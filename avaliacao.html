@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Avaliação Física · AJR Performance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:      #0B1E2D;
+    --navy-mid:  #112233;
+    --teal:      #0D2B3A;
+    --teal-mid:  #163545;
+    --gold:      #C9A84C;
+    --gold-lt:   #e2c878;
+    --gold-dk:   #9f8038;
+    --white:     #ffffff;
+    --off-white: #f0ede8;
+    --gray:      #8a9bab;
+    --danger:    #e05c5c;
+    --success:   #4caf7d;
+    --radius:    12px;
+    --input-bg:  #0e2030;
+    --border:    rgba(201,168,76,0.18);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #060e15;
+    color: var(--off-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(11,30,45,0.97);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo img { height: 46px; background: white; border-radius: 6px; padding: 4px 10px; }
+  .nav-back { color: var(--gray); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--gold); }
+
+  /* ── LAYOUT ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--navy) 0%, #0a1f30 60%, var(--teal) 100%);
+    padding: 3rem 5% 2.5rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute; top: 0; right: 0; width: 40%; height: 100%;
+    background: radial-gradient(ellipse at right center, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+  .page-header p { color: var(--gray); font-size: 0.9rem; }
+
+  main { max-width: 900px; margin: 0 auto; padding: 2rem 5% 4rem; }
+
+  /* ── SECTIONS ── */
+  .section {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--teal) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: rgba(201,168,76,0.07);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-header .section-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--gold); color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.8rem; flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--gold-lt); text-transform: uppercase; flex: 1;
+  }
+  .section-toggle { color: var(--gray); font-size: 1.2rem; transition: transform 0.2s; }
+  .section.collapsed .section-toggle { transform: rotate(-90deg); }
+  .section-body { padding: 1.5rem; }
+  .section.collapsed .section-body { display: none; }
+
+  /* ── FORM ELEMENTS ── */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .form-full { grid-column: 1 / -1; }
+
+  .field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .field label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--gray);
+  }
+  .field label span.unit { font-weight: 400; text-transform: none; color: var(--gray); opacity: 0.7; }
+  .field input, .field select, .field textarea {
+    background: var(--input-bg);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    color: var(--off-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+  }
+  .field input.calc-output {
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.35);
+    color: var(--gold-lt);
+    font-weight: 600;
+    cursor: default;
+  }
+  .field select option { background: var(--navy); }
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  /* Radio groups */
+  .radio-group { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .radio-group label {
+    display: flex; align-items: center; gap: 0.4rem;
+    text-transform: none; letter-spacing: 0; font-size: 0.85rem;
+    font-weight: 400; color: var(--off-white);
+    cursor: pointer;
+  }
+  .radio-group input[type=radio] { accent-color: var(--gold); }
+
+  /* ── TABLE STYLE (dobras / circunferências) ── */
+  .meas-table { width: 100%; border-collapse: collapse; }
+  .meas-table th {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--gray);
+    padding: 0.5rem 0.75rem; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .meas-table td { padding: 0.4rem 0.5rem; }
+  .meas-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  .meas-table td label {
+    font-size: 0.85rem; color: var(--off-white); font-weight: 500;
+  }
+  .meas-table td input {
+    background: var(--input-bg);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 6px;
+    color: var(--off-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    padding: 0.45rem 0.6rem;
+    width: 100%;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .meas-table td input:focus { border-color: var(--gold); }
+  .meas-table td input.calc-output {
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.35);
+    color: var(--gold-lt);
+    font-weight: 600;
+  }
+  .meas-table td input.asym-flag {
+    border-color: rgba(224,92,92,0.5);
+    color: #e88;
+  }
+
+  /* ── RESULTADO POLLOCK ── */
+  .pollock-result {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: var(--radius);
+  }
+  .pollock-result .result-item { text-align: center; }
+  .pollock-result .result-val {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem; font-weight: 900; color: var(--gold);
+    line-height: 1;
+  }
+  .pollock-result .result-label {
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--gray); margin-top: 0.25rem;
+  }
+
+  /* ── STAGES (VO2) ── */
+  .stages-table { width: 100%; border-collapse: collapse; }
+  .stages-table th {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.4px;
+    text-transform: uppercase; color: var(--gray);
+    padding: 0.5rem 0.4rem; border-bottom: 1px solid var(--border); text-align: center;
+  }
+  .stages-table td { padding: 0.35rem 0.4rem; }
+  .stages-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  .stages-table td input {
+    background: var(--input-bg);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 6px;
+    color: var(--off-white);
+    font-size: 0.82rem;
+    padding: 0.4rem 0.35rem;
+    width: 100%;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .stages-table td input:focus { border-color: var(--gold); }
+  .stages-table td input.calc-output {
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.3);
+    color: var(--gold-lt); font-weight: 600;
+  }
+
+  /* ── DIVIDERS ── */
+  .subsection-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--gold); margin: 1.5rem 0 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .subsection-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── ASSIMETRIA ── */
+  .asym-row { display: flex; gap: 0.5rem; align-items: flex-end; flex-wrap: wrap; }
+  .asym-badge {
+    padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700;
+    background: rgba(224,92,92,0.15); color: #e88; border: 1px solid rgba(224,92,92,0.3);
+  }
+  .asym-badge.ok {
+    background: rgba(76,175,125,0.12); color: #7ecfa5; border-color: rgba(76,175,125,0.3);
+  }
+
+  /* ── SAVE BAR ── */
+  .save-bar {
+    position: sticky; bottom: 0; z-index: 50;
+    background: rgba(11,30,45,0.97); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 1rem 5%;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .save-bar .status-msg { font-size: 0.85rem; color: var(--gray); }
+  .save-bar .status-msg.success { color: var(--success); }
+  .save-bar .status-msg.error { color: var(--danger); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.5rem; border-radius: 8px;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem;
+    cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: var(--gold-lt); }
+
+  /* ── FOTOS ── */
+  .foto-slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+  .foto-slot {
+    border: 1px dashed rgba(201,168,76,0.3);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--input-bg);
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .foto-slot .foto-preview {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    display: none; cursor: pointer;
+  }
+  .foto-slot .foto-placeholder {
+    width: 100%; aspect-ratio: 3/4;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: var(--gray); font-size: 0.78rem; gap: 0.5rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .foto-slot .foto-placeholder:hover { background: rgba(201,168,76,0.06); }
+  .foto-slot .foto-placeholder .foto-icon { font-size: 1.8rem; opacity: 0.5; }
+  .foto-slot .foto-footer {
+    padding: 0.5rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .foto-slot .foto-footer input {
+    flex: 1; background: transparent; border: none;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    color: var(--off-white); font-size: 0.78rem; padding: 0.2rem 0.3rem;
+    outline: none;
+  }
+  .foto-slot .foto-footer input:focus { border-bottom-color: var(--gold); }
+  .foto-slot .foto-footer button {
+    background: none; border: none; color: var(--danger);
+    cursor: pointer; font-size: 0.9rem; padding: 0; flex-shrink: 0;
+  }
+  .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-outline {
+    background: transparent; color: var(--gold);
+    border: 1px solid var(--gold);
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.1); }
+
+  /* ── FIREBASE CONFIG MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(6,14,21,0.92);
+    z-index: 200; display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.hidden { display: none; }
+  .modal {
+    background: var(--navy-mid); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem; max-width: 560px; width: 100%;
+  }
+  .modal h2 {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .modal p { font-size: 0.88rem; color: var(--gray); margin-bottom: 1.25rem; line-height: 1.7; }
+  .modal code {
+    background: rgba(0,0,0,0.3); border-radius: 4px;
+    padding: 0.15rem 0.4rem; font-size: 0.82rem; color: var(--gold-lt);
+  }
+  .modal textarea {
+    width: 100%; background: var(--input-bg);
+    border: 1px solid rgba(201,168,76,0.25); border-radius: 8px;
+    color: var(--off-white); font-family: monospace; font-size: 0.8rem;
+    padding: 0.75rem; min-height: 140px; resize: vertical;
+    outline: none; margin-bottom: 1rem;
+  }
+  .modal textarea:focus { border-color: var(--gold); }
+  .modal .btn-row { display: flex; gap: 0.75rem; justify-content: flex-end; flex-wrap: wrap; }
+
+  /* ── ALUNOS RECENTES ── */
+  .alunos-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .aluno-chip {
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 20px; padding: 0.3rem 0.9rem; font-size: 0.8rem;
+    color: var(--gold-lt); cursor: pointer; transition: all 0.2s;
+  }
+  .aluno-chip:hover { background: rgba(201,168,76,0.2); }
+
+  /* ── CHECKBOXES CÓCORAS ── */
+  .check-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.88rem; color: var(--off-white); cursor: pointer;
+    padding: 0.4rem 0.6rem; border-radius: 6px;
+    border: 1px solid rgba(201,168,76,0.12);
+    transition: background 0.15s;
+  }
+  .check-item:hover { background: rgba(201,168,76,0.06); }
+  .check-item input[type=checkbox] { accent-color: var(--gold); width: 15px; height: 15px; flex-shrink:0; }
+  .check-item input[type=checkbox]:checked + span,
+  .check-item input[type=checkbox]:checked ~ * { color: var(--danger); }
+
+  /* ── PROTOCOLO ── */
+  .protocolo-fit-hidden { display: none !important; }
+  #lbl-performance:has(input:checked), #lbl-fit:has(input:checked) {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold);
+  }
+
+  @media (max-width: 600px) {
+    .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
+    .meas-table th:nth-child(n+3), .meas-table td:nth-child(n+3) { display: none; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- Firebase Config Modal -->
+<div class="modal-overlay hidden" id="firebaseModal">
+  <div class="modal">
+    <h2>Configurar Firebase</h2>
+    <p>
+      Cole aqui o objeto de configuração do seu projeto Firebase.<br>
+      Acesse <code>console.firebase.google.com</code> → Configurações do projeto → Seus apps → Config SDK.<br>
+      Esta configuração é salva no seu navegador.
+    </p>
+    <textarea id="fbConfigInput" placeholder='{
+  "apiKey": "...",
+  "authDomain": "...",
+  "projectId": "...",
+  "storageBucket": "...",
+  "messagingSenderId": "...",
+  "appId": "..."
+}'></textarea>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="skipFirebase()">Usar sem banco (só calcular)</button>
+      <button class="btn btn-gold" onclick="initFirebaseFromModal()">Conectar</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="logo-ajr.png" alt="AJR Performance" onerror="this.style.display='none'" />
+  </div>
+  <a href="index.html" class="nav-back">← Voltar ao site</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>Registro de Avaliação Física</h1>
+  <p>Avaliador: Aldemir Junior · AJR Avaliação Física &amp; Performance</p>
+</div>
+
+<main>
+
+  <!-- ALUNOS RECENTES -->
+  <div id="alunosRecentes" style="display:none; margin-bottom:1.5rem;">
+    <p style="font-size:0.78rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.5rem;">Carregar avaliação anterior de:</p>
+    <div class="alunos-list" id="alunosList"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       1 · IDENTIFICAÇÃO
+  ═══════════════════════════════════ -->
+  <div class="section" id="sec1">
+    <div class="section-header" onclick="toggleSection('sec1')">
+      <span class="section-num">1</span>
+      <h2>Identificação do Aluno</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="form-grid">
+        <div class="field form-full">
+          <label>Nome completo</label>
+          <input type="text" id="nome" placeholder="Nome do aluno" />
+        </div>
+        <div class="field">
+          <label>Data de nascimento</label>
+          <input type="date" id="dataNascimento" oninput="calcIdade()" />
+        </div>
+        <div class="field">
+          <label>Idade calculada <span class="unit">anos</span></label>
+          <input type="number" id="idade" class="calc-output" readonly placeholder="—" />
+        </div>
+        <div class="field">
+          <label>Sexo biológico</label>
+          <select id="sexo" onchange="calcPollock()">
+            <option value="">Selecione</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Data da avaliação</label>
+          <input type="date" id="dataAvaliacao" />
+        </div>
+        <div class="field form-full">
+          <label>Objetivo</label>
+          <input type="text" id="objetivo" placeholder="Ex: Redução de gordura, ganho muscular..." />
+        </div>
+        <div class="field form-full" style="margin-top:0.5rem;">
+          <label>Protocolo</label>
+          <div class="radio-group">
+            <label style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;border-radius:8px;border:1px solid rgba(201,168,76,0.25);cursor:pointer;transition:background 0.15s;" id="lbl-performance">
+              <input type="radio" name="protocolo" value="performance" checked onchange="setProtocolo(this.value)" /> Performance
+            </label>
+            <label style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;border-radius:8px;border:1px solid rgba(201,168,76,0.25);cursor:pointer;transition:background 0.15s;" id="lbl-fit">
+              <input type="radio" name="protocolo" value="fit" onchange="setProtocolo(this.value)" /> Fit
+            </label>
+          </div>
+          <p style="font-size:0.73rem;color:var(--gray);margin-top:0.4rem;line-height:1.5;">
+            <strong style="color:var(--gold-lt);">Performance</strong> — protocolo completo &nbsp;·&nbsp;
+            <strong style="color:var(--gold-lt);">Fit</strong> — sem VO₂, assimetrias de joelho, cócoras e flexibilidade do pé
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       2 · QUESTIONÁRIO DE SAÚDE
+  ═══════════════════════════════════ -->
+  <div class="section" id="sec2">
+    <div class="section-header" onclick="toggleSection('sec2')">
+      <span class="section-num">2</span>
+      <h2>Questionário de Saúde</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="form-grid">
+        <div class="field form-full">
+          <label>Possui contraindicação médica para atividade física?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="contraindicacao" value="Não" /> Não</label>
+            <label><input type="radio" name="contraindicacao" value="Sim" /> Sim</label>
+          </div>
+        </div>
+        <div class="field form-full">
+          <label>Possui dor em alguma região do corpo? Se sim, qual?</label>
+          <input type="text" id="dor" placeholder="Não / Descrição da dor e local" />
+        </div>
+        <div class="field">
+          <label>Nível de dor — Escala EVA <span class="unit">0–10</span></label>
+          <input type="number" id="eva" min="0" max="10" placeholder="0" />
+        </div>
+        <div class="field form-full">
+          <label>Faz uso de medicamentos contínuos? Se sim, quais?</label>
+          <input type="text" id="medicamentos" placeholder="Não / Nome dos medicamentos" />
+        </div>
+        <div class="field form-full">
+          <label>Observações adicionais de saúde</label>
+          <textarea id="obsSaude" placeholder="Histórico relevante, cirurgias, lesões..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       3 · MEDIDAS EM REPOUSO
+  ═══════════════════════════════════ -->
+  <div class="section" id="sec3">
+    <div class="section-header" onclick="toggleSection('sec3')">
+      <span class="section-num">3</span>
+      <h2>Medidas em Repouso</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="form-grid">
+        <div class="field">
+          <label>Pressão Arterial <span class="unit">mmHg</span></label>
+          <input type="text" id="pa" placeholder="Ex: 120-80" />
+        </div>
+        <div class="field">
+          <label>FC de Repouso <span class="unit">bpm</span></label>
+          <input type="number" id="fcRepouso" placeholder="Ex: 65" />
+        </div>
+        <div class="field">
+          <label>Saturação de O₂ <span class="unit">%</span></label>
+          <input type="number" id="spo2" min="80" max="100" placeholder="Ex: 97" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       4 · COMPOSIÇÃO CORPORAL
+  ═══════════════════════════════════ -->
+  <div class="section" id="sec4">
+    <div class="section-header" onclick="toggleSection('sec4')">
+      <span class="section-num">4</span>
+      <h2>Composição Corporal</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+
+      <div class="subsection-title">Dados gerais</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Peso <span class="unit">kg</span></label>
+          <input type="number" id="peso" step="0.1" placeholder="Ex: 80.5" oninput="calcIMC();calcRCQ();" />
+        </div>
+        <div class="field">
+          <label>Altura <span class="unit">cm</span></label>
+          <input type="number" id="altura" step="0.1" placeholder="Ex: 175" oninput="calcIMC()" />
+        </div>
+        <div class="field">
+          <label>IMC <span class="unit">kg/m²</span></label>
+          <input type="number" id="imc" class="calc-output" readonly placeholder="—" />
+        </div>
+        <div class="field">
+          <label>Classificação IMC</label>
+          <input type="text" id="imcClass" class="calc-output" readonly placeholder="—" />
+        </div>
+      </div>
+
+      <div class="subsection-title">Circunferências <span style="font-weight:400;color:var(--gray);text-transform:none;font-size:0.8rem">cm</span></div>
+      <table class="meas-table">
+        <thead><tr><th>Segmento</th><th>Medida (cm)</th></tr></thead>
+        <tbody id="circTbody">
+          <tr><td><label>Pescoço</label></td><td><input type="number" step="0.1" data-circ="pescoco" placeholder="—" /></td></tr>
+          <tr><td><label>Ombro</label></td><td><input type="number" step="0.1" data-circ="ombro" placeholder="—" /></td></tr>
+          <tr><td><label>Tórax</label></td><td><input type="number" step="0.1" data-circ="torax" placeholder="—" /></td></tr>
+          <tr><td><label>Cintura</label></td><td><input type="number" step="0.1" data-circ="cintura" id="cintura" oninput="calcRCQ()" placeholder="—" /></td></tr>
+          <tr><td><label>Abdômen</label></td><td><input type="number" step="0.1" data-circ="abdomen" placeholder="—" /></td></tr>
+          <tr><td><label>Quadril</label></td><td><input type="number" step="0.1" data-circ="quadril" id="quadril" oninput="calcRCQ()" placeholder="—" /></td></tr>
+          <tr><td><label>Braço Direito Relaxado</label></td><td><input type="number" step="0.1" data-circ="bracoDirRelax" placeholder="—" /></td></tr>
+          <tr><td><label>Braço Direito Contraído</label></td><td><input type="number" step="0.1" data-circ="bracoDirContr" placeholder="—" /></td></tr>
+          <tr><td><label>Braço Esquerdo Relaxado</label></td><td><input type="number" step="0.1" data-circ="bracoEsqRelax" placeholder="—" /></td></tr>
+          <tr><td><label>Braço Esquerdo Contraído</label></td><td><input type="number" step="0.1" data-circ="bracoEsqContr" placeholder="—" /></td></tr>
+          <tr><td><label>Coxa Direita Medial</label></td><td><input type="number" step="0.1" data-circ="coxaDirMed" placeholder="—" /></td></tr>
+          <tr><td><label>Coxa Esquerda Medial</label></td><td><input type="number" step="0.1" data-circ="coxaEsqMed" placeholder="—" /></td></tr>
+          <tr><td><label>Panturrilha Direita</label></td><td><input type="number" step="0.1" data-circ="panturDir" placeholder="—" /></td></tr>
+          <tr><td><label>Panturrilha Esquerda</label></td><td><input type="number" step="0.1" data-circ="panturEsq" placeholder="—" /></td></tr>
+        </tbody>
+      </table>
+      <div class="form-grid" style="margin-top:1rem">
+        <div class="field">
+          <label>RCQ (Cintura/Quadril)</label>
+          <input type="number" id="rcq" class="calc-output" readonly step="0.01" placeholder="—" />
+        </div>
+        <div class="field">
+          <label>Soma Circunferências <span class="unit">cm</span></label>
+          <input type="number" id="somaCirc" class="calc-output" readonly placeholder="—" />
+        </div>
+      </div>
+
+      <div class="subsection-title">Dobras Cutâneas — Pollock 7 <span style="font-weight:400;color:var(--gray);text-transform:none;font-size:0.8rem">mm</span></div>
+      <table class="meas-table">
+        <thead><tr><th>Dobra</th><th>Medida (mm)</th></tr></thead>
+        <tbody>
+          <tr><td><label>Tricipital</label></td><td><input type="number" step="0.1" data-dobra="triceptal" oninput="calcPollock()" placeholder="—" /></td></tr>
+          <tr><td><label>Subscapular</label></td><td><input type="number" step="0.1" data-dobra="subscapular" oninput="calcPollock()" placeholder="—" /></td></tr>
+          <tr><td><label>Peitoral</label></td><td><input type="number" step="0.1" data-dobra="peitoral" oninput="calcPollock()" placeholder="—" /></td></tr>
+          <tr><td><label>Axilar Média</label></td><td><input type="number" step="0.1" data-dobra="axilar" oninput="calcPollock()" placeholder="—" /></td></tr>
+          <tr><td><label>Supra Ilíaca</label></td><td><input type="number" step="0.1" data-dobra="supraIliaca" oninput="calcPollock()" placeholder="—" /></td></tr>
+          <tr><td><label>Abdominal</label></td><td><input type="number" step="0.1" data-dobra="abdominal" oninput="calcPollock()" placeholder="—" /></td></tr>
+          <tr><td><label>Coxa</label></td><td><input type="number" step="0.1" data-dobra="coxa" oninput="calcPollock()" placeholder="—" /></td></tr>
+        </tbody>
+      </table>
+
+      <!-- Resultado Pollock -->
+      <div class="pollock-result" id="pollockResult">
+        <div class="result-item">
+          <div class="result-val" id="rSomaDobras">—</div>
+          <div class="result-label">Soma 7 Dobras (mm)</div>
+        </div>
+        <div class="result-item">
+          <div class="result-val" id="rDensidade">—</div>
+          <div class="result-label">Densidade Corporal</div>
+        </div>
+        <div class="result-item">
+          <div class="result-val" id="rGordura">—</div>
+          <div class="result-label">% Gordura</div>
+        </div>
+        <div class="result-item">
+          <div class="result-val" id="rMassaGorda">—</div>
+          <div class="result-label">Massa Gorda (kg)</div>
+        </div>
+        <div class="result-item">
+          <div class="result-val" id="rMassaMagra">—</div>
+          <div class="result-label">Massa Magra (kg)</div>
+        </div>
+        <div class="result-item">
+          <div class="result-val" id="rClassGord">—</div>
+          <div class="result-label">Classificação</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       4.5 · FOTOS DA AVALIAÇÃO
+  ═══════════════════════════════════ -->
+  <div class="section" id="secFotos">
+    <div class="section-header" onclick="toggleSection('secFotos')">
+      <span class="section-num" style="background:var(--teal-mid);border:1px solid var(--gold);">📷</span>
+      <h2>Fotos da Avaliação</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:0.82rem;color:var(--gray);margin-bottom:1rem;">Adicione fotos de postura, composição corporal ou registros do protocolo. As imagens são incluídas no PDF.</p>
+
+      <div class="foto-slots" id="fotoSlots">
+        <!-- slots gerados pelo JS -->
+      </div>
+
+      <button class="btn btn-outline" style="margin-top:1rem;font-size:0.8rem;" onclick="addFotoSlot()">+ Adicionar foto</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       5 · FORÇA MUSCULAR E ASSIMETRIA
+  ═══════════════════════════════════ -->
+  <div class="section" id="sec5">
+    <div class="section-header" onclick="toggleSection('sec5')">
+      <span class="section-num">5</span>
+      <h2>Força Muscular e Assimetria</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+      <table class="meas-table">
+        <thead>
+          <tr>
+            <th>Teste</th>
+            <th>Direita (kg)</th>
+            <th>Esquerda (kg)</th>
+            <th>Assimetria</th>
+            <th>Déficit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><label>Preensão Manual</label></td>
+            <td><input type="number" step="0.1" id="maoDireita" oninput="calcAsym('mao','maoDireita','maoEsquerda','asymMao','defMao')" placeholder="—" /></td>
+            <td><input type="number" step="0.1" id="maoEsquerda" oninput="calcAsym('mao','maoDireita','maoEsquerda','asymMao','defMao')" placeholder="—" /></td>
+            <td><input id="asymMao" class="calc-output" readonly placeholder="—" /></td>
+            <td><input id="defMao" class="calc-output" readonly placeholder="—" /></td>
+          </tr>
+          <tr>
+            <td><label>Cadeia Posterior (levantamento)</label></td>
+            <td><input type="number" step="0.1" id="cadPostDir" oninput="calcAsym('cadPost','cadPostDir','cadPostEsq','asymCadPost','defCadPost')" placeholder="—" /></td>
+            <td><input type="number" step="0.1" id="cadPostEsq" oninput="calcAsym('cadPost','cadPostDir','cadPostEsq','asymCadPost','defCadPost')" placeholder="—" /></td>
+            <td><input id="asymCadPost" class="calc-output" readonly placeholder="—" /></td>
+            <td><input id="defCadPost" class="calc-output" readonly placeholder="—" /></td>
+          </tr>
+          <tr id="row-extJo" class="protocolo-performance">
+            <td><label>Extensão de Joelho</label></td>
+            <td><input type="number" step="0.1" id="extJoDir" oninput="calcAsym('extJo','extJoDir','extJoEsq','asymExtJo','defExtJo')" placeholder="—" /></td>
+            <td><input type="number" step="0.1" id="extJoEsq" oninput="calcAsym('extJo','extJoDir','extJoEsq','asymExtJo','defExtJo')" placeholder="—" /></td>
+            <td><input id="asymExtJo" class="calc-output" readonly placeholder="—" /></td>
+            <td><input id="defExtJo" class="calc-output" readonly placeholder="—" /></td>
+          </tr>
+          <tr id="row-flexJo" class="protocolo-performance">
+            <td><label>Flexão de Joelho</label></td>
+            <td><input type="number" step="0.1" id="flexJoDir" oninput="calcAsym('flexJo','flexJoDir','flexJoEsq','asymFlexJo','defFlexJo')" placeholder="—" /></td>
+            <td><input type="number" step="0.1" id="flexJoEsq" oninput="calcAsym('flexJo','flexJoDir','flexJoEsq','asymFlexJo','defFlexJo')" placeholder="—" /></td>
+            <td><input id="asymFlexJo" class="calc-output" readonly placeholder="—" /></td>
+            <td><input id="defFlexJo" class="calc-output" readonly placeholder="—" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       6 · MOBILIDADE E FLEXIBILIDADE
+  ═══════════════════════════════════ -->
+  <div class="section" id="sec6">
+    <div class="section-header" onclick="toggleSection('sec6')">
+      <span class="section-num">6</span>
+      <h2>Mobilidade e Flexibilidade</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+
+      <div class="subsection-title">Sentar e Alcançar — Cadeia Posterior <span style="font-weight:400;color:var(--gray);text-transform:none;font-size:0.8rem">cm</span></div>
+      <div class="form-grid-2">
+        <div class="field">
+          <label>Direita</label>
+          <input type="number" step="0.1" id="flexDireita" placeholder="Ex: -2 ou 5" />
+        </div>
+        <div class="field">
+          <label>Esquerda</label>
+          <input type="number" step="0.1" id="flexEsquerda" placeholder="Ex: -2 ou 5" />
+        </div>
+      </div>
+
+      <div class="subsection-title">Flexibilidade de Ombros <span style="font-weight:400;color:var(--gray);text-transform:none;font-size:0.8rem">cm (negativo = distância que faltou)</span></div>
+      <div class="form-grid-2">
+        <div class="field">
+          <label>Direita</label>
+          <input type="number" step="0.1" id="ombroDireito" placeholder="Ex: -6 ou 2" />
+        </div>
+        <div class="field">
+          <label>Esquerda</label>
+          <input type="number" step="0.1" id="ombroEsquerdo" placeholder="Ex: -12 ou 1" />
+        </div>
+      </div>
+
+      <div id="block-flexJoScore" class="protocolo-performance">
+      <div class="subsection-title">Flexão de Joelho</div>
+      <p style="font-size:0.78rem;color:var(--gray);margin-bottom:0.75rem;line-height:1.6;">
+        <strong style="color:var(--gold-lt);">Scores:</strong>
+        0 — flexão &lt;90°&nbsp;&nbsp;·&nbsp;&nbsp;
+        1 — flexão &gt;90° e &lt;45°&nbsp;&nbsp;·&nbsp;&nbsp;
+        2 — flexão &gt;45° e &lt;30°&nbsp;&nbsp;·&nbsp;&nbsp;
+        3 — tocou o glúteo&nbsp;&nbsp;·&nbsp;&nbsp;
+        4 — ultrapassou o glúteo lateralmente
+      </p>
+      <div class="form-grid-2">
+        <div class="field">
+          <label>Score Direita <span class="unit">0–4</span></label>
+          <select id="flexJoelhoDireita">
+            <option value="">—</option>
+            <option value="0">0 — Flexão &lt;90°</option>
+            <option value="1">1 — Flexão &gt;90° e &lt;45°</option>
+            <option value="2">2 — Flexão &gt;45° e &lt;30°</option>
+            <option value="3">3 — Tocou o glúteo</option>
+            <option value="4">4 — Ultrapassou o glúteo lateralmente</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Score Esquerda <span class="unit">0–4</span></label>
+          <select id="flexJoelhoEsquerda">
+            <option value="">—</option>
+            <option value="0">0 — Flexão &lt;90°</option>
+            <option value="1">1 — Flexão &gt;90° e &lt;45°</option>
+            <option value="2">2 — Flexão &gt;45° e &lt;30°</option>
+            <option value="3">3 — Tocou o glúteo</option>
+            <option value="4">4 — Ultrapassou o glúteo lateralmente</option>
+          </select>
+        </div>
+      </div>
+      </div><!-- /block-flexJoScore -->
+
+      <div id="block-cocoras" class="protocolo-performance">
+      <div class="subsection-title" style="margin-top:1.5rem">Mobilidade em Cócoras</div>
+      <p style="font-size:0.78rem;color:var(--gray);margin-bottom:0.75rem;line-height:1.6;">
+        <strong style="color:var(--gold-lt);">Posição observada em cócoras</strong> — marque os itens <strong>não</strong> mantidos (−1 ponto cada):
+      </p>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;">
+        <label class="check-item"><input type="checkbox" id="ckPlantar" onchange="calcScoreCocoras()" /> Apoio Plantar preservado</label>
+        <label class="check-item"><input type="checkbox" id="ckJoelho" onchange="calcScoreCocoras()" /> Flexão de joelho &gt;90°</label>
+        <label class="check-item"><input type="checkbox" id="ckLombar" onchange="calcScoreCocoras()" /> Manteve a curvatura lombar</label>
+        <label class="check-item"><input type="checkbox" id="ckEscapular" onchange="calcScoreCocoras()" /> Manteve a retração escapular</label>
+      </div>
+      <div class="field" style="max-width:200px;">
+        <label>Pontuação <span class="unit">/4</span></label>
+        <input type="number" id="scoreCocoras" class="calc-output" readonly placeholder="—" />
+      </div>
+      </div><!-- /block-cocoras -->
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       7 · CARDIORRESPIRATÓRIO (VO2)
+  ═══════════════════════════════════ -->
+  <div class="section" id="sec8">
+    <div class="section-header" onclick="toggleSection('sec8')">
+      <span class="section-num">7</span>
+      <h2>Avaliação Cardiorrespiratória — VO₂</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="form-grid-3" style="margin-bottom:1rem">
+        <div class="field form-full">
+          <label>Protocolo AJR</label>
+          <p style="font-size:0.78rem;color:var(--gray);line-height:1.6;margin-top:0.2rem;">
+            Rampa · 1% inclinação (fixo) · 1 min/estágio · início 5 km/h · +1 km/h por estágio · recuperação 4 km/h / 1 min
+          </p>
+        </div>
+      </div>
+
+      <table class="stages-table" id="stagesTable">
+        <thead>
+          <tr>
+            <th>Estágio</th>
+            <th>Vel. (km/h)</th>
+            <th>FC (bpm)</th>
+            <th>BORG</th>
+            <th>VO₂ est. (ml/kg/min)</th>
+          </tr>
+        </thead>
+        <tbody id="stagesBody">
+          <!-- generated by JS -->
+        </tbody>
+      </table>
+
+      <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap">
+        <button class="btn btn-outline" onclick="addStage()">+ Estágio</button>
+        <button class="btn btn-outline" onclick="removeStage()">− Remover último</button>
+      </div>
+
+      <!-- Recuperação -->
+      <div class="subsection-title" style="margin-top:1.5rem">Recuperação (4 km/h · 1 min)</div>
+      <div class="form-grid-2" style="max-width:400px;">
+        <div class="field">
+          <label>FC Recuperação 1 min <span class="unit">bpm</span></label>
+          <input type="number" id="fcRecuperacao" placeholder="—" />
+        </div>
+        <div class="field">
+          <label>Delta FC (máx − recup.) <span class="unit">bpm</span></label>
+          <input type="number" id="deltaFC" class="calc-output" readonly placeholder="—" />
+        </div>
+      </div>
+
+      <div class="subsection-title" style="margin-top:1.5rem">Resultados</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>VO₂ máx estimado <span class="unit">ml/kg/min</span></label>
+          <input type="number" step="0.1" id="vo2Max" placeholder="—" oninput="classVo2Update()" />
+        </div>
+        <div class="field">
+          <label>FC máxima atingida <span class="unit">bpm</span></label>
+          <input type="number" id="fcMax" placeholder="—" oninput="calcDeltaFC()" />
+        </div>
+        <div class="field">
+          <label>Velocidade máxima <span class="unit">km/h</span></label>
+          <input type="number" step="0.5" id="velMax" placeholder="—" />
+        </div>
+        <div class="field">
+          <label>Classificação VO₂</label>
+          <input type="text" id="classVo2" class="calc-output" readonly placeholder="—" />
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:1rem">
+        <label>Observações do teste</label>
+        <textarea id="obsVo2" placeholder="Motivo de interrupção, RPE geral, intercorrências..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       8 · PARECER FINAL
+  ═══════════════════════════════════ -->
+  <div class="section" id="sec9">
+    <div class="section-header" onclick="toggleSection('sec9')">
+      <span class="section-num">8</span>
+      <h2>Parecer Final e Direcionamento</h2>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body">
+
+      <!-- Gerar parecer -->
+      <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.25rem;">
+        <p style="font-size:0.85rem;color:var(--off-white);margin-bottom:0.75rem;font-weight:600;">✦ Gerar Parecer com IA</p>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.75rem;">
+          <input type="password" id="anthropicKey" placeholder="Chave Anthropic API (sk-ant-...)"
+            style="flex:1;min-width:220px;background:var(--input-bg);border:1px solid rgba(201,168,76,0.2);border-radius:8px;color:var(--off-white);font-size:0.82rem;padding:0.5rem 0.8rem;outline:none;"
+            oninput="localStorage.setItem('ajr_claude_key', this.value)" />
+          <button class="btn btn-gold" style="font-size:0.88rem;white-space:nowrap;" onclick="gerarParecer()">
+            ✦ Gerar com IA
+          </button>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+          <span id="parecerStatus" style="font-size:0.78rem;color:var(--gray);flex:1;"></span>
+          <button class="btn btn-outline" style="font-size:0.78rem;padding:0.4rem 0.9rem;" onclick="abrirClaude()">
+            Abrir no Claude.ai ↗
+          </button>
+        </div>
+        <p style="font-size:0.72rem;color:var(--gray);margin-top:0.6rem;line-height:1.5;">
+          A chave é salva no navegador — só precisa colar uma vez. Sem chave, use o botão "Abrir no Claude.ai".
+        </p>
+      </div>
+
+      <div class="field">
+        <label>Parecer geral</label>
+        <textarea id="parecer" style="min-height:160px" placeholder="Clique em 'Gerar com IA' ou escreva manualmente..."></textarea>
+      </div>
+      <div class="field" style="margin-top:1rem">
+        <label>Direcionamento técnico</label>
+        <textarea id="direcionamento" style="min-height:130px" placeholder="Clique em 'Gerar com IA' ou escreva manualmente..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- SAVE BAR -->
+<div class="save-bar">
+  <span class="status-msg" id="saveStatus">Pronto para salvar</span>
+  <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+    <button class="btn btn-outline" id="btnPDF" onclick="gerarPDF()">⬇ Gerar PDF</button>
+    <button class="btn btn-outline" onclick="showFirebaseModal()">⚙ Firebase</button>
+    <button class="btn btn-gold" id="btnSalvar" onclick="salvarAvaliacao()">
+      ✦ Salvar Avaliação
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PDF TEMPLATE (hidden, rendered for export)
+══════════════════════════════════════════════ -->
+<div id="pdfTemplate" style="display:none; position:fixed; left:-9999px; top:0; width:794px; background:#fff; font-family:'Inter',sans-serif; font-size:13px; color:#1a1a2e; line-height:1.5;">
+
+  <!-- HEADER -->
+  <div style="background:#0B1E2D; padding:32px 40px 24px; display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <div style="font-family:'Montserrat',sans-serif; font-size:9px; font-weight:700; letter-spacing:2px; color:#C9A84C; text-transform:uppercase; margin-bottom:4px;">AJR Avaliação Física &amp; Performance</div>
+      <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:#fff;">Relatório de Avaliação Física</div>
+      <div style="font-size:11px; color:#8a9bab; margin-top:4px;" id="pdf-subheader">—</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:10px; color:#8a9bab;">Avaliador</div>
+      <div style="font-size:12px; font-weight:600; color:#e2c878;">Aldemir Junior</div>
+    </div>
+  </div>
+
+  <!-- GOLD LINE -->
+  <div style="height:3px; background:linear-gradient(90deg,#C9A84C,#e2c878,#C9A84C);"></div>
+
+  <div style="padding:28px 40px;">
+
+    <!-- IDENTIFICAÇÃO -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">1 · Identificação</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;" id="pdf-ident">—</div>
+    </div>
+
+    <!-- SAÚDE -->
+    <div style="margin-bottom:24px;" id="pdf-saude-block">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">2 · Questionário de Saúde</div>
+      <div id="pdf-saude">—</div>
+    </div>
+
+    <!-- REPOUSO -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">3 · Medidas em Repouso</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;" id="pdf-repouso">—</div>
+    </div>
+
+    <!-- COMPOSIÇÃO CORPORAL -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">4 · Composição Corporal</div>
+
+      <!-- Pollock result cards -->
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-bottom:16px; background:#f7f4ef; border-radius:8px; padding:14px;" id="pdf-pollock">—</div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <!-- Circunferências -->
+        <div>
+          <div style="font-size:9px; font-weight:700; color:#8a7a50; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Circunferências (cm)</div>
+          <table style="width:100%; border-collapse:collapse; font-size:11px;" id="pdf-circ-table">—</table>
+        </div>
+        <!-- Dobras -->
+        <div>
+          <div style="font-size:9px; font-weight:700; color:#8a7a50; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Dobras Cutâneas — Pollock 7 (mm)</div>
+          <table style="width:100%; border-collapse:collapse; font-size:11px;" id="pdf-dobras-table">—</table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOTOS -->
+    <div style="margin-bottom:24px;" id="pdf-fotos-block">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">Registro Fotográfico</div>
+      <div id="pdf-fotos-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;"></div>
+    </div>
+
+    <!-- FORÇA GLOBAL -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">5 · Força Global</div>
+      <table style="width:100%; border-collapse:collapse; font-size:11px;" id="pdf-forca-table">—</table>
+    </div>
+
+    <!-- MOBILIDADE -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">6 · Mobilidade e Flexibilidade</div>
+      <div id="pdf-mob">—</div>
+    </div>
+
+    <!-- ISOMETRIA -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">7 · Força Isométrica</div>
+      <table style="width:100%; border-collapse:collapse; font-size:11px;" id="pdf-iso-table">—</table>
+    </div>
+
+    <!-- VO2 -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">8 · Avaliação Cardiorrespiratória</div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px;" id="pdf-vo2-cards">—</div>
+      <table style="width:100%; border-collapse:collapse; font-size:10px;" id="pdf-stages-table">—</table>
+      <div id="pdf-obs-vo2" style="font-size:11px; color:#555; margin-top:8px;"></div>
+    </div>
+
+    <!-- PARECER -->
+    <div style="margin-bottom:16px;" id="pdf-parecer-block">
+      <div style="font-family:'Montserrat',sans-serif; font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#C9A84C; border-bottom:1px solid #e8e0d0; padding-bottom:6px; margin-bottom:14px;">9 · Parecer Final e Direcionamento</div>
+      <div id="pdf-parecer" style="font-size:11px; color:#333; line-height:1.7; margin-bottom:12px;"></div>
+      <div id="pdf-direcionamento" style="font-size:11px; color:#333; line-height:1.7;"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:#0B1E2D; padding:14px 40px; display:flex; justify-content:space-between; align-items:center;">
+    <div style="font-size:10px; color:#8a9bab;">ajrperformance.com.br</div>
+    <div style="font-size:9px; color:#C9A84C; font-family:'Montserrat',sans-serif; letter-spacing:1px; text-transform:uppercase;">AJR Avaliação Física &amp; Performance</div>
+    <div id="pdf-footer-date" style="font-size:10px; color:#8a9bab;">—</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     FIREBASE SDKs (v9 compat)
+══════════════════════════════════════════════ -->
+<script type="module">
+  import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, limit }
+    from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  window._fbModules = { initializeApp, getApps, getFirestore, collection, addDoc, getDocs, query, where, orderBy, limit };
+</script>
+
+<script>
+/* ══════════════════════════════════════════
+   FIREBASE INIT
+══════════════════════════════════════════ */
+let db = null;
+let firebaseReady = false;
+
+// Firebase config embutido
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAIGjRV322Y9wet7BnoefKcosGycWIfBZ0",
+  authDomain: "avaliacao-fisica-9585b.firebaseapp.com",
+  projectId: "avaliacao-fisica-9585b",
+  storageBucket: "avaliacao-fisica-9585b.firebasestorage.app",
+  messagingSenderId: "489452702873",
+  appId: "1:489452702873:web:9e4882f24a619bd082fc08",
+  measurementId: "G-H2QHF7YTCN"
+};
+
+/* ══════════════════════════════════════════
+   PROTOCOLO FIT / PERFORMANCE
+══════════════════════════════════════════ */
+function setProtocolo(val) {
+  const isFit = val === 'fit';
+  // Seções inteiras
+  document.getElementById('sec8').classList.toggle('protocolo-fit-hidden', isFit);
+  // Linhas de assimetria de joelho
+  document.getElementById('row-extJo').classList.toggle('protocolo-fit-hidden', isFit);
+  document.getElementById('row-flexJo').classList.toggle('protocolo-fit-hidden', isFit);
+  // Bloco flexão de joelho (score 0–4, puxar o pé)
+  document.getElementById('block-flexJoScore').classList.toggle('protocolo-fit-hidden', isFit);
+  // Bloco cócoras
+  document.getElementById('block-cocoras').classList.toggle('protocolo-fit-hidden', isFit);
+}
+window.setProtocolo = setProtocolo;
+
+window.addEventListener('load', () => {
+  // Set today as default assessment date
+  document.getElementById('dataAvaliacao').value = new Date().toISOString().split('T')[0];
+  // Init stages
+  for (let i = 0; i < 7; i++) addStage();
+  // Init Firebase direto — sem modal
+  initFirebase(FIREBASE_CONFIG);
+  // Restaura chave Claude se salva
+  const savedKey = localStorage.getItem('ajr_claude_key');
+  if (savedKey) document.getElementById('anthropicKey').value = savedKey;
+});
+
+function showFirebaseModal() {
+  document.getElementById('firebaseModal').classList.remove('hidden');
+  const saved = localStorage.getItem('ajr_fb_config');
+  if (saved) document.getElementById('fbConfigInput').value = saved;
+}
+
+function skipFirebase() {
+  document.getElementById('firebaseModal').classList.add('hidden');
+  setStatus('Modo offline — dados não serão salvos no banco', '');
+}
+
+function initFirebaseFromModal() {
+  const raw = document.getElementById('fbConfigInput').value.trim();
+  try {
+    const cfg = JSON.parse(raw);
+    localStorage.setItem('ajr_fb_config', JSON.stringify(cfg));
+    initFirebase(cfg);
+    document.getElementById('firebaseModal').classList.add('hidden');
+  } catch(e) {
+    alert('JSON inválido. Verifique a configuração.');
+  }
+}
+
+async function initFirebase(cfg) {
+  try {
+    const { initializeApp, getApps, getFirestore } = window._fbModules || {};
+    if (!initializeApp) { setTimeout(() => initFirebase(cfg), 500); return; }
+    const app = getApps().length ? getApps()[0] : initializeApp(cfg);
+    db = getFirestore(app);
+    firebaseReady = true;
+    setStatus('Firebase conectado ✓', 'success');
+    await carregarAlunos();
+  } catch(e) {
+    setStatus('Erro ao conectar Firebase: ' + e.message, 'error');
+  }
+}
+
+/* ══════════════════════════════════════════
+   CALCULATIONS
+══════════════════════════════════════════ */
+function calcIdade() {
+  const dob = document.getElementById('dataNascimento').value;
+  if (!dob) return;
+  const today = new Date();
+  const birth = new Date(dob);
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  document.getElementById('idade').value = age;
+  calcPollock();
+}
+
+function calcIMC() {
+  const peso = parseFloat(document.getElementById('peso').value);
+  const alt = parseFloat(document.getElementById('altura').value) / 100;
+  if (!peso || !alt) return;
+  const imc = peso / (alt * alt);
+  document.getElementById('imc').value = imc.toFixed(2);
+  const cls = imc < 18.5 ? 'Abaixo do peso' : imc < 25 ? 'Peso normal' :
+    imc < 30 ? 'Sobrepeso' : imc < 35 ? 'Obesidade I' :
+    imc < 40 ? 'Obesidade II' : 'Obesidade III';
+  document.getElementById('imcClass').value = cls;
+}
+
+function calcRCQ() {
+  const cin = parseFloat(document.getElementById('cintura').value);
+  const quad = parseFloat(document.getElementById('quadril').value);
+  if (!cin || !quad) return;
+  document.getElementById('rcq').value = (cin / quad).toFixed(2);
+  // Soma circunferências
+  const inputs = document.querySelectorAll('[data-circ]');
+  let soma = 0;
+  inputs.forEach(i => { if (i.value) soma += parseFloat(i.value); });
+  document.getElementById('somaCirc').value = soma.toFixed(1);
+}
+
+// Also update soma when any circ changes
+document.addEventListener('input', e => {
+  if (e.target.dataset.circ) {
+    let soma = 0;
+    document.querySelectorAll('[data-circ]').forEach(i => { if (i.value) soma += parseFloat(i.value); });
+    document.getElementById('somaCirc').value = soma.toFixed(1);
+  }
+});
+
+function calcPollock() {
+  const sexo = document.getElementById('sexo').value;
+  const idade = parseFloat(document.getElementById('idade').value);
+  if (!sexo || !idade) return;
+
+  const dobras = {};
+  document.querySelectorAll('[data-dobra]').forEach(i => {
+    dobras[i.dataset.dobra] = parseFloat(i.value) || 0;
+  });
+
+  const soma = dobras.triceptal + dobras.subscapular + dobras.peitoral +
+               dobras.axilar + dobras.supraIliaca + dobras.abdominal + dobras.coxa;
+
+  if (soma <= 0) return;
+
+  // Pollock 7 dobras
+  let dc;
+  if (sexo === 'M') {
+    dc = 1.112 - (0.00043499 * soma) + (0.00000055 * soma * soma) - (0.00028826 * idade);
+  } else {
+    dc = 1.097 - (0.00046971 * soma) + (0.00000056 * soma * soma) - (0.00012828 * idade);
+  }
+
+  // Siri
+  const pctGord = ((4.95 / dc) - 4.50) * 100;
+  const peso = parseFloat(document.getElementById('peso').value) || 0;
+  const massaGorda = peso * pctGord / 100;
+  const massaMagra = peso - massaGorda;
+
+  document.getElementById('rSomaDobras').textContent = soma.toFixed(1);
+  document.getElementById('rDensidade').textContent = dc.toFixed(7);
+  document.getElementById('rGordura').textContent = pctGord.toFixed(1) + '%';
+  document.getElementById('rMassaGorda').textContent = peso ? massaGorda.toFixed(1) : '—';
+  document.getElementById('rMassaMagra').textContent = peso ? massaMagra.toFixed(1) : '—';
+
+  // Classificação (Pollock & Wilmore)
+  let cls = '';
+  if (sexo === 'M') {
+    if (pctGord < 6) cls = 'Essencial';
+    else if (pctGord < 14) cls = 'Atlético';
+    else if (pctGord < 18) cls = 'Fitness';
+    else if (pctGord < 25) cls = 'Aceitável';
+    else cls = 'Obesidade';
+  } else {
+    if (pctGord < 14) cls = 'Essencial';
+    else if (pctGord < 21) cls = 'Atlético';
+    else if (pctGord < 25) cls = 'Fitness';
+    else if (pctGord < 35) cls = 'Aceitável';
+    else cls = 'Obesidade';
+  }
+  document.getElementById('rClassGord').textContent = cls;
+}
+
+function calcAsym(name, dirId, esqId, asymId, defId) {
+  const dir = parseFloat(document.getElementById(dirId).value);
+  const esq = parseFloat(document.getElementById(esqId).value);
+  if (!dir || !esq) return;
+  const asym = (Math.max(dir, esq) / Math.min(dir, esq)) * 100;
+  const def = ((Math.max(dir, esq) - Math.min(dir, esq)) / Math.max(dir, esq)) * 100;
+  const aEl = document.getElementById(asymId);
+  const dEl = document.getElementById(defId);
+  aEl.value = asym.toFixed(1) + '%';
+  dEl.value = def.toFixed(1) + '%';
+  if (def > 15) { aEl.classList.add('asym-flag'); dEl.classList.add('asym-flag'); }
+  else { aEl.classList.remove('asym-flag'); dEl.classList.remove('asym-flag'); }
+}
+
+/* VO2 classification — delegado para classVo2Update() */
+
+/* ══════════════════════════════════════════
+   STAGES (VO2)
+══════════════════════════════════════════ */
+// Protocolo AJR: 5 km/h inicial, +1 km/h/min, 1% inclinação fixa
+const AJR_VEL_INICIAL = 5;
+const AJR_INCREMENTO  = 1;
+const AJR_GRADE       = 0.01; // 1%
+
+// Tabela de referência VO2 por velocidade (protocolo AJR)
+const AJR_VO2_TABLE = {
+  5: 13.3, 6: 15.3, 7: 27.9, 8: 31.4, 9: 34.9,
+  10: 38.3, 11: 41.8, 12: 45.3, 13: 48.8, 14: 52.3, 15: 55.8
+};
+
+let stageCount = 0;
+function addStage() {
+  stageCount++;
+  const tbody = document.getElementById('stagesBody');
+  const row = document.createElement('tr');
+  const vel = AJR_VEL_INICIAL + (stageCount - 1) * AJR_INCREMENTO;
+  row.innerHTML = `
+    <td style="text-align:center;color:var(--gray);font-size:0.82rem">${stageCount}</td>
+    <td><input type="number" step="0.5" class="stage-vel" value="${vel.toFixed(1)}" oninput="calcVO2Row(this)" /></td>
+    <td><input type="number" class="stage-fc" placeholder="—" /></td>
+    <td><input type="number" min="6" max="20" class="stage-borg" placeholder="—" /></td>
+    <td><input class="calc-output stage-vo2" readonly placeholder="—" /></td>`;
+  tbody.appendChild(row);
+  calcVO2Row(row.querySelector('.stage-vel'));
+}
+
+function removeStage() {
+  const tbody = document.getElementById('stagesBody');
+  if (tbody.rows.length > 1) { tbody.deleteRow(tbody.rows.length - 1); stageCount--; }
+}
+
+function calcVO2Row(velInput) {
+  const vel = parseFloat(velInput.value);
+  if (!vel) return;
+  let vo2;
+  const velInt = Math.round(vel);
+  if (AJR_VO2_TABLE[velInt] !== undefined && Math.abs(vel - velInt) < 0.1) {
+    // Usa tabela de referência AJR
+    vo2 = AJR_VO2_TABLE[velInt].toFixed(1);
+  } else {
+    // Fallback ACSM com 1% grade para velocidades fora da tabela
+    const velMin = vel * 1000 / 60;
+    if (vel <= 6) {
+      vo2 = (0.1 * velMin + 1.8 * velMin * AJR_GRADE + 3.5).toFixed(1); // caminhada
+    } else {
+      vo2 = (0.2 * velMin + 0.9 * velMin * AJR_GRADE + 3.5).toFixed(1); // corrida
+    }
+  }
+  velInput.closest('tr').querySelector('.stage-vo2').value = vo2;
+}
+
+function calcDeltaFC() {
+  const fcMax = parseFloat(document.getElementById('fcMax').value);
+  const fcRec = parseFloat(document.getElementById('fcRecuperacao')?.value);
+  if (fcMax && fcRec) document.getElementById('deltaFC').value = (fcMax - fcRec).toFixed(0);
+}
+window.calcDeltaFC = calcDeltaFC;
+document.addEventListener('input', e => { if (e.target.id === 'fcRecuperacao') calcDeltaFC(); });
+
+function classVo2Update() {
+  const v2 = parseFloat(document.getElementById('vo2Max').value);
+  const sexo = document.getElementById('sexo').value;
+  if (!v2) return;
+  let cls = '';
+  if (sexo === 'M') {
+    if (v2 < 28) cls = 'Muito Fraco'; else if (v2 < 34) cls = 'Fraco';
+    else if (v2 < 42) cls = 'Regular'; else if (v2 < 50) cls = 'Bom';
+    else if (v2 < 56) cls = 'Muito Bom'; else cls = 'Excelente';
+  } else {
+    if (v2 < 22) cls = 'Muito Fraco'; else if (v2 < 28) cls = 'Fraco';
+    else if (v2 < 36) cls = 'Regular'; else if (v2 < 44) cls = 'Bom';
+    else if (v2 < 50) cls = 'Muito Bom'; else cls = 'Excelente';
+  }
+  document.getElementById('classVo2').value = cls;
+}
+window.classVo2Update = classVo2Update;
+
+/* ══════════════════════════════════════════
+   SECTION TOGGLE
+══════════════════════════════════════════ */
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+
+/* ══════════════════════════════════════════
+   SAVE & LOAD
+══════════════════════════════════════════ */
+function coletarDados() {
+  const dobras = {};
+  document.querySelectorAll('[data-dobra]').forEach(i => {
+    dobras[i.dataset.dobra] = parseFloat(i.value) || null;
+  });
+  const circunferencias = {};
+  document.querySelectorAll('[data-circ]').forEach(i => {
+    circunferencias[i.dataset.circ] = parseFloat(i.value) || null;
+  });
+
+  const stages = [];
+  document.querySelectorAll('#stagesBody tr').forEach((row, idx) => {
+    stages.push({
+      estagio: idx + 1,
+      velocidade: parseFloat(row.querySelector('.stage-vel')?.value) || null,
+      fc: parseFloat(row.querySelector('.stage-fc')?.value) || null,
+      borg: parseFloat(row.querySelector('.stage-borg')?.value) || null,
+      vo2est: parseFloat(row.querySelector('.stage-vo2')?.value) || null,
+    });
+  });
+
+  const radio = (name) => document.querySelector(`input[name="${name}"]:checked`)?.value || null;
+
+  return {
+    // Meta
+    dataAvaliacao: document.getElementById('dataAvaliacao').value,
+    criadoEm: new Date().toISOString(),
+    avaliador: 'Aldemir Junior',
+    // Identificação
+    nome: document.getElementById('nome').value,
+    dataNascimento: document.getElementById('dataNascimento').value,
+    idade: parseInt(document.getElementById('idade').value) || null,
+    sexo: document.getElementById('sexo').value,
+    objetivo: document.getElementById('objetivo').value,
+    // Saúde
+    contraindicacao: radio('contraindicacao'),
+    dor: document.getElementById('dor').value,
+    eva: parseInt(document.getElementById('eva').value) || null,
+    medicamentos: document.getElementById('medicamentos').value,
+    obsSaude: document.getElementById('obsSaude').value,
+    // Repouso
+    pa: document.getElementById('pa').value,
+    fcRepouso: parseInt(document.getElementById('fcRepouso').value) || null,
+    spo2: parseInt(document.getElementById('spo2').value) || null,
+    // Composição corporal
+    peso: parseFloat(document.getElementById('peso').value) || null,
+    altura: parseFloat(document.getElementById('altura').value) || null,
+    imc: parseFloat(document.getElementById('imc').value) || null,
+    imcClass: document.getElementById('imcClass').value,
+    rcq: parseFloat(document.getElementById('rcq').value) || null,
+    somaCirc: parseFloat(document.getElementById('somaCirc').value) || null,
+    circunferencias,
+    dobras,
+    somaDobras: parseFloat(document.getElementById('rSomaDobras').textContent) || null,
+    densidadeCorporal: parseFloat(document.getElementById('rDensidade').textContent) || null,
+    percentualGordura: parseFloat(document.getElementById('rGordura').textContent) || null,
+    massaGorda: parseFloat(document.getElementById('rMassaGorda').textContent) || null,
+    massaMagra: parseFloat(document.getElementById('rMassaMagra').textContent) || null,
+    classGordura: document.getElementById('rClassGord').textContent,
+    // Força global
+    maoDireita: parseFloat(document.getElementById('maoDireita').value) || null,
+    maoEsquerda: parseFloat(document.getElementById('maoEsquerda').value) || null,
+    asymMao: document.getElementById('asymMao').value,
+    defMao: document.getElementById('defMao').value,
+    // Mobilidade
+    flexCadPostDir: parseFloat(document.getElementById('flexDireita').value) || null,
+    flexCadPostEsq: parseFloat(document.getElementById('flexEsquerda').value) || null,
+    ombroDireito: parseFloat(document.getElementById('ombroDireito').value) || null,
+    ombroEsquerdo: parseFloat(document.getElementById('ombroEsquerdo').value) || null,
+    flexJoelhoDireita: document.getElementById('flexJoelhoDireita').value,
+    flexJoelhoEsquerda: document.getElementById('flexJoelhoEsquerda').value,
+    mobCocoras: document.getElementById('mobCocoras')?.value || null,
+    scoreCocoras: parseInt(document.getElementById('scoreCocoras')?.value) || null,
+    // Isometria
+    cadPostDir: parseFloat(document.getElementById('cadPostDir').value) || null,
+    cadPostEsq: parseFloat(document.getElementById('cadPostEsq').value) || null,
+    impulsao: parseFloat(document.getElementById('impulsao')?.value) || null,
+    empurrDir: parseFloat(document.getElementById('empurrDir')?.value) || null,
+    empurrEsq: parseFloat(document.getElementById('empurrEsq')?.value) || null,
+    extJoDir: parseFloat(document.getElementById('extJoDir').value) || null,
+    extJoEsq: parseFloat(document.getElementById('extJoEsq').value) || null,
+    flexJoDir: parseFloat(document.getElementById('flexJoDir').value) || null,
+    flexJoEsq: parseFloat(document.getElementById('flexJoEsq').value) || null,
+    // VO2
+    protocoloVo2: document.getElementById('protocoloVo2').value,
+    stages,
+    vo2Max: parseFloat(document.getElementById('vo2Max').value) || null,
+    fcMax: parseInt(document.getElementById('fcMax').value) || null,
+    velMax: parseFloat(document.getElementById('velMax').value) || null,
+    classVo2: document.getElementById('classVo2').value,
+    obsVo2: document.getElementById('obsVo2').value,
+    // Parecer
+    parecer: document.getElementById('parecer').value,
+    direcionamento: document.getElementById('direcionamento').value,
+  };
+}
+
+async function salvarAvaliacao() {
+  const dados = coletarDados();
+  if (!dados.nome) { setStatus('Preencha o nome do aluno antes de salvar.', 'error'); return; }
+
+  if (!firebaseReady) {
+    setStatus('Firebase não configurado. Dados não salvos.', 'error');
+    showFirebaseModal();
+    return;
+  }
+
+  const btn = document.getElementById('btnSalvar');
+  btn.disabled = true;
+  setStatus('Salvando...', '');
+  try {
+    const { collection, addDoc } = window._fbModules;
+    const ref = await addDoc(collection(db, 'avaliacoes'), dados);
+    setStatus(`Salvo com sucesso! ID: ${ref.id}`, 'success');
+    await carregarAlunos();
+  } catch(e) {
+    setStatus('Erro ao salvar: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function carregarAlunos() {
+  if (!firebaseReady) return;
+  try {
+    const { collection, getDocs, query, orderBy, limit } = window._fbModules;
+    const q = query(collection(db, 'avaliacoes'), orderBy('criadoEm', 'desc'), limit(20));
+    const snap = await getDocs(q);
+    const nomes = [...new Set(snap.docs.map(d => d.data().nome).filter(Boolean))];
+    if (nomes.length === 0) return;
+    const container = document.getElementById('alunosRecentes');
+    const list = document.getElementById('alunosList');
+    list.innerHTML = nomes.map(n =>
+      `<span class="aluno-chip" onclick="preencherNome('${n}')">${n}</span>`
+    ).join('');
+    container.style.display = 'block';
+  } catch(e) { /* ignore */ }
+}
+
+function preencherNome(nome) {
+  document.getElementById('nome').value = nome;
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('saveStatus');
+  el.textContent = msg;
+  el.className = 'status-msg ' + type;
+}
+
+// expose globals
+window.showFirebaseModal = showFirebaseModal;
+window.skipFirebase = skipFirebase;
+window.initFirebaseFromModal = initFirebaseFromModal;
+window.toggleSection = toggleSection;
+window.calcIdade = calcIdade;
+window.calcIMC = calcIMC;
+window.calcRCQ = calcRCQ;
+window.calcPollock = calcPollock;
+window.calcAsym = calcAsym;
+window.addStage = addStage;
+window.removeStage = removeStage;
+window.calcVO2Row = calcVO2Row;
+window.salvarAvaliacao = salvarAvaliacao;
+window.preencherNome = preencherNome;
+window.gerarPDF = gerarPDF;
+window.addFotoSlot = addFotoSlot;
+window.carregarFoto = carregarFoto;
+window.removerFoto = removerFoto;
+window.abrirClaude = abrirClaude;
+window.gerarParecer = gerarParecer;
+window.copiarPrompt = copiarPrompt;
+
+/* ══════════════════════════════════════════
+   SCORE CÓCORAS
+══════════════════════════════════════════ */
+function calcScoreCocoras() {
+  const checks = ['ckPlantar','ckJoelho','ckLombar','ckEscapular'];
+  const falhas = checks.filter(id => document.getElementById(id)?.checked).length;
+  document.getElementById('scoreCocoras').value = 4 - falhas;
+}
+window.calcScoreCocoras = calcScoreCocoras;
+
+/* ══════════════════════════════════════════
+   PARECER COM IA
+══════════════════════════════════════════ */
+function montarPrompt() {
+  const d = coletarDados();
+  const checks = {
+    plantar: document.getElementById('ckPlantar')?.checked,
+    joelho:  document.getElementById('ckJoelho')?.checked,
+    lombar:  document.getElementById('ckLombar')?.checked,
+    escapular: document.getElementById('ckEscapular')?.checked,
+  };
+  const cocScore = 4 - Object.values(checks).filter(Boolean).length;
+  const falhas = Object.entries(checks).filter(([,v])=>v).map(([k])=>({plantar:'Apoio plantar',joelho:'Flexão de joelho >90°',lombar:'Curvatura lombar',escapular:'Retração escapular'}[k])).join(', ');
+
+  return `Você é um professor de educação física especialista em avaliação física e performance. Escreva um PARECER FINAL de avaliação para o aluno abaixo, em português, com tom científico e objetivo mas acessível. Estruture em dois blocos:
+
+1. PARECER GERAL (4-6 parágrafos): analise composição corporal, hemodinâmica em repouso, capacidade cardiorrespiratória, força muscular com assimetrias, mobilidade/flexibilidade. Destaque pontos positivos e de atenção.
+
+2. DIRECIONAMENTO TÉCNICO (3-5 parágrafos): recomendações prioritárias de treinamento, intensidades, foco, e eventuais encaminhamentos. Seja específico.
+
+--- DADOS DA AVALIAÇÃO ---
+Aluno: ${d.nome || '—'} | Sexo: ${d.sexo === 'M' ? 'Masculino' : 'Feminino'} | Idade: ${d.idade || '—'} anos | Objetivo: ${d.objetivo || '—'}
+
+REPOUSO: PA ${d.pa||'—'} | FC ${d.fcRepouso||'—'} bpm | SpO2 ${d.spo2||'—'}%
+
+COMPOSIÇÃO CORPORAL: Peso ${d.peso||'—'}kg | Altura ${d.altura||'—'}cm | IMC ${d.imc||'—'} (${d.imcClass||'—'}) | RCQ ${d.rcq||'—'} | % Gordura ${d.percentualGordura||'—'}% (${d.classGordura||'—'}) | Massa Gorda ${d.massaGorda||'—'}kg | Massa Magra ${d.massaMagra||'—'}kg | Soma Dobras ${d.somaDobras||'—'}mm
+
+FORÇA MUSCULAR: Preensão D/E ${d.maoDireita||'—'}/${d.maoEsquerda||'—'}kg (déficit ${d.defMao||'—'}) | Cadeia Post D/E ${d.cadPostDir||'—'}/${d.cadPostEsq||'—'}kg (déficit ${document.getElementById('defCadPost')?.value||'—'}) | Ext.Joelho D/E ${d.extJoDir||'—'}/${d.extJoEsq||'—'}kg (déficit ${document.getElementById('defExtJo')?.value||'—'}) | Flex.Joelho D/E ${d.flexJoDir||'—'}/${d.flexJoEsq||'—'}kg (déficit ${document.getElementById('defFlexJo')?.value||'—'})
+
+MOBILIDADE: Cadeia Post D/E ${d.flexCadPostDir||'—'}/${d.flexCadPostEsq||'—'}cm | Ombro D/E ${d.ombroDireito||'—'}/${d.ombroEsquerdo||'—'}cm | Flex.Joelho D/E score ${document.getElementById('flexJoelhoDireita')?.value||'—'}/${document.getElementById('flexJoelhoEsquerda')?.value||'—'} | Cócoras score ${cocScore}/4${falhas ? ' (falhas: '+falhas+')' : ''}
+
+VO2: Máx estimado ${d.vo2Max||'—'} ml/kg/min (${d.classVo2||'—'}) | FC máx ${d.fcMax||'—'} bpm | Vel. máx ${d.velMax||'—'} km/h${d.obsVo2 ? ' | Obs: '+d.obsVo2 : ''}
+---
+Escreva somente os dois blocos, sem títulos em markdown, sem asteriscos. Use parágrafos corridos.`;
+}
+
+function abrirClaude() {
+  const status = document.getElementById('parecerStatus');
+  const prompt = montarPrompt();
+  const copiar = () => {
+    status.textContent = '✓ Prompt copiado! Cole no Claude.ai e envie.';
+    status.style.color = 'var(--success)';
+    window.open('https://claude.ai/new', '_blank');
+    setTimeout(() => { status.textContent = ''; }, 8000);
+  };
+  navigator.clipboard.writeText(prompt).then(copiar).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = prompt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); copiar();
+  });
+}
+
+async function gerarParecer() {
+  const key = document.getElementById('anthropicKey').value.trim() || localStorage.getItem('ajr_claude_key') || '';
+  const status = document.getElementById('parecerStatus');
+
+  if (!key) {
+    status.textContent = 'Cole sua chave API acima para gerar automaticamente.';
+    status.style.color = 'var(--danger)';
+    return;
+  }
+
+  status.textContent = '✦ Gerando parecer...';
+  status.style.color = 'var(--gold)';
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+        'anthropic-dangerous-allow-browser': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1800,
+        messages: [{ role: 'user', content: montarPrompt() }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || 'Erro ' + res.status);
+    }
+    const data = await res.json();
+    const texto = data.content?.[0]?.text || '';
+
+    const idx = texto.search(/DIRECIONAMENTO|Direcionamento/);
+    if (idx > 0) {
+      document.getElementById('parecer').value = texto.slice(0, idx).replace(/^PARECER\s*GERAL\s*/i, '').trim();
+      document.getElementById('direcionamento').value = texto.slice(idx).replace(/^DIRECIONAMENTO\s*T[EÉ]CNICO\s*/i, '').trim();
+    } else {
+      document.getElementById('parecer').value = texto.trim();
+    }
+    status.textContent = '✓ Parecer gerado com sucesso';
+    status.style.color = 'var(--success)';
+    setTimeout(() => { status.textContent = ''; }, 5000);
+  } catch(e) {
+    status.textContent = 'Erro: ' + e.message;
+    status.style.color = 'var(--danger)';
+  }
+}
+
+function copiarPrompt() { abrirClaude(); }
+
+/* ══════════════════════════════════════════
+   FOTOS
+══════════════════════════════════════════ */
+let fotoCount = 0;
+
+function addFotoSlot(labelDefault) {
+  fotoCount++;
+  const id = 'foto_' + fotoCount;
+  const slot = document.createElement('div');
+  slot.className = 'foto-slot';
+  slot.id = 'slot_' + id;
+  slot.innerHTML = `
+    <input type="file" id="input_${id}" accept="image/*" style="opacity:0;position:absolute;width:0;height:0;" onchange="carregarFoto('${id}')" />
+    <label for="input_${id}" style="display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;">
+      <img class="foto-preview" id="prev_${id}" title="Clique para trocar" />
+      <div class="foto-placeholder" id="ph_${id}">
+        <span class="foto-icon">📷</span>
+        <span>Clique para adicionar</span>
+      </div>
+    </label>
+    <div class="foto-footer">
+      <input type="text" placeholder="Legenda (ex: Frente, Lateral D...)" id="leg_${id}" value="${labelDefault||''}" onclick="event.stopPropagation()" />
+      <button type="button" onclick="removerFoto('${id}');event.preventDefault();event.stopPropagation();" title="Remover">✕</button>
+    </div>`;
+  document.getElementById('fotoSlots').appendChild(slot);
+}
+
+function carregarFoto(id) {
+  const file = document.getElementById('input_' + id).files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = document.getElementById('prev_' + id);
+    const ph  = document.getElementById('ph_' + id);
+    img.src = e.target.result;
+    img.style.display = 'block';
+    ph.style.display  = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function removerFoto(id) {
+  const slot = document.getElementById('slot_' + id);
+  if (slot) slot.remove();
+}
+
+// inicia com 4 slots padrão
+window.addEventListener('DOMContentLoaded', () => {
+  ['Frente', 'Lateral Direita', 'Lateral Esquerda', 'Costas'].forEach(l => addFotoSlot(l));
+});
+</script>
+
+<script>
+/* ══════════════════════════════════════════
+   PDF GENERATION
+══════════════════════════════════════════ */
+function v(id) { return document.getElementById(id)?.value || ''; }
+function t(id) { return document.getElementById(id)?.textContent || ''; }
+
+function cell(label, value, gold) {
+  return `<div style="background:#f7f4ef;border-radius:6px;padding:10px 12px;">
+    <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8a7a50;margin-bottom:3px;">${label}</div>
+    <div style="font-size:13px;font-weight:600;color:${gold?'#9f8038':'#1a1a2e'};">${value||'—'}</div>
+  </div>`;
+}
+
+function tableRow(cols, isHeader) {
+  const tag = isHeader ? 'th' : 'td';
+  const style = isHeader
+    ? 'padding:5px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8a7a50;border-bottom:2px solid #e8e0d0;text-align:left;'
+    : 'padding:5px 8px;font-size:11px;border-bottom:1px solid #f0ede8;';
+  return `<tr>${cols.map(c=>`<${tag} style="${style}">${c||'—'}</${tag}>`).join('')}</tr>`;
+}
+
+function asymColor(val) {
+  if (!val) return '#1a1a2e';
+  const n = parseFloat(val);
+  return n > 15 ? '#c0392b' : '#27ae60';
+}
+
+function montarHTML() {
+  const secTitle = 'font-family:Montserrat,sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;border-bottom:1px solid #e8e0d0;padding-bottom:5px;margin-bottom:12px;';
+  const subTitle = 'font-size:9px;font-weight:700;color:#8a7a50;text-transform:uppercase;letter-spacing:1px;margin:10px 0 6px;';
+  const isPerformance = document.querySelector('input[name="protocolo"]:checked')?.value !== 'fit';
+  const nome = v('nome') || 'Aluno';
+  const data = v('dataAvaliacao') ? new Date(v('dataAvaliacao')+'T12:00').toLocaleDateString('pt-BR') : '—';
+  const radio = (name) => document.querySelector(`input[name="${name}"]:checked`)?.value || '—';
+
+  // Composição corporal
+  const pollockCards = [
+    cell('Soma Dobras (mm)', t('rSomaDobras'), true),
+    cell('Dens. Corporal',   t('rDensidade'),  true),
+    cell('% Gordura',        t('rGordura'),    true),
+    cell('Massa Gorda (kg)', t('rMassaGorda'), true),
+    cell('Massa Magra (kg)', t('rMassaMagra'), true),
+    cell('Classificação',    t('rClassGord'),  true),
+  ].join('');
+
+  const circLabels = {pescoco:'Pescoço',ombro:'Ombro',torax:'Tórax',cintura:'Cintura',abdomen:'Abdômen',quadril:'Quadril',bracoDirRelax:'Braço Dir. Relax.',bracoDirContr:'Braço Dir. Contr.',bracoEsqRelax:'Braço Esq. Relax.',bracoEsqContr:'Braço Esq. Contr.',coxaDirMed:'Coxa Dir. Medial',coxaEsqMed:'Coxa Esq. Medial',panturDir:'Panturrilha Dir.',panturEsq:'Panturrilha Esq.'};
+  let circRows = tableRow(['Segmento','cm'], true);
+  document.querySelectorAll('[data-circ]').forEach(el => { if (el.value) circRows += tableRow([circLabels[el.dataset.circ]||el.dataset.circ, el.value]); });
+  circRows += tableRow(['RCQ', v('rcq')]); circRows += tableRow(['Soma Circ.', v('somaCirc')+' cm']);
+
+  const dobraLabels = {triceptal:'Tricipital',subscapular:'Subscapular',peitoral:'Peitoral',axilar:'Axilar Média',supraIliaca:'Supra Ilíaca',abdominal:'Abdominal',coxa:'Coxa'};
+  let dobraRows = tableRow(['Dobra','mm'], true);
+  document.querySelectorAll('[data-dobra]').forEach(el => { if (el.value) dobraRows += tableRow([dobraLabels[el.dataset.dobra]||el.dataset.dobra, el.value]); });
+  dobraRows += tableRow(['IMC', v('imc')+' kg/m² — '+v('imcClass')]);
+
+  // Força
+  let forcaRows = tableRow(['Teste','Dir.','Esq.','Assimetria','Déficit'], true);
+  const fTestsAll = [['Preensão Manual','maoDireita','maoEsquerda','asymMao','defMao'],['Cadeia Posterior','cadPostDir','cadPostEsq','asymCadPost','defCadPost'],['Ext. Joelho','extJoDir','extJoEsq','asymExtJo','defExtJo'],['Flex. Joelho','flexJoDir','flexJoEsq','asymFlexJo','defFlexJo']];
+  const fTests = isPerformance ? fTestsAll : fTestsAll.slice(0, 2);
+  fTests.forEach(([label,dId,eId,aId,dfId]) => {
+    const def = document.getElementById(dfId)?.value||'';
+    forcaRows += tableRow([label, v(dId)||'—', v(eId)||'—',
+      `<span style="color:${asymColor(def.replace('%',''))}">${document.getElementById(aId)?.value||'—'}</span>`,
+      `<span style="color:${asymColor(def.replace('%',''))}">${def||'—'}</span>`]);
+  });
+
+  // Fotos
+  let fotosHTML = '';
+  document.querySelectorAll('.foto-slot').forEach(slot => {
+    const img = slot.querySelector('.foto-preview');
+    const leg = slot.querySelector('.foto-footer input')?.value || '';
+    if (img && img.src && img.style.display !== 'none') {
+      fotosHTML += `<div style="text-align:center;break-inside:avoid;">
+        <img src="${img.src}" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px;border:1px solid #e8e0d0;" />
+        ${leg ? `<div style="font-size:9px;color:#8a7a50;margin-top:4px;font-weight:600;text-transform:uppercase;">${leg}</div>` : ''}
+      </div>`;
+    }
+  });
+
+  // VO2
+  let stRows = tableRow(['Estágio','Vel. (km/h)','FC (bpm)','BORG','VO₂ est.'], true);
+  document.querySelectorAll('#stagesBody tr').forEach((row,i) => {
+    const vel = row.querySelector('.stage-vel')?.value;
+    if (vel) stRows += tableRow([i+1, vel, row.querySelector('.stage-fc')?.value||'—', row.querySelector('.stage-borg')?.value||'—', row.querySelector('.stage-vo2')?.value||'—']);
+  });
+
+  const parecer = v('parecer'); const direcao = v('direcionamento');
+
+  return `
+    <!-- HEADER -->
+    <div style="background:#0B1E2D;padding:28px 40px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:Montserrat,sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;color:#C9A84C;text-transform:uppercase;margin-bottom:4px;">AJR Avaliação Física &amp; Performance</div>
+        <div style="font-family:Georgia,serif;font-size:20px;font-weight:900;color:#fff;">Relatório de Avaliação Física</div>
+        <div style="font-size:10px;color:#8a9bab;margin-top:3px;">${nome} · ${data}</div>
+      </div>
+      <div style="text-align:right;"><div style="font-size:9px;color:#8a9bab;">Avaliador</div><div style="font-size:11px;font-weight:600;color:#e2c878;">Aldemir Junior</div></div>
+    </div>
+    <div style="height:3px;background:linear-gradient(90deg,#C9A84C,#e2c878,#C9A84C);"></div>
+
+    <div style="padding:24px 40px;">
+
+      <!-- IDENTIFICAÇÃO -->
+      <div style="margin-bottom:20px;">
+        <div style="${secTitle}">1 · Identificação</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          ${cell('Nome',v('nome'))}${cell('Idade',v('idade')?v('idade')+' anos':'')}${cell('Sexo',v('sexo')==='M'?'Masculino':v('sexo')==='F'?'Feminino':'')}
+          ${cell('Data Nasc.',v('dataNascimento')?new Date(v('dataNascimento')+'T12:00').toLocaleDateString('pt-BR'):'')}${cell('Data Aval.',data)}${cell('Objetivo',v('objetivo'))}
+        </div>
+      </div>
+
+      <!-- SAÚDE -->
+      <div style="margin-bottom:20px;">
+        <div style="${secTitle}">2 · Saúde</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:#333;">
+          <div><b>Contraindicação:</b> ${radio('contraindicacao')}</div><div><b>Dor:</b> ${v('dor')||'—'}</div>
+          <div><b>EVA:</b> ${v('eva')||'0'}/10</div><div><b>Medicamentos:</b> ${v('medicamentos')||'—'}</div>
+        </div>
+      </div>
+
+      <!-- REPOUSO -->
+      <div style="margin-bottom:20px;">
+        <div style="${secTitle}">3 · Repouso</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          ${cell('Pressão Arterial',v('pa')+' mmHg')}${cell('FC Repouso',v('fcRepouso')+' bpm')}${cell('SpO₂',v('spo2')+'%')}
+        </div>
+      </div>
+
+      <!-- COMPOSIÇÃO CORPORAL -->
+      <div style="margin-bottom:20px;">
+        <div style="${secTitle}">4 · Composição Corporal</div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;background:#f7f4ef;border-radius:8px;padding:12px;">${pollockCards}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div><div style="${subTitle}">Circunferências (cm)</div><table style="width:100%;border-collapse:collapse;font-size:11px;">${circRows}</table></div>
+          <div><div style="${subTitle}">Dobras Cutâneas — Pollock 7 (mm)</div><table style="width:100%;border-collapse:collapse;font-size:11px;">${dobraRows}</table></div>
+        </div>
+      </div>
+
+      ${fotosHTML ? `<div style="margin-bottom:20px;break-inside:avoid;"><div style="${secTitle}">Registro Fotográfico</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">${fotosHTML}</div></div>` : ''}
+
+      <!-- FORÇA -->
+      <div style="margin-bottom:20px;">
+        <div style="${secTitle}">5 · Força Muscular e Assimetria</div>
+        <table style="width:100%;border-collapse:collapse;font-size:11px;">${forcaRows}</table>
+      </div>
+
+      <!-- MOBILIDADE -->
+      <div style="margin-bottom:20px;">
+        <div style="${secTitle}">6 · Mobilidade e Flexibilidade</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:#333;">
+          <div><b>Cadeia Post. Dir.:</b> ${v('flexDireita')||'—'} cm</div><div><b>Cadeia Post. Esq.:</b> ${v('flexEsquerda')||'—'} cm</div>
+          <div><b>Ombro Dir.:</b> ${v('ombroDireito')||'—'} cm</div><div><b>Ombro Esq.:</b> ${v('ombroEsquerdo')||'—'} cm</div>
+          ${isPerformance ? `<div><b>Flex. Joelho Dir.:</b> ${v('flexJoelhoDireita')||'—'}</div><div><b>Flex. Joelho Esq.:</b> ${v('flexJoelhoEsquerda')||'—'}</div>` : ''}
+          ${isPerformance ? `<div><b>Score Cócoras:</b> ${v('scoreCocoras')||'—'}/4</div>` : ''}
+        </div>
+      </div>
+
+      <!-- VO2 -->
+      ${isPerformance ? `<div style="margin-bottom:20px;">
+        <div style="${secTitle}">7 · Avaliação Cardiorrespiratória — VO₂</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;">
+          ${cell('VO₂ Máx est.',v('vo2Max')?v('vo2Max')+' ml/kg/min':'',true)}${cell('Classificação',v('classVo2'),true)}${cell('Vel. Máxima',v('velMax')?v('velMax')+' km/h':'')}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+          ${cell('FC Máxima',v('fcMax')?v('fcMax')+' bpm':'')}${cell('FC Recuperação (1 min)',v('fcRecuperacao')?v('fcRecuperacao')+' bpm':'')}${cell('Delta FC',v('deltaFC')?v('deltaFC')+' bpm':'')}
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:10px;">${stRows}</table>
+        ${v('obsVo2')?`<div style="font-size:10px;color:#555;margin-top:6px;">Obs.: ${v('obsVo2')}</div>`:''}
+      </div>` : ''}
+
+      <!-- PARECER -->
+      ${parecer||direcao ? `<div style="margin-bottom:16px;">
+        <div style="${secTitle}">8 · Parecer Final e Direcionamento</div>
+        ${parecer?`<div style="${subTitle}">Parecer Geral</div><p style="font-size:11px;color:#333;line-height:1.7;">${parecer.replace(/\n/g,'<br>')}</p>`:''}
+        ${direcao?`<div style="${subTitle}">Direcionamento Técnico</div><p style="font-size:11px;color:#333;line-height:1.7;">${direcao.replace(/\n/g,'<br>')}</p>`:''}
+      </div>` : ''}
+
+    </div>
+
+    <!-- FOOTER -->
+    <div style="background:#0B1E2D;padding:12px 40px;display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:9px;color:#8a9bab;">ajrperformance.com.br</div>
+      <div style="font-size:8px;color:#C9A84C;font-family:Montserrat,sans-serif;letter-spacing:1px;text-transform:uppercase;">AJR Avaliação Física &amp; Performance</div>
+      <div style="font-size:9px;color:#8a9bab;">Emitido em ${new Date().toLocaleDateString('pt-BR')}</div>
+    </div>`;
+}
+
+function gerarPDF() {
+  const btn = document.getElementById('btnPDF');
+  btn.disabled = true; btn.textContent = '⏳ Abrindo...';
+
+  const html = montarHTML();
+  const nome = v('nome') || 'aluno';
+
+  const win = window.open('', '_blank');
+  if (!win) { btn.disabled=false; btn.textContent='⬇ Gerar PDF'; setStatus('Permita pop-ups para gerar o PDF', 'error'); return; }
+
+  win.document.write(`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>AJR Avaliação — ${nome}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, sans-serif; font-size: 13px; color: #1a1a2e; background: #fff; }
+    @media print {
+      @page { margin: 0; size: A4; }
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="no-print" style="background:#0B1E2D;padding:12px 40px;display:flex;gap:12px;align-items:center;">
+    <button onclick="window.print()" style="background:#C9A84C;color:#0B1E2D;border:none;padding:8px 20px;border-radius:6px;font-weight:700;cursor:pointer;font-size:14px;">⬇ Salvar como PDF (Ctrl+P)</button>
+    <span style="color:#8a9bab;font-size:12px;">No diálogo de impressão, selecione "Salvar como PDF" como destino</span>
+  </div>
+  ${html}
+</body>
+</html>`);
+  win.document.close();
+
+  btn.disabled = false; btn.textContent = '⬇ Gerar PDF';
+  setStatus('Janela aberta — clique em "Salvar como PDF" ✓', 'success');
+  setTimeout(() => setStatus('Pronto para salvar',''), 6000);
+}
+</script>
+</body>
+</html>
