@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avaliação de Assimetria — AJR Performance</title>
+<style>
+:root{--gold:#C9A84C;--dark:#111111;--dark2:#1c1c1c;--gray-bg:#f7f7f5;--gray-text:#666666;--border:#e0e0e0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#ebebeb;color:var(--dark)}
+#banner{background:#c62828;color:white;padding:14px 16px;text-align:center;font-size:13px;font-weight:700;line-height:1.5}
+#banner span{display:block;font-weight:400;font-size:12px;margin-top:4px}
+.form-wrap{max-width:700px;margin:0 auto;padding:28px 16px 0}
+.form-card{background:white;border-radius:14px;padding:28px;border:1px solid var(--border);margin-bottom:20px}
+.fh{border-bottom:2px solid var(--gold);padding-bottom:14px;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.aj-circle{width:46px;height:46px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:1px;flex-shrink:0}
+.bn{font-size:15px;font-weight:700;color:var(--gold);letter-spacing:2.5px}
+.bs{font-size:11px;color:var(--gray-text);letter-spacing:.8px;margin-top:3px}
+label{font-size:12px;color:var(--gray-text);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+input[type=text],input[type=tel],textarea{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:8px;font-size:16px;font-family:inherit;outline:none;transition:border-color .18s;-webkit-appearance:none}
+input:focus,textarea:focus{border-color:var(--gold)}
+textarea{resize:vertical;min-height:90px;line-height:1.6;font-size:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{margin-bottom:14px}
+.st{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin:6px 0 12px;padding-bottom:6px;border-bottom:1px solid #f0e8d0}
+.dom-row{display:flex;gap:8px}
+.db{padding:10px 24px;border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:8px;cursor:pointer;font-size:15px;font-weight:700;-webkit-tap-highlight-color:transparent}
+.db.on{background:var(--gold);color:white}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.print-btn{width:100%;padding:15px;background:var(--gold);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.5px;-webkit-tap-highlight-color:transparent}
+.hint{font-size:11px;color:#aaa;text-align:center;margin-top:10px;line-height:1.6}
+.document{max-width:700px;margin:0 auto 48px;background:white;border:1px solid var(--border);border-radius:14px;overflow:hidden;color-adjust:exact;-webkit-print-color-adjust:exact}
+.doc-hdr{background:var(--dark);padding:22px 30px;display:flex;align-items:center;gap:18px;border-bottom:3px solid var(--gold);color-adjust:exact;-webkit-print-color-adjust:exact}
+.daj{width:54px;height:54px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--gold);letter-spacing:1px;flex-shrink:0}
+.dbn{font-size:17px;font-weight:800;color:var(--gold);letter-spacing:3px}
+.dbs{font-size:11px;color:#aaa;letter-spacing:1px;margin-top:4px}
+.doc-body{padding:30px}
+.doc-title{font-size:17px;font-weight:800;color:var(--dark);letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid var(--gold);padding-bottom:10px;margin-bottom:20px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;margin-bottom:24px}
+.il{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--gray-text)}
+.iv{font-size:14px;font-weight:700;color:var(--dark);margin-top:2px}
+table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:13px}
+thead tr{background:var(--dark);color-adjust:exact;-webkit-print-color-adjust:exact}
+th{padding:10px 13px;text-align:left;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:white;font-weight:600}
+td{padding:13px;border-bottom:1px solid #eeeeee;vertical-align:middle}
+tr:nth-child(even) td{background:#fafafa}
+tr:last-child td{border-bottom:none}
+.tn{font-weight:700;font-size:13px}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:11px;font-weight:700;color-adjust:exact;-webkit-print-color-adjust:exact}
+.ok{background:#e6f4e6;color:#1a5e1a}
+.warn{background:#fff3cd;color:#7a5600}
+.bad{background:#fde8e8;color:#8b1a1a}
+.parecer{background:var(--gray-bg);border-radius:10px;padding:18px 22px;margin-bottom:22px;border-left:4px solid var(--gold)}
+.ptitle{font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px}
+.ptext{font-size:13px;line-height:1.7;color:var(--dark);white-space:pre-wrap}
+.assin{margin-top:14px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--gray-text);flex-wrap:wrap;gap:4px}
+.svc{background:var(--dark);border-radius:10px;padding:20px 22px;margin-bottom:22px;color-adjust:exact;-webkit-print-color-adjust:exact;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.svctitle{font-size:10px;font-weight:800;color:var(--gold);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.doc-ftr{background:var(--dark2);border-top:2px solid var(--gold);padding:14px 30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;color-adjust:exact;-webkit-print-color-adjust:exact}
+.fi{font-size:11px;color:#aaa}
+@media print{
+  #banner{display:none!important}
+  body{background:white}
+  .form-wrap{display:none!important}
+  .document{max-width:100%;margin:0;border:none;border-radius:0}
+  @page{margin:0;size:A4 portrait}
+  .doc-hdr,thead tr,.svc,.doc-ftr{color-adjust:exact!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+</style>
+</head>
+<body>
+
+<div id="banner">
+  ⚠️ Abrir pelo WhatsApp não funciona. Use Chrome ou Safari.
+  <span>Toque nos 3 pontos ⋮ → "Abrir no Chrome" ou "Abrir no Safari"</span>
+</div>
+
+<div class="form-wrap">
+  <div class="form-card">
+    <div class="fh">
+      <div class="aj-circle">AJ</div>
+      <div>
+        <div class="bn">ALDEMIR JUNIOR</div>
+        <div class="bs">AVALIAÇÃO FÍSICA E PERFORMANCE</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end;margin-bottom:18px">
+      <div class="field" style="margin:0">
+        <label for="nome">Nome do avaliado</label>
+        <input type="text" id="nome" placeholder="Nome completo" oninput="calc()" onchange="calc()" autocomplete="off">
+      </div>
+      <div class="field" style="margin:0">
+        <label for="wpp">WhatsApp (com DDD)</label>
+        <input type="tel" id="wpp" placeholder="14999990000" oninput="calc()" onchange="calc()" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:18px">
+      <label>Lado dominante</label>
+      <div class="dom-row">
+        <button type="button" class="db on" id="bD" onclick="setDom('D')">D — Direito</button>
+        <button type="button" class="db" id="bE" onclick="setDom('E')">E — Esquerdo</button>
+      </div>
+    </div>
+
+    <div class="st">Preensão Manual (kgf)</div>
+    <div class="g2">
+      <div class="field"><label for="pd">Direito</label><input type="text" id="pd" inputmode="decimal" placeholder="ex: 32,5" oninput="calc()" onchange="calc()" autocomplete="off"></div>
+      <div class="field"><label for="pe">Esquerdo</label><input type="text" id="pe" inputmode="decimal" placeholder="ex: 29,0" oninput="calc()" onchange="calc()" autocomplete="off"></div>
+    </div>
+
+    <div class="st">Extensão de Joelho (kgf)</div>
+    <div class="g2">
+      <div class="field"><label for="jd">Direito</label><input type="text" id="jd" inputmode="decimal" placeholder="ex: 45,0" oninput="calc()" onchange="calc()" autocomplete="off"></div>
+      <div class="field"><label for="je">Esquerdo</label><input type="text" id="je" inputmode="decimal" placeholder="ex: 41,5" oninput="calc()" onchange="calc()" autocomplete="off"></div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div class="st" style="margin:0;border:none;padding:0">Parecer Profissional</div>
+      <button type="button" onclick="limparTudo()" style="font-size:12px;padding:6px 14px;border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent">↺ Novo atendimento</button>
+    </div>
+    <div class="field">
+      <label for="parecer">Gerado automaticamente · editável</label>
+      <textarea id="parecer" placeholder="Preencha os valores acima para gerar o parecer..." oninput="parecerManual=true;calc()" onchange="parecerManual=true;calc()"></textarea>
+    </div>
+
+    <div class="btn-grid">
+      <button type="button" class="print-btn" style="margin:0" onclick="window.print()">⬇ Gerar PDF</button>
+      <button type="button" class="print-btn" style="background:#25D366;margin:0" onclick="enviarWpp()">💬 WhatsApp</button>
+    </div>
+    <p class="hint">1. Gere o PDF e salve no celular<br>2. Toque em WhatsApp → mensagem abre pronta → anexe o PDF manualmente</p>
+  </div>
+</div>
+
+<div class="document">
+  <div class="doc-hdr">
+    <div class="daj">AJ</div>
+    <div>
+      <div class="dbn">ALDEMIR JUNIOR</div>
+      <div class="dbs">AVALIAÇÃO FÍSICA E PERFORMANCE &nbsp;·&nbsp; BAURU, SP</div>
+    </div>
+  </div>
+  <div class="doc-body">
+    <div class="doc-title">Avaliação de Assimetria Bilateral</div>
+    <div class="info-grid">
+      <div><div class="il">Avaliado</div><div class="iv" id="d-nome">—</div></div>
+      <div><div class="il">Data</div><div class="iv" id="d-data">—</div></div>
+      <div><div class="il">Local</div><div class="iv">Monster Gym · Bauru, SP</div></div>
+      <div><div class="il">Lado Dominante</div><div class="iv" id="d-dom">Direito</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Teste</th><th>Dominante</th><th>Não-dominante</th><th>Déficit</th><th>Classificação</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="tn">Preensão Manual</td>
+          <td id="d-pd">—</td><td id="d-pe">—</td>
+          <td><strong id="d-pd-def">—</strong></td>
+          <td><span class="badge" id="badge-p">—</span></td>
+        </tr>
+        <tr>
+          <td class="tn">Extensão de Joelho</td>
+          <td id="d-jd">—</td><td id="d-je">—</td>
+          <td><strong id="d-jd-def">—</strong></td>
+          <td><span class="badge" id="badge-j">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="parecer">
+      <div class="ptitle">Parecer Profissional</div>
+      <div class="ptext" id="d-parecer">—</div>
+      <div class="assin">
+        <span>Aldemir Junior &nbsp;·&nbsp; CREF 182634-G/SP</span>
+        <span>Profissional de Educação Física</span>
+      </div>
+    </div>
+    <div class="svc">
+      <div>
+        <div class="svctitle">Continue evoluindo com dados reais</div>
+        <div style="font-size:22px;font-weight:900;color:white;">Planos a partir de <span style="color:var(--gold);">R$ 79,90</span></div>
+      </div>
+      <div style="text-align:right;font-size:12px;color:#aaa;line-height:1.8">
+        <div style="color:var(--gold);font-weight:700">ajrperformance.com.br</div>
+        <div>@aldemirjr.treinador</div>
+        <div>(14) 99743-2182</div>
+        <div>Clínica Vitallite · Bauru, SP</div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-ftr">
+    <div class="fi"><a href="https://ajrperformance.com.br" target="_blank" style="color:var(--gold);text-decoration:none"><strong>ajrperformance.com.br</strong></a></div>
+    <div class="fi"><a href="https://instagram.com/aldemirjr.treinador" target="_blank" style="color:var(--gold);text-decoration:none"><strong>@aldemirjr.treinador</strong></a></div>
+    <div class="fi">(14) 99743-2182</div>
+    <div class="fi">Clínica Vitallite · Rua Gérson França, 18-28 · Bauru, SP</div>
+  </div>
+</div>
+
+<script>
+document.getElementById('banner').style.display='none';
+var dom='D',parecerManual=false,lastAutoParece='';
+
+function getNum(id){var v=(document.getElementById(id).value||'').replace(',','.');return parseFloat(v);}
+function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+function deficit(a,b){if(isNaN(a)||isNaN(b)||a<=0)return null;return Math.max(0,(a-b)/a*100);}
+function cls(d){
+  if(d===null)return{pct:'—',label:'—',c:''};
+  var pct=d.toFixed(1)+'%';
+  if(d<10)return{pct:pct,label:'Equilibrado',c:'ok'};
+  if(d<15)return{pct:pct,label:'Atenção',c:'warn'};
+  return{pct:pct,label:'Significativo',c:'bad'};
+}
+function setDom(s){
+  dom=s;
+  document.getElementById('bD').className='db'+(s==='D'?' on':'');
+  document.getElementById('bE').className='db'+(s==='E'?' on':'');
+  set('d-dom',s==='D'?'Direito':'Esquerdo');
+  calc();
+}
+function gerarParecer(nome,pDef,jDef,nLong){
+  var pN=nome?nome.trim().split(' ')[0]:'O avaliado';
+  var nl=nLong.toLowerCase();var txt='';
+  if(pDef!==null){
+    if(pDef<10)txt+=pN+' apresenta boa simetria de preensão manual (déficit de '+pDef.toFixed(1)+'%), com equilíbrio adequado entre os membros superiores. ';
+    else if(pDef<15)txt+=pN+' apresenta assimetria leve de preensão manual (déficit de '+pDef.toFixed(1)+'%), com o membro '+nl+' abaixo do esperado. Indica-se fortalecimento unilateral do membro '+nl+'. ';
+    else txt+=pN+' apresenta assimetria significativa de preensão manual (déficit de '+pDef.toFixed(1)+'%), com o membro '+nl+' expressivamente mais fraco. Recomenda-se programa corretivo prioritário no membro '+nl+'. ';
+  }
+  if(jDef!==null){
+    if(jDef<10)txt+='Na extensão de joelho, observa-se boa simetria bilateral (déficit de '+jDef.toFixed(1)+'%), com equilíbrio satisfatório entre os membros inferiores. ';
+    else if(jDef<15)txt+='Na extensão de joelho, detecta-se assimetria leve (déficit de '+jDef.toFixed(1)+'%), com o membro '+nl+' apresentando menor produção de força. Sugere-se exercícios unilaterais de cadeia cinética fechada. ';
+    else txt+='Na extensão de joelho, constata-se assimetria significativa (déficit de '+jDef.toFixed(1)+'%), com risco aumentado de lesão. Recomenda-se intervenção corretiva imediata com exercícios unilaterais progressivos. ';
+  }
+  var worst=Math.max(pDef!==null?pDef:0,jDef!==null?jDef:0);
+  if(worst>=15)txt+='Recomenda-se acompanhamento profissional individualizado com protocolo corretivo e reavaliação em 45 dias.';
+  else if(worst>=10)txt+='Recomenda-se acompanhamento profissional para correção dos desequilíbrios e reavaliação em 60 dias.';
+  else txt+='Recomenda-se manutenção do programa atual com reavaliação periódica.';
+  return txt;
+}
+function calc(){
+  try{
+    var nome=document.getElementById('nome').value.trim();
+    var pd=getNum('pd'),pe=getNum('pe'),jd=getNum('jd'),je=getNum('je');
+    var date=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+    set('d-nome',nome||'—');set('d-data',date);
+    var pDom=dom==='D'?pd:pe,pNon=dom==='D'?pe:pd;
+    var jDom=dom==='D'?jd:je,jNon=dom==='D'?je:jd;
+    var dL=dom==='D'?'D':'E',nL=dom==='D'?'E':'D';
+    var nLong=dom==='D'?'Esquerdo':'Direito';
+    var pDef=deficit(pDom,pNon),jDef=deficit(jDom,jNon);
+    var pC=cls(pDef),jC=cls(jDef);
+    set('d-pd',!isNaN(pDom)?pDom.toFixed(1)+' kgf ('+dL+')':'—');
+    set('d-pe',!isNaN(pNon)?pNon.toFixed(1)+' kgf ('+nL+')':'—');
+    set('d-pd-def',pC.pct);
+    set('d-jd',!isNaN(jDom)?jDom.toFixed(1)+' kgf ('+dL+')':'—');
+    set('d-je',!isNaN(jNon)?jNon.toFixed(1)+' kgf ('+nL+')':'—');
+    set('d-jd-def',jC.pct);
+    var bp=document.getElementById('badge-p');if(bp){bp.textContent=pC.label;bp.className='badge '+pC.c;}
+    var bj=document.getElementById('badge-j');if(bj){bj.textContent=jC.label;bj.className='badge '+jC.c;}
+    var hasResults=pDef!==null||jDef!==null;
+    var ta=document.getElementById('parecer');
+    if(hasResults&&!parecerManual&&ta){
+      var autoTxt=gerarParecer(nome,pDef,jDef,nLong);
+      if(ta.value===lastAutoParece){ta.value=autoTxt;lastAutoParece=autoTxt;}
+    }
+    set('d-parecer',ta&&ta.value?ta.value:'—');
+  }catch(e){}
+}
+function limparTudo(){
+  ['nome','wpp','pd','pe','jd','je','parecer'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  parecerManual=false;lastAutoParece='';calc();
+}
+calc();
+
+function enviarWpp(){
+  try{
+    var nome=document.getElementById('nome').value.trim();
+    var wpp=document.getElementById('wpp').value.replace(/\D/g,'');
+    if(!wpp||wpp.length<10){alert('Informe o WhatsApp do avaliado (com DDD, só números).');return;}
+    var primeiro=nome?nome.trim().split(' ')[0]:'';
+    var surveyUrl='https://ajrperformance.com.br/pesquisa.html'+(nome?'?nome='+encodeURIComponent(nome):'');
+    var msg='Olá'+(primeiro?', '+primeiro:'')+'! 👋\n\n';
+    msg+='Seu resultado da *Avaliação de Assimetria Bilateral* está pronto. Segue o PDF em anexo! 💪\n\n';
+    msg+='Qualquer dúvida é só me chamar.\n\n';
+    msg+='— Aldemir Junior · AJR Performance\n';
+    msg+='📱 @aldemirjr.treinador\n\n';
+    msg+='───────────────────\n';
+    msg+='📝 *Avalie o evento* (1 minuto):\n';
+    msg+=surveyUrl;
+    var num=wpp.startsWith('55')?wpp:'55'+wpp;
+    var encoded=encodeURIComponent(msg);
+    var isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if(isMobile){location.href='whatsapp://send?phone='+num+'&text='+encoded;}
+    else{window.open('https://wa.me/'+num+'?text='+encoded,'_blank');}
+  }catch(e){alert('Erro ao abrir WhatsApp. Verifique o número e tente novamente.');}
+}
+</script>
+</body>
+</html>
