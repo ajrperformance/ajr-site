@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesquisa de Satisfação — AJR Performance</title>
+<style>
+:root {
+  --gold: #C9A84C;
+  --dark: #111111;
+  --border: #e0e0e0;
+  --gray: #666666;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #ebebeb; color: var(--dark); min-height: 100vh; }
+
+.wrap { max-width: 480px; margin: 0 auto; padding: 28px 16px 48px; }
+.card { background: white; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; }
+
+.hdr { background: var(--dark); padding: 24px 28px; display: flex; align-items: center; gap: 16px; border-bottom: 3px solid var(--gold); }
+.aj { width: 48px; height: 48px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--gold); flex-shrink: 0; }
+.hdr-txt .name { font-size: 15px; font-weight: 800; color: var(--gold); letter-spacing: 2px; }
+.hdr-txt .sub  { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+.body { padding: 28px; }
+.title { font-size: 18px; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+.sub   { font-size: 13px; color: var(--gray); margin-bottom: 28px; line-height: 1.5; }
+
+.field { margin-bottom: 22px; }
+label { font-size: 11px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: .6px; display: block; margin-bottom: 8px; }
+textarea, input[type=text] { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; font-family: inherit; outline: none; resize: vertical; transition: border-color .15s; -webkit-appearance: none; }
+textarea { min-height: 80px; }
+textarea:focus, input:focus { border-color: var(--gold); }
+
+/* Stars */
+.stars { display: flex; gap: 8px; flex-direction: row-reverse; justify-content: flex-end; }
+.stars input { display: none; }
+.stars label {
+  font-size: 36px; cursor: pointer; color: #ddd; margin: 0;
+  text-transform: none; letter-spacing: 0;
+  transition: color .1s; -webkit-tap-highlight-color: transparent;
+}
+.stars input:checked ~ label,
+.stars label:hover,
+.stars label:hover ~ label { color: var(--gold); }
+
+/* Recommend */
+.rec-row { display: flex; gap: 10px; }
+.rec-btn { flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: white; font-size: 15px; font-weight: 600; cursor: pointer; color: var(--gray); transition: all .15s; -webkit-tap-highlight-color: transparent; }
+.rec-btn.on { border-color: var(--gold); background: #fdf6e3; color: var(--dark); }
+
+.send-btn { width: 100%; padding: 16px; background: var(--gold); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 6px; -webkit-tap-highlight-color: transparent; }
+.send-btn:active { background: #b8941e; }
+
+/* Confirmação */
+#ok { display: none; text-align: center; padding: 40px 28px; }
+.ok-icon { font-size: 64px; margin-bottom: 16px; }
+.ok-title { font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+.ok-sub { font-size: 14px; color: var(--gray); line-height: 1.6; }
+.ok-link { display: inline-block; margin-top: 20px; color: var(--gold); font-weight: 700; font-size: 13px; text-decoration: none; }
+
+.hint { font-size: 11px; color: #bbb; text-align: center; margin-top: 14px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="hdr">
+      <div class="aj">AJ</div>
+      <div class="hdr-txt">
+        <div class="name">ALDEMIR JUNIOR</div>
+        <div class="sub">Avaliação Física e Performance · Bauru, SP</div>
+      </div>
+    </div>
+
+    <div class="body">
+      <div id="form-section">
+        <div class="title">Pesquisa de Satisfação</div>
+        <p class="sub">Sua opinião leva menos de 1 minuto e ajuda a melhorar o atendimento. Obrigado! 🙏</p>
+
+        <!-- Nome (pré-preenchido pela URL) -->
+        <div class="field">
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" placeholder="Como quer ser chamado?" autocomplete="off">
+        </div>
+
+        <!-- Nota -->
+        <div class="field">
+          <label>Nota para o evento</label>
+          <div class="stars">
+            <input type="radio" id="s5" name="stars" value="5"><label for="s5" title="5">★</label>
+            <input type="radio" id="s4" name="stars" value="4"><label for="s4" title="4">★</label>
+            <input type="radio" id="s3" name="stars" value="3"><label for="s3" title="3">★</label>
+            <input type="radio" id="s2" name="stars" value="2"><label for="s2" title="2">★</label>
+            <input type="radio" id="s1" name="stars" value="1"><label for="s1" title="1">★</label>
+          </div>
+        </div>
+
+        <!-- O que mais gostou -->
+        <div class="field">
+          <label for="gostou">O que você mais gostou?</label>
+          <textarea id="gostou" placeholder="Atendimento, avaliação, clareza das informações..."></textarea>
+        </div>
+
+        <!-- Sugestão -->
+        <div class="field">
+          <label for="sugestao">Alguma sugestão de melhoria?</label>
+          <textarea id="sugestao" placeholder="Pode falar à vontade!"></textarea>
+        </div>
+
+        <!-- Recomendaria -->
+        <div class="field">
+          <label>Recomendaria para um amigo?</label>
+          <div class="rec-row">
+            <button type="button" class="rec-btn" id="recSim" onclick="setRec('Sim')">👍 Sim</button>
+            <button type="button" class="rec-btn" id="recTalvez" onclick="setRec('Talvez')">🤔 Talvez</button>
+            <button type="button" class="rec-btn" id="recNao" onclick="setRec('Não')">👎 Não</button>
+          </div>
+        </div>
+
+        <button type="button" class="send-btn" onclick="enviar()">Enviar resposta 💬</button>
+        <p class="hint">Ao enviar, você será direcionado ao WhatsApp com suas respostas.<br>Basta confirmar o envio.</p>
+      </div>
+
+      <div id="ok">
+        <div class="ok-icon">🏆</div>
+        <div class="ok-title">Obrigado pelo feedback!</div>
+        <p class="ok-sub">Sua opinião é muito importante para continuar melhorando o atendimento. Até a próxima! 💪</p>
+        <a class="ok-link" href="https://instagram.com/aldemirjr.treinador" target="_blank">@aldemirjr.treinador</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Pré-preenche nome vindo da URL (?nome=João)
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var n = params.get('nome');
+  if (n) document.getElementById('nome').value = n;
+})();
+
+var rec = '';
+
+function setRec(v) {
+  rec = v;
+  ['Sim','Talvez','Não'].forEach(function(r) {
+    var id = 'rec' + r.replace('ã','a').replace('Não','Nao');
+    var el = document.getElementById(id);
+    if (el) el.className = 'rec-btn' + (r === v ? ' on' : '');
+  });
+}
+
+function getStars() {
+  var sel = document.querySelector('.stars input:checked');
+  return sel ? sel.value : null;
+}
+
+function enviar() {
+  var nome     = document.getElementById('nome').value.trim();
+  var stars    = getStars();
+  var gostou   = document.getElementById('gostou').value.trim();
+  var sugestao = document.getElementById('sugestao').value.trim();
+
+  if (!stars) { alert('Por favor, dê uma nota para o evento (1 a 5 estrelas).'); return; }
+
+  var estrelas = '';
+  for (var i = 0; i < parseInt(stars); i++) estrelas += '⭐';
+
+  var msg = '📋 *Pesquisa de Satisfação — Monster Gym*\n\n';
+  msg += '*Nome:* ' + (nome || 'Não informado') + '\n';
+  msg += '*Nota:* ' + estrelas + ' (' + stars + '/5)\n';
+  if (gostou)   msg += '*O que gostou:* ' + gostou + '\n';
+  if (sugestao) msg += '*Sugestão:* ' + sugestao + '\n';
+  if (rec)      msg += '*Recomendaria:* ' + rec + '\n';
+
+  // Número do Aldemir
+  var aldemir = '5514997432182';
+  var url = 'whatsapp://send?phone=' + aldemir + '&text=' + encodeURIComponent(msg);
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    location.href = url;
+  } else {
+    window.open('https://wa.me/' + aldemir + '?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  // Mostra confirmação
+  setTimeout(function() {
+    document.getElementById('form-section').style.display = 'none';
+    document.getElementById('ok').style.display = 'block';
+  }, 800);
+}
+</script>
+</body>
+</html>
