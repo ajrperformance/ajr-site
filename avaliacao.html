@@ -1788,7 +1788,6 @@ function montarHTML() {
   const dobraLabels = {triceptal:'Tricipital',subscapular:'Subscapular',peitoral:'Peitoral',axilar:'Axilar Média',supraIliaca:'Supra Ilíaca',abdominal:'Abdominal',coxa:'Coxa'};
   let dobraRows = tableRow(['Dobra','mm'], true);
   document.querySelectorAll('[data-dobra]').forEach(el => { if (el.value) dobraRows += tableRow([dobraLabels[el.dataset.dobra]||el.dataset.dobra, el.value]); });
-  dobraRows += tableRow(['IMC', v('imc')+' kg/m² — '+v('imcClass')]);
 
   // Força
   let forcaRows = tableRow(['Teste','Dir.','Esq.','Assimetria','Déficit'], true);
@@ -1806,7 +1805,7 @@ function montarHTML() {
   document.querySelectorAll('.foto-slot').forEach(slot => {
     const img = slot.querySelector('.foto-preview');
     const leg = slot.querySelector('.foto-footer input')?.value || '';
-    if (img && img.src && img.style.display !== 'none') {
+    if (img && img.src && img.src.startsWith('data:')) {
       fotosHTML += `<div style="text-align:center;break-inside:avoid;">
         <img src="${img.src}" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px;border:1px solid #e8e0d0;" />
         ${leg ? `<div style="font-size:9px;color:#8a7a50;margin-top:4px;font-weight:600;text-transform:uppercase;">${leg}</div>` : ''}
@@ -1866,6 +1865,9 @@ function montarHTML() {
       <!-- COMPOSIÇÃO CORPORAL -->
       <div style="margin-bottom:20px;">
         <div style="${secTitle}">4 · Composição Corporal</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
+          ${cell('Peso',v('peso')?v('peso')+' kg':'')}${cell('Altura',v('altura')?v('altura')+' cm':'')}${cell('IMC',v('imc')?v('imc')+' kg/m²':'')}${cell('Classif. IMC',v('imcClass'))}
+        </div>
         <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;background:#f7f4ef;border-radius:8px;padding:12px;">${pollockCards}</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
           <div><div style="${subTitle}">Circunferências (cm)</div><table style="width:100%;border-collapse:collapse;font-size:11px;">${circRows}</table></div>
