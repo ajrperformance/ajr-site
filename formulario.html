@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AJR Online — Formulário de Adesão</title>
+<style>
+:root {
+  --black: #080f1a;
+  --dark: #0d1627;
+  --card: #101e33;
+  --card2: #0e1b2e;
+  --border: #1a2d4a;
+  --border-gold: rgba(201,162,39,.22);
+  --accent: #c9a227;
+  --accent-light: #e0b84a;
+  --accent2: #f0d080;
+  --accent-glow: rgba(201,162,39,.18);
+  --text: #f0f4ff;
+  --text-soft: #c8d3e8;
+  --muted: #5a6e8a;
+  --danger: #ff4444;
+  --success: #22c55e;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+
+/* PROGRESS BAR */
+.progress-wrap{position:sticky;top:0;z-index:100;background:var(--dark);border-bottom:1px solid var(--border);padding:12px 16px;}
+.progress-steps{display:flex;gap:4px;max-width:640px;margin:0 auto;}
+.step-dot{flex:1;height:4px;border-radius:2px;background:var(--border);transition:background .3s;}
+.step-dot.active{background:var(--accent);}
+.step-label{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;letter-spacing:.5px;text-transform:uppercase;}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,#0d1627 0%,#081020 100%);border-bottom:1px solid var(--border-gold);padding:36px 20px 28px;text-align:center;}
+.hero-logo{font-size:22px;font-weight:900;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:4px;}
+.hero-sub{font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.hero h1{font-size:clamp(22px,5vw,32px);font-weight:800;color:var(--text);margin:18px 0 8px;line-height:1.2;}
+.hero p{font-size:14px;color:var(--text-soft);max-width:480px;margin:0 auto;line-height:1.6;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,162,39,.1);border:1px solid var(--border-gold);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--accent);margin-top:14px;letter-spacing:.5px;}
+
+/* SECTIONS */
+.section{display:none;max-width:640px;margin:0 auto;padding:24px 16px 40px;}
+.section.active{display:block;}
+.section-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.section-desc{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
+.card-title{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;}
+
+/* FIELDS */
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:12px;font-weight:600;color:var(--text-soft);}
+.field input,.field select,.field textarea{
+  background:#0a1525;border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-size:14px;padding:10px 12px;outline:none;
+  transition:border-color .2s;width:100%;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);}
+.field textarea{resize:vertical;min-height:80px;}
+.field select option{background:#0d1627;}
+
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+
+/* RADIO GROUP */
+.radio-group{display:flex;gap:8px;flex-wrap:wrap;}
+.radio-btn{flex:1;min-width:80px;}
+.radio-btn input{display:none;}
+.radio-btn label{
+  display:flex;align-items:center;justify-content:center;
+  padding:9px 12px;border-radius:8px;border:1px solid var(--border);
+  cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);
+  transition:all .2s;text-align:center;
+}
+.radio-btn input:checked+label{border-color:var(--accent);color:var(--accent);background:rgba(201,162,39,.08);}
+
+/* CHECKBOX GROUP */
+.check-group{display:flex;flex-direction:column;gap:8px;}
+.check-item{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--text-soft);}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;}
+
+/* PHOTO UPLOAD */
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.photo-box{position:relative;}
+.photo-box input[type=file]{display:none;}
+.photo-label{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;border:1.5px dashed var(--border);border-radius:12px;
+  padding:20px 10px;cursor:pointer;transition:border-color .2s;min-height:110px;
+  font-size:11px;color:var(--muted);text-align:center;
+}
+.photo-label:hover{border-color:var(--accent);}
+.photo-label .icon{font-size:24px;}
+.photo-preview{width:100%;height:110px;object-fit:cover;border-radius:10px;display:none;}
+
+/* MEASUREMENT */
+.meas-group-hdr{font-size:12px;font-weight:700;color:var(--text-soft);margin:18px 0 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:8px;}
+.meas-group-hdr:first-child{margin-top:0;}
+.meas-subhint{font-size:11px;color:var(--muted);font-weight:400;}
+.opt-badge{font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:4px;}
+.meas-intro{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
+.mnum{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.35);
+  color:var(--accent);font-size:10px;font-weight:800;
+  margin-right:5px;flex-shrink:0;vertical-align:middle;
+}
+.meas-tip{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4;}
+
+/* CONTRACT */
+.contract-box{
+  background:#070e1a;border:1px solid var(--border);border-radius:10px;
+  padding:18px;font-size:12px;color:var(--text-soft);line-height:1.8;
+  max-height:320px;overflow-y:auto;margin-bottom:16px;
+}
+.contract-box h3{color:var(--accent);font-size:13px;margin:14px 0 6px;letter-spacing:.5px;}
+.contract-box h3:first-child{margin-top:0;}
+.contract-box p{margin-bottom:8px;}
+
+/* SIGNATURE */
+#sigCanvas{
+  width:100%;height:160px;background:#060d1a;border:1px solid var(--border);
+  border-radius:10px;cursor:crosshair;display:block;touch-action:none;
+}
+.sig-actions{display:flex;gap:8px;margin-top:8px;}
+
+/* BUTTONS */
+.btn{
+  padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;
+  cursor:pointer;border:none;transition:all .2s;letter-spacing:.3px;
+}
+.btn-primary{background:var(--accent);color:#000;}
+.btn-primary:hover{background:var(--accent-light);}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.btn-sm{padding:7px 14px;font-size:12px;}
+
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;}
+.nav-bar .btn{flex:1;}
+
+/* GOLD DIVIDER */
+.gold-line{height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:16px 0;opacity:.35;}
+
+/* SUCCESS */
+.success-wrap{text-align:center;padding:48px 20px;}
+.success-icon{font-size:56px;margin-bottom:16px;}
+.success-title{font-size:26px;font-weight:800;color:var(--text);margin-bottom:8px;}
+.success-sub{font-size:14px;color:var(--muted);line-height:1.6;max-width:400px;margin:0 auto 28px;}
+
+/* SPINNER */
+.spinner{display:none;width:20px;height:20px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* REQUIRED */
+.req{color:var(--danger);margin-left:2px;}
+
+@media (max-width:500px){
+  .row,.row3{grid-template-columns:1fr;}
+  .photo-grid{grid-template-columns:1fr 1fr;}
+}
+@media print{.progress-wrap,.nav-bar{display:none;}}
+
+/* WHATSAPP FLOAT */
+.wa-float{
+  position:fixed;bottom:20px;right:20px;z-index:999;
+  background:#25d366;color:#fff;
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;text-decoration:none;
+  box-shadow:0 4px 16px rgba(37,211,102,.45);
+  transition:transform .2s;
+}
+.wa-float:hover{transform:scale(1.1);}
+</style>
+</head>
+<body>
+
+<a href="https://wa.me/5514997432182?text=Olá%2C%20tenho%20dúvidas%20sobre%20o%20AJR%20Online" target="_blank" class="wa-float" title="Fale no WhatsApp">💬</a>
+
+<!-- PROGRESS -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-steps" id="progressBar">
+    <div class="step-dot active"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+  </div>
+  <div class="step-label" id="stepLabel">Passo 1 de 6 — Dados Pessoais</div>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="formHero">
+  <div class="hero-logo">AJR</div>
+  <div class="hero-sub">Online</div>
+  <h1>Seu treino ideal começa aqui.</h1>
+  <p>Preencha com atenção. Quanto mais detalhes, melhor o programa montado para você.</p>
+  <div class="hero-badge">🔒 Formulário seguro · LGPD</div>
+</div>
+
+<!-- ══════════════ SEÇÃO 1 — DADOS PESSOAIS ══════════════ -->
+<div class="section active" id="sec1">
+  <p class="section-title">Dados Pessoais</p>
+  <p class="section-desc">Informações básicas para identificação e contato.</p>
+
+  <div class="card">
+    <div class="card-title">Identificação</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="field">
+        <label>Nome completo <span class="req">*</span></label>
+        <input type="text" id="nome" placeholder="Seu nome completo" required>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>E-mail <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="seu@email.com" required>
+        </div>
+        <div class="field">
+          <label>WhatsApp <span class="req">*</span></label>
+          <input type="tel" id="whatsapp" placeholder="(11) 99999-9999" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Data de nascimento <span class="req">*</span></label>
+          <input type="date" id="nascimento" required>
+        </div>
+        <div class="field">
+          <label>Sexo biológico <span class="req">*</span></label>
+          <div class="radio-group">
+            <div class="radio-btn"><input type="radio" name="sexo" id="sexoM" value="Masculino"><label for="sexoM">Masculino</label></div>
+            <div class="radio-btn"><input type="radio" name="sexo" id="sexoF" value="Feminino"><label for="sexoF">Feminino</label></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Peso (kg) <span class="req">*</span></label>
+          <input type="number" id="peso" placeholder="70" min="30" max="300" required oninput="calcMetrics()">
+        </div>
+        <div class="field">
+          <label>Altura (cm) <span class="req">*</span></label>
+          <input type="number" id="altura" placeholder="170" min="100" max="250" required oninput="calcMetrics()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Cidade / Estado</label>
+        <input type="text" id="cidade" placeholder="São Paulo / SP">
+      </div>
+      <div class="field">
+        <label>Profissão</label>
+        <input type="text" id="profissao" placeholder="Sua profissão">
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDIDAS CORPORAIS -->
+  <div class="card">
+    <div class="card-title">Medidas Corporais <span style="font-size:11px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:6px;">— opcional, mas recomendado</span></div>
+    <p class="meas-intro">📏 Meça sempre em jejum ou com estômago vazio. Use fita métrica inelástica, posicionada na horizontal, paralela ao chão.</p>
+
+    <!-- TRONCO -->
+    <div class="meas-group-hdr">
+      Tronco
+      <span class="meas-subhint">fita horizontal, respiração normal</span>
+    </div>
+    <div class="row" style="gap:12px;">
+      <div class="field">
+        <label><span class="mnum">1</span>Pescoço (cm)</label>
+        <input type="number" id="m_pescoco" placeholder="38" min="20" max="80">
+        <div class="meas-tip">Abaixo do pomo-de-adão, parte mais estreita.</div>
+      </div>
+      <div class="field">
+        <label><span class="mnum">2</span>Peitoral (cm)</label>
+        <input type="number" id="m_peitoral" placeholder="95" min="40" max="200">
+        <div class="meas-tip">Na linha dos mamilos, inspire e meça.</div>
+      </div>
+    </div>
+    <div class="row" style="gap:12px;margin-top:10px;">
+      <div class="field">
+        <label><span class="mnum">3</span>Abdominal (cm)</label>
+        <input type="number" id="m_abdominal" placeholder="85" min="40" max="200">
+        <div class="meas-tip">Na altura do umbigo, ao expirar normalmente.</div>
+      </div>
+      <div class="field">
+        <label><span class="mnum">4</span>Cintura (cm)</label>
+        <input type="number" id="m_cintura" placeholder="80" min="40" max="200" oninput="calcMetrics()">
+        <div class="meas-tip">Parte mais estreita, entre costelas e quadril.</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;">
+      <div class="field">
+        <label><span class="mnum">5</span>Quadril (cm)</label>
+        <input type="number" id="m_quadril" placeholder="95" min="40" max="200" style="max-width:240px;" oninput="calcMetrics()">
+        <div class="meas-tip">Parte mais larga dos glúteos, pés juntos.</div>
+      </div>
+    </div>
+
+    <!-- BRAÇOS -->
+    <div class="meas-group-hdr" style="margin-top:18px;">
+      <span class="mnum">6</span>Braços
+      <span class="opt-badge">(cm · ponto médio do bíceps, braço relaxado)</span>
+    </div>
+    <div class="row" style="gap:12px;">
+      <div class="field">
+        <label>Braço Direito</label>
+        <input type="number" id="m_braco_d" placeholder="34" min="10" max="80">
+      </div>
+      <div class="field">
+        <label>Braço Esquerdo</label>
+        <input type="number" id="m_braco_e" placeholder="34" min="10" max="80">
+      </div>
+    </div>
+
+    <!-- COXAS -->
+    <div class="meas-group-hdr" style="margin-top:18px;">
+      <span class="mnum">7</span>Coxas
+      <span class="opt-badge">(cm · ponto médio entre virilha e joelho)</span>
+    </div>
+    <div class="row" style="gap:12px;">
+      <div class="field">
+        <label>Coxa Direita</label>
+        <input type="number" id="m_coxa_d" placeholder="55" min="20" max="100">
+      </div>
+      <div class="field">
+        <label>Coxa Esquerda</label>
+        <input type="number" id="m_coxa_e" placeholder="55" min="20" max="100">
+      </div>
+    </div>
+
+    <!-- PANTURRILHAS -->
+    <div class="meas-group-hdr" style="margin-top:18px;">
+      <span class="mnum">8</span>Panturrilhas
+      <span class="opt-badge">(cm · parte mais larga da batata da perna)</span>
+    </div>
+    <div class="row" style="gap:12px;">
+      <div class="field">
+        <label>Panturrilha Direita</label>
+        <input type="number" id="m_pant_d" placeholder="37" min="15" max="80">
+      </div>
+      <div class="field">
+        <label>Panturrilha Esquerda</label>
+        <input type="number" id="m_pant_e" placeholder="37" min="15" max="80">
+      </div>
+    </div>
+
+    <!-- PAINEL IMC + RCQ -->
+    <div id="metricsPanel" style="display:none;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">📊 Calculado automaticamente</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div id="cardIMC" style="display:none;background:#0a1525;border:1px solid var(--border-gold);border-radius:10px;padding:14px;text-align:center;">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">IMC</div>
+          <div id="valIMC" style="font-size:26px;font-weight:800;color:var(--accent);">—</div>
+          <div id="classIMC" style="font-size:11px;color:var(--text-soft);margin-top:4px;"></div>
+          <div style="font-size:10px;color:var(--muted);margin-top:6px;">kg/m² · Quetelet</div>
+        </div>
+        <div id="cardRCQ" style="display:none;background:#0a1525;border:1px solid var(--border-gold);border-radius:10px;padding:14px;text-align:center;">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">RCQ</div>
+          <div id="valRCQ" style="font-size:26px;font-weight:800;color:var(--accent);">—</div>
+          <div id="classRCQ" style="font-size:11px;color:var(--text-soft);margin-top:4px;"></div>
+          <div style="font-size:10px;color:var(--muted);margin-top:6px;">Razão Cintura-Quadril</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <button class="btn btn-primary" onclick="next(1)">Próximo →</button>
+  </div>
+</div>
+
+<!-- ══════════════ SEÇÃO 2 — HISTÓRICO DE SAÚDE ══════════════ -->
+<div class="section" id="sec2">
+  <p class="section-title">Histórico de Saúde</p>
+  <p class="section-desc">Essencial para um treino seguro e eficiente.</p>
+
+  <div class="card">
+    <div class="card-title">Condições de Saúde</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="field">
+        <label>Possui alguma condição médica diagnosticada? <span class="req">*</span></label>
+        <div class="radio-group">
+          <div class="radio-btn"><input type="radio" name="condicao" id="condN" value="Não"><label for="condN">Não</label></div>
+          <div class="radio-btn"><input type="radio" name="condicao" id="condS" value="Sim"><label for="condS">Sim</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Se sim, qual(is)?</label>
+        <textarea id="condicao_desc" placeholder="Descreva suas condições de saúde..."></textarea>
+      </div>
+      <div class="field">
+        <label>Faz uso de algum medicamento contínuo?</label>
+        <input type="text" id="medicamentos" placeholder="Ex: Losartana, Metformina... ou Não">
+      </div>
+      <div class="field">
+        <label>Possui lesão ou limitação física atual?</label>
+        <textarea id="lesoes" placeholder="Ex: dor no joelho direito, hérnia de disco L4-L5..."></textarea>
+      </div>
+      <div class="field">
+        <label>Já realizou cirurgia? Qual?</label>
+        <input type="text" id="cirurgia" placeholder="Ex: joelho em 2019... ou Não">
+      </div>
+      <div class="field">
+        <label>Tem alguma restrição alimentar ou alergia?</label>
+        <input type="text" id="alergia" placeholder="Ex: intolerância à lactose... ou Não">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Histórico de Treino</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="field">
+        <label>Nível de experiência com treino <span class="req">*</span></label>
+        <select id="nivel">
+          <option value="">Selecione...</option>
+          <option>Iniciante (menos de 6 meses)</option>
+          <option>Intermediário (6 meses a 2 anos)</option>
+          <option>Avançado (mais de 2 anos)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Treina atualmente? Com qual frequência?</label>
+        <input type="text" id="frequencia_atual" placeholder="Ex: 3x por semana, musculação">
+      </div>
+      <div class="field">
+        <label>Quais atividades físicas já praticou?</label>
+        <textarea id="atividades" placeholder="Ex: musculação, corrida, futebol..."></textarea>
+      </div>
+      <div class="field">
+        <label>Já teve acompanhamento profissional antes?</label>
+        <div class="radio-group">
+          <div class="radio-btn"><input type="radio" name="acomp" id="acN" value="Não"><label for="acN">Não</label></div>
+          <div class="radio-btn"><input type="radio" name="acomp" id="acS" value="Sim"><label for="acS">Sim</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <button class="btn btn-outline" onclick="prev(1)">← Voltar</button>
+    <button class="btn btn-primary" onclick="next(2)">Próximo →</button>
+  </div>
+</div>
+
+<!-- ══════════════ SEÇÃO 3 — OBJETIVOS & ESTILO DE VIDA ══════════════ -->
+<div class="section" id="sec3">
+  <p class="section-title">Objetivos &amp; Estilo de Vida</p>
+  <p class="section-desc">Quanto mais você contar, mais personalizado será seu programa.</p>
+
+  <div class="card">
+    <div class="card-title">Seus Objetivos</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="field">
+        <label>Objetivo principal <span class="req">*</span></label>
+        <select id="objetivo">
+          <option value="">Selecione...</option>
+          <option>Emagrecimento / Perda de gordura</option>
+          <option>Ganho de massa muscular</option>
+          <option>Condicionamento físico geral</option>
+          <option>Definição muscular</option>
+          <option>Reabilitação / Saúde</option>
+          <option>Performance esportiva</option>
+          <option>Qualidade de vida</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Objetivo secundário</label>
+        <input type="text" id="obj_sec" placeholder="Ex: melhorar postura, aumentar disposição...">
+      </div>
+      <div class="field">
+        <label>Qual resultado você quer em 3 meses?</label>
+        <textarea id="resultado_3m" placeholder="Descreva com detalhes o que espera alcançar..."></textarea>
+      </div>
+      <div class="field">
+        <label>Quantos dias por semana pode treinar? <span class="req">*</span></label>
+        <select id="dias_semana">
+          <option value="">Selecione...</option>
+          <option>2 dias</option>
+          <option>3 dias</option>
+          <option>4 dias</option>
+          <option>5 dias</option>
+          <option>6 dias</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Tempo disponível por sessão</label>
+        <select id="tempo_sessao">
+          <option value="">Selecione...</option>
+          <option>30 a 45 minutos</option>
+          <option>45 a 60 minutos</option>
+          <option>60 a 90 minutos</option>
+          <option>Mais de 90 minutos</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Estilo de Vida</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="field">
+        <label>Onde vai treinar? <span class="req">*</span></label>
+        <div class="radio-group">
+          <div class="radio-btn"><input type="radio" name="local" id="locA" value="Academia"><label for="locA">Academia</label></div>
+          <div class="radio-btn"><input type="radio" name="local" id="locC" value="Casa"><label for="locC">Casa</label></div>
+          <div class="radio-btn"><input type="radio" name="local" id="locAC" value="Academia e Casa"><label for="locAC">Ambos</label></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Equipamentos disponíveis em casa</label>
+        <textarea id="equipamentos" placeholder="Ex: halteres, elásticos, barra... ou Nenhum"></textarea>
+      </div>
+      <div class="field">
+        <label>Como é sua alimentação atual?</label>
+        <select id="alimentacao">
+          <option value="">Selecione...</option>
+          <option>Muito ruim (muita junk food, sem controle)</option>
+          <option>Regular (pode melhorar bastante)</option>
+          <option>Boa (tem noção mas peca às vezes)</option>
+          <option>Ótima (alimentação controlada)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Quantas horas de sono por noite, em média?</label>
+        <select id="sono">
+          <option value="">Selecione...</option>
+          <option>Menos de 5h</option>
+          <option>5 a 6h</option>
+          <option>6 a 7h</option>
+          <option>7 a 8h</option>
+          <option>Mais de 8h</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Nível de estresse no dia a dia</label>
+        <select id="estresse">
+          <option value="">Selecione...</option>
+          <option>Baixo</option>
+          <option>Moderado</option>
+          <option>Alto</option>
+          <option>Muito alto</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Algo mais que devo saber para montar o melhor programa para você?</label>
+        <textarea id="obs_gerais" placeholder="Conte o que quiser. Qualquer detalhe ajuda!"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <button class="btn btn-outline" onclick="prev(2)">← Voltar</button>
+    <button class="btn btn-primary" onclick="next(3)">Próximo →</button>
+  </div>
+</div>
+
+<!-- ══════════════ SEÇÃO 4 — FOTOS ══════════════ -->
+<div class="section" id="sec4">
+  <p class="section-title">Fotos de Avaliação</p>
+  <p class="section-desc">As fotos são usadas exclusivamente para montagem do seu programa. Roupas de treino (shorts/top).</p>
+
+  <div class="card">
+    <div class="card-title">📸 Fotos Corporais — opcional</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5;">Envie fotos em boa iluminação, de corpo inteiro, fundo neutro. Frente, costas e lateral.</p>
+    <div class="photo-grid">
+      <div class="photo-box">
+        <input type="file" id="foto_frente" accept="image/*" onchange="previewPhoto(this,'prev_frente')">
+        <label class="photo-label" for="foto_frente">
+          <img id="prev_frente" class="photo-preview">
+          <span class="icon">🧍</span>
+          <span>Frente</span>
+        </label>
+      </div>
+      <div class="photo-box">
+        <input type="file" id="foto_costas" accept="image/*" onchange="previewPhoto(this,'prev_costas')">
+        <label class="photo-label" for="foto_costas">
+          <img id="prev_costas" class="photo-preview">
+          <span class="icon">🚶</span>
+          <span>Costas</span>
+        </label>
+      </div>
+      <div class="photo-box">
+        <input type="file" id="foto_lateral" accept="image/*" onchange="previewPhoto(this,'prev_lateral')">
+        <label class="photo-label" for="foto_lateral">
+          <img id="prev_lateral" class="photo-preview">
+          <span class="icon">🧍</span>
+          <span>Lateral</span>
+        </label>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5;">🔒 Imagens tratadas com sigilo absoluto. Uso exclusivo para avaliação e acompanhamento do seu progresso.</p>
+  </div>
+
+  <div class="nav-bar">
+    <button class="btn btn-outline" onclick="prev(3)">← Voltar</button>
+    <button class="btn btn-primary" onclick="next(4)">Próximo →</button>
+  </div>
+</div>
+
+<!-- ══════════════ SEÇÃO 5 — CONTRATO ══════════════ -->
+<div class="section" id="sec5">
+  <p class="section-title">Contrato &amp; Termos</p>
+  <p class="section-desc">Leia com atenção antes de assinar.</p>
+
+  <div class="card">
+    <div class="contract-box">
+      <h3>1. OBJETO DO CONTRATO</h3>
+      <p>O presente contrato tem por objeto a prestação de serviços de consultoria esportiva online pelo profissional <strong>Aldemir Junior (AJR Performance)</strong>, CREf [número], ao aluno identificado neste formulário, incluindo a elaboração de programas de treinamento personalizados entregues digitalmente.</p>
+
+      <h3>2. PLANO E PAGAMENTO</h3>
+      <p>O serviço é oferecido em modalidade de assinatura recorrente mensal. O valor e a data de cobrança são definidos no plano selecionado pelo aluno. O não pagamento na data acordada implica suspensão automática do acesso ao programa.</p>
+
+      <h3>3. OBRIGAÇÕES DO PROFISSIONAL</h3>
+      <p>O profissional se compromete a entregar o programa de treino personalizado em até 24 horas (segunda a sexta) após o preenchimento completo deste formulário, realizar atualizações mensais conforme a evolução do aluno e estar disponível para suporte via WhatsApp em horário comercial.</p>
+
+      <h3>4. OBRIGAÇÕES DO ALUNO</h3>
+      <p>O aluno se compromete a fornecer informações verdadeiras sobre seu estado de saúde, seguir o programa conforme orientado, comunicar ao profissional qualquer intercorrência de saúde e realizar os pagamentos nas datas acordadas.</p>
+
+      <h3>5. SAÚDE E RESPONSABILIDADE</h3>
+      <p>O aluno declara estar apto para a prática de atividades físicas. Em caso de condições de saúde pré-existentes, recomenda-se avaliação médica prévia. O profissional não se responsabiliza por lesões decorrentes de execução incorreta dos exercícios ou omissão de informações de saúde.</p>
+
+      <h3>6. DIREITOS DE IMAGEM</h3>
+      <p>O aluno autoriza expressamente o uso de suas fotos de avaliação e evolução (antes e depois) pelo profissional Aldemir Junior para fins de divulgação e marketing nas redes sociais, site e materiais promocionais da AJR Performance, preservando, se solicitado, o anonimato do aluno. Esta autorização pode ser revogada a qualquer momento por escrito.</p>
+
+      <h3>7. CONFIDENCIALIDADE E LGPD</h3>
+      <p>Todos os dados coletados neste formulário são tratados em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018). As informações são utilizadas exclusivamente para a prestação do serviço contratado e não serão compartilhadas com terceiros sem consentimento do titular.</p>
+
+      <h3>8. CANCELAMENTO</h3>
+      <p>O aluno pode cancelar a assinatura a qualquer momento, sem multa, com aviso prévio de 7 dias. Não há reembolso proporcional para o mês em curso após o início da prestação dos serviços.</p>
+
+      <h3>9. FORO</h3>
+      <p>As partes elegem o foro da comarca de residência do profissional para dirimir quaisquer controvérsias oriundas deste contrato.</p>
+    </div>
+
+    <div class="check-group">
+      <label class="check-item">
+        <input type="checkbox" id="aceite_termos" required>
+        <span>Li e concordo com todos os termos e condições acima. <span class="req">*</span></span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="aceite_imagem">
+        <span>Autorizo o uso das minhas fotos para fins de divulgação pela AJR Performance.</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="aceite_lgpd" required>
+        <span>Consinto com o tratamento dos meus dados pessoais conforme a LGPD. <span class="req">*</span></span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="aceite_saude" required>
+        <span>Declaro que estou apto(a) para prática de atividades físicas. <span class="req">*</span></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <button class="btn btn-outline" onclick="prev(4)">← Voltar</button>
+    <button class="btn btn-primary" onclick="next(5)">Próximo →</button>
+  </div>
+</div>
+
+<!-- ══════════════ SEÇÃO 6 — ASSINATURA ══════════════ -->
+<div class="section" id="sec6">
+  <p class="section-title">Assinatura Digital</p>
+  <p class="section-desc">Assine abaixo para confirmar o contrato.</p>
+
+  <div class="card">
+    <div class="card-title">✍️ Sua assinatura</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Use o mouse ou o dedo (touch). Assine dentro da área abaixo.</p>
+    <canvas id="sigCanvas"></canvas>
+    <div class="sig-actions">
+      <button class="btn btn-outline btn-sm" onclick="clearSig()">🗑 Limpar</button>
+    </div>
+  </div>
+
+  <div class="card" style="background:rgba(201,162,39,.06);border-color:var(--border-gold);">
+    <div style="font-size:12px;color:var(--text-soft);line-height:1.7;">
+      Ao enviar este formulário, declaro que todas as informações são verdadeiras e que li e concordei com os termos do contrato acima.
+    </div>
+  </div>
+
+  <div id="errMsg" style="display:none;background:rgba(255,68,68,.1);border:1px solid var(--danger);border-radius:8px;padding:12px;font-size:13px;color:var(--danger);margin-bottom:12px;"></div>
+
+  <div class="nav-bar">
+    <button class="btn btn-outline" onclick="prev(5)">← Voltar</button>
+    <button class="btn btn-primary" id="btnEnviar" onclick="submitForm()">
+      <span id="btnTxt">Enviar e Assinar ✓</span>
+      <div class="spinner" id="spinner"></div>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ SUCESSO ══════════════ -->
+<div class="section" id="secSuccess">
+  <div class="success-wrap">
+    <div class="success-icon">🏆</div>
+    <div class="success-title">Tudo certo!</div>
+    <p class="success-sub">Formulário recebido com sucesso. Em até 24 horas (segunda a sexta) seu programa de treino personalizado estará pronto. Bem-vindo(a) ao AJR Online!</p>
+    <p style="font-size:12px;color:var(--muted);">Qualquer dúvida, fale pelo WhatsApp com o Aldemir.</p>
+  </div>
+</div>
+
+<script>
+// ── STEP NAVIGATION ──────────────────────────────────────
+const labels = ['Dados Pessoais','Histórico de Saúde','Objetivos & Estilo de Vida','Fotos','Contrato','Assinatura'];
+let currentStep = 1;
+
+function showStep(n){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const target = document.getElementById('sec'+n);
+  if(target) target.classList.add('active');
+  const dots = document.querySelectorAll('.step-dot');
+  dots.forEach((d,i)=>d.classList.toggle('active', i<n));
+  document.getElementById('stepLabel').textContent = `Passo ${n} de 6 — ${labels[n-1]}`;
+  window.scrollTo({top:0,behavior:'smooth'});
+  currentStep = n;
+}
+
+function next(from){
+  if(from===1 && !validateStep1()) return;
+  if(from===2 && !validateStep2()) return;
+  if(from===5 && !validateStep5()) return;
+  showStep(from+1);
+}
+function prev(from){ showStep(from); }
+
+// ── VALIDATION ────────────────────────────────────────────
+function req(id){ return document.getElementById(id)?.value?.trim(); }
+function alert2(msg){ alert(msg); }
+
+function validateStep1(){
+  if(!req('nome'))        { alert2('Informe seu nome completo.'); return false; }
+  if(!req('email'))       { alert2('Informe seu e-mail.'); return false; }
+  if(!req('whatsapp'))    { alert2('Informe seu WhatsApp.'); return false; }
+  if(!req('nascimento'))  { alert2('Informe sua data de nascimento.'); return false; }
+  if(!document.querySelector('input[name=sexo]:checked')) { alert2('Selecione o sexo biológico.'); return false; }
+  if(!req('peso'))        { alert2('Informe seu peso.'); return false; }
+  if(!req('altura'))      { alert2('Informe sua altura.'); return false; }
+  return true;
+}
+function validateStep2(){
+  if(!document.querySelector('input[name=condicao]:checked')) { alert2('Responda se possui condição médica.'); return false; }
+  if(!req('nivel')) { alert2('Selecione seu nível de experiência.'); return false; }
+  return true;
+}
+function validateStep5(){
+  if(!document.getElementById('aceite_termos').checked) { alert2('Você precisa aceitar os termos do contrato.'); return false; }
+  if(!document.getElementById('aceite_lgpd').checked)   { alert2('Você precisa aceitar o tratamento de dados (LGPD).'); return false; }
+  if(!document.getElementById('aceite_saude').checked)  { alert2('Você precisa declarar aptidão para atividades físicas.'); return false; }
+  return true;
+}
+
+// ── PHOTO PREVIEW ─────────────────────────────────────────
+function previewPhoto(input, prevId){
+  const file = input.files[0];
+  const prev = document.getElementById(prevId);
+  if(file){
+    const reader = new FileReader();
+    reader.onload = e => {
+      prev.src = e.target.result;
+      prev.style.display = 'block';
+      prev.nextElementSibling && (prev.nextElementSibling.style.display='none');
+      prev.parentElement.querySelector('span:not(.icon)') && (prev.parentElement.querySelector('span:not(.icon)').style.display='none');
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+// ── SIGNATURE CANVAS ─────────────────────────────────────
+const canvas = document.getElementById('sigCanvas');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+
+function resizeCanvas(){
+  const dpr = window.devicePixelRatio||1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr,dpr);
+  ctx.strokeStyle = '#c9a227';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function getPos(e){
+  const r = canvas.getBoundingClientRect();
+  if(e.touches) return {x:e.touches[0].clientX-r.left, y:e.touches[0].clientY-r.top};
+  return {x:e.clientX-r.left, y:e.clientY-r.top};
+}
+canvas.addEventListener('mousedown', e=>{ drawing=true; ctx.beginPath(); const p=getPos(e); ctx.moveTo(p.x,p.y); });
+canvas.addEventListener('mousemove', e=>{ if(!drawing) return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); });
+canvas.addEventListener('mouseup',   ()=>{ drawing=false; });
+canvas.addEventListener('mouseleave',()=>{ drawing=false; });
+canvas.addEventListener('touchstart',e=>{ e.preventDefault(); drawing=true; ctx.beginPath(); const p=getPos(e); ctx.moveTo(p.x,p.y); },{passive:false});
+canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(!drawing) return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); },{passive:false});
+canvas.addEventListener('touchend',  ()=>{ drawing=false; });
+
+function clearSig(){ resizeCanvas(); }
+function isSigEmpty(){
+  const d = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+  return !d.some(v=>v!==0);
+}
+
+// ── IMGBB — upload de fotos em alta resolução ─────────────
+const IMGBB_KEY = '844d77075aab73eefbc0518e9f0eae39';
+
+async function uploadFoto(file, label){
+  return new Promise((resolve)=>{
+    const reader = new FileReader();
+    reader.onload = async (e)=>{
+      const base64 = e.target.result.split(',')[1];
+      const fd = new FormData();
+      fd.append('key', IMGBB_KEY);
+      fd.append('image', base64);
+      fd.append('name', label + '_' + val('nome').replace(/\s+/g,'_'));
+      try{
+        const r = await fetch('https://api.imgbb.com/1/upload', {method:'POST', body:fd});
+        const d = await r.json();
+        if(d.success){
+          resolve({ ok:true, url: d.data.url, view: d.data.display_url });
+        } else {
+          resolve({ ok:false });
+        }
+      } catch(_){ resolve({ ok:false }); }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── SUBMIT ────────────────────────────────────────────────
+async function submitForm(){
+  if(isSigEmpty()){ showErr('Por favor, assine no campo acima antes de enviar.'); return; }
+
+  const btn    = document.getElementById('btnEnviar');
+  const btnTxt = document.getElementById('btnTxt');
+  const spinner= document.getElementById('spinner');
+  btn.disabled = true;
+  spinner.style.display = 'block';
+
+  // 1. Upload das fotos para ImgBB
+  const fotoMap = [
+    { id:'foto_frente',  label:'Frente'  },
+    { id:'foto_costas',  label:'Costas'  },
+    { id:'foto_lateral', label:'Lateral' },
+  ];
+  const fotoLinks = [];
+  for(let i=0; i<fotoMap.length; i++){
+    const {id, label} = fotoMap[i];
+    const file = document.getElementById(id).files[0];
+    if(file){
+      btnTxt.textContent = `Enviando foto ${i+1}/3…`;
+      const result = await uploadFoto(file, label);
+      if(result.ok){
+        fotoLinks.push(`${label}: ${result.url}`);
+      } else {
+        fotoLinks.push(`${label}: falha no upload`);
+      }
+    }
+  }
+
+  btnTxt.textContent = 'Enviando formulário…';
+
+  // 2. Monta FormData para envio por e-mail
+  const fd = new FormData();
+  fd.append('_subject','📋 Novo aluno AJR Online — '+val('nome'));
+  fd.append('_captcha','false');
+  fd.append('_template','table');
+
+  fd.append('Nome', val('nome'));
+  fd.append('Email', val('email'));
+  fd.append('WhatsApp', val('whatsapp'));
+  fd.append('Nascimento', val('nascimento'));
+  fd.append('Sexo', document.querySelector('input[name=sexo]:checked')?.value||'');
+  fd.append('Peso (kg)', val('peso'));
+  fd.append('Altura (cm)', val('altura'));
+  fd.append('Cidade', val('cidade'));
+  fd.append('Profissão', val('profissao'));
+
+  fd.append('Medida Pescoço (cm)', val('m_pescoco'));
+  fd.append('Medida Peitoral (cm)', val('m_peitoral'));
+  fd.append('Medida Abdominal (cm)', val('m_abdominal'));
+  fd.append('Medida Cintura (cm)', val('m_cintura'));
+  fd.append('Medida Quadril (cm)', val('m_quadril'));
+  fd.append('Medida Braço Direito (cm)', val('m_braco_d'));
+  fd.append('Medida Braço Esquerdo (cm)', val('m_braco_e'));
+  fd.append('Medida Coxa Direita (cm)', val('m_coxa_d'));
+  fd.append('Medida Coxa Esquerda (cm)', val('m_coxa_e'));
+  fd.append('Medida Panturrilha Direita (cm)', val('m_pant_d'));
+  fd.append('Medida Panturrilha Esquerda (cm)', val('m_pant_e'));
+
+  fd.append('Condição Médica', document.querySelector('input[name=condicao]:checked')?.value||'');
+  fd.append('Condição (desc)', val('condicao_desc'));
+  fd.append('Medicamentos', val('medicamentos'));
+  fd.append('Lesões', val('lesoes'));
+  fd.append('Cirurgia', val('cirurgia'));
+  fd.append('Alergias', val('alergia'));
+  fd.append('Nível', val('nivel'));
+  fd.append('Frequência Atual', val('frequencia_atual'));
+  fd.append('Atividades', val('atividades'));
+
+  fd.append('Objetivo', val('objetivo'));
+  fd.append('Objetivo Secundário', val('obj_sec'));
+  fd.append('Resultado 3 meses', val('resultado_3m'));
+  fd.append('Dias por Semana', val('dias_semana'));
+  fd.append('Tempo por Sessão', val('tempo_sessao'));
+  fd.append('Local de Treino', document.querySelector('input[name=local]:checked')?.value||'');
+  fd.append('Equipamentos', val('equipamentos'));
+  fd.append('Alimentação', val('alimentacao'));
+  fd.append('Sono', val('sono'));
+  fd.append('Estresse', val('estresse'));
+  fd.append('Observações Gerais', val('obs_gerais'));
+
+  fd.append('Aceite Termos', document.getElementById('aceite_termos').checked?'Sim':'Não');
+  fd.append('Autorização de Imagem', document.getElementById('aceite_imagem').checked?'Sim':'Não');
+  fd.append('Aceite LGPD', document.getElementById('aceite_lgpd').checked?'Sim':'Não');
+  fd.append('Declaração Aptidão', document.getElementById('aceite_saude').checked?'Sim':'Não');
+  fd.append('Data Assinatura', new Date().toLocaleString('pt-BR'));
+
+  if(fotoLinks.length > 0){
+    fd.append('📸 Fotos (alta resolução — clique para baixar)', fotoLinks.join(' | '));
+  } else {
+    fd.append('📸 Fotos', 'Nenhuma foto enviada');
+  }
+
+  // 3. Envia assinatura + formulário
+  canvas.toBlob(async blob=>{
+    fd.append('assinatura_digital', blob, 'assinatura.png');
+    try{
+      const res = await fetch('https://formsubmit.co/ajax/aldemirjrpersonal@gmail.com',{method:'POST',body:fd});
+      const json = await res.json();
+      if(json.success==='true'||json.success===true){
+        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+        document.getElementById('secSuccess').classList.add('active');
+        document.getElementById('progressWrap').style.display='none';
+        document.getElementById('formHero').style.display='none';
+        window.scrollTo({top:0,behavior:'smooth'});
+      } else {
+        showErr('Ocorreu um erro ao enviar. Tente novamente ou entre em contato via WhatsApp.');
+        resetBtn();
+      }
+    } catch(e){
+      showErr('Erro de conexão. Verifique sua internet e tente novamente.');
+      resetBtn();
+    }
+  },'image/png');
+}
+
+function val(id){ return document.getElementById(id)?.value||''; }
+
+// ── IMC + RCQ ─────────────────────────────────────────────
+function calcMetrics(){
+  const peso    = parseFloat(document.getElementById('peso')?.value);
+  const altura  = parseFloat(document.getElementById('altura')?.value);
+  const cintura = parseFloat(document.getElementById('m_cintura')?.value);
+  const quadril = parseFloat(document.getElementById('m_quadril')?.value);
+  const sexo    = document.querySelector('input[name=sexo]:checked')?.value||'';
+
+  let anyResult = false;
+
+  if(peso>0 && altura>0){
+    const altM = altura/100;
+    const imc  = peso/(altM*altM);
+    document.getElementById('valIMC').textContent = imc.toFixed(1);
+    let cls='', color='var(--text-soft)';
+    if(imc<18.5){ cls='Abaixo do peso'; color='#60a5fa'; }
+    else if(imc<25){ cls='Peso normal ✓'; color='var(--success)'; }
+    else if(imc<30){ cls='Sobrepeso'; color='#fbbf24'; }
+    else if(imc<35){ cls='Obesidade grau I'; color='#f97316'; }
+    else if(imc<40){ cls='Obesidade grau II'; color='#ef4444'; }
+    else           { cls='Obesidade grau III'; color='#dc2626'; }
+    const cl = document.getElementById('classIMC');
+    cl.textContent = cls; cl.style.color = color;
+    document.getElementById('cardIMC').style.display='block';
+    anyResult = true;
+  } else {
+    document.getElementById('cardIMC').style.display='none';
+  }
+
+  if(cintura>0 && quadril>0){
+    const rcq = cintura/quadril;
+    document.getElementById('valRCQ').textContent = rcq.toFixed(2);
+    let cls='', color='var(--text-soft)';
+    const limH = sexo==='Feminino' ? 0.85 : 0.90;
+    if(rcq <= limH){ cls='Risco baixo ✓'; color='var(--success)'; }
+    else            { cls='Risco elevado'; color='#f97316'; }
+    const cl = document.getElementById('classRCQ');
+    cl.textContent = cls; cl.style.color = color;
+    document.getElementById('cardRCQ').style.display='block';
+    anyResult = true;
+  } else {
+    document.getElementById('cardRCQ').style.display='none';
+  }
+
+  document.getElementById('metricsPanel').style.display = anyResult ? 'block' : 'none';
+}
+
+function showErr(msg){
+  const el = document.getElementById('errMsg');
+  el.textContent = msg;
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth'});
+}
+function resetBtn(){
+  document.getElementById('btnTxt').style.display='inline';
+  document.getElementById('spinner').style.display='none';
+  document.getElementById('btnEnviar').disabled=false;
+}
+</script>
+</body>
+</html>
