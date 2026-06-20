@@ -1957,18 +1957,16 @@ function addFotoSlot(labelDefault) {
   const slot = document.createElement('div');
   slot.className = 'foto-slot';
   slot.id = 'slot_' + id;
-  // Input DENTRO do label para compatibilidade máxima com browsers
   slot.innerHTML = `
-    <label style="display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;">
-      <input type="file" id="input_${id}" accept="image/*"
-        style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0,0,0,0);"
-        onchange="carregarFoto('${id}')" />
-      <img class="foto-preview" id="prev_${id}" title="Clique para trocar" />
+    <input type="file" id="input_${id}" accept="image/*" style="display:none;" onchange="carregarFoto('${id}')" />
+    <div style="display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;"
+         onclick="document.getElementById('input_${id}').click()">
+      <img class="foto-preview" id="prev_${id}" title="Clique para trocar" style="display:none;" />
       <div class="foto-placeholder" id="ph_${id}">
         <span class="foto-icon">📷</span>
         <span>Clique para adicionar</span>
       </div>
-    </label>
+    </div>
     <div class="foto-footer">
       <input type="text" placeholder="Legenda (ex: Frente, Lateral D...)" id="leg_${id}" value="${labelDefault||''}" onclick="event.stopPropagation()" />
       <button type="button" onclick="removerFoto('${id}');event.preventDefault();event.stopPropagation();" title="Remover">✕</button>
@@ -1985,7 +1983,8 @@ function carregarFoto(id) {
     const ph  = document.getElementById('ph_' + id);
     img.src = e.target.result;
     img.style.display = 'block';
-    ph.style.display  = 'none';
+    img.onclick = () => document.getElementById('input_' + id).click(); // trocar foto ao clicar
+    ph.style.display = 'none';
   };
   reader.readAsDataURL(file);
 }
