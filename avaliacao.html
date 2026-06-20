@@ -400,6 +400,32 @@
 </head>
 <body>
 
+<!-- ══ MODAL HISTÓRICO ══ -->
+<div class="modal-overlay hidden" id="historicoModal" onclick="if(event.target===this)fecharHistorico()">
+  <div class="modal" style="max-width:700px;width:100%;max-height:85vh;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <h2 style="font-size:1.25rem;">📋 Histórico de Avaliações</h2>
+      <button onclick="fecharHistorico()" style="background:none;border:none;color:var(--gray);font-size:1.3rem;cursor:pointer;">✕</button>
+    </div>
+
+    <!-- Busca -->
+    <div style="position:relative;margin-bottom:1rem;">
+      <input id="historicoBusca" type="text" placeholder="Buscar por nome..."
+        oninput="filtrarHistorico()"
+        style="width:100%;background:var(--input-bg);border:1px solid rgba(201,168,76,0.25);border-radius:8px;color:var(--off-white);font-size:0.88rem;padding:0.55rem 0.9rem;outline:none;" />
+    </div>
+
+    <!-- Lista -->
+    <div id="historicoLista" style="overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:0.5rem;padding-right:4px;">
+      <p style="color:var(--gray);font-size:0.85rem;text-align:center;padding:2rem 0;" id="historicoEmpty">Carregando...</p>
+    </div>
+
+    <p style="font-size:0.72rem;color:var(--gray);margin-top:0.75rem;">
+      Clique em uma avaliação para carregá-la no formulário. A data é atualizada para hoje e o parecer é zerado.
+    </p>
+  </div>
+</div>
+
 <!-- Firebase Config Modal -->
 <div class="modal-overlay hidden" id="firebaseModal">
   <div class="modal">
@@ -421,6 +447,15 @@
       <button class="btn btn-outline" onclick="skipFirebase()">Usar sem banco (só calcular)</button>
       <button class="btn btn-gold" onclick="initFirebaseFromModal()">Conectar</button>
     </div>
+  </div>
+</div>
+
+<!-- Banner de rascunho -->
+<div id="rascunhoBanner" style="display:none; background:rgba(201,168,76,0.12); border-bottom:1px solid rgba(201,168,76,0.35); padding:0.6rem 5%; display:none; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+  <span style="font-size:0.84rem; color:var(--gold-lt);">⚡ Rascunho encontrado — dados da última sessão disponíveis para restaurar.</span>
+  <div style="display:flex;gap:0.5rem;">
+    <button onclick="restaurarRascunho(true)" style="background:var(--gold);color:var(--navy);border:none;padding:0.35rem 1rem;border-radius:6px;font-weight:700;font-size:0.8rem;cursor:pointer;">Restaurar</button>
+    <button onclick="descartarRascunho()" style="background:transparent;color:var(--gray);border:1px solid rgba(255,255,255,0.15);padding:0.35rem 0.8rem;border-radius:6px;font-size:0.8rem;cursor:pointer;">Descartar</button>
   </div>
 </div>
 
@@ -969,9 +1004,13 @@
 
 <!-- SAVE BAR -->
 <div class="save-bar">
-  <span class="status-msg" id="saveStatus">Pronto para salvar</span>
-  <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+  <div style="display:flex;flex-direction:column;gap:0.2rem;">
+    <span class="status-msg" id="saveStatus">Pronto para salvar</span>
+    <span id="rascunhoStatus" style="font-size:0.72rem;color:var(--gray);"></span>
+  </div>
+  <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
     <button class="btn btn-outline" id="btnPDF" onclick="gerarPDF()">⬇ Gerar PDF</button>
+    <button class="btn btn-outline" onclick="abrirHistorico()">📋 Histórico</button>
     <button class="btn btn-outline" onclick="showFirebaseModal()">⚙ Firebase</button>
     <button class="btn btn-gold" id="btnSalvar" onclick="salvarAvaliacao()">
       ✦ Salvar Avaliação
@@ -1136,6 +1175,115 @@ function setProtocolo(val) {
 }
 window.setProtocolo = setProtocolo;
 
+/* ══════════════════════════════════════════
+   AUTO-SAVE (localStorage)
+══════════════════════════════════════════ */
+const RASCUNHO_KEY = 'ajr_rascunho_v2';
+let rascunhoTimer = null;
+
+function agendarAutoSave() {
+  clearTimeout(rascunhoTimer);
+  rascunhoTimer = setTimeout(salvarRascunho, 1500);
+}
+
+function salvarRascunho() {
+  try {
+    const dados = coletarDados();
+    // Adiciona checkboxes (não capturados em coletarDados)
+    dados._checkboxes = {
+      ckPlantar:   !!document.getElementById('ckPlantar')?.checked,
+      ckJoelho:    !!document.getElementById('ckJoelho')?.checked,
+      ckLombar:    !!document.getElementById('ckLombar')?.checked,
+      ckEscapular: !!document.getElementById('ckEscapular')?.checked,
+    };
+    dados._stageCount = stageCount;
+    dados._savedAt = new Date().toISOString();
+    localStorage.setItem(RASCUNHO_KEY, JSON.stringify(dados));
+    // Atualiza indicador
+    const hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const el = document.getElementById('rascunhoStatus');
+    if (el) el.textContent = `💾 Rascunho salvo às ${hora}`;
+  } catch(e) {
+    // localStorage pode estar cheio
+    const el = document.getElementById('rascunhoStatus');
+    if (el) el.textContent = '⚠ Rascunho não pôde ser salvo (armazenamento cheio)';
+  }
+}
+
+function restaurarRascunho(fromBanner) {
+  try {
+    const raw = localStorage.getItem(RASCUNHO_KEY);
+    if (!raw) return false;
+    const dados = JSON.parse(raw);
+
+    // Fecha banner
+    document.getElementById('rascunhoBanner').style.display = 'none';
+
+    // Preenche formulário
+    preencherFormulario(dados);
+
+    // Restaura data original (preencherFormulario não sobrescreve)
+    if (dados.dataAvaliacao) document.getElementById('dataAvaliacao').value = dados.dataAvaliacao;
+
+    // Restaura checkboxes
+    if (dados._checkboxes) {
+      Object.entries(dados._checkboxes).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.checked = !!val;
+      });
+      calcScoreCocoras();
+    }
+
+    // Restaura stages de VO2 (recria a tabela com os valores salvos)
+    if (dados.stages && dados.stages.length > 0) {
+      document.getElementById('stagesBody').innerHTML = '';
+      stageCount = 0;
+      dados.stages.forEach((s) => {
+        addStage();
+        const rows = document.querySelectorAll('#stagesBody tr');
+        const row = rows[stageCount - 1];
+        if (row && s) {
+          if (s.velocidade != null) row.querySelector('.stage-vel').value = s.velocidade;
+          if (s.fc != null)         row.querySelector('.stage-fc').value  = s.fc;
+          if (s.borg != null)       row.querySelector('.stage-borg').value = s.borg;
+          if (s.vo2est != null)     row.querySelector('.stage-vo2').value = s.vo2est;
+        }
+      });
+    }
+
+    // Restaura parecer e direcionamento
+    if (dados.parecer)        document.getElementById('parecer').value = dados.parecer;
+    if (dados.direcionamento) document.getElementById('direcionamento').value = dados.direcionamento;
+
+    if (fromBanner) {
+      setStatus('✓ Rascunho restaurado com sucesso', 'success');
+      setTimeout(() => setStatus('Pronto para salvar', ''), 4000);
+    }
+    return true;
+  } catch(e) {
+    console.warn('Falha ao restaurar rascunho:', e);
+    return false;
+  }
+}
+
+function descartarRascunho() {
+  localStorage.removeItem(RASCUNHO_KEY);
+  document.getElementById('rascunhoBanner').style.display = 'none';
+}
+
+function limparRascunho() {
+  localStorage.removeItem(RASCUNHO_KEY);
+  const el = document.getElementById('rascunhoStatus');
+  if (el) el.textContent = '';
+}
+
+// Dispara auto-save em qualquer mudança de input
+document.addEventListener('input',  agendarAutoSave);
+document.addEventListener('change', agendarAutoSave);
+
+window.restaurarRascunho = restaurarRascunho;
+window.descartarRascunho = descartarRascunho;
+
 window.addEventListener('load', () => {
   // Set today as default assessment date
   document.getElementById('dataAvaliacao').value = new Date().toISOString().split('T')[0];
@@ -1146,6 +1294,19 @@ window.addEventListener('load', () => {
   // Restaura chave Claude se salva
   const savedKey = localStorage.getItem('ajr_claude_key');
   if (savedKey) document.getElementById('anthropicKey').value = savedKey;
+  // Verifica se há rascunho salvo — exibe banner
+  if (localStorage.getItem(RASCUNHO_KEY)) {
+    try {
+      const d = JSON.parse(localStorage.getItem(RASCUNHO_KEY));
+      const banner = document.getElementById('rascunhoBanner');
+      const nome = d.nome ? ` de ${d.nome}` : '';
+      const hora = d._savedAt ? ` (${new Date(d._savedAt).toLocaleString('pt-BR', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})})` : '';
+      banner.querySelector('span').textContent = `⚡ Rascunho encontrado${nome}${hora} — restaurar dados da última sessão?`;
+      banner.style.display = 'flex';
+    } catch(e) {
+      localStorage.removeItem(RASCUNHO_KEY);
+    }
+  }
 });
 
 function showFirebaseModal() {
@@ -1477,7 +1638,8 @@ function coletarDados() {
     flexJoDir: parseFloat(document.getElementById('flexJoDir').value) || null,
     flexJoEsq: parseFloat(document.getElementById('flexJoEsq').value) || null,
     // VO2
-    protocoloVo2: document.getElementById('protocoloVo2').value,
+    protocolo: document.querySelector('input[name="protocolo"]:checked')?.value || 'performance',
+    protocoloVo2: 'AJR (Rampa 1% inclinação)',
     stages,
     vo2Max: parseFloat(document.getElementById('vo2Max').value) || null,
     fcMax: parseInt(document.getElementById('fcMax').value) || null,
@@ -1502,11 +1664,21 @@ async function salvarAvaliacao() {
 
   const btn = document.getElementById('btnSalvar');
   btn.disabled = true;
+
+  // Auto-gerar parecer se estiver vazio e chave API disponível
+  const key = document.getElementById('anthropicKey').value.trim() || localStorage.getItem('ajr_claude_key') || '';
+  if (key && !document.getElementById('parecer').value.trim()) {
+    setStatus('✦ Gerando parecer automaticamente...', '');
+    await gerarParecer();
+  }
+
   setStatus('Salvando...', '');
   try {
+    const dadosFinais = coletarDados(); // re-coleta incluindo o parecer gerado
     const { collection, addDoc } = window._fbModules;
-    const ref = await addDoc(collection(db, 'avaliacoes'), dados);
-    setStatus(`Salvo com sucesso! ID: ${ref.id}`, 'success');
+    const ref = await addDoc(collection(db, 'avaliacoes'), dadosFinais);
+    limparRascunho(); // rascunho salvo no Firebase — pode limpar o local
+    setStatus(`✓ Salvo com sucesso! ID: ${ref.id}`, 'success');
     await carregarAlunos();
   } catch(e) {
     setStatus('Erro ao salvar: ' + e.message, 'error');
@@ -1515,25 +1687,115 @@ async function salvarAvaliacao() {
   }
 }
 
+// Mapa nome → { docId, dados } da avaliação mais recente de cada aluno
+let alunosMap = {};
+
 async function carregarAlunos() {
   if (!firebaseReady) return;
   try {
     const { collection, getDocs, query, orderBy, limit } = window._fbModules;
-    const q = query(collection(db, 'avaliacoes'), orderBy('criadoEm', 'desc'), limit(20));
+    const q = query(collection(db, 'avaliacoes'), orderBy('criadoEm', 'desc'), limit(50));
     const snap = await getDocs(q);
-    const nomes = [...new Set(snap.docs.map(d => d.data().nome).filter(Boolean))];
+    alunosMap = {};
+    snap.docs.forEach(doc => {
+      const d = doc.data();
+      if (d.nome && !alunosMap[d.nome]) {
+        alunosMap[d.nome] = { docId: doc.id, dados: d };
+      }
+    });
+    const nomes = Object.keys(alunosMap);
     if (nomes.length === 0) return;
     const container = document.getElementById('alunosRecentes');
     const list = document.getElementById('alunosList');
     list.innerHTML = nomes.map(n =>
-      `<span class="aluno-chip" onclick="preencherNome('${n}')">${n}</span>`
+      `<span class="aluno-chip" onclick="carregarCliente('${n.replace(/'/g,"\\'")}')">▶ ${n}</span>`
     ).join('');
     container.style.display = 'block';
   } catch(e) { /* ignore */ }
 }
 
+function carregarCliente(nome) {
+  const entry = alunosMap[nome];
+  if (!entry) { document.getElementById('nome').value = nome; return; }
+  preencherFormulario(entry.dados);
+  // Nova avaliação: atualiza a data para hoje, limpa parecer
+  document.getElementById('dataAvaliacao').value = new Date().toISOString().split('T')[0];
+  document.getElementById('parecer').value = '';
+  document.getElementById('direcionamento').value = '';
+  setStatus(`✓ Dados de ${nome} carregados — preencha as novas medidas`, 'success');
+  setTimeout(() => setStatus('Pronto para salvar', ''), 5000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function preencherFormulario(d) {
+  // Identificação
+  if (d.nome) document.getElementById('nome').value = d.nome;
+  if (d.dataNascimento) { document.getElementById('dataNascimento').value = d.dataNascimento; calcIdade(); }
+  if (d.sexo) document.getElementById('sexo').value = d.sexo;
+  if (d.objetivo) document.getElementById('objetivo').value = d.objetivo;
+  // Protocolo
+  const proto = d.protocolo || 'performance';
+  const protoRadio = document.querySelector(`input[name="protocolo"][value="${proto}"]`);
+  if (protoRadio) { protoRadio.checked = true; setProtocolo(proto); }
+  // Saúde
+  if (d.contraindicacao) {
+    const r = document.querySelector(`input[name="contraindicacao"][value="${d.contraindicacao}"]`);
+    if (r) r.checked = true;
+  }
+  if (d.dor) document.getElementById('dor').value = d.dor;
+  if (d.eva != null) document.getElementById('eva').value = d.eva;
+  if (d.medicamentos) document.getElementById('medicamentos').value = d.medicamentos;
+  if (d.obsSaude) document.getElementById('obsSaude').value = d.obsSaude;
+  // Repouso
+  if (d.pa) document.getElementById('pa').value = d.pa;
+  if (d.fcRepouso) document.getElementById('fcRepouso').value = d.fcRepouso;
+  if (d.spo2) document.getElementById('spo2').value = d.spo2;
+  // Composição corporal
+  if (d.peso) document.getElementById('peso').value = d.peso;
+  if (d.altura) { document.getElementById('altura').value = d.altura; calcIMC(); }
+  // Circunferências
+  if (d.circunferencias) {
+    Object.entries(d.circunferencias).forEach(([key, val]) => {
+      const el = document.querySelector(`[data-circ="${key}"]`);
+      if (el && val != null) el.value = val;
+    });
+    calcRCQ();
+  }
+  // Dobras
+  if (d.dobras) {
+    Object.entries(d.dobras).forEach(([key, val]) => {
+      const el = document.querySelector(`[data-dobra="${key}"]`);
+      if (el && val != null) el.value = val;
+    });
+    calcPollock();
+  }
+  // Força
+  ['maoDireita','maoEsquerda','cadPostDir','cadPostEsq','extJoDir','extJoEsq','flexJoDir','flexJoEsq'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && d[id] != null) el.value = d[id];
+  });
+  calcAsym('mao','maoDireita','maoEsquerda','asymMao','defMao');
+  calcAsym('cadPost','cadPostDir','cadPostEsq','asymCadPost','defCadPost');
+  calcAsym('extJo','extJoDir','extJoEsq','asymExtJo','defExtJo');
+  calcAsym('flexJo','flexJoDir','flexJoEsq','asymFlexJo','defFlexJo');
+  // Mobilidade
+  if (d.flexCadPostDir != null) document.getElementById('flexDireita').value = d.flexCadPostDir;
+  if (d.flexCadPostEsq != null) document.getElementById('flexEsquerda').value = d.flexCadPostEsq;
+  if (d.ombroDireito != null) document.getElementById('ombroDireito').value = d.ombroDireito;
+  if (d.ombroEsquerdo != null) document.getElementById('ombroEsquerdo').value = d.ombroEsquerdo;
+  if (d.flexJoelhoDireita) document.getElementById('flexJoelhoDireita').value = d.flexJoelhoDireita;
+  if (d.flexJoelhoEsquerda) document.getElementById('flexJoelhoEsquerda').value = d.flexJoelhoEsquerda;
+  // VO2
+  if (d.vo2Max) { document.getElementById('vo2Max').value = d.vo2Max; classVo2Update(); }
+  if (d.fcMax) document.getElementById('fcMax').value = d.fcMax;
+  if (d.velMax) document.getElementById('velMax').value = d.velMax;
+  if (d.fcRecuperacao) document.getElementById('fcRecuperacao').value = d.fcRecuperacao;
+  if (d.obsVo2) document.getElementById('obsVo2').value = d.obsVo2;
+  calcDeltaFC();
+}
+
 function preencherNome(nome) {
-  document.getElementById('nome').value = nome;
+  carregarCliente(nome);
 }
 
 function setStatus(msg, type) {
@@ -1557,6 +1819,8 @@ window.removeStage = removeStage;
 window.calcVO2Row = calcVO2Row;
 window.salvarAvaliacao = salvarAvaliacao;
 window.preencherNome = preencherNome;
+window.carregarCliente = carregarCliente;
+window.preencherFormulario = preencherFormulario;
 window.gerarPDF = gerarPDF;
 window.addFotoSlot = addFotoSlot;
 window.carregarFoto = carregarFoto;
@@ -1735,6 +1999,136 @@ window.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
+/* ══════════════════════════════════════════
+   HISTÓRICO DE AVALIAÇÕES
+══════════════════════════════════════════ */
+let historicoCache = []; // { id, dados }
+
+async function abrirHistorico() {
+  document.getElementById('historicoModal').classList.remove('hidden');
+  document.getElementById('historicoBusca').value = '';
+  await carregarHistorico();
+}
+
+function fecharHistorico() {
+  document.getElementById('historicoModal').classList.add('hidden');
+}
+
+async function carregarHistorico() {
+  const lista = document.getElementById('historicoLista');
+  const empty = document.getElementById('historicoEmpty');
+  empty.style.display = 'block';
+  empty.textContent = 'Carregando...';
+
+  if (!firebaseReady) {
+    empty.textContent = 'Firebase não conectado.';
+    return;
+  }
+
+  try {
+    const { collection, getDocs, query, orderBy, limit } = window._fbModules;
+    const q = query(collection(db, 'avaliacoes'), orderBy('criadoEm', 'desc'), limit(100));
+    const snap = await getDocs(q);
+    historicoCache = snap.docs.map(d => ({ id: d.id, dados: d.data() }));
+
+    if (historicoCache.length === 0) {
+      empty.textContent = 'Nenhuma avaliação salva ainda.';
+      return;
+    }
+    empty.style.display = 'none';
+    renderHistorico(historicoCache);
+  } catch(e) {
+    empty.textContent = 'Erro ao carregar: ' + e.message;
+  }
+}
+
+function renderHistorico(items) {
+  const lista = document.getElementById('historicoLista');
+  // Remove cards antigos mas mantém o empty msg
+  lista.querySelectorAll('.hist-card').forEach(el => el.remove());
+
+  if (items.length === 0) {
+    document.getElementById('historicoEmpty').style.display = 'block';
+    document.getElementById('historicoEmpty').textContent = 'Nenhum resultado encontrado.';
+    return;
+  }
+  document.getElementById('historicoEmpty').style.display = 'none';
+
+  items.forEach(({ id, dados: d }) => {
+    const dataAval = d.dataAvaliacao
+      ? new Date(d.dataAvaliacao + 'T12:00').toLocaleDateString('pt-BR')
+      : (d.criadoEm ? new Date(d.criadoEm).toLocaleDateString('pt-BR') : '—');
+
+    const card = document.createElement('div');
+    card.className = 'hist-card';
+    card.style.cssText = 'background:var(--input-bg);border:1px solid rgba(201,168,76,0.18);border-radius:10px;padding:0.9rem 1.1rem;cursor:pointer;transition:border-color 0.2s,background 0.2s;display:flex;align-items:center;justify-content:space-between;gap:1rem;';
+    card.onmouseenter = () => { card.style.borderColor='var(--gold)'; card.style.background='rgba(201,168,76,0.06)'; };
+    card.onmouseleave = () => { card.style.borderColor='rgba(201,168,76,0.18)'; card.style.background='var(--input-bg)'; };
+    card.onclick = () => carregarDoHistorico(d);
+
+    // Métricas rápidas
+    const gordura = d.percentualGordura ? `${d.percentualGordura.toFixed(1)}% gord.` : '';
+    const peso    = d.peso ? `${d.peso} kg` : '';
+    const vo2     = d.vo2Max ? `VO₂ ${d.vo2Max} ml/kg/min` : '';
+    const proto   = d.protocolo === 'fit' ? 'Fit' : 'Performance';
+    const metricas = [peso, gordura, vo2].filter(Boolean).join(' · ');
+
+    card.innerHTML = `
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:600;font-size:0.92rem;color:var(--off-white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${d.nome || '(sem nome)'}</div>
+        <div style="font-size:0.75rem;color:var(--gray);margin-top:0.2rem;">${metricas || '—'}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <div style="font-size:0.78rem;color:var(--gold-lt);font-weight:600;">${dataAval}</div>
+        <div style="font-size:0.7rem;color:var(--gray);margin-top:0.15rem;">${proto}</div>
+      </div>
+      <div style="color:var(--gold);font-size:1rem;flex-shrink:0;">›</div>`;
+
+    lista.appendChild(card);
+  });
+}
+
+function filtrarHistorico() {
+  const termo = document.getElementById('historicoBusca').value.toLowerCase().trim();
+  if (!termo) { renderHistorico(historicoCache); return; }
+  renderHistorico(historicoCache.filter(({ dados: d }) =>
+    (d.nome || '').toLowerCase().includes(termo)
+  ));
+}
+
+function carregarDoHistorico(d) {
+  fecharHistorico();
+  preencherFormulario(d);
+  // Restaura data original da avaliação
+  if (d.dataAvaliacao) document.getElementById('dataAvaliacao').value = d.dataAvaliacao;
+  // Restaura parecer e direcionamento
+  if (d.parecer)        document.getElementById('parecer').value = d.parecer;
+  if (d.direcionamento) document.getElementById('direcionamento').value = d.direcionamento;
+  // Restaura stages de VO2
+  if (d.stages && d.stages.length > 0) {
+    document.getElementById('stagesBody').innerHTML = '';
+    stageCount = 0;
+    d.stages.forEach(s => {
+      addStage();
+      const rows = document.querySelectorAll('#stagesBody tr');
+      const row = rows[stageCount - 1];
+      if (row && s) {
+        if (s.velocidade != null) row.querySelector('.stage-vel').value = s.velocidade;
+        if (s.fc != null)         row.querySelector('.stage-fc').value = s.fc;
+        if (s.borg != null)       row.querySelector('.stage-borg').value = s.borg;
+        if (s.vo2est != null)     row.querySelector('.stage-vo2').value = s.vo2est;
+      }
+    });
+  }
+  setStatus(`✓ Avaliação de ${d.nome || 'aluno'} carregada`, 'success');
+  setTimeout(() => setStatus('Pronto para salvar', ''), 4000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.abrirHistorico  = abrirHistorico;
+window.fecharHistorico = fecharHistorico;
+window.filtrarHistorico = filtrarHistorico;
+
 /* ══════════════════════════════════════════
    PDF GENERATION
 ══════════════════════════════════════════ */
