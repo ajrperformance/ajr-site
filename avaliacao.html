@@ -1853,11 +1853,11 @@ function montarPrompt() {
   const cocScore = 4 - Object.values(checks).filter(Boolean).length;
   const falhas = Object.entries(checks).filter(([,v])=>v).map(([k])=>({plantar:'Apoio plantar',joelho:'Flexão de joelho >90°',lombar:'Curvatura lombar',escapular:'Retração escapular'}[k])).join(', ');
 
-  return `Você é um professor de educação física especialista em avaliação física e performance. Escreva um PARECER FINAL de avaliação para o aluno abaixo, em português, com tom científico e objetivo mas acessível. Estruture em dois blocos:
+  return `Você é um professor de educação física especialista em avaliação física e performance. Escreva um PARECER FINAL de avaliação para o aluno abaixo, em português, com tom científico e objetivo mas acessível. Seja conciso. Estruture em dois blocos:
 
-1. PARECER GERAL (4-6 parágrafos): analise composição corporal, hemodinâmica em repouso, capacidade cardiorrespiratória, força muscular com assimetrias, mobilidade/flexibilidade. Destaque pontos positivos e de atenção.
+1. PARECER GERAL (exatamente 3 parágrafos): analise composição corporal e hemodinâmica, capacidade cardiorrespiratória, força muscular e assimetrias + mobilidade. Um parágrafo para cada tema. Inclua os valores numéricos relevantes.
 
-2. DIRECIONAMENTO TÉCNICO (3-5 parágrafos): recomendações prioritárias de treinamento, intensidades, foco, e eventuais encaminhamentos. Seja específico.
+2. DIRECIONAMENTO TÉCNICO (exatamente 2 parágrafos): prioridades de treinamento com intensidades e foco; eventuais encaminhamentos ou alertas. Seja direto e específico.
 
 --- DADOS DA AVALIAÇÃO ---
 Aluno: ${d.nome || '—'} | Sexo: ${d.sexo === 'M' ? 'Masculino' : 'Feminino'} | Idade: ${d.idade || '—'} anos | Objetivo: ${d.objetivo || '—'}
@@ -1916,7 +1916,7 @@ async function gerarParecer() {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 1800,
+        max_tokens: 900,
         messages: [{ role: 'user', content: montarPrompt() }]
       })
     });
@@ -1957,9 +1957,12 @@ function addFotoSlot(labelDefault) {
   const slot = document.createElement('div');
   slot.className = 'foto-slot';
   slot.id = 'slot_' + id;
+  // Input DENTRO do label para compatibilidade máxima com browsers
   slot.innerHTML = `
-    <input type="file" id="input_${id}" accept="image/*" style="opacity:0;position:absolute;width:0;height:0;" onchange="carregarFoto('${id}')" />
-    <label for="input_${id}" style="display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;">
+    <label style="display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;">
+      <input type="file" id="input_${id}" accept="image/*"
+        style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0,0,0,0);"
+        onchange="carregarFoto('${id}')" />
       <img class="foto-preview" id="prev_${id}" title="Clique para trocar" />
       <div class="foto-placeholder" id="ph_${id}">
         <span class="foto-icon">📷</span>
@@ -2320,15 +2323,13 @@ function montarHTML() {
 
 function gerarPDF() {
   const btn = document.getElementById('btnPDF');
-  btn.disabled = true; btn.textContent = '⏳ Abrindo...';
+  btn.disabled = true; btn.textContent = '⏳ Gerando...';
 
-  const html = montarHTML();
-  const nome = v('nome') || 'aluno';
+  try {
+    const html = montarHTML();
+    const nome = v('nome') || 'aluno';
 
-  const win = window.open('', '_blank');
-  if (!win) { btn.disabled=false; btn.textContent='⬇ Gerar PDF'; setStatus('Permita pop-ups para gerar o PDF', 'error'); return; }
-
-  win.document.write(`<!DOCTYPE html>
+    const fullHTML = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -2345,18 +2346,33 @@ function gerarPDF() {
   </style>
 </head>
 <body>
-  <div class="no-print" style="background:#0B1E2D;padding:12px 40px;display:flex;gap:12px;align-items:center;">
+  <div class="no-print" style="background:#0B1E2D;padding:12px 40px;display:flex;gap:12px;align-items:center;position:sticky;top:0;z-index:10;">
     <button onclick="window.print()" style="background:#C9A84C;color:#0B1E2D;border:none;padding:8px 20px;border-radius:6px;font-weight:700;cursor:pointer;font-size:14px;">⬇ Salvar como PDF (Ctrl+P)</button>
-    <span style="color:#8a9bab;font-size:12px;">No diálogo de impressão, selecione "Salvar como PDF" como destino</span>
+    <span style="color:#8a9bab;font-size:12px;">No diálogo de impressão, selecione <strong style="color:#e2c878;">Salvar como PDF</strong> como destino</span>
   </div>
   ${html}
 </body>
-</html>`);
-  win.document.close();
+</html>`;
 
-  btn.disabled = false; btn.textContent = '⬇ Gerar PDF';
-  setStatus('Janela aberta — clique em "Salvar como PDF" ✓', 'success');
-  setTimeout(() => setStatus('Pronto para salvar',''), 6000);
+    const blob = new Blob([fullHTML], { type: 'text/html;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const win  = window.open(url, '_blank');
+
+    if (!win) {
+      URL.revokeObjectURL(url);
+      setStatus('Permita pop-ups para gerar o PDF', 'error');
+    } else {
+      setTimeout(() => URL.revokeObjectURL(url), 120000);
+      setStatus('Janela aberta — clique em "Salvar como PDF" ✓', 'success');
+      setTimeout(() => setStatus('Pronto para salvar', ''), 6000);
+    }
+  } catch(e) {
+    setStatus('Erro ao gerar PDF: ' + e.message, 'error');
+    console.error('PDF error:', e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⬇ Gerar PDF';
+  }
 }
 </script>
 </body>
