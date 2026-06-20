@@ -1954,39 +1954,73 @@ let fotoCount = 0;
 function addFotoSlot(labelDefault) {
   fotoCount++;
   const id = 'foto_' + fotoCount;
+
   const slot = document.createElement('div');
   slot.className = 'foto-slot';
   slot.id = 'slot_' + id;
-  slot.innerHTML = `
-    <input type="file" id="input_${id}" accept="image/*" style="display:none;" onchange="carregarFoto('${id}')" />
-    <div style="display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;"
-         onclick="document.getElementById('input_${id}').click()">
-      <img class="foto-preview" id="prev_${id}" title="Clique para trocar" style="display:none;" />
-      <div class="foto-placeholder" id="ph_${id}">
-        <span class="foto-icon">📷</span>
-        <span>Clique para adicionar</span>
-      </div>
-    </div>
-    <div class="foto-footer">
-      <input type="text" placeholder="Legenda (ex: Frente, Lateral D...)" id="leg_${id}" value="${labelDefault||''}" onclick="event.stopPropagation()" />
-      <button type="button" onclick="removerFoto('${id}');event.preventDefault();event.stopPropagation();" title="Remover">✕</button>
-    </div>`;
+
+  // ── input de arquivo ──
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.id = 'input_' + id;
+  input.accept = 'image/*';
+  input.style.display = 'none';
+  input.addEventListener('change', function () { carregarFoto(id); });
+
+  // ── label como área clicável (input dentro = browser abre dialog ao clicar) ──
+  const label = document.createElement('label');
+  label.style.cssText = 'display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;';
+  label.appendChild(input);
+
+  const img = document.createElement('img');
+  img.className = 'foto-preview';
+  img.id = 'prev_' + id;
+  img.title = 'Clique para trocar';
+  label.appendChild(img);
+
+  const ph = document.createElement('div');
+  ph.className = 'foto-placeholder';
+  ph.id = 'ph_' + id;
+  ph.innerHTML = '<span class="foto-icon">📷</span><span>Clique para adicionar</span>';
+  label.appendChild(ph);
+
+  slot.appendChild(label);
+
+  // ── rodapé com legenda e botão remover ──
+  const footer = document.createElement('div');
+  footer.className = 'foto-footer';
+
+  const leg = document.createElement('input');
+  leg.type = 'text';
+  leg.id = 'leg_' + id;
+  leg.placeholder = 'Legenda (ex: Frente, Lateral D...)';
+  leg.value = labelDefault || '';
+  leg.addEventListener('click', e => e.stopPropagation());
+
+  const btnRem = document.createElement('button');
+  btnRem.type = 'button';
+  btnRem.title = 'Remover';
+  btnRem.textContent = '✕';
+  btnRem.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); removerFoto(id); });
+
+  footer.appendChild(leg);
+  footer.appendChild(btnRem);
+  slot.appendChild(footer);
+
   document.getElementById('fotoSlots').appendChild(slot);
 }
 
 function carregarFoto(id) {
-  const file = document.getElementById('input_' + id).files[0];
-  if (!file) return;
+  const input = document.getElementById('input_' + id);
+  if (!input || !input.files || !input.files[0]) return;
   const reader = new FileReader();
   reader.onload = (e) => {
     const img = document.getElementById('prev_' + id);
     const ph  = document.getElementById('ph_' + id);
-    img.src = e.target.result;
-    img.style.display = 'block';
-    img.onclick = () => document.getElementById('input_' + id).click(); // trocar foto ao clicar
-    ph.style.display = 'none';
+    if (img) { img.src = e.target.result; img.style.display = 'block'; }
+    if (ph)  { ph.style.display = 'none'; }
   };
-  reader.readAsDataURL(file);
+  reader.readAsDataURL(input.files[0]);
 }
 
 function removerFoto(id) {
