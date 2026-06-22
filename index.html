@@ -979,21 +979,21 @@
       </div>
     </div>
 
-    <!-- Slide 2: Escaneamento -->
+    <!-- Slide 2: VO2 Máximo -->
     <div class="car-slide" id="carSlide1">
-      <div class="car-slide-bg" style="background-image:url('foto-escaneamento.jpg')"></div>
+      <div class="car-slide-bg" style="background-image:url('foto-vo2.jpg')"></div>
       <div class="car-overlay"></div>
       <div class="car-accent-bar"></div>
       <div class="car-slide-num">02</div>
       <div class="car-content">
-        <div class="car-badge-pill">Tecnologia Tera Science</div>
+        <div class="car-badge-pill">Diagnóstico Cardiorrespiratório</div>
         <div class="car-eyebrow">Sessão Única · Presencial</div>
-        <h2 class="car-title">Escaneamento<br><em>Corporal 3D</em></h2>
-        <p class="car-desc">Veja sua composição corporal em detalhes — % de gordura, massa muscular e distribuição por segmento em uma sessão.</p>
-        <div class="car-price">R$149,90<small>sessão única</small></div>
+        <h2 class="car-title">Teste de<br><em>VO2 Máximo</em></h2>
+        <p class="car-desc">Descubra sua capacidade aeróbica real — o indicador mais preciso de saúde cardiovascular e base para treino de alta performance.</p>
+        <div class="car-price">R$349,90<small>sessão única</small></div>
         <div class="car-actions">
           <a href="#planos" class="car-btn-p">Ver plano completo</a>
-          <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Escaneamento%20Corporal%203D%20(R%24149%2C90).%20Pode%20me%20ajudar%3F" target="_blank" onclick="gtag('event','whatsapp_click',{plan:'escaneamento',source:'carousel'})" class="car-btn-g">Agendar agora →</a>
+          <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Teste%20de%20VO2%20M%C3%A1ximo%20(R%24349%2C90).%20Pode%20me%20ajudar%3F" target="_blank" onclick="gtag('event','whatsapp_click',{plan:'vo2',source:'carousel'})" class="car-btn-g">Agendar agora →</a>
         </div>
       </div>
     </div>
@@ -1427,11 +1427,11 @@
       <h3 class="quiz-question">O que você busca nessa avaliação?</h3>
       <p class="quiz-subtitle">Última pergunta — promessa! Sua recomendação já está quase pronta.</p>
       <div class="quiz-opts two-col">
-        <button class="quiz-opt-btn" onclick="qAnswer(4,'escaneamento')">
-          <span class="qob-icon">🔬</span>
+        <button class="quiz-opt-btn" onclick="qAnswer(4,'vo2')">
+          <span class="qob-icon">🫀</span>
           <span class="qob-body">
-            <span class="qob-label">Ver minha composição em detalhes</span>
-            <span class="qob-desc">Escaneamento 3D rápido — resultado em uma sessão</span>
+            <span class="qob-label">Medir minha capacidade cardiorrespiratória</span>
+            <span class="qob-desc">Teste de VO2 Máximo — o indicador mais preciso de saúde aeróbica</span>
           </span>
           <span class="qob-check">✓</span>
         </button>
@@ -1490,12 +1490,12 @@
       price: 'R$79,90', note: 'por mês · plano recorrente',
       wpp: 'Fiz+o+quiz+e+o+resultado+foi+AJR+Online.+Quero+saber+mais!'
     },
-    'escaneamento': {
-      title: 'Escaneamento Corporal é o ponto de partida ideal',
-      why: 'Você quer entender seu corpo de forma rápida e visual. O Escaneamento com tecnologia Tera Science mostra composição corporal, % de gordura e distribuição muscular em uma sessão presencial.',
-      perks: ['Tecnologia Tera Science 3D','% gordura, massa muscular e visceral','Distribuição de gordura por segmento','Relatório digital completo em uma sessão'],
-      price: 'R$149,90', note: 'sessão única · presencial em Bauru',
-      wpp: 'Fiz+o+quiz+e+o+resultado+foi+Escaneamento+Corporal.+Quero+agendar!'
+    'vo2': {
+      title: 'Teste de VO2 Máximo é a avaliação certa para você',
+      why: 'Você quer conhecer sua capacidade aeróbica real. O Teste de VO2 Máximo é o padrão-ouro para avaliar saúde cardiovascular e definir zonas de treino precisas — uma sessão presencial com protocolo científico.',
+      perks: ['Protocolo científico de esforço máximo','Cálculo do VO2 máximo individualizado','Zonas de treinamento aeróbico e anaeróbico','Frequência cardíaca máxima e de reserva','Relatório digital completo em uma sessão'],
+      price: 'R$349,90', note: 'sessão única · presencial em Bauru',
+      wpp: 'Fiz+o+quiz+e+o+resultado+foi+Teste+de+VO2+M%C3%A1ximo.+Quero+agendar!'
     },
     'ajr-performance': {
       title: 'AJR Performance é o caminho certo para você',
@@ -1558,7 +1558,7 @@
       } else if(step===3){
         showStep(4);
       } else if(step===4){
-        if(val==='escaneamento'){ showResult('escaneamento'); }
+        if(val==='vo2'){ showResult('vo2'); }
         else { showResult('ajr-performance'); }
       }
     }, 380);
@@ -1699,28 +1699,28 @@
       </div>
     </div>
 
-    <!-- Escaneamento Corporal -->
+    <!-- Teste de VO2 Máximo -->
     <div class="plano">
-      <img src="foto-escaneamento.jpg" alt="Escaneamento Corporal Tera Science" class="plano-img" />
+      <img src="foto-vo2.jpg" alt="Teste de VO2 Máximo" class="plano-img" />
       <div class="plano-head">
-        <div class="plano-tag">Tecnologia Tera Science</div>
-        <div class="plano-name">Escaneamento Corporal</div>
-        <div class="plano-desc">Bioimpedância avançada com visualização 3D do corpo. Veja sua composição como nunca viu.</div>
+        <div class="plano-tag">Diagnóstico Cardiorrespiratório</div>
+        <div class="plano-name">Teste de VO2 Máximo</div>
+        <div class="plano-desc">Protocolo científico de esforço para medir sua capacidade aeróbica real e definir zonas de treino precisas.</div>
       </div>
       <div class="plano-preco">
-        <div class="preco-val">R$149<span style="font-size:1.1rem">,90</span></div>
+        <div class="preco-val">R$349<span style="font-size:1.1rem">,90</span></div>
         <div class="preco-note">Sessão única · presencial</div>
       </div>
       <div class="plano-divider" style="margin-top:1.25rem"></div>
       <ul class="plano-lista">
-        <li>Bioimpedância com tecnologia Tera Science</li>
-        <li>Visualização 3D da composição corporal</li>
-        <li>% gordura, massa muscular e visceral</li>
-        <li>Distribuição de gordura por segmento</li>
+        <li>Protocolo científico de esforço máximo</li>
+        <li>Cálculo do VO2 máximo individualizado</li>
+        <li>Zonas de treinamento aeróbico e anaeróbico</li>
+        <li>Frequência cardíaca máxima e de reserva</li>
         <li>Relatório digital completo</li>
       </ul>
       <div class="plano-foot">
-        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Escaneamento%20Corporal%203D%20(R%24149%2C90).%20Pode%20me%20ajudar%3F" onclick="gtag('event','whatsapp_click',{plan:'escaneamento',source:'card'})" class="btn-plano-outline">Agendar escaneamento</a>
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Teste%20de%20VO2%20M%C3%A1ximo%20(R%24349%2C90).%20Pode%20me%20ajudar%3F" onclick="gtag('event','whatsapp_click',{plan:'vo2',source:'card'})" class="btn-plano-outline">Agendar teste de VO2</a>
       </div>
     </div>
 
@@ -1844,7 +1844,7 @@
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        Em torno de 60 a 90 minutos, dependendo da modalidade. A avaliação AJR Performance é mais detalhada e pode levar até 2 horas com todas as etapas. O escaneamento corporal é mais rápido — cerca de 30 minutos.
+        Em torno de 60 a 90 minutos, dependendo da modalidade. A avaliação AJR Performance é mais detalhada e pode levar até 2 horas com todas as etapas. O Teste de VO2 Máximo dura em média 40 a 60 minutos com protocolo completo.
       </div>
     </div>
 
@@ -1870,11 +1870,11 @@
 
     <div class="faq-item">
       <button class="faq-btn" onclick="toggleFaq(this)">
-        O escaneamento corporal substitui a avaliação completa?
+        O Teste de VO2 Máximo substitui a avaliação completa?
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        Não, eles se complementam. O escaneamento é focado em composição corporal com tecnologia 3D. A avaliação completa inclui VO2, força muscular, mobilidade, pressão arterial, assimetrias e muito mais — é um diagnóstico de todo o corpo.
+        Não, eles se complementam. O Teste de VO2 Máximo é focado em capacidade cardiorrespiratória e zonas de treino aeróbico. A avaliação completa inclui composição corporal, força muscular, mobilidade, pressão arterial, assimetrias e muito mais — é um diagnóstico integral do corpo.
       </div>
     </div>
 
