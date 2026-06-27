@@ -1951,6 +1951,10 @@ window.classVo2Update = classVo2Update;
 ══════════════════════════════════════════ */
 function toggleSection(id) {
   document.getElementById(id).classList.toggle('collapsed');
+  // Redesenha avatar ao abrir sec4
+  if (id === 'sec4' && !document.getElementById('sec4').classList.contains('collapsed')) {
+    if (typeof window.drawBodyAvatar === 'function') setTimeout(window.drawBodyAvatar, 50);
+  }
 }
 
 /* ══════════════════════════════════════════
@@ -2485,8 +2489,8 @@ window.addLesaoRow  = addLesaoRow;
 /* ══════════════════════════════════════════
    BODY PAIN MAP  — interação imediata
 ══════════════════════════════════════════ */
-const painData = {};          // { regionId: { level, label, note } }
-let currentPainRegion = null;
+var painData = {};             // { regionId: { level, label, note } }
+var currentPainRegion = null;
 
 // Cores de preenchimento indexadas por EVA 0-10
 const EVA_FILL = [
@@ -2691,6 +2695,22 @@ function drawBodyAvatar() {
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0, 0, W, H);
+  try { _drawBodyAvatarInner(ctx, W, H, canvas); } catch(ex) {
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='rgba(255,100,80,0.85)'; ctx.font='bold 11px sans-serif';
+    ctx.fillText('Erro avatar:', 6, 18);
+    ctx.font='10px sans-serif';
+    var words = ex.message.split(' ');
+    var line = '', y = 34;
+    words.forEach(function(w) {
+      var test = line + w + ' ';
+      if (test.length > 28 && line) { ctx.fillText(line, 6, y); y += 14; line = w + ' '; }
+      else line = test;
+    });
+    if (line) ctx.fillText(line, 6, y);
+  }
+}
+function _drawBodyAvatarInner(ctx, W, H, canvas) {
 
   // ── Read measurements ──
   const gv = id => parseFloat(document.getElementById(id)?.value) || 0;
@@ -2892,7 +2912,7 @@ function drawBodyAvatar() {
     dobraHeat(dAxi, 25), dobraHeat(dAbd, 35), dobraHeat(dSup, 30), dobraHeat(dCox, 30)
   ];
   zoneDots.forEach((dot, i) => { dot.style.background = heatRGBA(heats[i], 1); });
-}
+} // end _drawBodyAvatarInner
 
 window.drawBodyAvatar = drawBodyAvatar;
 window.switchBodyView = switchBodyView;
@@ -3280,19 +3300,52 @@ function gerarPDF() {
 
 <script>
 /* ══ PAIN MAP INIT — roda depois de tudo carregado ══ */
+
+// Captura qualquer erro JS e exibe no painel de dor
+window.addEventListener('error', function(ev) {
+  try {
+    var prompt = document.getElementById('painPrompt');
+    if (prompt && prompt.style.display !== 'none') {
+      prompt.innerHTML = '⚠️ Erro JS: ' + ev.message + ' (linha ' + ev.lineno + ')';
+    }
+  } catch(e) {}
+});
+
 (function() {
   function bmInit() {
-    // Coloca onclick direto em cada região do SVG
-    document.querySelectorAll('.bm-region').forEach(function(el) {
+    var regions = document.querySelectorAll('.bm-region');
+
+    regions.forEach(function(el) {
       el.onclick = function(e) {
         e.stopPropagation();
         var r = this.getAttribute('data-region');
         var l = this.getAttribute('data-label');
-        if (r && typeof selectRegion === 'function') selectRegion(r, l);
+        if (!r) return;
+
+        try {
+          if (typeof window.selectRegion === 'function') {
+            window.selectRegion(r, l);
+          } else {
+            // Fallback direto no DOM (caso window.selectRegion não exista)
+            window.currentPainRegion = r;
+            var prompt = document.getElementById('painPrompt');
+            var editor = document.getElementById('painEditor');
+            var labelEl = document.getElementById('painEditorLabel');
+            if (prompt)  prompt.style.display  = 'none';
+            if (editor)  editor.style.display   = '';
+            if (labelEl) labelEl.textContent     = l || r;
+          }
+        } catch(ex) {
+          var prompt = document.getElementById('painPrompt');
+          if (prompt) {
+            prompt.style.display = '';
+            prompt.textContent = '⚠ Erro ao selecionar região: ' + ex.message;
+          }
+        }
       };
     });
 
-    // Textarea nota auto-save (usa window.* para acesso cross-script)
+    // Textarea nota
     var noteEl = document.getElementById('painNote');
     if (noteEl && !noteEl._bmInit) {
       noteEl._bmInit = true;
@@ -3303,9 +3356,18 @@ function gerarPDF() {
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bmInit);
+    document.addEventListener('DOMContentLoaded', function() {
+      bmInit();
+      if (typeof window.drawBodyAvatar === 'function') {
+        try { window.drawBodyAvatar(); } catch(e) {}
+      }
+    });
   } else {
-    bmInit(); // DOM já carregado
+    bmInit();
+    // Garantir que o avatar desenha mesmo que o DOMContentLoaded já tenha disparado
+    if (typeof window.drawBodyAvatar === 'function') {
+      try { window.drawBodyAvatar(); } catch(e) {}
+    }
   }
 })();
 </script>
