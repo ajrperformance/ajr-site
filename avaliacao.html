@@ -396,6 +396,192 @@
     .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
     .meas-table th:nth-child(n+3), .meas-table td:nth-child(n+3) { display: none; }
   }
+
+  /* ═══ PATOLOGIAS GRID ═══ */
+  .patologias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+  .patologias-grid label {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; color: var(--off-white);
+    cursor: pointer; padding: 0.35rem 0.6rem;
+    border-radius: 8px; border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .patologias-grid label:hover { background: rgba(201,168,76,0.06); border-color: var(--border); }
+  .patologias-grid input[type=checkbox] { accent-color: var(--gold); width: 14px; height: 14px; flex-shrink:0; }
+  .patologias-grid label:has(input:checked) { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.35); }
+
+  /* ═══ DYNAMIC TABLE (meds / lesões) ═══ */
+  .dyn-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 0.5rem; }
+  .dyn-table th {
+    text-align: left; padding: 0.45rem 0.5rem;
+    color: var(--gold); font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .dyn-table td { padding: 0.25rem 0.3rem; }
+  .dyn-table input, .dyn-table select {
+    width: 100%; background: var(--input-bg); border: 1px solid transparent;
+    border-radius: 4px; color: var(--off-white); font-size: 0.78rem;
+    padding: 0.3rem 0.4rem; font-family: 'Inter', sans-serif; transition: border 0.2s;
+  }
+  .dyn-table input:focus, .dyn-table select:focus { border-color: var(--gold); outline: none; }
+  .dyn-table select { cursor: pointer; }
+  .dyn-table tr:hover td { background: rgba(201,168,76,0.03); }
+  .dyn-table .btn-rem-row {
+    background: none; border: none; color: var(--danger);
+    cursor: pointer; font-size: 0.85rem; padding: 0.2rem 0.4rem;
+  }
+  .dyn-table .btn-rem-row:hover { color: #ff8080; }
+  .add-row-btn {
+    font-size: 0.75rem; color: var(--gold); background: none;
+    border: 1px dashed rgba(201,168,76,0.35); border-radius: 6px;
+    padding: 0.3rem 0.8rem; cursor: pointer; margin-top: 0.5rem;
+    transition: all 0.2s; font-family: 'Montserrat', sans-serif; font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .add-row-btn:hover { background: rgba(201,168,76,0.08); border-style: solid; }
+
+  /* ═══ BODY PAIN MAP ═══ */
+  .body-map-wrap {
+    display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+  .body-map-col { flex: 0 0 auto; }
+  .body-map-toggle { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .bm-toggle-btn {
+    padding: 0.28rem 0.85rem; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--teal);
+    color: var(--gray); font-size: 0.72rem; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+  .bm-toggle-btn.active { background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold); }
+  .body-map-svg { width: 168px; display: block; }
+  .bm-region {
+    fill: rgba(201,168,76,0.06); stroke: rgba(201,168,76,0.22); stroke-width: 1;
+    cursor: pointer; pointer-events: all;
+    transition: fill 0.22s, stroke 0.22s, filter 0.22s;
+  }
+  .bm-region:hover { fill: rgba(201,168,76,0.18); stroke: rgba(201,168,76,0.55); }
+  .bm-region.bm-selected { stroke-width: 1.8; filter: drop-shadow(0 0 4px currentColor); }
+  .bm-label-text { fill: rgba(201,168,76,0.3); font-size: 7px; font-family: 'Montserrat',sans-serif; pointer-events: none; text-anchor: middle; }
+
+  /* ── Pain side panel ── */
+  .pain-panel { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 0; }
+
+  .pain-editor-box {
+    background: var(--teal); border: 1px solid rgba(201,168,76,0.35);
+    border-radius: var(--radius); padding: 0.85rem 1rem; margin-bottom: 1rem;
+    min-height: 120px; display: flex; flex-direction: column; justify-content: center;
+  }
+  .pain-prompt {
+    color: var(--gray); font-size: 0.8rem; font-style: italic; text-align: center; line-height: 1.55;
+  }
+  .pain-editor-region-name {
+    font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+  }
+  .eva-instruction {
+    font-size: 0.72rem; color: var(--gray); margin-bottom: 0.5rem;
+  }
+  .eva-btn-row {
+    display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.65rem;
+  }
+  .eva-btn {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid transparent; font-size: 0.65rem; font-weight: 800;
+    font-family: 'Montserrat', sans-serif; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.12s, box-shadow 0.12s; flex-shrink: 0; color: #fff;
+  }
+  .eva-btn:hover  { transform: scale(1.18); }
+  .eva-btn.active { border-color: #fff; transform: scale(1.22); box-shadow: 0 0 8px rgba(255,255,255,0.5); }
+  /* EVA 0 */
+  .eva-btn[data-v="0"]  { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.3); color: var(--gray); }
+  /* EVA 1-3 amarelo */
+  .eva-btn[data-v="1"]  { background: rgba(255,230,30,0.55); color: #332; }
+  .eva-btn[data-v="2"]  { background: rgba(255,210,25,0.68); color: #332; }
+  .eva-btn[data-v="3"]  { background: rgba(250,185,20,0.80); color: #332; }
+  /* EVA 4-6 laranja */
+  .eva-btn[data-v="4"]  { background: rgba(255,155,30,0.80); }
+  .eva-btn[data-v="5"]  { background: rgba(255,125,25,0.85); }
+  .eva-btn[data-v="6"]  { background: rgba(255,90,25,0.88); }
+  /* EVA 7-10 vermelho */
+  .eva-btn[data-v="7"]  { background: rgba(230,55,40,0.88); }
+  .eva-btn[data-v="8"]  { background: rgba(210,30,30,0.90); }
+  .eva-btn[data-v="9"]  { background: rgba(185,10,10,0.93); }
+  .eva-btn[data-v="10"] { background: rgba(155,0,0,0.97); }
+
+  .pain-note-field {
+    width: 100%; background: var(--input-bg); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--off-white); font-family: 'Inter', sans-serif;
+    font-size: 0.76rem; padding: 0.4rem 0.5rem; resize: vertical; min-height: 42px;
+    transition: border 0.2s;
+  }
+  .pain-note-field:focus { border-color: var(--gold); outline: none; }
+  .pain-rem-btn {
+    background: none; border: none; color: var(--danger); font-size: 0.73rem;
+    cursor: pointer; padding: 0; margin-top: 0.35rem; font-family: 'Inter', sans-serif;
+    display: inline-block;
+  }
+  .pain-rem-btn:hover { text-decoration: underline; }
+
+  .pain-list-title {
+    font-family: 'Montserrat', sans-serif; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .pain-list { display: flex; flex-direction: column; gap: 0.4rem; }
+  .pain-item {
+    background: rgba(201,168,76,0.05); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.45rem 0.7rem;
+    display: flex; align-items: center; gap: 0.55rem; font-size: 0.8rem; flex-wrap: wrap;
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .pain-item:hover { border-color: rgba(201,168,76,0.4); }
+  .pain-item.pi-active { border-color: var(--gold); background: rgba(201,168,76,0.1); }
+  .pi-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .pi-name { flex: 1; color: var(--off-white); font-weight: 500; }
+  .pi-badge {
+    font-size: 0.67rem; font-weight: 800; padding: 0.1rem 0.42rem;
+    border-radius: 10px; font-family: 'Montserrat', sans-serif; flex-shrink: 0;
+  }
+  .pi-note { color: var(--gray); font-size: 0.72rem; font-style: italic; flex-basis: 100%; margin-top: -0.1rem; }
+  .btn-rem-pain { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.82rem; padding: 0 0.1rem; flex-shrink: 0; }
+
+  /* ═══ BODY COMPOSITION AVATAR ═══ */
+  .avatar-wrap {
+    display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;
+    margin-top: 1.75rem; padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .avatar-canvas-col { flex: 0 0 auto; }
+  #avatarCanvas {
+    border-radius: var(--radius); display: block;
+    background: rgba(201,168,76,0.03); border: 1px solid var(--border);
+  }
+  .avatar-info { flex: 1; min-width: 180px; }
+  .avatar-info h4 {
+    font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .fat-gradient-bar {
+    height: 10px; border-radius: 5px; margin: 0.5rem 0 0.3rem;
+    background: linear-gradient(to right,#4fc3f7,#4caf7d,#f5c832,#f59132,#e05c5c);
+  }
+  .fat-gradient-labels { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--gray); }
+  .fat-zone-row {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.78rem; margin: 0.4rem 0;
+  }
+  .fzr-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .fzr-label { flex: 1; color: var(--off-white); }
+  .fzr-val { font-family: 'Montserrat',sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--gold); }
+  .avatar-note { font-size: 0.72rem; color: var(--gray); line-height: 1.55; margin-top: 0.9rem; }
   </style>
 </head>
 <body>
@@ -549,31 +735,224 @@
       <span class="section-toggle">▾</span>
     </div>
     <div class="section-body">
+
+      <!-- Contraindicação + objetivo -->
       <div class="form-grid">
         <div class="field form-full">
           <label>Possui contraindicação médica para atividade física?</label>
           <div class="radio-group">
             <label><input type="radio" name="contraindicacao" value="Não" /> Não</label>
-            <label><input type="radio" name="contraindicacao" value="Sim" /> Sim</label>
+            <label><input type="radio" name="contraindicacao" value="Sim" /> Sim — ver observações</label>
           </div>
         </div>
         <div class="field form-full">
-          <label>Possui dor em alguma região do corpo? Se sim, qual?</label>
-          <input type="text" id="dor" placeholder="Não / Descrição da dor e local" />
-        </div>
-        <div class="field">
-          <label>Nível de dor — Escala EVA <span class="unit">0–10</span></label>
-          <input type="number" id="eva" min="0" max="10" placeholder="0" />
-        </div>
-        <div class="field form-full">
-          <label>Faz uso de medicamentos contínuos? Se sim, quais?</label>
-          <input type="text" id="medicamentos" placeholder="Não / Nome dos medicamentos" />
+          <label>Realiza ou realizou tratamento médico/fisioterápico recentemente?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="tratamento" value="Não" /> Não</label>
+            <label><input type="radio" name="tratamento" value="Sim" /> Sim</label>
+          </div>
         </div>
         <div class="field form-full">
-          <label>Observações adicionais de saúde</label>
-          <textarea id="obsSaude" placeholder="Histórico relevante, cirurgias, lesões..."></textarea>
+          <label>Cirurgias anteriores</label>
+          <input type="text" id="cirurgias" placeholder="Descreva ou escreva 'Nenhuma'" />
+        </div>
+        <div class="field form-full">
+          <label>Observações gerais de saúde</label>
+          <textarea id="obsSaude" placeholder="Informações relevantes adicionais..."></textarea>
         </div>
       </div>
+
+      <!-- Patologias -->
+      <div class="subsection-title" style="margin-top:1.25rem;">Patologias e Condições de Saúde</div>
+      <div class="patologias-grid">
+        <label><input type="checkbox" name="patologia" value="Hipertensão" /> Hipertensão</label>
+        <label><input type="checkbox" name="patologia" value="Diabetes tipo 1" /> Diabetes tipo 1</label>
+        <label><input type="checkbox" name="patologia" value="Diabetes tipo 2" /> Diabetes tipo 2</label>
+        <label><input type="checkbox" name="patologia" value="Dislipidemia" /> Dislipidemia</label>
+        <label><input type="checkbox" name="patologia" value="Doença cardiovascular" /> Doença cardiovascular</label>
+        <label><input type="checkbox" name="patologia" value="Arritmia" /> Arritmia</label>
+        <label><input type="checkbox" name="patologia" value="Asma / DPOC" /> Asma / DPOC</label>
+        <label><input type="checkbox" name="patologia" value="Problema articular / osteoartrite" /> Problema articular</label>
+        <label><input type="checkbox" name="patologia" value="Osteoporose / osteopenia" /> Osteoporose</label>
+        <label><input type="checkbox" name="patologia" value="Hérnia de disco" /> Hérnia de disco</label>
+        <label><input type="checkbox" name="patologia" value="Hipotireoidismo / hipertireoidismo" /> Tireoide</label>
+        <label><input type="checkbox" name="patologia" value="Ansiedade / depressão" /> Ansiedade / depressão</label>
+        <label><input type="checkbox" name="patologia" value="Enxaqueca / cefaleia" /> Enxaqueca</label>
+        <label><input type="checkbox" name="patologia" value="Síndrome metabólica" /> S. metabólica</label>
+        <label><input type="checkbox" name="patologia" value="Obesidade" /> Obesidade</label>
+        <label><input type="checkbox" name="patologia" value="Outra" /> Outra (ver obs.)</label>
+      </div>
+
+      <!-- Medicamentos -->
+      <div class="subsection-title" style="margin-top:1.25rem;">Medicamentos em Uso Contínuo</div>
+      <table class="dyn-table" id="medTable">
+        <thead><tr>
+          <th style="width:38%">Medicamento</th>
+          <th style="width:22%">Dosagem</th>
+          <th style="width:28%">Frequência</th>
+          <th style="width:12%"></th>
+        </tr></thead>
+        <tbody id="medBody">
+          <tr>
+            <td><input type="text" placeholder="Nome do medicamento" /></td>
+            <td><input type="text" placeholder="Ex: 50mg" /></td>
+            <td><select>
+              <option value="">—</option>
+              <option>1× ao dia</option><option>2× ao dia</option><option>3× ao dia</option>
+              <option>Em dias alternados</option><option>Semanal</option><option>Quando necessário</option>
+            </select></td>
+            <td><button type="button" class="btn-rem-row" onclick="remRow(this)">✕</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="add-row-btn" onclick="addMedRow()">+ Adicionar medicamento</button>
+
+      <!-- Histórico de Lesões -->
+      <div class="subsection-title" style="margin-top:1.25rem;">Histórico de Lesões</div>
+      <table class="dyn-table" id="lesaoTable">
+        <thead><tr>
+          <th style="width:30%">Região</th>
+          <th style="width:28%">Tipo de Lesão</th>
+          <th style="width:20%">Período</th>
+          <th style="width:14%">Status</th>
+          <th style="width:8%"></th>
+        </tr></thead>
+        <tbody id="lesaoBody">
+          <tr>
+            <td><input type="text" placeholder="Ex: Joelho direito" /></td>
+            <td><input type="text" placeholder="Ex: Entorse, tendinite" /></td>
+            <td><input type="text" placeholder="Ex: 2022" /></td>
+            <td><select>
+              <option value="">—</option>
+              <option>Resolvida</option><option>Em tratamento</option><option>Crônica</option><option>Recorrente</option>
+            </select></td>
+            <td><button type="button" class="btn-rem-row" onclick="remRow(this)">✕</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="add-row-btn" onclick="addLesaoRow()">+ Adicionar lesão</button>
+
+      <!-- Mapa de Dores -->
+      <div class="subsection-title" style="margin-top:1.5rem;">Mapa de Dores <span style="font-size:0.72rem;color:var(--gray);font-weight:400;text-transform:none;letter-spacing:0">— clique nas regiões do corpo</span></div>
+      <div class="body-map-wrap">
+
+        <!-- SVG figure -->
+        <div class="body-map-col">
+          <div class="body-map-toggle">
+            <button class="bm-toggle-btn active" id="btnFront" onclick="switchBodyView('front')">Frente</button>
+            <button class="bm-toggle-btn" id="btnBack"  onclick="switchBodyView('back')">Costas</button>
+          </div>
+          <svg class="body-map-svg" id="bodyMapSvg" viewBox="0 0 220 415" xmlns="http://www.w3.org/2000/svg" onclick="handleBodyMapClick(event)" style="cursor:pointer">
+
+            <!-- ── FRONT ── -->
+            <g id="bmFront">
+              <ellipse class="bm-region" data-region="cabeca" data-label="Cabeça" cx="110" cy="32" rx="22" ry="26"/>
+              <rect   class="bm-region" data-region="pescoco" data-label="Pescoço" x="101" y="57" width="18" height="14" rx="4"/>
+              <ellipse class="bm-region" data-region="ombro_dir" data-label="Ombro Direito" cx="62" cy="76" rx="18" ry="13"/>
+              <ellipse class="bm-region" data-region="ombro_esq" data-label="Ombro Esquerdo" cx="158" cy="76" rx="18" ry="13"/>
+              <path class="bm-region" data-region="torax" data-label="Tórax / Peito" d="M 74,68 C 64,72 62,82 62,94 L 64,120 L 156,120 L 158,94 C 158,82 156,72 146,68 Z"/>
+              <path class="bm-region" data-region="abdomen" data-label="Abdômen" d="M 64,120 L 66,152 L 154,152 L 156,120 Z"/>
+              <path class="bm-region" data-region="pelve" data-label="Pelve / Virilha" d="M 66,152 C 65,163 68,172 80,175 L 140,175 C 152,172 155,163 154,152 Z"/>
+              <path class="bm-region" data-region="braco_dir" data-label="Braço Direito" d="M 56,82 C 46,82 40,88 37,98 L 34,144 L 50,144 L 60,92 Z"/>
+              <path class="bm-region" data-region="braco_esq" data-label="Braço Esquerdo" d="M 164,82 C 174,82 180,88 183,98 L 186,144 L 170,144 L 160,92 Z"/>
+              <path class="bm-region" data-region="antebraco_dir" data-label="Antebraço Direito" d="M 34,146 L 28,190 L 42,190 L 50,146 Z"/>
+              <path class="bm-region" data-region="antebraco_esq" data-label="Antebraço Esquerdo" d="M 186,146 L 192,190 L 178,190 L 170,146 Z"/>
+              <ellipse class="bm-region" data-region="mao_dir" data-label="Mão Direita" cx="35" cy="198" rx="11" ry="11"/>
+              <ellipse class="bm-region" data-region="mao_esq" data-label="Mão Esquerda" cx="185" cy="198" rx="11" ry="11"/>
+              <path class="bm-region" data-region="coxa_dir" data-label="Coxa Direita" d="M 68,175 L 62,175 L 59,256 L 98,256 L 100,175 Z"/>
+              <path class="bm-region" data-region="coxa_esq" data-label="Coxa Esquerda" d="M 120,175 L 161,175 L 158,256 L 122,256 Z"/>
+              <ellipse class="bm-region" data-region="joelho_dir" data-label="Joelho Direito" cx="79" cy="261" rx="18" ry="10"/>
+              <ellipse class="bm-region" data-region="joelho_esq" data-label="Joelho Esquerdo" cx="141" cy="261" rx="18" ry="10"/>
+              <path class="bm-region" data-region="perna_dir" data-label="Perna / Tíbia Direita" d="M 63,270 L 61,346 L 97,346 L 97,270 Z"/>
+              <path class="bm-region" data-region="perna_esq" data-label="Perna / Tíbia Esquerda" d="M 123,270 L 123,346 L 159,346 L 157,270 Z"/>
+              <ellipse class="bm-region" data-region="pe_dir" data-label="Pé Direito" cx="79" cy="353" rx="20" ry="9"/>
+              <ellipse class="bm-region" data-region="pe_esq" data-label="Pé Esquerdo" cx="141" cy="353" rx="20" ry="9"/>
+              <!-- label hints -->
+              <text class="bm-label-text" x="110" y="98">TÓRAX</text>
+              <text class="bm-label-text" x="110" y="135">ABD</text>
+              <text class="bm-label-text" x="79" y="215">C.DIR</text>
+              <text class="bm-label-text" x="141" y="215">C.ESQ</text>
+            </g>
+
+            <!-- ── BACK ── -->
+            <g id="bmBack" style="display:none">
+              <ellipse class="bm-region" data-region="b_cabeca" data-label="Cabeça (posterior)" cx="110" cy="32" rx="22" ry="26"/>
+              <rect   class="bm-region" data-region="b_pescoco" data-label="Pescoço (posterior)" x="101" y="57" width="18" height="14" rx="4"/>
+              <ellipse class="bm-region" data-region="b_ombro_dir" data-label="Ombro Direito (post.)" cx="62" cy="76" rx="18" ry="13"/>
+              <ellipse class="bm-region" data-region="b_ombro_esq" data-label="Ombro Esquerdo (post.)" cx="158" cy="76" rx="18" ry="13"/>
+              <path class="bm-region" data-region="b_costas_sup" data-label="Costas Superiores / Trapézio" d="M 74,68 C 64,72 62,82 62,94 L 64,120 L 156,120 L 158,94 C 158,82 156,72 146,68 Z"/>
+              <path class="bm-region" data-region="b_lombar" data-label="Lombar" d="M 64,120 L 66,152 L 154,152 L 156,120 Z"/>
+              <path class="bm-region" data-region="b_sacro" data-label="Sacro / Cóccix" d="M 66,152 C 65,163 68,172 80,175 L 140,175 C 152,172 155,163 154,152 Z"/>
+              <path class="bm-region" data-region="b_braco_dir" data-label="Tríceps Direito" d="M 56,82 C 46,82 40,88 37,98 L 34,144 L 50,144 L 60,92 Z"/>
+              <path class="bm-region" data-region="b_braco_esq" data-label="Tríceps Esquerdo" d="M 164,82 C 174,82 180,88 183,98 L 186,144 L 170,144 L 160,92 Z"/>
+              <path class="bm-region" data-region="b_antebraco_dir" data-label="Antebraço Direito (post.)" d="M 34,146 L 28,190 L 42,190 L 50,146 Z"/>
+              <path class="bm-region" data-region="b_antebraco_esq" data-label="Antebraço Esquerdo (post.)" d="M 186,146 L 192,190 L 178,190 L 170,146 Z"/>
+              <ellipse class="bm-region" data-region="b_mao_dir" data-label="Mão Direita (dorso)" cx="35" cy="198" rx="11" ry="11"/>
+              <ellipse class="bm-region" data-region="b_mao_esq" data-label="Mão Esquerda (dorso)" cx="185" cy="198" rx="11" ry="11"/>
+              <path class="bm-region" data-region="b_gluteo_dir" data-label="Glúteo Direito" d="M 68,175 L 62,175 L 60,228 C 63,244 74,250 86,250 L 100,250 L 100,175 Z"/>
+              <path class="bm-region" data-region="b_gluteo_esq" data-label="Glúteo Esquerdo" d="M 120,175 L 161,175 L 160,228 C 157,244 146,250 134,250 L 120,250 Z"/>
+              <path class="bm-region" data-region="b_isqui_dir" data-label="Isquiotibial Direito" d="M 60,248 L 59,256 L 98,256 L 100,248 Z"/>
+              <path class="bm-region" data-region="b_isqui_esq" data-label="Isquiotibial Esquerdo" d="M 120,248 L 120,256 L 161,256 L 160,248 Z"/>
+              <ellipse class="bm-region" data-region="b_joelho_dir" data-label="Joelho Direito (post.)" cx="79" cy="261" rx="18" ry="10"/>
+              <ellipse class="bm-region" data-region="b_joelho_esq" data-label="Joelho Esquerdo (post.)" cx="141" cy="261" rx="18" ry="10"/>
+              <path class="bm-region" data-region="b_panturrilha_dir" data-label="Panturrilha Direita" d="M 63,270 L 61,346 L 97,346 L 97,270 Z"/>
+              <path class="bm-region" data-region="b_panturrilha_esq" data-label="Panturrilha Esquerda" d="M 123,270 L 123,346 L 159,346 L 157,270 Z"/>
+              <ellipse class="bm-region" data-region="b_pe_dir" data-label="Pé Direito (plantar)" cx="79" cy="353" rx="20" ry="9"/>
+              <ellipse class="bm-region" data-region="b_pe_esq" data-label="Pé Esquerdo (plantar)" cx="141" cy="353" rx="20" ry="9"/>
+              <!-- label hints -->
+              <text class="bm-label-text" x="110" y="98">COSTAS</text>
+              <text class="bm-label-text" x="110" y="135">LOMBAR</text>
+              <text class="bm-label-text" x="79" y="218">GL.DIR</text>
+              <text class="bm-label-text" x="141" y="218">GL.ESQ</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Pain panel -->
+        <div class="pain-panel">
+
+          <!-- Editor: aparece quando uma região é selecionada -->
+          <div class="pain-editor-box" id="painEditorBox">
+            <!-- Estado inicial: nenhuma região selecionada -->
+            <div class="pain-prompt" id="painPrompt">
+              ☝️ Clique em uma região do boneco para registrar a intensidade da dor
+            </div>
+
+            <!-- Editor de dor (oculto até clicar no SVG) -->
+            <div id="painEditor" style="display:none">
+              <div class="pain-editor-region-name" id="painEditorLabel">—</div>
+              <div class="eva-instruction">Selecione a intensidade (EVA 0 = sem dor · 10 = máxima):</div>
+              <div class="eva-btn-row" id="evaBtnRow">
+                <button type="button" class="eva-btn" data-v="0"  onclick="applyEva(0)"  title="Sem dor / remover">✕</button>
+                <button type="button" class="eva-btn" data-v="1"  onclick="applyEva(1)"  title="EVA 1">1</button>
+                <button type="button" class="eva-btn" data-v="2"  onclick="applyEva(2)"  title="EVA 2">2</button>
+                <button type="button" class="eva-btn" data-v="3"  onclick="applyEva(3)"  title="EVA 3">3</button>
+                <button type="button" class="eva-btn" data-v="4"  onclick="applyEva(4)"  title="EVA 4">4</button>
+                <button type="button" class="eva-btn" data-v="5"  onclick="applyEva(5)"  title="EVA 5">5</button>
+                <button type="button" class="eva-btn" data-v="6"  onclick="applyEva(6)"  title="EVA 6">6</button>
+                <button type="button" class="eva-btn" data-v="7"  onclick="applyEva(7)"  title="EVA 7">7</button>
+                <button type="button" class="eva-btn" data-v="8"  onclick="applyEva(8)"  title="EVA 8">8</button>
+                <button type="button" class="eva-btn" data-v="9"  onclick="applyEva(9)"  title="EVA 9">9</button>
+                <button type="button" class="eva-btn" data-v="10" onclick="applyEva(10)" title="EVA 10">10</button>
+              </div>
+              <textarea class="pain-note-field" id="painNote" placeholder="Nota: tipo, frequência, fatores agravantes..." rows="2"></textarea>
+              <button class="pain-rem-btn" id="painRemBtn" onclick="removePainEntry(currentPainRegion)" style="display:none">✕ Remover dor desta região</button>
+            </div>
+          </div>
+
+          <!-- Lista de dores registradas -->
+          <div class="pain-list-title">Dores registradas</div>
+          <div class="pain-list" id="painList">
+            <p style="color:var(--gray);font-size:0.76rem;font-style:italic;">Nenhuma registrada ainda.</p>
+          </div>
+        </div>
+      </div><!-- /.body-map-wrap -->
+
+      <!-- hidden field for PDF serialization -->
+      <input type="hidden" id="dor" />
+      <input type="hidden" id="eva" />
+      <input type="hidden" id="medicamentos" />
+
     </div>
   </div>
 
@@ -679,6 +1058,28 @@
           <tr><td><label>Coxa</label></td><td><input type="number" step="0.1" data-dobra="coxa" oninput="calcPollock()" placeholder="—" /></td></tr>
         </tbody>
       </table>
+
+      <!-- Avatar de Composição Corporal -->
+      <div class="avatar-wrap" id="avatarWrap">
+        <div class="avatar-canvas-col">
+          <canvas id="avatarCanvas" width="200" height="380"></canvas>
+        </div>
+        <div class="avatar-info">
+          <h4>Distribuição de Gordura</h4>
+          <div class="fat-gradient-bar"></div>
+          <div class="fat-gradient-labels"><span>Muito Magro</span><span>Obeso</span></div>
+          <div style="margin-top:0.9rem;" id="fatZoneRows">
+            <div class="fat-zone-row"><div class="fzr-dot" style="background:#4fc3f7"></div><span class="fzr-label">Braço / Tríceps</span><span class="fzr-val" id="fz_triceps">—</span></div>
+            <div class="fat-zone-row"><div class="fzr-dot" style="background:#4caf7d"></div><span class="fzr-label">Costas / Subescapular</span><span class="fzr-val" id="fz_sub">—</span></div>
+            <div class="fat-zone-row"><div class="fzr-dot" style="background:#a0d87d"></div><span class="fzr-label">Peitoral</span><span class="fzr-val" id="fz_pei">—</span></div>
+            <div class="fat-zone-row"><div class="fzr-dot" style="background:#f5c832"></div><span class="fzr-label">Axilar / Flanco</span><span class="fzr-val" id="fz_axi">—</span></div>
+            <div class="fat-zone-row"><div class="fzr-dot" style="background:#f59132"></div><span class="fzr-label">Abdominal</span><span class="fzr-val" id="fz_abd">—</span></div>
+            <div class="fat-zone-row"><div class="fzr-dot" style="background:#e05c5c"></div><span class="fzr-label">Supra-ilíaca / Quadril</span><span class="fzr-val" id="fz_sup">—</span></div>
+            <div class="fat-zone-row"><div class="fzr-dot" style="background:#c0392b"></div><span class="fzr-label">Coxa</span><span class="fzr-val" id="fz_cox">—</span></div>
+          </div>
+          <p class="avatar-note">As proporções do avatar são baseadas nas circunferências. As cores indicam a espessura relativa das dobras cutâneas em cada zona — vermelho = maior acúmulo de gordura localizada.</p>
+        </div>
+      </div>
 
       <!-- Resultado Pollock -->
       <div class="pollock-result" id="pollockResult">
@@ -1445,6 +1846,7 @@ function calcPollock() {
     else cls = 'Obesidade';
   }
   document.getElementById('rClassGord').textContent = cls;
+  if (typeof drawBodyAvatar === 'function') drawBodyAvatar();
 }
 
 function calcAsym(name, dirId, esqId, asymId, defId) {
@@ -1959,32 +2361,37 @@ function addFotoSlot(labelDefault) {
   slot.className = 'foto-slot';
   slot.id = 'slot_' + id;
 
-  // ── input de arquivo ──
+  // ── input de arquivo (fora do DOM visual, appended ao slot) ──
   const input = document.createElement('input');
   input.type = 'file';
   input.id = 'input_' + id;
   input.accept = 'image/*';
-  input.style.display = 'none';
+  input.style.cssText = 'position:absolute;width:0;height:0;opacity:0;pointer-events:none;';
   input.addEventListener('change', function () { carregarFoto(id); });
+  slot.appendChild(input);
 
-  // ── label como área clicável (input dentro = browser abre dialog ao clicar) ──
-  const label = document.createElement('label');
-  label.style.cssText = 'display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;';
-  label.appendChild(input);
+  // ── área clicável ──
+  const area = document.createElement('div');
+  area.style.cssText = 'display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;';
+  area.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    document.getElementById('input_' + id).click();
+  });
 
   const img = document.createElement('img');
   img.className = 'foto-preview';
   img.id = 'prev_' + id;
   img.title = 'Clique para trocar';
-  label.appendChild(img);
+  area.appendChild(img);
 
   const ph = document.createElement('div');
   ph.className = 'foto-placeholder';
   ph.id = 'ph_' + id;
   ph.innerHTML = '<span class="foto-icon">📷</span><span>Clique para adicionar</span>';
-  label.appendChild(ph);
+  area.appendChild(ph);
 
-  slot.appendChild(label);
+  slot.appendChild(area);
 
   // ── rodapé com legenda e botão remover ──
   const footer = document.createElement('div');
@@ -2031,6 +2438,468 @@ function removerFoto(id) {
 // inicia com 4 slots padrão
 window.addEventListener('DOMContentLoaded', () => {
   ['Frente', 'Lateral Direita', 'Lateral Esquerda', 'Costas'].forEach(l => addFotoSlot(l));
+  initBodyMap();
+  drawBodyAvatar();
+});
+
+/* ══════════════════════════════════════════
+   TABELAS DINÂMICAS (meds / lesões)
+══════════════════════════════════════════ */
+function remRow(btn) {
+  const row = btn.closest('tr');
+  const tbody = row.parentElement;
+  if (tbody.rows.length > 1) row.remove();
+  else row.querySelectorAll('input,select').forEach(el => el.value = '');
+}
+
+function addMedRow() {
+  document.getElementById('medBody').insertAdjacentHTML('beforeend', `<tr>
+    <td><input type="text" placeholder="Nome do medicamento" /></td>
+    <td><input type="text" placeholder="Ex: 50mg" /></td>
+    <td><select>
+      <option value="">—</option>
+      <option>1× ao dia</option><option>2× ao dia</option><option>3× ao dia</option>
+      <option>Em dias alternados</option><option>Semanal</option><option>Quando necessário</option>
+    </select></td>
+    <td><button type="button" class="btn-rem-row" onclick="remRow(this)">✕</button></td>
+  </tr>`);
+}
+
+function addLesaoRow() {
+  document.getElementById('lesaoBody').insertAdjacentHTML('beforeend', `<tr>
+    <td><input type="text" placeholder="Ex: Joelho direito" /></td>
+    <td><input type="text" placeholder="Ex: Entorse, tendinite" /></td>
+    <td><input type="text" placeholder="Ex: 2022" /></td>
+    <td><select>
+      <option value="">—</option>
+      <option>Resolvida</option><option>Em tratamento</option><option>Crônica</option><option>Recorrente</option>
+    </select></td>
+    <td><button type="button" class="btn-rem-row" onclick="remRow(this)">✕</button></td>
+  </tr>`);
+}
+
+window.remRow       = remRow;
+window.addMedRow    = addMedRow;
+window.addLesaoRow  = addLesaoRow;
+
+/* ══════════════════════════════════════════
+   BODY PAIN MAP  — interação imediata
+══════════════════════════════════════════ */
+const painData = {};          // { regionId: { level, label, note } }
+let currentPainRegion = null;
+
+// Cores de preenchimento indexadas por EVA 0-10
+const EVA_FILL = [
+  '',                             // 0 – sem dor (reseta)
+  'rgba(255,235,25,0.22)',        // 1
+  'rgba(255,215,20,0.35)',        // 2
+  'rgba(250,188,15,0.47)',        // 3
+  'rgba(255,158,28,0.55)',        // 4
+  'rgba(255,128,22,0.62)',        // 5
+  'rgba(255,92,22,0.68)',         // 6
+  'rgba(235,52,38,0.72)',         // 7
+  'rgba(215,28,28,0.78)',         // 8
+  'rgba(190,8,8,0.84)',           // 9
+  'rgba(155,0,0,0.92)',           // 10
+];
+const EVA_STROKE = [
+  'rgba(201,168,76,0.2)',         // 0
+  '#ffe030','#f5cc25','#f5ae18',  // 1-3
+  '#f59820','#f57820','#f55215',  // 4-6
+  '#e03c38','#cc2020','#b00a0a','#980000', // 7-10
+];
+
+function evaColor(level) {
+  // returns dot/badge color
+  if (level === 0) return '#8a9bab';
+  if (level <= 3)  return '#f5c832';
+  if (level <= 6)  return '#f59132';
+  return '#e05c5c';
+}
+
+/* ── Inicialização ── */
+function initBodyMap() {
+  // Auto-salva nota ao digitar (sem botão)
+  const noteEl = document.getElementById('painNote');
+  if (noteEl) {
+    noteEl.addEventListener('input', function () {
+      if (!currentPainRegion || !painData[currentPainRegion]) return;
+      painData[currentPainRegion].note = this.value.trim();
+      renderPainList();
+      syncPainHidden();
+    });
+  }
+}
+
+/* ── Delegação de clique no SVG (onclick no <svg>) ── */
+function handleBodyMapClick(event) {
+  const target = event.target.closest('.bm-region');
+  if (!target) return;
+  selectRegion(target.dataset.region, target.dataset.label);
+}
+window.handleBodyMapClick = handleBodyMapClick;
+
+/* ── Selecionar região no SVG ── */
+function selectRegion(region, label) {
+  // Desmarca seleção anterior
+  document.querySelectorAll('.bm-region.bm-selected')
+    .forEach(el => el.classList.remove('bm-selected'));
+  document.querySelectorAll('.pain-item.pi-active')
+    .forEach(el => el.classList.remove('pi-active'));
+
+  currentPainRegion = region;
+
+  // Marca região no SVG
+  document.querySelectorAll(`[data-region="${region}"]`)
+    .forEach(el => el.classList.add('bm-selected'));
+
+  // Mostra editor
+  document.getElementById('painPrompt').style.display  = 'none';
+  document.getElementById('painEditor').style.display  = '';
+  document.getElementById('painEditorLabel').textContent = label || region;
+
+  // Preenche editor com dados existentes (se houver)
+  const existing = painData[region] || { level: 0, note: '' };
+  document.getElementById('painNote').value = existing.note || '';
+  document.getElementById('painRemBtn').style.display = existing.level > 0 ? '' : 'none';
+  highlightEvaBtn(existing.level);
+
+  // Destaca item na lista
+  const listItem = document.querySelector(`.pain-item[data-region="${region}"]`);
+  if (listItem) listItem.classList.add('pi-active');
+}
+
+/* ── Aplicar EVA imediatamente ao clicar no botão ── */
+function applyEva(level) {
+  if (!currentPainRegion) return;
+  const label = document.getElementById('painEditorLabel').textContent;
+  const note  = document.getElementById('painNote').value.trim();
+
+  if (level === 0) {
+    delete painData[currentPainRegion];
+    document.getElementById('painRemBtn').style.display = 'none';
+  } else {
+    painData[currentPainRegion] = { level, label, note };
+    document.getElementById('painRemBtn').style.display = '';
+  }
+
+  highlightEvaBtn(level);
+  applyPainColors();
+  renderPainList();
+  syncPainHidden();
+}
+
+/* ── Destaca botão EVA ativo ── */
+function highlightEvaBtn(level) {
+  document.querySelectorAll('.eva-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.eva-btn[data-v="${level}"]`);
+  if (btn) btn.classList.add('active');
+}
+
+/* ── Aplica cores ao SVG via inline style ── */
+function applyPainColors() {
+  // Reset todos
+  document.querySelectorAll('.bm-region').forEach(el => {
+    el.style.fill   = '';
+    el.style.stroke = '';
+  });
+  // Pinta os que têm dor
+  Object.entries(painData).forEach(([region, d]) => {
+    document.querySelectorAll(`[data-region="${region}"]`).forEach(el => {
+      el.style.fill   = EVA_FILL[d.level]   || '';
+      el.style.stroke = EVA_STROKE[d.level] || '';
+    });
+  });
+}
+
+/* ── Renderiza lista de dores ── */
+function renderPainList() {
+  const list = document.getElementById('painList');
+  const entries = Object.entries(painData);
+  if (entries.length === 0) {
+    list.innerHTML = '<p style="color:var(--gray);font-size:0.76rem;font-style:italic;">Nenhuma registrada ainda.</p>';
+    return;
+  }
+  list.innerHTML = entries.map(([region, d]) => {
+    const col = evaColor(d.level);
+    const active = region === currentPainRegion ? ' pi-active' : '';
+    return `<div class="pain-item${active}" data-region="${region}" onclick="selectRegion('${region}','${d.label}')">
+      <span class="pi-dot" style="background:${col}"></span>
+      <span class="pi-name">${d.label || region}</span>
+      <span class="pi-badge" style="background:${col}22;color:${col};border:1px solid ${col}44;">EVA ${d.level}</span>
+      <button class="btn-rem-pain" onclick="event.stopPropagation();removePainEntry('${region}')">✕</button>
+      ${d.note ? `<span class="pi-note">${d.note}</span>` : ''}
+    </div>`;
+  }).join('');
+}
+
+/* ── Remover entrada ── */
+function removePainEntry(region) {
+  if (!region) return;
+  delete painData[region];
+  document.querySelectorAll(`[data-region="${region}"]`).forEach(el => {
+    el.style.fill = ''; el.style.stroke = ''; el.classList.remove('bm-selected');
+  });
+  // Reset editor se era a região ativa
+  if (currentPainRegion === region) {
+    currentPainRegion = null;
+    document.getElementById('painPrompt').style.display = '';
+    document.getElementById('painEditor').style.display = 'none';
+  }
+  renderPainList();
+  syncPainHidden();
+}
+
+/* ── Sync com campos hidden (PDF/save) ── */
+function syncPainHidden() {
+  const entries = Object.entries(painData);
+  document.getElementById('dor').value = entries.map(([,d]) => `${d.label} (EVA ${d.level})`).join('; ');
+  document.getElementById('eva').value = entries.length ? Math.max(...entries.map(([,d]) => d.level)) : 0;
+}
+
+/* ── Toggle frente/costas ── */
+function switchBodyView(view) {
+  document.getElementById('bmFront').style.display = view === 'front' ? '' : 'none';
+  document.getElementById('bmBack').style.display  = view === 'back'  ? '' : 'none';
+  document.getElementById('btnFront').classList.toggle('active', view === 'front');
+  document.getElementById('btnBack').classList.toggle('active', view === 'back');
+}
+
+function updatePainNote(note) {
+  if (!currentPainRegion || !painData[currentPainRegion]) return;
+  painData[currentPainRegion].note = note;
+  renderPainList();
+  syncPainHidden();
+}
+
+window.switchBodyView  = switchBodyView;
+window.selectRegion    = selectRegion;
+window.applyEva        = applyEva;
+window.removePainEntry = removePainEntry;
+window.renderPainList  = renderPainList;
+window.syncPainHidden  = syncPainHidden;
+window.highlightEvaBtn = highlightEvaBtn;
+window.applyPainColors = applyPainColors;
+window.updatePainNote  = updatePainNote;
+
+/* ══════════════════════════════════════════
+   BODY COMPOSITION AVATAR (Canvas)
+══════════════════════════════════════════ */
+function drawBodyAvatar() {
+  const canvas = document.getElementById('avatarCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  // ── Read measurements ──
+  const gv = id => parseFloat(document.getElementById(id)?.value) || 0;
+  const gc = name => { const el = document.querySelector(`[data-circ="${name}"]`); return el ? (parseFloat(el.value)||0) : 0; };
+  const gd = name => { const el = document.querySelector(`[data-dobra="${name}"]`); return el ? (parseFloat(el.value)||0) : 0; };
+
+  // circunferências (cm) — defaults representam adulto médio
+  const ombroC  = gc('ombro')       || 104;
+  const cinturaC= gc('cintura')     || 84;
+  const quadrilC= gc('quadril')     || 98;
+  const coxaC   = gc('coxaDirMed') || 56;
+  const bracoC  = gc('bracoDirRelax')|| 35;
+  const panturC = gc('panturDir')   || 37;
+
+  // dobras (mm)
+  const dTri = gd('triceptal');
+  const dSub = gd('subscapular');
+  const dPei = gd('peitoral');
+  const dAxi = gd('axilar');
+  const dSup = gd('supraIliaca');
+  const dAbd = gd('abdominal');
+  const dCox = gd('coxa');
+
+  // ── Heat map color helper ──
+  // heat 0-1 → blue → green → yellow → orange → red
+  function heatRGBA(heat, alpha) {
+    heat = Math.max(0, Math.min(1, heat));
+    let r, g, b;
+    if (heat < 0.25) {
+      const t = heat / 0.25;
+      r = Math.round(79 + t*(76-79)); g = Math.round(195 + t*(175-195)); b = Math.round(247 + t*(80-247));
+    } else if (heat < 0.5) {
+      const t = (heat-0.25)/0.25;
+      r = Math.round(76 + t*(245-76)); g = Math.round(175 + t*(200-175)); b = Math.round(80 + t*(50-80));
+    } else if (heat < 0.75) {
+      const t = (heat-0.5)/0.25;
+      r = Math.round(245); g = Math.round(200 + t*(145-200)); b = Math.round(50);
+    } else {
+      const t = (heat-0.75)/0.25;
+      r = Math.round(245 + t*(224-245)); g = Math.round(145 + t*(92-145)); b = Math.round(50 + t*(0-50));
+    }
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  // Normalise a dobra value to heat [0-1]; ref scale: 0mm → 0, 40mm → 1
+  function dobraHeat(mm, ref) { return Math.min(mm / (ref||35), 1); }
+
+  // ── Layout proportions ──
+  const cx = W / 2;
+  // scale everything relative to reference shoulder circ = 104
+  const scale = s => s * (ombroC / 104);
+
+  const shW  = scale(44);   // half-width at shoulders
+  const waW  = scale(25) * (cinturaC / ombroC) / (84/104);
+  const hiW  = scale(35) * (quadrilC / ombroC) / (98/104);
+  const thW  = scale(22) * (coxaC / 56);
+  const arW  = scale(14) * (bracoC / 35);
+  const caW  = scale(13) * (panturC / 37);
+  const gap  = 6; // gap between legs
+
+  // y positions
+  const headTop  = 8,  headRY = 26, headCY = headTop + headRY;
+  const neckTop  = headCY + headRY - 2, neckH = 16;
+  const shY      = neckTop + neckH;
+  const waY      = shY + H * 0.19;
+  const hiY      = waY + H * 0.045;
+  const kneeY    = hiY + H * 0.23;
+  const ankleY   = kneeY + H * 0.195;
+  const footY    = ankleY + 10;
+
+  const bodyBase = '#12263a';
+  const stroke   = 'rgba(201,168,76,0.35)';
+
+  function drawShape(fn, fill, str) {
+    ctx.beginPath(); fn();
+    ctx.fillStyle = fill; ctx.fill();
+    if (str) { ctx.strokeStyle = str; ctx.lineWidth = 1; ctx.stroke(); }
+  }
+
+  function overlayHeat(fn, heat) {
+    if (heat <= 0) return;
+    ctx.beginPath(); fn();
+    ctx.fillStyle = heatRGBA(heat, 0.52); ctx.fill();
+  }
+
+  // ── Head ──
+  drawShape(() => ctx.ellipse(cx, headCY, 22, headRY, 0, 0, Math.PI*2), bodyBase, stroke);
+
+  // face features (subtle)
+  ctx.fillStyle = 'rgba(201,168,76,0.12)';
+  ctx.beginPath(); ctx.ellipse(cx-7, headCY-4, 3.5, 2.5, 0, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(cx+7, headCY-4, 3.5, 2.5, 0, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(cx, headCY+6, 5, 0.1*Math.PI, 0.9*Math.PI); ctx.strokeStyle='rgba(201,168,76,0.15)'; ctx.lineWidth=1; ctx.stroke();
+
+  // ── Neck ──
+  drawShape(() => { ctx.rect(cx-9, neckTop, 18, neckH); }, bodyBase, stroke);
+
+  // ── Torso — chest ──
+  const chestFn = () => {
+    ctx.moveTo(cx-shW, shY); ctx.lineTo(cx+shW, shY);
+    ctx.lineTo(cx+waW, waY); ctx.lineTo(cx-waW, waY); ctx.closePath();
+  };
+  drawShape(chestFn, bodyBase, stroke);
+  overlayHeat(chestFn, dobraHeat(dSub + dAxi + dPei, 60));
+
+  // ── Torso — abdomen ──
+  const abdFn = () => {
+    ctx.moveTo(cx-waW, waY); ctx.lineTo(cx+waW, waY);
+    ctx.lineTo(cx+hiW, hiY); ctx.lineTo(cx-hiW, hiY); ctx.closePath();
+  };
+  drawShape(abdFn, bodyBase, stroke);
+  overlayHeat(abdFn, dobraHeat(dAbd + dSup, 55));
+
+  // ── Arms ──
+  const armHeat = dobraHeat(dTri, 25);
+  const armFaH  = waY + (kneeY - waY) * 0.4;
+
+  // Left upper arm
+  const lArm = () => {
+    ctx.moveTo(cx-shW, shY); ctx.lineTo(cx-shW-arW, shY+4);
+    ctx.lineTo(cx-shW-arW*0.85, waY); ctx.lineTo(cx-shW+arW*0.15, waY); ctx.closePath();
+  };
+  drawShape(lArm, bodyBase, stroke); overlayHeat(lArm, armHeat);
+
+  // Right upper arm
+  const rArm = () => {
+    ctx.moveTo(cx+shW, shY); ctx.lineTo(cx+shW+arW, shY+4);
+    ctx.lineTo(cx+shW+arW*0.85, waY); ctx.lineTo(cx+shW-arW*0.15, waY); ctx.closePath();
+  };
+  drawShape(rArm, bodyBase, stroke); overlayHeat(rArm, armHeat);
+
+  // Forearms
+  const lFarm = () => {
+    ctx.moveTo(cx-shW-arW*0.85, waY); ctx.lineTo(cx-shW-arW, waY+2);
+    ctx.lineTo(cx-shW-arW*0.7, armFaH); ctx.lineTo(cx-shW-arW*0.2, armFaH); ctx.closePath();
+  };
+  drawShape(lFarm, bodyBase, stroke);
+
+  const rFarm = () => {
+    ctx.moveTo(cx+shW+arW*0.85, waY); ctx.lineTo(cx+shW+arW, waY+2);
+    ctx.lineTo(cx+shW+arW*0.7, armFaH); ctx.lineTo(cx+shW+arW*0.2, armFaH); ctx.closePath();
+  };
+  drawShape(rFarm, bodyBase, stroke);
+
+  // Hands
+  drawShape(()=>ctx.ellipse(cx-shW-arW*0.45, armFaH+10, 9, 10, 0, 0, Math.PI*2), bodyBase, stroke);
+  drawShape(()=>ctx.ellipse(cx+shW+arW*0.45, armFaH+10, 9, 10, 0, 0, Math.PI*2), bodyBase, stroke);
+
+  // ── Thighs ──
+  const thighHeat = dobraHeat(dCox, 30);
+  const lThigh = () => {
+    ctx.moveTo(cx-gap, hiY); ctx.lineTo(cx-gap-thW, hiY+4);
+    ctx.lineTo(cx-gap-thW*0.82, kneeY); ctx.lineTo(cx-gap+thW*0.12, kneeY); ctx.closePath();
+  };
+  drawShape(lThigh, bodyBase, stroke); overlayHeat(lThigh, thighHeat);
+
+  const rThigh = () => {
+    ctx.moveTo(cx+gap, hiY); ctx.lineTo(cx+gap+thW, hiY+4);
+    ctx.lineTo(cx+gap+thW*0.82, kneeY); ctx.lineTo(cx+gap-thW*0.12, kneeY); ctx.closePath();
+  };
+  drawShape(rThigh, bodyBase, stroke); overlayHeat(rThigh, thighHeat);
+
+  // Knees
+  drawShape(()=>ctx.ellipse(cx-gap-thW*0.35, kneeY, thW*0.52, 8, 0, 0, Math.PI*2), bodyBase, stroke);
+  drawShape(()=>ctx.ellipse(cx+gap+thW*0.35, kneeY, thW*0.52, 8, 0, 0, Math.PI*2), bodyBase, stroke);
+
+  // ── Calves ──
+  const calfHeat = dobraHeat((dAbd+dSup)*0.25, 18);
+  const lCalf = () => {
+    ctx.moveTo(cx-gap-thW*0.82, kneeY+6); ctx.lineTo(cx-gap+thW*0.12, kneeY+6);
+    ctx.lineTo(cx-gap+caW*0.1, ankleY); ctx.lineTo(cx-gap-caW*0.9, ankleY); ctx.closePath();
+  };
+  drawShape(lCalf, bodyBase, stroke); overlayHeat(lCalf, calfHeat);
+
+  const rCalf = () => {
+    ctx.moveTo(cx+gap+thW*0.82, kneeY+6); ctx.lineTo(cx+gap-thW*0.12, kneeY+6);
+    ctx.lineTo(cx+gap-caW*0.1, ankleY); ctx.lineTo(cx+gap+caW*0.9, ankleY); ctx.closePath();
+  };
+  drawShape(rCalf, bodyBase, stroke); overlayHeat(rCalf, calfHeat);
+
+  // Feet
+  drawShape(()=>ctx.ellipse(cx-gap-thW*0.38, footY, 15, 7, 0, 0, Math.PI*2), bodyBase, stroke);
+  drawShape(()=>ctx.ellipse(cx+gap+thW*0.38, footY, 15, 7, 0, 0, Math.PI*2), bodyBase, stroke);
+
+  // ── Update legend ──
+  function fmtDobra(mm) { return mm > 0 ? mm.toFixed(1) + ' mm' : '—'; }
+  document.getElementById('fz_triceps').textContent  = fmtDobra(dTri);
+  document.getElementById('fz_sub').textContent      = fmtDobra(dSub);
+  document.getElementById('fz_pei').textContent      = fmtDobra(dPei);
+  document.getElementById('fz_axi').textContent      = fmtDobra(dAxi);
+  document.getElementById('fz_abd').textContent      = fmtDobra(dAbd);
+  document.getElementById('fz_sup').textContent      = fmtDobra(dSup);
+  document.getElementById('fz_cox').textContent      = fmtDobra(dCox);
+
+  // Update dot colors dynamically
+  const zoneDots = document.querySelectorAll('.fzr-dot');
+  const heats = [
+    dobraHeat(dTri, 25), dobraHeat(dSub, 30), dobraHeat(dPei, 28),
+    dobraHeat(dAxi, 25), dobraHeat(dAbd, 35), dobraHeat(dSup, 30), dobraHeat(dCox, 30)
+  ];
+  zoneDots.forEach((dot, i) => { dot.style.background = heatRGBA(heats[i], 1); });
+}
+
+window.drawBodyAvatar = drawBodyAvatar;
+window.switchBodyView = switchBodyView;
+
+// Hook avatar update into measurements
+document.querySelectorAll('[data-circ],[data-dobra]').forEach(el => {
+  el.addEventListener('input', drawBodyAvatar);
 });
 </script>
 
@@ -2407,6 +3276,38 @@ function gerarPDF() {
     btn.textContent = '⬇ Gerar PDF';
   }
 }
+</script>
+
+<script>
+/* ══ PAIN MAP INIT — roda depois de tudo carregado ══ */
+(function() {
+  function bmInit() {
+    // Coloca onclick direto em cada região do SVG
+    document.querySelectorAll('.bm-region').forEach(function(el) {
+      el.onclick = function(e) {
+        e.stopPropagation();
+        var r = this.getAttribute('data-region');
+        var l = this.getAttribute('data-label');
+        if (r && typeof selectRegion === 'function') selectRegion(r, l);
+      };
+    });
+
+    // Textarea nota auto-save (usa window.* para acesso cross-script)
+    var noteEl = document.getElementById('painNote');
+    if (noteEl && !noteEl._bmInit) {
+      noteEl._bmInit = true;
+      noteEl.addEventListener('input', function() {
+        if (typeof window.updatePainNote === 'function') window.updatePainNote(this.value.trim());
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bmInit);
+  } else {
+    bmInit(); // DOM já carregado
+  }
+})();
 </script>
 </body>
 </html>
