@@ -2489,7 +2489,9 @@ window.addLesaoRow  = addLesaoRow;
 /* ══════════════════════════════════════════
    BODY PAIN MAP  — interação imediata
 ══════════════════════════════════════════ */
-var painData = {};             // { regionId: { level, label, note } }
+window.painData = window.painData || {};
+var painData = window.painData;   // { regionId: { level, label, note } }
+window.currentPainRegion = window.currentPainRegion || null;
 var currentPainRegion = null;
 
 // Cores de preenchimento indexadas por EVA 0-10
@@ -2545,13 +2547,16 @@ window.handleBodyMapClick = handleBodyMapClick;
 
 /* ── Selecionar região no SVG ── */
 function selectRegion(region, label) {
+  var _pain = window.painData = window.painData || {};
+  painData = _pain;
+
   // Desmarca seleção anterior
   document.querySelectorAll('.bm-region.bm-selected')
     .forEach(el => el.classList.remove('bm-selected'));
   document.querySelectorAll('.pain-item.pi-active')
     .forEach(el => el.classList.remove('pi-active'));
 
-  currentPainRegion = region;
+  currentPainRegion = window.currentPainRegion = region;
 
   // Marca região no SVG
   document.querySelectorAll(`[data-region="${region}"]`)
@@ -2563,7 +2568,7 @@ function selectRegion(region, label) {
   document.getElementById('painEditorLabel').textContent = label || region;
 
   // Preenche editor com dados existentes (se houver)
-  const existing = painData[region] || { level: 0, note: '' };
+  const existing = _pain[region] || { level: 0, note: '' };
   document.getElementById('painNote').value = existing.note || '';
   document.getElementById('painRemBtn').style.display = existing.level > 0 ? '' : 'none';
   highlightEvaBtn(existing.level);
@@ -2575,17 +2580,22 @@ function selectRegion(region, label) {
 
 /* ── Aplicar EVA imediatamente ao clicar no botão ── */
 function applyEva(level) {
-  if (!currentPainRegion) return;
+  var _pain = window.painData = window.painData || {};
+  var _region = window.currentPainRegion || currentPainRegion;
+  if (!_region) return;
   const label = document.getElementById('painEditorLabel').textContent;
   const note  = document.getElementById('painNote').value.trim();
 
   if (level === 0) {
-    delete painData[currentPainRegion];
+    delete _pain[_region];
     document.getElementById('painRemBtn').style.display = 'none';
   } else {
-    painData[currentPainRegion] = { level, label, note };
+    _pain[_region] = { level, label, note };
     document.getElementById('painRemBtn').style.display = '';
   }
+  // sync module-level ref
+  painData = _pain;
+  currentPainRegion = _region;
 
   highlightEvaBtn(level);
   applyPainColors();
@@ -2602,13 +2612,12 @@ function highlightEvaBtn(level) {
 
 /* ── Aplica cores ao SVG via inline style ── */
 function applyPainColors() {
-  // Reset todos
+  var _pain = window.painData || {};
   document.querySelectorAll('.bm-region').forEach(el => {
     el.style.fill   = '';
     el.style.stroke = '';
   });
-  // Pinta os que têm dor
-  Object.entries(painData).forEach(([region, d]) => {
+  Object.entries(_pain).forEach(([region, d]) => {
     document.querySelectorAll(`[data-region="${region}"]`).forEach(el => {
       el.style.fill   = EVA_FILL[d.level]   || '';
       el.style.stroke = EVA_STROKE[d.level] || '';
@@ -2618,15 +2627,17 @@ function applyPainColors() {
 
 /* ── Renderiza lista de dores ── */
 function renderPainList() {
+  var _pain = window.painData || {};
+  var _region = window.currentPainRegion || currentPainRegion;
   const list = document.getElementById('painList');
-  const entries = Object.entries(painData);
+  const entries = Object.entries(_pain);
   if (entries.length === 0) {
     list.innerHTML = '<p style="color:var(--gray);font-size:0.76rem;font-style:italic;">Nenhuma registrada ainda.</p>';
     return;
   }
   list.innerHTML = entries.map(([region, d]) => {
     const col = evaColor(d.level);
-    const active = region === currentPainRegion ? ' pi-active' : '';
+    const active = region === _region ? ' pi-active' : '';
     return `<div class="pain-item${active}" data-region="${region}" onclick="selectRegion('${region}','${d.label}')">
       <span class="pi-dot" style="background:${col}"></span>
       <span class="pi-name">${d.label || region}</span>
@@ -2640,13 +2651,15 @@ function renderPainList() {
 /* ── Remover entrada ── */
 function removePainEntry(region) {
   if (!region) return;
-  delete painData[region];
+  var _pain = window.painData = window.painData || {};
+  delete _pain[region];
+  painData = _pain;
   document.querySelectorAll(`[data-region="${region}"]`).forEach(el => {
     el.style.fill = ''; el.style.stroke = ''; el.classList.remove('bm-selected');
   });
-  // Reset editor se era a região ativa
-  if (currentPainRegion === region) {
-    currentPainRegion = null;
+  var _cur = window.currentPainRegion || currentPainRegion;
+  if (_cur === region) {
+    currentPainRegion = window.currentPainRegion = null;
     document.getElementById('painPrompt').style.display = '';
     document.getElementById('painEditor').style.display = 'none';
   }
@@ -2656,7 +2669,8 @@ function removePainEntry(region) {
 
 /* ── Sync com campos hidden (PDF/save) ── */
 function syncPainHidden() {
-  const entries = Object.entries(painData);
+  var _pain = window.painData || {};
+  const entries = Object.entries(_pain);
   document.getElementById('dor').value = entries.map(([,d]) => `${d.label} (EVA ${d.level})`).join('; ');
   document.getElementById('eva').value = entries.length ? Math.max(...entries.map(([,d]) => d.level)) : 0;
 }
@@ -2670,8 +2684,11 @@ function switchBodyView(view) {
 }
 
 function updatePainNote(note) {
-  if (!currentPainRegion || !painData[currentPainRegion]) return;
-  painData[currentPainRegion].note = note;
+  var _pain = window.painData || {};
+  var _region = window.currentPainRegion || currentPainRegion;
+  if (!_region || !_pain[_region]) return;
+  _pain[_region].note = note;
+  window.painData = _pain; painData = _pain;
   renderPainList();
   syncPainHidden();
 }
@@ -2711,21 +2728,17 @@ function drawBodyAvatar() {
   }
 }
 function _drawBodyAvatarInner(ctx, W, H, canvas) {
+  const gc = n => { const el = document.querySelector(`[data-circ="${n}"]`); return el ? (parseFloat(el.value)||0) : 0; };
+  const gd = n => { const el = document.querySelector(`[data-dobra="${n}"]`); return el ? (parseFloat(el.value)||0) : 0; };
 
-  // ── Read measurements ──
-  const gv = id => parseFloat(document.getElementById(id)?.value) || 0;
-  const gc = name => { const el = document.querySelector(`[data-circ="${name}"]`); return el ? (parseFloat(el.value)||0) : 0; };
-  const gd = name => { const el = document.querySelector(`[data-dobra="${name}"]`); return el ? (parseFloat(el.value)||0) : 0; };
+  // ── Medidas (cm / mm) com defaults de adulto médio ──
+  const ombroC  = gc('ombro')          || 104;
+  const cinturaC= gc('cintura')        || 84;
+  const quadrilC= gc('quadril')        || 98;
+  const coxaC   = gc('coxaDirMed')    || 56;
+  const bracoC  = gc('bracoDirRelax') || 35;
+  const panturC = gc('panturDir')     || 37;
 
-  // circunferências (cm) — defaults representam adulto médio
-  const ombroC  = gc('ombro')       || 104;
-  const cinturaC= gc('cintura')     || 84;
-  const quadrilC= gc('quadril')     || 98;
-  const coxaC   = gc('coxaDirMed') || 56;
-  const bracoC  = gc('bracoDirRelax')|| 35;
-  const panturC = gc('panturDir')   || 37;
-
-  // dobras (mm)
   const dTri = gd('triceptal');
   const dSub = gd('subscapular');
   const dPei = gd('peitoral');
@@ -2734,184 +2747,264 @@ function _drawBodyAvatarInner(ctx, W, H, canvas) {
   const dAbd = gd('abdominal');
   const dCox = gd('coxa');
 
-  // ── Heat map color helper ──
-  // heat 0-1 → blue → green → yellow → orange → red
-  function heatRGBA(heat, alpha) {
-    heat = Math.max(0, Math.min(1, heat));
+  // ── Cores de pele ──
+  const SKIN_BASE  = '#C8B4A0';
+  const SKIN_LIGHT = '#DDD0BE';
+  const SKIN_DARK  = '#9E8070';
+  const SHADOW     = 'rgba(60,35,20,0.18)';
+
+  // ── Helpers de cor ──
+  function heatRGBA(h, a) {
+    h = Math.max(0, Math.min(1, h));
     let r, g, b;
-    if (heat < 0.25) {
-      const t = heat / 0.25;
-      r = Math.round(79 + t*(76-79)); g = Math.round(195 + t*(175-195)); b = Math.round(247 + t*(80-247));
-    } else if (heat < 0.5) {
-      const t = (heat-0.25)/0.25;
-      r = Math.round(76 + t*(245-76)); g = Math.round(175 + t*(200-175)); b = Math.round(80 + t*(50-80));
-    } else if (heat < 0.75) {
-      const t = (heat-0.5)/0.25;
-      r = Math.round(245); g = Math.round(200 + t*(145-200)); b = Math.round(50);
-    } else {
-      const t = (heat-0.75)/0.25;
-      r = Math.round(245 + t*(224-245)); g = Math.round(145 + t*(92-145)); b = Math.round(50 + t*(0-50));
+    if (h < 0.33)      { const t=h/0.33;       r=76+t*(255-76);   g=175+t*(235-175); b=80+t*(59-80); }
+    else if (h < 0.66) { const t=(h-0.33)/0.33; r=255;             g=235+t*(152-235); b=59+t*(0-59); }
+    else               { const t=(h-0.66)/0.34; r=255+t*(224-255); g=152+t*(67-152); b=0; }
+    return `rgba(${Math.round(r)},${Math.round(g)},${Math.round(b)},${a})`;
+  }
+  const dobraH = (mm, ref) => Math.min((mm||0) / (ref||35), 1);
+
+  // Gradiente radial para efeito 3D
+  function skinGrad(x, y, rx, ry) {
+    const g = ctx.createRadialGradient(x - rx*0.28, y - ry*0.3, rx*0.06, x, y, Math.max(rx, ry));
+    g.addColorStop(0,   SKIN_LIGHT);
+    g.addColorStop(0.55, SKIN_BASE);
+    g.addColorStop(1,   SKIN_DARK);
+    return g;
+  }
+
+  // Desenha forma preenchida com gradiente + sombra interna
+  function drawPart(pathFn, cx2, cy2, rx2, ry2, heatVal) {
+    ctx.beginPath(); pathFn();
+    ctx.fillStyle = skinGrad(cx2, cy2, rx2, ry2);
+    ctx.fill();
+    if (heatVal > 0.04) {
+      ctx.beginPath(); pathFn();
+      ctx.fillStyle = heatRGBA(heatVal, 0.45);
+      ctx.fill();
     }
-    return `rgba(${r},${g},${b},${alpha})`;
+    // Borda suave
+    ctx.beginPath(); pathFn();
+    ctx.strokeStyle = SHADOW;
+    ctx.lineWidth = 1;
+    ctx.stroke();
   }
 
-  // Normalise a dobra value to heat [0-1]; ref scale: 0mm → 0, 40mm → 1
-  function dobraHeat(mm, ref) { return Math.min(mm / (ref||35), 1); }
-
-  // ── Layout proportions ──
+  // ── Proporções ──
   const cx = W / 2;
-  // scale everything relative to reference shoulder circ = 104
-  const scale = s => s * (ombroC / 104);
+  // halfWidths em px — base: ombro 104cm ≈ 44px de meia-largura
+  const BASE = ombroC || 104;
+  const toHW = circ => 44 * (circ / BASE);
 
-  const shW  = scale(44);   // half-width at shoulders
-  const waW  = scale(25) * (cinturaC / ombroC) / (84/104);
-  const hiW  = scale(35) * (quadrilC / ombroC) / (98/104);
-  const thW  = scale(22) * (coxaC / 56);
-  const arW  = scale(14) * (bracoC / 35);
-  const caW  = scale(13) * (panturC / 37);
-  const gap  = 6; // gap between legs
+  const shHW = toHW(ombroC);
+  // Barriga protrui visualmente conforme dobras abdominais
+  const bellyFactor = 1 + Math.min((dAbd + dSup) / 60, 0.55);
+  const waHW = toHW(cinturaC) * bellyFactor;
+  const hiHW = toHW(quadrilC) * (1 + dobraH(dSup, 40) * 0.15);
+  const thHW = toHW(coxaC) * 0.52 * (1 + dobraH(dCox, 40) * 0.18);
+  const arHW = toHW(bracoC) * 0.48 * (1 + dobraH(dTri, 30) * 0.22);
+  const caHW = toHW(panturC) * 0.46;
 
-  // y positions
-  const headTop  = 8,  headRY = 26, headCY = headTop + headRY;
-  const neckTop  = headCY + headRY - 2, neckH = 16;
-  const shY      = neckTop + neckH;
-  const waY      = shY + H * 0.19;
-  const hiY      = waY + H * 0.045;
-  const kneeY    = hiY + H * 0.23;
-  const ankleY   = kneeY + H * 0.195;
-  const footY    = ankleY + 10;
+  // Posições Y
+  const hdRY  = 22, hdCY = 8 + hdRY;
+  const nkT   = hdCY + hdRY - 3, nkB = nkT + 13;
+  const shY   = nkB;
+  const waY   = shY  + H * 0.175;
+  const hiY   = waY  + H * 0.042;
+  const crY   = hiY  + H * 0.022;   // virilha
+  const knY   = crY  + H * 0.215;
+  const anY   = knY  + H * 0.185;
+  const ftY   = anY  + 7;
+  const elY   = waY  - H * 0.01;    // cotovelo
+  const hnY   = elY  + H * 0.115;   // mão
 
-  const bodyBase = '#12263a';
-  const stroke   = 'rgba(201,168,76,0.35)';
+  const legGap = Math.max(3, thHW * 0.12);
 
-  function drawShape(fn, fill, str) {
-    ctx.beginPath(); fn();
-    ctx.fillStyle = fill; ctx.fill();
-    if (str) { ctx.strokeStyle = str; ctx.lineWidth = 1; ctx.stroke(); }
-  }
+  // ══ DESENHO (de trás pra frente) ══
 
-  function overlayHeat(fn, heat) {
-    if (heat <= 0) return;
-    ctx.beginPath(); fn();
-    ctx.fillStyle = heatRGBA(heat, 0.52); ctx.fill();
-  }
+  // Sombra de chão
+  ctx.beginPath();
+  ctx.ellipse(cx, ftY + 8, thHW * 2.2, 6, 0, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(0,0,0,0.09)';
+  ctx.fill();
 
-  // ── Head ──
-  drawShape(() => ctx.ellipse(cx, headCY, 22, headRY, 0, 0, Math.PI*2), bodyBase, stroke);
-
-  // face features (subtle)
-  ctx.fillStyle = 'rgba(201,168,76,0.12)';
-  ctx.beginPath(); ctx.ellipse(cx-7, headCY-4, 3.5, 2.5, 0, 0, Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(cx+7, headCY-4, 3.5, 2.5, 0, 0, Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.arc(cx, headCY+6, 5, 0.1*Math.PI, 0.9*Math.PI); ctx.strokeStyle='rgba(201,168,76,0.15)'; ctx.lineWidth=1; ctx.stroke();
-
-  // ── Neck ──
-  drawShape(() => { ctx.rect(cx-9, neckTop, 18, neckH); }, bodyBase, stroke);
-
-  // ── Torso — chest ──
-  const chestFn = () => {
-    ctx.moveTo(cx-shW, shY); ctx.lineTo(cx+shW, shY);
-    ctx.lineTo(cx+waW, waY); ctx.lineTo(cx-waW, waY); ctx.closePath();
+  // ── PERNAS esquerda (posição "atrás") ──
+  const lThighPath = () => {
+    ctx.moveTo(cx - legGap, crY);
+    ctx.bezierCurveTo(cx - legGap - thHW, crY + 8, cx - legGap - thHW * 0.95, knY - 15, cx - legGap - thHW * 0.8, knY);
+    ctx.bezierCurveTo(cx - legGap - thHW * 0.15, knY + 2, cx - legGap + thHW * 0.08, crY + 4, cx - legGap, crY);
+    ctx.closePath();
   };
-  drawShape(chestFn, bodyBase, stroke);
-  overlayHeat(chestFn, dobraHeat(dSub + dAxi + dPei, 60));
+  drawPart(lThighPath, cx - legGap - thHW * 0.45, crY + (knY - crY) * 0.45, thHW, (knY - crY) * 0.45, dobraH(dCox, 35));
 
-  // ── Torso — abdomen ──
-  const abdFn = () => {
-    ctx.moveTo(cx-waW, waY); ctx.lineTo(cx+waW, waY);
-    ctx.lineTo(cx+hiW, hiY); ctx.lineTo(cx-hiW, hiY); ctx.closePath();
+  const lCalfPath = () => {
+    ctx.moveTo(cx - legGap - thHW * 0.8, knY + 4);
+    ctx.bezierCurveTo(cx - legGap - caHW * 0.9, knY + 18, cx - legGap - caHW * 0.8, anY - 12, cx - legGap - caHW * 0.5, anY);
+    ctx.bezierCurveTo(cx - legGap + caHW * 0.05, anY + 1, cx - legGap + thHW * 0.07, knY + 5, cx - legGap - thHW * 0.15, knY + 4);
+    ctx.closePath();
   };
-  drawShape(abdFn, bodyBase, stroke);
-  overlayHeat(abdFn, dobraHeat(dAbd + dSup, 55));
+  drawPart(lCalfPath, cx - legGap - caHW * 0.4, knY + (anY - knY) * 0.45, caHW, (anY - knY) * 0.45, 0);
 
-  // ── Arms ──
-  const armHeat = dobraHeat(dTri, 25);
-  const armFaH  = waY + (kneeY - waY) * 0.4;
+  // Pé esquerdo
+  ctx.beginPath();
+  ctx.ellipse(cx - legGap - caHW * 0.25, ftY, 13, 5.5, -0.12, 0, Math.PI * 2);
+  ctx.fillStyle = skinGrad(cx - legGap - caHW * 0.25, ftY, 13, 5.5);
+  ctx.fill(); ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
 
-  // Left upper arm
-  const lArm = () => {
-    ctx.moveTo(cx-shW, shY); ctx.lineTo(cx-shW-arW, shY+4);
-    ctx.lineTo(cx-shW-arW*0.85, waY); ctx.lineTo(cx-shW+arW*0.15, waY); ctx.closePath();
+  // ── PERNA direita (posição "atrás") ──
+  const rThighPath = () => {
+    ctx.moveTo(cx + legGap, crY);
+    ctx.bezierCurveTo(cx + legGap + thHW, crY + 8, cx + legGap + thHW * 0.95, knY - 15, cx + legGap + thHW * 0.8, knY);
+    ctx.bezierCurveTo(cx + legGap + thHW * 0.15, knY + 2, cx + legGap - thHW * 0.08, crY + 4, cx + legGap, crY);
+    ctx.closePath();
   };
-  drawShape(lArm, bodyBase, stroke); overlayHeat(lArm, armHeat);
+  drawPart(rThighPath, cx + legGap + thHW * 0.45, crY + (knY - crY) * 0.45, thHW, (knY - crY) * 0.45, dobraH(dCox, 35));
 
-  // Right upper arm
-  const rArm = () => {
-    ctx.moveTo(cx+shW, shY); ctx.lineTo(cx+shW+arW, shY+4);
-    ctx.lineTo(cx+shW+arW*0.85, waY); ctx.lineTo(cx+shW-arW*0.15, waY); ctx.closePath();
+  const rCalfPath = () => {
+    ctx.moveTo(cx + legGap + thHW * 0.8, knY + 4);
+    ctx.bezierCurveTo(cx + legGap + caHW * 0.9, knY + 18, cx + legGap + caHW * 0.8, anY - 12, cx + legGap + caHW * 0.5, anY);
+    ctx.bezierCurveTo(cx + legGap - caHW * 0.05, anY + 1, cx + legGap - thHW * 0.07, knY + 5, cx + legGap + thHW * 0.15, knY + 4);
+    ctx.closePath();
   };
-  drawShape(rArm, bodyBase, stroke); overlayHeat(rArm, armHeat);
+  drawPart(rCalfPath, cx + legGap + caHW * 0.4, knY + (anY - knY) * 0.45, caHW, (anY - knY) * 0.45, 0);
 
-  // Forearms
-  const lFarm = () => {
-    ctx.moveTo(cx-shW-arW*0.85, waY); ctx.lineTo(cx-shW-arW, waY+2);
-    ctx.lineTo(cx-shW-arW*0.7, armFaH); ctx.lineTo(cx-shW-arW*0.2, armFaH); ctx.closePath();
+  ctx.beginPath();
+  ctx.ellipse(cx + legGap + caHW * 0.25, ftY, 13, 5.5, 0.12, 0, Math.PI * 2);
+  ctx.fillStyle = skinGrad(cx + legGap + caHW * 0.25, ftY, 13, 5.5);
+  ctx.fill(); ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
+
+  // Joelhos
+  [cx - legGap - thHW * 0.38, cx + legGap + thHW * 0.38].forEach(kx => {
+    ctx.beginPath(); ctx.ellipse(kx, knY, thHW * 0.36, 6.5, 0, 0, Math.PI * 2);
+    ctx.fillStyle = skinGrad(kx, knY, thHW * 0.36, 6.5); ctx.fill();
+    ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
+  });
+
+  // ── TORSO ──
+  const chestHeat = dobraH((dSub + dAxi + dPei) / 3, 22);
+  const abdHeat   = dobraH((dAbd + dSup) / 2,       22);
+
+  // Peito
+  const chestPath = () => {
+    ctx.moveTo(cx - shHW, shY);
+    ctx.bezierCurveTo(cx - shHW - 4, shY + (waY - shY) * 0.45, cx - waHW - 2, waY - (waY - shY) * 0.15, cx - waHW, waY);
+    ctx.lineTo(cx + waHW, waY);
+    ctx.bezierCurveTo(cx + waHW + 2, waY - (waY - shY) * 0.15, cx + shHW + 4, shY + (waY - shY) * 0.45, cx + shHW, shY);
+    ctx.closePath();
   };
-  drawShape(lFarm, bodyBase, stroke);
+  drawPart(chestPath, cx, shY + (waY - shY) * 0.45, shHW, (waY - shY) * 0.45, chestHeat);
 
-  const rFarm = () => {
-    ctx.moveTo(cx+shW+arW*0.85, waY); ctx.lineTo(cx+shW+arW, waY+2);
-    ctx.lineTo(cx+shW+arW*0.7, armFaH); ctx.lineTo(cx+shW+arW*0.2, armFaH); ctx.closePath();
+  // Abdômen (mais protuberante se dAbd alto)
+  const abdPath = () => {
+    const belly = 1 + Math.min((dAbd + dSup) / 50, 0.5);
+    ctx.moveTo(cx - waHW, waY);
+    ctx.bezierCurveTo(cx - waHW * belly, waY + (hiY - waY) * 0.5, cx - hiHW * 1.02, hiY - (hiY - waY) * 0.1, cx - hiHW, hiY);
+    ctx.lineTo(cx + hiHW, hiY);
+    ctx.bezierCurveTo(cx + hiHW * 1.02, hiY - (hiY - waY) * 0.1, cx + waHW * belly, waY + (hiY - waY) * 0.5, cx + waHW, waY);
+    ctx.closePath();
   };
-  drawShape(rFarm, bodyBase, stroke);
+  drawPart(abdPath, cx, waY + (hiY - waY) * 0.5, waHW, (hiY - waY) * 0.5, abdHeat);
 
-  // Hands
-  drawShape(()=>ctx.ellipse(cx-shW-arW*0.45, armFaH+10, 9, 10, 0, 0, Math.PI*2), bodyBase, stroke);
-  drawShape(()=>ctx.ellipse(cx+shW+arW*0.45, armFaH+10, 9, 10, 0, 0, Math.PI*2), bodyBase, stroke);
-
-  // ── Thighs ──
-  const thighHeat = dobraHeat(dCox, 30);
-  const lThigh = () => {
-    ctx.moveTo(cx-gap, hiY); ctx.lineTo(cx-gap-thW, hiY+4);
-    ctx.lineTo(cx-gap-thW*0.82, kneeY); ctx.lineTo(cx-gap+thW*0.12, kneeY); ctx.closePath();
+  // Pelve
+  const pelvisPath = () => {
+    ctx.moveTo(cx - hiHW, hiY);
+    ctx.bezierCurveTo(cx - hiHW, hiY + (crY - hiY) * 0.7, cx - thHW * 1.7, crY, cx - legGap - thHW * 0.1, crY);
+    ctx.lineTo(cx + legGap + thHW * 0.1, crY);
+    ctx.bezierCurveTo(cx + thHW * 1.7, crY, cx + hiHW, hiY + (crY - hiY) * 0.7, cx + hiHW, hiY);
+    ctx.closePath();
   };
-  drawShape(lThigh, bodyBase, stroke); overlayHeat(lThigh, thighHeat);
+  drawPart(pelvisPath, cx, hiY + (crY - hiY) * 0.5, hiHW, (crY - hiY) * 0.5, abdHeat * 0.6);
 
-  const rThigh = () => {
-    ctx.moveTo(cx+gap, hiY); ctx.lineTo(cx+gap+thW, hiY+4);
-    ctx.lineTo(cx+gap+thW*0.82, kneeY); ctx.lineTo(cx+gap-thW*0.12, kneeY); ctx.closePath();
+  // ── BRAÇOS ──
+  const armHeat = dobraH(dTri, 28);
+
+  // Braço esquerdo — superior
+  const lUAPath = () => {
+    ctx.moveTo(cx - shHW + 4, shY + 4);
+    ctx.bezierCurveTo(cx - shHW - arHW, shY + 2, cx - shHW - arHW * 1.08, elY - 12, cx - shHW - arHW * 0.88, elY);
+    ctx.bezierCurveTo(cx - shHW - arHW * 0.22, elY + 2, cx - shHW + arHW * 0.12, shY + 10, cx - shHW + 4, shY + 4);
+    ctx.closePath();
   };
-  drawShape(rThigh, bodyBase, stroke); overlayHeat(rThigh, thighHeat);
+  drawPart(lUAPath, cx - shHW - arHW * 0.5, shY + (elY - shY) * 0.45, arHW, (elY - shY) * 0.45, armHeat);
 
-  // Knees
-  drawShape(()=>ctx.ellipse(cx-gap-thW*0.35, kneeY, thW*0.52, 8, 0, 0, Math.PI*2), bodyBase, stroke);
-  drawShape(()=>ctx.ellipse(cx+gap+thW*0.35, kneeY, thW*0.52, 8, 0, 0, Math.PI*2), bodyBase, stroke);
-
-  // ── Calves ──
-  const calfHeat = dobraHeat((dAbd+dSup)*0.25, 18);
-  const lCalf = () => {
-    ctx.moveTo(cx-gap-thW*0.82, kneeY+6); ctx.lineTo(cx-gap+thW*0.12, kneeY+6);
-    ctx.lineTo(cx-gap+caW*0.1, ankleY); ctx.lineTo(cx-gap-caW*0.9, ankleY); ctx.closePath();
+  const lFAPath = () => {
+    ctx.moveTo(cx - shHW - arHW * 0.88, elY);
+    ctx.bezierCurveTo(cx - shHW - arHW * 1.05, elY + 6, cx - shHW - arHW * 0.78, hnY - 8, cx - shHW - arHW * 0.6, hnY);
+    ctx.bezierCurveTo(cx - shHW - arHW * 0.12, hnY + 1, cx - shHW - arHW * 0.08, elY + 4, cx - shHW - arHW * 0.22, elY);
+    ctx.closePath();
   };
-  drawShape(lCalf, bodyBase, stroke); overlayHeat(lCalf, calfHeat);
+  drawPart(lFAPath, cx - shHW - arHW * 0.5, elY + (hnY - elY) * 0.45, arHW * 0.8, (hnY - elY) * 0.45, 0);
 
-  const rCalf = () => {
-    ctx.moveTo(cx+gap+thW*0.82, kneeY+6); ctx.lineTo(cx+gap-thW*0.12, kneeY+6);
-    ctx.lineTo(cx+gap-caW*0.1, ankleY); ctx.lineTo(cx+gap+caW*0.9, ankleY); ctx.closePath();
+  ctx.beginPath(); ctx.ellipse(cx - shHW - arHW * 0.38, hnY + 7, arHW * 0.52, 7, -0.1, 0, Math.PI * 2);
+  ctx.fillStyle = skinGrad(cx - shHW - arHW * 0.38, hnY + 7, arHW * 0.52, 7); ctx.fill();
+  ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
+
+  // Braço direito — superior
+  const rUAPath = () => {
+    ctx.moveTo(cx + shHW - 4, shY + 4);
+    ctx.bezierCurveTo(cx + shHW + arHW, shY + 2, cx + shHW + arHW * 1.08, elY - 12, cx + shHW + arHW * 0.88, elY);
+    ctx.bezierCurveTo(cx + shHW + arHW * 0.22, elY + 2, cx + shHW - arHW * 0.12, shY + 10, cx + shHW - 4, shY + 4);
+    ctx.closePath();
   };
-  drawShape(rCalf, bodyBase, stroke); overlayHeat(rCalf, calfHeat);
+  drawPart(rUAPath, cx + shHW + arHW * 0.5, shY + (elY - shY) * 0.45, arHW, (elY - shY) * 0.45, armHeat);
 
-  // Feet
-  drawShape(()=>ctx.ellipse(cx-gap-thW*0.38, footY, 15, 7, 0, 0, Math.PI*2), bodyBase, stroke);
-  drawShape(()=>ctx.ellipse(cx+gap+thW*0.38, footY, 15, 7, 0, 0, Math.PI*2), bodyBase, stroke);
+  const rFAPath = () => {
+    ctx.moveTo(cx + shHW + arHW * 0.88, elY);
+    ctx.bezierCurveTo(cx + shHW + arHW * 1.05, elY + 6, cx + shHW + arHW * 0.78, hnY - 8, cx + shHW + arHW * 0.6, hnY);
+    ctx.bezierCurveTo(cx + shHW + arHW * 0.12, hnY + 1, cx + shHW + arHW * 0.08, elY + 4, cx + shHW + arHW * 0.22, elY);
+    ctx.closePath();
+  };
+  drawPart(rFAPath, cx + shHW + arHW * 0.5, elY + (hnY - elY) * 0.45, arHW * 0.8, (hnY - elY) * 0.45, 0);
 
-  // ── Update legend ──
-  function fmtDobra(mm) { return mm > 0 ? mm.toFixed(1) + ' mm' : '—'; }
-  document.getElementById('fz_triceps').textContent  = fmtDobra(dTri);
-  document.getElementById('fz_sub').textContent      = fmtDobra(dSub);
-  document.getElementById('fz_pei').textContent      = fmtDobra(dPei);
-  document.getElementById('fz_axi').textContent      = fmtDobra(dAxi);
-  document.getElementById('fz_abd').textContent      = fmtDobra(dAbd);
-  document.getElementById('fz_sup').textContent      = fmtDobra(dSup);
-  document.getElementById('fz_cox').textContent      = fmtDobra(dCox);
+  ctx.beginPath(); ctx.ellipse(cx + shHW + arHW * 0.38, hnY + 7, arHW * 0.52, 7, 0.1, 0, Math.PI * 2);
+  ctx.fillStyle = skinGrad(cx + shHW + arHW * 0.38, hnY + 7, arHW * 0.52, 7); ctx.fill();
+  ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
 
-  // Update dot colors dynamically
-  const zoneDots = document.querySelectorAll('.fzr-dot');
-  const heats = [
-    dobraHeat(dTri, 25), dobraHeat(dSub, 30), dobraHeat(dPei, 28),
-    dobraHeat(dAxi, 25), dobraHeat(dAbd, 35), dobraHeat(dSup, 30), dobraHeat(dCox, 30)
-  ];
-  zoneDots.forEach((dot, i) => { dot.style.background = heatRGBA(heats[i], 1); });
+  // Deltóides
+  [{ x: cx - shHW + 2, ang: -0.35 }, { x: cx + shHW - 2, ang: 0.35 }].forEach(d => {
+    ctx.beginPath(); ctx.ellipse(d.x, shY + 3, 13, 9, d.ang, 0, Math.PI * 2);
+    ctx.fillStyle = skinGrad(d.x, shY + 3, 13, 9); ctx.fill();
+    ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.7; ctx.stroke();
+  });
+
+  // ── PESCOÇO ──
+  ctx.beginPath();
+  ctx.moveTo(cx - 8, nkT);
+  ctx.bezierCurveTo(cx - 10, nkT + 4, cx - 9, nkB - 2, cx - 9, nkB);
+  ctx.lineTo(cx + 9, nkB);
+  ctx.bezierCurveTo(cx + 9, nkB - 2, cx + 10, nkT + 4, cx + 8, nkT);
+  ctx.closePath();
+  ctx.fillStyle = skinGrad(cx, nkT + (nkB - nkT) * 0.5, 10, (nkB - nkT) * 0.5);
+  ctx.fill(); ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.7; ctx.stroke();
+
+  // ── CABEÇA ──
+  const headGrad = ctx.createRadialGradient(cx - 7, hdCY - 8, 3, cx, hdCY, hdRY);
+  headGrad.addColorStop(0,   SKIN_LIGHT);
+  headGrad.addColorStop(0.6, SKIN_BASE);
+  headGrad.addColorStop(1,   SKIN_DARK);
+  ctx.beginPath(); ctx.ellipse(cx, hdCY, 19, hdRY, 0, 0, Math.PI * 2);
+  ctx.fillStyle = headGrad; ctx.fill();
+  ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
+
+  // Rosto (olhos + boca sutis)
+  ctx.fillStyle = 'rgba(80,50,35,0.22)';
+  ctx.beginPath(); ctx.ellipse(cx - 6, hdCY - 4, 3, 2.2, -0.2, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(cx + 6, hdCY - 4, 3, 2.2,  0.2, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(cx, hdCY + 6, 4.5, 0.12 * Math.PI, 0.88 * Math.PI);
+  ctx.strokeStyle = 'rgba(80,50,35,0.18)'; ctx.lineWidth = 1; ctx.stroke();
+
+  // ── LEGENDA ──
+  const fmt = mm => mm > 0 ? mm.toFixed(1) + ' mm' : '—';
+  const ids = ['fz_triceps','fz_sub','fz_pei','fz_axi','fz_abd','fz_sup','fz_cox'];
+  const vals = [dTri, dSub, dPei, dAxi, dAbd, dSup, dCox];
+  const refs = [25, 30, 28, 25, 35, 30, 30];
+  ids.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = fmt(vals[i]);
+  });
+  document.querySelectorAll('.fzr-dot').forEach((dot, i) => {
+    if (i < refs.length) dot.style.background = heatRGBA(dobraH(vals[i], refs[i]), 1);
+  });
 } // end _drawBodyAvatarInner
 
 window.drawBodyAvatar = drawBodyAvatar;
