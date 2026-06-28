@@ -704,8 +704,8 @@
           <input type="date" id="dataNascimento" oninput="calcIdade()" />
         </div>
         <div class="field">
-          <label>Idade calculada <span class="unit">anos</span></label>
-          <input type="number" id="idade" class="calc-output" readonly placeholder="—" />
+          <label>Idade <span class="unit">anos</span></label>
+          <input type="number" id="idade" placeholder="—" oninput="calcPollock()" />
         </div>
         <div class="field">
           <label>Sexo biológico</label>
@@ -2404,37 +2404,37 @@ function addFotoSlot(labelDefault) {
   slot.className = 'foto-slot';
   slot.id = 'slot_' + id;
 
-  // ── input de arquivo (fora do DOM visual, appended ao slot) ──
+  // ── input de arquivo oculto ──
   const input = document.createElement('input');
   input.type = 'file';
   input.id = 'input_' + id;
   input.accept = 'image/*';
-  input.style.cssText = 'position:absolute;width:0;height:0;opacity:0;pointer-events:none;';
+  input.style.cssText = 'display:none;';
   input.addEventListener('change', function () { carregarFoto(id); });
   slot.appendChild(input);
 
-  // ── área clicável ──
-  const area = document.createElement('div');
-  area.style.cssText = 'display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;';
-  area.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    document.getElementById('input_' + id).click();
-  });
+  // ── label como área clicável (abre file dialog nativamente) ──
+  const label = document.createElement('label');
+  label.htmlFor = 'input_' + id;
+  label.style.cssText = 'display:flex;flex-direction:column;flex:1;cursor:pointer;overflow:hidden;';
 
   const img = document.createElement('img');
   img.className = 'foto-preview';
   img.id = 'prev_' + id;
   img.title = 'Clique para trocar';
-  area.appendChild(img);
+  img.addEventListener('click', function(e) {
+    // Quando já tem imagem, clique na img também abre o seletor (via label pai)
+    // Nada extra necessário — o label já faz isso
+  });
+  label.appendChild(img);
 
   const ph = document.createElement('div');
   ph.className = 'foto-placeholder';
   ph.id = 'ph_' + id;
   ph.innerHTML = '<span class="foto-icon">📷</span><span>Clique para adicionar</span>';
-  area.appendChild(ph);
+  label.appendChild(ph);
 
-  slot.appendChild(area);
+  slot.appendChild(label);
 
   // ── rodapé com legenda e botão remover ──
   const footer = document.createElement('div');
@@ -2443,15 +2443,14 @@ function addFotoSlot(labelDefault) {
   const leg = document.createElement('input');
   leg.type = 'text';
   leg.id = 'leg_' + id;
-  leg.placeholder = 'Legenda (ex: Frente, Lateral D...)';
+  leg.placeholder = 'Legenda';
   leg.value = labelDefault || '';
-  leg.addEventListener('click', e => e.stopPropagation());
 
   const btnRem = document.createElement('button');
   btnRem.type = 'button';
-  btnRem.title = 'Remover';
+  btnRem.title = 'Remover slot';
   btnRem.textContent = '✕';
-  btnRem.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); removerFoto(id); });
+  btnRem.addEventListener('click', e => { e.preventDefault(); removerFoto(id); });
 
   footer.appendChild(leg);
   footer.appendChild(btnRem);
