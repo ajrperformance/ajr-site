@@ -553,35 +553,52 @@
   .pi-note { color: var(--gray); font-size: 0.72rem; font-style: italic; flex-basis: 100%; margin-top: -0.1rem; }
   .btn-rem-pain { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.82rem; padding: 0 0.1rem; flex-shrink: 0; }
 
-  /* ═══ BODY COMPOSITION AVATAR ═══ */
-  .avatar-wrap {
-    display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;
+  /* ═══ COMPOSITION CHARTS ═══ */
+  .comp-charts {
+    display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;
     margin-top: 1.75rem; padding-top: 1.25rem;
     border-top: 1px solid var(--border);
   }
-  .avatar-canvas-col { flex: 0 0 auto; }
-  #avatarCanvas {
-    border-radius: var(--radius); display: block;
-    background: rgba(201,168,76,0.03); border: 1px solid var(--border);
+  .comp-card {
+    background: rgba(201,168,76,0.04); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.1rem 1.25rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.85rem;
   }
-  .avatar-info { flex: 1; min-width: 180px; }
-  .avatar-info h4 {
-    font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.09em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
+  .comp-card-wide { flex: 1; min-width: 220px; align-items: flex-start; }
+  .comp-card-title {
+    font-family: 'Montserrat', sans-serif; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--gold);
+    align-self: flex-start;
   }
-  .fat-gradient-bar {
-    height: 10px; border-radius: 5px; margin: 0.5rem 0 0.3rem;
-    background: linear-gradient(to right,#4fc3f7,#4caf7d,#f5c832,#f59132,#e05c5c);
+  /* Donut */
+  .donut-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+  .donut-center { position: absolute; text-align: center; pointer-events: none; }
+  .donut-pct {
+    font-family: 'Montserrat', sans-serif; font-size: 1.45rem; font-weight: 800;
+    color: var(--off-white); line-height: 1;
   }
-  .fat-gradient-labels { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--gray); }
-  .fat-zone-row {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.78rem; margin: 0.4rem 0;
+  .donut-sub { font-size: 0.6rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.2rem; }
+  .donut-pills { display: flex; gap: 0.9rem; }
+  .dpill {
+    display: flex; flex-direction: column; align-items: center; gap: 0.12rem;
+    background: rgba(255,255,255,0.04); border-radius: 8px; padding: 0.38rem 0.65rem;
   }
-  .fzr-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .fzr-label { flex: 1; color: var(--off-white); }
-  .fzr-val { font-family: 'Montserrat',sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--gold); }
-  .avatar-note { font-size: 0.72rem; color: var(--gray); line-height: 1.55; margin-top: 0.9rem; }
+  .dpill-val { font-family: 'Montserrat',sans-serif; font-size: 0.85rem; font-weight: 700; }
+  .dpill-lab { font-size: 0.6rem; color: var(--gray); }
+  .dpill-lean .dpill-val { color: var(--gold); }
+  .dpill-fat  .dpill-val { color: #e05c5c; }
+  /* Dobra bars */
+  .dobra-bar-row {
+    display: flex; align-items: center; gap: 0.55rem;
+    width: 100%; margin-bottom: 0.42rem;
+  }
+  .dobra-bar-name { width: 72px; font-size: 0.72rem; color: var(--gray); flex-shrink: 0; text-align: right; }
+  .dobra-bar-track {
+    flex: 1; height: 10px; background: rgba(255,255,255,0.06);
+    border-radius: 5px; overflow: hidden; position: relative;
+  }
+  .dobra-bar-fill { height: 100%; border-radius: 5px; transition: width 0.4s ease; min-width: 0; }
+  .dobra-bar-val { width: 38px; font-family: 'Montserrat',sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--off-white); text-align: right; }
   </style>
 </head>
 <body>
@@ -1059,26 +1076,49 @@
         </tbody>
       </table>
 
-      <!-- Avatar de Composição Corporal -->
-      <div class="avatar-wrap" id="avatarWrap">
-        <div class="avatar-canvas-col">
-          <canvas id="avatarCanvas" width="200" height="380"></canvas>
-        </div>
-        <div class="avatar-info">
-          <h4>Distribuição de Gordura</h4>
-          <div class="fat-gradient-bar"></div>
-          <div class="fat-gradient-labels"><span>Muito Magro</span><span>Obeso</span></div>
-          <div style="margin-top:0.9rem;" id="fatZoneRows">
-            <div class="fat-zone-row"><div class="fzr-dot" style="background:#4fc3f7"></div><span class="fzr-label">Braço / Tríceps</span><span class="fzr-val" id="fz_triceps">—</span></div>
-            <div class="fat-zone-row"><div class="fzr-dot" style="background:#4caf7d"></div><span class="fzr-label">Costas / Subescapular</span><span class="fzr-val" id="fz_sub">—</span></div>
-            <div class="fat-zone-row"><div class="fzr-dot" style="background:#a0d87d"></div><span class="fzr-label">Peitoral</span><span class="fzr-val" id="fz_pei">—</span></div>
-            <div class="fat-zone-row"><div class="fzr-dot" style="background:#f5c832"></div><span class="fzr-label">Axilar / Flanco</span><span class="fzr-val" id="fz_axi">—</span></div>
-            <div class="fat-zone-row"><div class="fzr-dot" style="background:#f59132"></div><span class="fzr-label">Abdominal</span><span class="fzr-val" id="fz_abd">—</span></div>
-            <div class="fat-zone-row"><div class="fzr-dot" style="background:#e05c5c"></div><span class="fzr-label">Supra-ilíaca / Quadril</span><span class="fzr-val" id="fz_sup">—</span></div>
-            <div class="fat-zone-row"><div class="fzr-dot" style="background:#c0392b"></div><span class="fzr-label">Coxa</span><span class="fzr-val" id="fz_cox">—</span></div>
+      <!-- Gráficos de Composição Corporal -->
+      <div class="comp-charts" id="compCharts">
+
+        <!-- Donut: % Gordura vs Massa Magra -->
+        <div class="comp-card">
+          <div class="comp-card-title">Composição Corporal</div>
+          <div class="donut-wrap">
+            <canvas id="chartDonut" width="190" height="190"></canvas>
+            <div class="donut-center">
+              <div class="donut-pct" id="donutPct">—</div>
+              <div class="donut-sub">% Gordura</div>
+            </div>
           </div>
-          <p class="avatar-note">As proporções do avatar são baseadas nas circunferências. As cores indicam a espessura relativa das dobras cutâneas em cada zona — vermelho = maior acúmulo de gordura localizada.</p>
+          <div class="donut-pills">
+            <div class="dpill dpill-lean">
+              <span class="dpill-val" id="pillMLG">— kg</span>
+              <span class="dpill-lab">Massa Magra</span>
+            </div>
+            <div class="dpill dpill-fat">
+              <span class="dpill-val" id="pillMG">— kg</span>
+              <span class="dpill-lab">Massa Gorda</span>
+            </div>
+          </div>
+          <div style="font-size:0.62rem;color:var(--gray);text-align:center;max-width:180px;line-height:1.45;">
+            Pollock 7 dobras · Siri · <span id="donutClass" style="color:var(--gold)">—</span>
+          </div>
         </div>
+
+        <!-- Barras: dobras por zona -->
+        <div class="comp-card comp-card-wide">
+          <div class="comp-card-title">Dobras Cutâneas <span style="font-weight:400;text-transform:none;font-size:0.7rem;color:var(--gray)">mm · Pollock 7</span></div>
+          <div id="dobrasBars" style="width:100%">
+            <!-- gerado por updateDobraBars() -->
+            <div style="font-size:0.78rem;color:var(--gray);padding:1rem 0;">Preencha as dobras para visualizar.</div>
+          </div>
+          <div style="display:flex;gap:0.8rem;margin-top:0.4rem;flex-wrap:wrap;">
+            <span style="font-size:0.62rem;color:#34A853">■ Baixo (&lt;12 mm)</span>
+            <span style="font-size:0.62rem;color:#FBBC04">■ Moderado (12–22)</span>
+            <span style="font-size:0.62rem;color:#FA7B17">■ Elevado (22–32)</span>
+            <span style="font-size:0.62rem;color:#EA4335">■ Muito Elevado (&gt;32)</span>
+          </div>
+        </div>
+
       </div>
 
       <!-- Resultado Pollock -->
@@ -1846,7 +1886,10 @@ function calcPollock() {
     else cls = 'Obesidade';
   }
   document.getElementById('rClassGord').textContent = cls;
-  if (typeof drawBodyAvatar === 'function') drawBodyAvatar();
+
+  // Gráficos
+  drawDonutChart(pctGord, peso > 0 ? massaGorda : null, peso > 0 ? massaMagra : null, cls);
+  updateDobraBars(dobras);
 }
 
 function calcAsym(name, dirId, esqId, asymId, defId) {
@@ -1951,10 +1994,6 @@ window.classVo2Update = classVo2Update;
 ══════════════════════════════════════════ */
 function toggleSection(id) {
   document.getElementById(id).classList.toggle('collapsed');
-  // Redesenha avatar ao abrir sec4
-  if (id === 'sec4' && !document.getElementById('sec4').classList.contains('collapsed')) {
-    if (typeof window.drawBodyAvatar === 'function') setTimeout(window.drawBodyAvatar, 50);
-  }
 }
 
 /* ══════════════════════════════════════════
@@ -2443,7 +2482,6 @@ function removerFoto(id) {
 window.addEventListener('DOMContentLoaded', () => {
   ['Frente', 'Lateral Direita', 'Lateral Esquerda', 'Costas'].forEach(l => addFotoSlot(l));
   initBodyMap();
-  drawBodyAvatar();
 });
 
 /* ══════════════════════════════════════════
@@ -2704,316 +2742,131 @@ window.applyPainColors = applyPainColors;
 window.updatePainNote  = updatePainNote;
 
 /* ══════════════════════════════════════════
-   BODY COMPOSITION AVATAR (Canvas)
+   COMPOSITION CHARTS
 ══════════════════════════════════════════ */
-function drawBodyAvatar() {
-  const canvas = document.getElementById('avatarCanvas');
+
+// ── Donut: %Gordura vs Massa Magra ──
+function drawDonutChart(pctGord, massaGorda, massaMagra, cls) {
+  const canvas = document.getElementById('chartDonut');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0, 0, W, H);
-  try { _drawBodyAvatarInner(ctx, W, H, canvas); } catch(ex) {
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='rgba(255,100,80,0.85)'; ctx.font='bold 11px sans-serif';
-    ctx.fillText('Erro avatar:', 6, 18);
-    ctx.font='10px sans-serif';
-    var words = ex.message.split(' ');
-    var line = '', y = 34;
-    words.forEach(function(w) {
-      var test = line + w + ' ';
-      if (test.length > 28 && line) { ctx.fillText(line, 6, y); y += 14; line = w + ' '; }
-      else line = test;
-    });
-    if (line) ctx.fillText(line, 6, y);
-  }
-}
-function _drawBodyAvatarInner(ctx, W, H, canvas) {
-  const gc = n => { const el = document.querySelector(`[data-circ="${n}"]`); return el ? (parseFloat(el.value)||0) : 0; };
-  const gd = n => { const el = document.querySelector(`[data-dobra="${n}"]`); return el ? (parseFloat(el.value)||0) : 0; };
 
-  // ── Medidas (cm / mm) com defaults de adulto médio ──
-  const ombroC  = gc('ombro')          || 104;
-  const cinturaC= gc('cintura')        || 84;
-  const quadrilC= gc('quadril')        || 98;
-  const coxaC   = gc('coxaDirMed')    || 56;
-  const bracoC  = gc('bracoDirRelax') || 35;
-  const panturC = gc('panturDir')     || 37;
+  const cx = W/2, cy = H/2;
+  const rO = 80, rI = 54;  // outer / inner radius
+  const GAP = 0.018;        // small gap between arcs
 
-  const dTri = gd('triceptal');
-  const dSub = gd('subscapular');
-  const dPei = gd('peitoral');
-  const dAxi = gd('axilar');
-  const dSup = gd('supraIliaca');
-  const dAbd = gd('abdominal');
-  const dCox = gd('coxa');
-
-  // ── Cores de pele ──
-  const SKIN_BASE  = '#C8B4A0';
-  const SKIN_LIGHT = '#DDD0BE';
-  const SKIN_DARK  = '#9E8070';
-  const SHADOW     = 'rgba(60,35,20,0.18)';
-
-  // ── Helpers de cor ──
-  function heatRGBA(h, a) {
-    h = Math.max(0, Math.min(1, h));
-    let r, g, b;
-    if (h < 0.33)      { const t=h/0.33;       r=76+t*(255-76);   g=175+t*(235-175); b=80+t*(59-80); }
-    else if (h < 0.66) { const t=(h-0.33)/0.33; r=255;             g=235+t*(152-235); b=59+t*(0-59); }
-    else               { const t=(h-0.66)/0.34; r=255+t*(224-255); g=152+t*(67-152); b=0; }
-    return `rgba(${Math.round(r)},${Math.round(g)},${Math.round(b)},${a})`;
-  }
-  const dobraH = (mm, ref) => Math.min((mm||0) / (ref||35), 1);
-
-  // Gradiente radial para efeito 3D
-  function skinGrad(x, y, rx, ry) {
-    const g = ctx.createRadialGradient(x - rx*0.28, y - ry*0.3, rx*0.06, x, y, Math.max(rx, ry));
-    g.addColorStop(0,   SKIN_LIGHT);
-    g.addColorStop(0.55, SKIN_BASE);
-    g.addColorStop(1,   SKIN_DARK);
-    return g;
+  // Classification color
+  let fatColor = '#34A853';
+  if (pctGord >= 25 && pctGord < 32) fatColor = '#FBBC04';
+  else if (pctGord >= 32 && pctGord < 38) fatColor = '#FA7B17';
+  else if (pctGord >= 38) fatColor = '#EA4335';
+  // Adjust for male (tighter)
+  const sexo = document.getElementById('sexo').value;
+  if (sexo === 'M') {
+    fatColor = '#34A853';
+    if (pctGord >= 18) fatColor = '#FBBC04';
+    if (pctGord >= 25) fatColor = '#FA7B17';
+    if (pctGord >= 30) fatColor = '#EA4335';
   }
 
-  // Desenha forma preenchida com gradiente + sombra interna
-  function drawPart(pathFn, cx2, cy2, rx2, ry2, heatVal) {
-    ctx.beginPath(); pathFn();
-    ctx.fillStyle = skinGrad(cx2, cy2, rx2, ry2);
-    ctx.fill();
-    if (heatVal > 0.04) {
-      ctx.beginPath(); pathFn();
-      ctx.fillStyle = heatRGBA(heatVal, 0.45);
-      ctx.fill();
-    }
-    // Borda suave
-    ctx.beginPath(); pathFn();
-    ctx.strokeStyle = SHADOW;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-  }
+  const fatFrac = Math.max(0.02, Math.min(0.98, pctGord / 100));
+  const startAngle = -Math.PI / 2;
+  const fatEnd = startAngle + fatFrac * Math.PI * 2;
 
-  // ── Proporções ──
-  const cx = W / 2;
-  // halfWidths em px — base: ombro 104cm ≈ 44px de meia-largura
-  const BASE = ombroC || 104;
-  const toHW = circ => 44 * (circ / BASE);
+  // Track background
+  ctx.beginPath(); ctx.arc(cx, cy, rO, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,255,255,0.04)'; ctx.fill();
 
-  const shHW = toHW(ombroC);
-  // Barriga protrui visualmente conforme dobras abdominais
-  const bellyFactor = 1 + Math.min((dAbd + dSup) / 60, 0.55);
-  const waHW = toHW(cinturaC) * bellyFactor;
-  const hiHW = toHW(quadrilC) * (1 + dobraH(dSup, 40) * 0.15);
-  const thHW = toHW(coxaC) * 0.52 * (1 + dobraH(dCox, 40) * 0.18);
-  const arHW = toHW(bracoC) * 0.48 * (1 + dobraH(dTri, 30) * 0.22);
-  const caHW = toHW(panturC) * 0.46;
-
-  // Posições Y
-  const hdRY  = 22, hdCY = 8 + hdRY;
-  const nkT   = hdCY + hdRY - 3, nkB = nkT + 13;
-  const shY   = nkB;
-  const waY   = shY  + H * 0.175;
-  const hiY   = waY  + H * 0.042;
-  const crY   = hiY  + H * 0.022;   // virilha
-  const knY   = crY  + H * 0.215;
-  const anY   = knY  + H * 0.185;
-  const ftY   = anY  + 7;
-  const elY   = waY  - H * 0.01;    // cotovelo
-  const hnY   = elY  + H * 0.115;   // mão
-
-  const legGap = Math.max(3, thHW * 0.12);
-
-  // ══ DESENHO (de trás pra frente) ══
-
-  // Sombra de chão
+  // Fat arc
   ctx.beginPath();
-  ctx.ellipse(cx, ftY + 8, thHW * 2.2, 6, 0, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(0,0,0,0.09)';
-  ctx.fill();
-
-  // ── PERNAS esquerda (posição "atrás") ──
-  const lThighPath = () => {
-    ctx.moveTo(cx - legGap, crY);
-    ctx.bezierCurveTo(cx - legGap - thHW, crY + 8, cx - legGap - thHW * 0.95, knY - 15, cx - legGap - thHW * 0.8, knY);
-    ctx.bezierCurveTo(cx - legGap - thHW * 0.15, knY + 2, cx - legGap + thHW * 0.08, crY + 4, cx - legGap, crY);
-    ctx.closePath();
-  };
-  drawPart(lThighPath, cx - legGap - thHW * 0.45, crY + (knY - crY) * 0.45, thHW, (knY - crY) * 0.45, dobraH(dCox, 35));
-
-  const lCalfPath = () => {
-    ctx.moveTo(cx - legGap - thHW * 0.8, knY + 4);
-    ctx.bezierCurveTo(cx - legGap - caHW * 0.9, knY + 18, cx - legGap - caHW * 0.8, anY - 12, cx - legGap - caHW * 0.5, anY);
-    ctx.bezierCurveTo(cx - legGap + caHW * 0.05, anY + 1, cx - legGap + thHW * 0.07, knY + 5, cx - legGap - thHW * 0.15, knY + 4);
-    ctx.closePath();
-  };
-  drawPart(lCalfPath, cx - legGap - caHW * 0.4, knY + (anY - knY) * 0.45, caHW, (anY - knY) * 0.45, 0);
-
-  // Pé esquerdo
-  ctx.beginPath();
-  ctx.ellipse(cx - legGap - caHW * 0.25, ftY, 13, 5.5, -0.12, 0, Math.PI * 2);
-  ctx.fillStyle = skinGrad(cx - legGap - caHW * 0.25, ftY, 13, 5.5);
-  ctx.fill(); ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
-
-  // ── PERNA direita (posição "atrás") ──
-  const rThighPath = () => {
-    ctx.moveTo(cx + legGap, crY);
-    ctx.bezierCurveTo(cx + legGap + thHW, crY + 8, cx + legGap + thHW * 0.95, knY - 15, cx + legGap + thHW * 0.8, knY);
-    ctx.bezierCurveTo(cx + legGap + thHW * 0.15, knY + 2, cx + legGap - thHW * 0.08, crY + 4, cx + legGap, crY);
-    ctx.closePath();
-  };
-  drawPart(rThighPath, cx + legGap + thHW * 0.45, crY + (knY - crY) * 0.45, thHW, (knY - crY) * 0.45, dobraH(dCox, 35));
-
-  const rCalfPath = () => {
-    ctx.moveTo(cx + legGap + thHW * 0.8, knY + 4);
-    ctx.bezierCurveTo(cx + legGap + caHW * 0.9, knY + 18, cx + legGap + caHW * 0.8, anY - 12, cx + legGap + caHW * 0.5, anY);
-    ctx.bezierCurveTo(cx + legGap - caHW * 0.05, anY + 1, cx + legGap - thHW * 0.07, knY + 5, cx + legGap + thHW * 0.15, knY + 4);
-    ctx.closePath();
-  };
-  drawPart(rCalfPath, cx + legGap + caHW * 0.4, knY + (anY - knY) * 0.45, caHW, (anY - knY) * 0.45, 0);
-
-  ctx.beginPath();
-  ctx.ellipse(cx + legGap + caHW * 0.25, ftY, 13, 5.5, 0.12, 0, Math.PI * 2);
-  ctx.fillStyle = skinGrad(cx + legGap + caHW * 0.25, ftY, 13, 5.5);
-  ctx.fill(); ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
-
-  // Joelhos
-  [cx - legGap - thHW * 0.38, cx + legGap + thHW * 0.38].forEach(kx => {
-    ctx.beginPath(); ctx.ellipse(kx, knY, thHW * 0.36, 6.5, 0, 0, Math.PI * 2);
-    ctx.fillStyle = skinGrad(kx, knY, thHW * 0.36, 6.5); ctx.fill();
-    ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
-  });
-
-  // ── TORSO ──
-  const chestHeat = dobraH((dSub + dAxi + dPei) / 3, 22);
-  const abdHeat   = dobraH((dAbd + dSup) / 2,       22);
-
-  // Peito
-  const chestPath = () => {
-    ctx.moveTo(cx - shHW, shY);
-    ctx.bezierCurveTo(cx - shHW - 4, shY + (waY - shY) * 0.45, cx - waHW - 2, waY - (waY - shY) * 0.15, cx - waHW, waY);
-    ctx.lineTo(cx + waHW, waY);
-    ctx.bezierCurveTo(cx + waHW + 2, waY - (waY - shY) * 0.15, cx + shHW + 4, shY + (waY - shY) * 0.45, cx + shHW, shY);
-    ctx.closePath();
-  };
-  drawPart(chestPath, cx, shY + (waY - shY) * 0.45, shHW, (waY - shY) * 0.45, chestHeat);
-
-  // Abdômen (mais protuberante se dAbd alto)
-  const abdPath = () => {
-    const belly = 1 + Math.min((dAbd + dSup) / 50, 0.5);
-    ctx.moveTo(cx - waHW, waY);
-    ctx.bezierCurveTo(cx - waHW * belly, waY + (hiY - waY) * 0.5, cx - hiHW * 1.02, hiY - (hiY - waY) * 0.1, cx - hiHW, hiY);
-    ctx.lineTo(cx + hiHW, hiY);
-    ctx.bezierCurveTo(cx + hiHW * 1.02, hiY - (hiY - waY) * 0.1, cx + waHW * belly, waY + (hiY - waY) * 0.5, cx + waHW, waY);
-    ctx.closePath();
-  };
-  drawPart(abdPath, cx, waY + (hiY - waY) * 0.5, waHW, (hiY - waY) * 0.5, abdHeat);
-
-  // Pelve
-  const pelvisPath = () => {
-    ctx.moveTo(cx - hiHW, hiY);
-    ctx.bezierCurveTo(cx - hiHW, hiY + (crY - hiY) * 0.7, cx - thHW * 1.7, crY, cx - legGap - thHW * 0.1, crY);
-    ctx.lineTo(cx + legGap + thHW * 0.1, crY);
-    ctx.bezierCurveTo(cx + thHW * 1.7, crY, cx + hiHW, hiY + (crY - hiY) * 0.7, cx + hiHW, hiY);
-    ctx.closePath();
-  };
-  drawPart(pelvisPath, cx, hiY + (crY - hiY) * 0.5, hiHW, (crY - hiY) * 0.5, abdHeat * 0.6);
-
-  // ── BRAÇOS ──
-  const armHeat = dobraH(dTri, 28);
-
-  // Braço esquerdo — superior
-  const lUAPath = () => {
-    ctx.moveTo(cx - shHW + 4, shY + 4);
-    ctx.bezierCurveTo(cx - shHW - arHW, shY + 2, cx - shHW - arHW * 1.08, elY - 12, cx - shHW - arHW * 0.88, elY);
-    ctx.bezierCurveTo(cx - shHW - arHW * 0.22, elY + 2, cx - shHW + arHW * 0.12, shY + 10, cx - shHW + 4, shY + 4);
-    ctx.closePath();
-  };
-  drawPart(lUAPath, cx - shHW - arHW * 0.5, shY + (elY - shY) * 0.45, arHW, (elY - shY) * 0.45, armHeat);
-
-  const lFAPath = () => {
-    ctx.moveTo(cx - shHW - arHW * 0.88, elY);
-    ctx.bezierCurveTo(cx - shHW - arHW * 1.05, elY + 6, cx - shHW - arHW * 0.78, hnY - 8, cx - shHW - arHW * 0.6, hnY);
-    ctx.bezierCurveTo(cx - shHW - arHW * 0.12, hnY + 1, cx - shHW - arHW * 0.08, elY + 4, cx - shHW - arHW * 0.22, elY);
-    ctx.closePath();
-  };
-  drawPart(lFAPath, cx - shHW - arHW * 0.5, elY + (hnY - elY) * 0.45, arHW * 0.8, (hnY - elY) * 0.45, 0);
-
-  ctx.beginPath(); ctx.ellipse(cx - shHW - arHW * 0.38, hnY + 7, arHW * 0.52, 7, -0.1, 0, Math.PI * 2);
-  ctx.fillStyle = skinGrad(cx - shHW - arHW * 0.38, hnY + 7, arHW * 0.52, 7); ctx.fill();
-  ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
-
-  // Braço direito — superior
-  const rUAPath = () => {
-    ctx.moveTo(cx + shHW - 4, shY + 4);
-    ctx.bezierCurveTo(cx + shHW + arHW, shY + 2, cx + shHW + arHW * 1.08, elY - 12, cx + shHW + arHW * 0.88, elY);
-    ctx.bezierCurveTo(cx + shHW + arHW * 0.22, elY + 2, cx + shHW - arHW * 0.12, shY + 10, cx + shHW - 4, shY + 4);
-    ctx.closePath();
-  };
-  drawPart(rUAPath, cx + shHW + arHW * 0.5, shY + (elY - shY) * 0.45, arHW, (elY - shY) * 0.45, armHeat);
-
-  const rFAPath = () => {
-    ctx.moveTo(cx + shHW + arHW * 0.88, elY);
-    ctx.bezierCurveTo(cx + shHW + arHW * 1.05, elY + 6, cx + shHW + arHW * 0.78, hnY - 8, cx + shHW + arHW * 0.6, hnY);
-    ctx.bezierCurveTo(cx + shHW + arHW * 0.12, hnY + 1, cx + shHW + arHW * 0.08, elY + 4, cx + shHW + arHW * 0.22, elY);
-    ctx.closePath();
-  };
-  drawPart(rFAPath, cx + shHW + arHW * 0.5, elY + (hnY - elY) * 0.45, arHW * 0.8, (hnY - elY) * 0.45, 0);
-
-  ctx.beginPath(); ctx.ellipse(cx + shHW + arHW * 0.38, hnY + 7, arHW * 0.52, 7, 0.1, 0, Math.PI * 2);
-  ctx.fillStyle = skinGrad(cx + shHW + arHW * 0.38, hnY + 7, arHW * 0.52, 7); ctx.fill();
-  ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
-
-  // Deltóides
-  [{ x: cx - shHW + 2, ang: -0.35 }, { x: cx + shHW - 2, ang: 0.35 }].forEach(d => {
-    ctx.beginPath(); ctx.ellipse(d.x, shY + 3, 13, 9, d.ang, 0, Math.PI * 2);
-    ctx.fillStyle = skinGrad(d.x, shY + 3, 13, 9); ctx.fill();
-    ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.7; ctx.stroke();
-  });
-
-  // ── PESCOÇO ──
-  ctx.beginPath();
-  ctx.moveTo(cx - 8, nkT);
-  ctx.bezierCurveTo(cx - 10, nkT + 4, cx - 9, nkB - 2, cx - 9, nkB);
-  ctx.lineTo(cx + 9, nkB);
-  ctx.bezierCurveTo(cx + 9, nkB - 2, cx + 10, nkT + 4, cx + 8, nkT);
+  ctx.arc(cx, cy, rO, startAngle + GAP, fatEnd - GAP);
+  ctx.arc(cx, cy, rI, fatEnd - GAP, startAngle + GAP, true);
   ctx.closePath();
-  ctx.fillStyle = skinGrad(cx, nkT + (nkB - nkT) * 0.5, 10, (nkB - nkT) * 0.5);
-  ctx.fill(); ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.7; ctx.stroke();
+  ctx.fillStyle = fatColor; ctx.fill();
 
-  // ── CABEÇA ──
-  const headGrad = ctx.createRadialGradient(cx - 7, hdCY - 8, 3, cx, hdCY, hdRY);
-  headGrad.addColorStop(0,   SKIN_LIGHT);
-  headGrad.addColorStop(0.6, SKIN_BASE);
-  headGrad.addColorStop(1,   SKIN_DARK);
-  ctx.beginPath(); ctx.ellipse(cx, hdCY, 19, hdRY, 0, 0, Math.PI * 2);
-  ctx.fillStyle = headGrad; ctx.fill();
-  ctx.strokeStyle = SHADOW; ctx.lineWidth = 0.8; ctx.stroke();
+  // Lean arc (gold)
+  ctx.beginPath();
+  ctx.arc(cx, cy, rO, fatEnd + GAP, startAngle + Math.PI*2 - GAP);
+  ctx.arc(cx, cy, rI, startAngle + Math.PI*2 - GAP, fatEnd + GAP, true);
+  ctx.closePath();
+  ctx.fillStyle = '#C9A84C'; ctx.fill();
 
-  // Rosto (olhos + boca sutis)
-  ctx.fillStyle = 'rgba(80,50,35,0.22)';
-  ctx.beginPath(); ctx.ellipse(cx - 6, hdCY - 4, 3, 2.2, -0.2, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(cx + 6, hdCY - 4, 3, 2.2,  0.2, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.arc(cx, hdCY + 6, 4.5, 0.12 * Math.PI, 0.88 * Math.PI);
-  ctx.strokeStyle = 'rgba(80,50,35,0.18)'; ctx.lineWidth = 1; ctx.stroke();
+  // Inner hole (match card bg)
+  ctx.beginPath(); ctx.arc(cx, cy, rI - 1, 0, Math.PI*2);
+  ctx.fillStyle = '#0C1D2E'; ctx.fill();
 
-  // ── LEGENDA ──
-  const fmt = mm => mm > 0 ? mm.toFixed(1) + ' mm' : '—';
-  const ids = ['fz_triceps','fz_sub','fz_pei','fz_axi','fz_abd','fz_sup','fz_cox'];
-  const vals = [dTri, dSub, dPei, dAxi, dAbd, dSup, dCox];
-  const refs = [25, 30, 28, 25, 35, 30, 30];
-  ids.forEach((id, i) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = fmt(vals[i]);
+  // Center text
+  ctx.textAlign = 'center';
+  ctx.font = 'bold 22px Montserrat, sans-serif';
+  ctx.fillStyle = '#F0EDE8';
+  ctx.fillText(pctGord.toFixed(1) + '%', cx, cy + 6);
+
+  // Update DOM elements
+  const pctEl = document.getElementById('donutPct');
+  const clsEl = document.getElementById('donutClass');
+  if (pctEl) pctEl.textContent = pctGord.toFixed(1) + '%';
+  if (clsEl) { clsEl.textContent = cls || '—'; clsEl.style.color = fatColor; }
+
+  const mlgEl = document.getElementById('pillMLG');
+  const mgEl  = document.getElementById('pillMG');
+  if (mlgEl) mlgEl.textContent = massaMagra != null ? massaMagra.toFixed(1) + ' kg' : '— kg';
+  if (mgEl)  mgEl.textContent  = massaGorda  != null ? massaGorda.toFixed(1)  + ' kg' : '— kg';
+}
+/* ── updateDobraBars: horizontal bar chart for the 7 skinfolds ── */
+function updateDobraBars(dobras) {
+  const container = document.getElementById('dobrasBars');
+  if (!container) return;
+  const config = [
+    {key:'triceptal',   label:'Tricipital'},
+    {key:'subscapular', label:'Subscapular'},
+    {key:'peitoral',    label:'Peitoral'},
+    {key:'axilar',      label:'Axilar'},
+    {key:'supraIliaca', label:'Supra-ilíaca'},
+    {key:'abdominal',   label:'Abdominal'},
+    {key:'coxa',        label:'Coxa'},
+  ];
+  const vals = config.map(c => dobras[c.key] || 0);
+  const maxV = Math.max(...vals, 35);
+
+  function barColor(v) {
+    if (v < 12) return '#34A853';
+    if (v < 22) return '#FBBC04';
+    if (v < 32) return '#FA7B17';
+    return '#EA4335';
+  }
+
+  if (vals.every(v => v === 0)) {
+    container.innerHTML = '<div style="font-size:0.78rem;color:var(--gray);padding:1rem 0;">Preencha as dobras para visualizar.</div>';
+    return;
+  }
+
+  container.innerHTML = config.map((c, i) => {
+    const v = vals[i];
+    const pct = v > 0 ? Math.min(100, (v / maxV) * 100) : 0;
+    const col = barColor(v);
+    return `<div class="dobra-bar-row">
+      <span class="dobra-bar-name">${c.label}</span>
+      <div class="dobra-bar-track">
+        <div class="dobra-bar-fill" style="width:${pct.toFixed(1)}%;background:${col}"></div>
+      </div>
+      <span class="dobra-bar-val">${v > 0 ? v.toFixed(1) + ' mm' : '—'}</span>
+    </div>`;
+  }).join('');
+}
+
+// Update bars live as user types dobras
+document.querySelectorAll('[data-dobra]').forEach(el => {
+  el.addEventListener('input', () => {
+    const dobras = {};
+    document.querySelectorAll('[data-dobra]').forEach(i => {
+      dobras[i.dataset.dobra] = parseFloat(i.value) || 0;
+    });
+    updateDobraBars(dobras);
   });
-  document.querySelectorAll('.fzr-dot').forEach((dot, i) => {
-    if (i < refs.length) dot.style.background = heatRGBA(dobraH(vals[i], refs[i]), 1);
-  });
-} // end _drawBodyAvatarInner
-
-window.drawBodyAvatar = drawBodyAvatar;
-window.switchBodyView = switchBodyView;
-
-// Hook avatar update into measurements
-document.querySelectorAll('[data-circ],[data-dobra]').forEach(el => {
-  el.addEventListener('input', drawBodyAvatar);
 });
+
 </script>
 
 <script>
@@ -3451,16 +3304,9 @@ window.addEventListener('error', function(ev) {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       bmInit();
-      if (typeof window.drawBodyAvatar === 'function') {
-        try { window.drawBodyAvatar(); } catch(e) {}
-      }
     });
   } else {
     bmInit();
-    // Garantir que o avatar desenha mesmo que o DOMContentLoaded já tenha disparado
-    if (typeof window.drawBodyAvatar === 'function') {
-      try { window.drawBodyAvatar(); } catch(e) {}
-    }
   }
 })();
 </script>
