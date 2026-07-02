@@ -658,7 +658,7 @@
 <body>
 
 <!-- ══ AUTH OVERLAY ══ -->
-<div id="authOverlay">
+<div id="authOverlay" class="hidden">
   <div class="auth-card">
     <div class="auth-logo">AJR Avaliação Física &amp; Performance</div>
     <div class="auth-title">Acesso Restrito</div>
@@ -1643,6 +1643,9 @@
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
+  // ⚠️ AUTH DESATIVADO TEMPORARIAMENTE (acesso liberado). Para reativar, descomente o bloco abaixo
+  // e remova a classe "hidden" do <div id="authOverlay"> no HTML.
+  /*
   onAuthStateChanged(auth, user => {
     const overlay = document.getElementById('authOverlay');
     if (user && user.email === ALLOWED_EMAIL) {
@@ -1656,6 +1659,7 @@
       }
     }
   });
+  */
 
   document.getElementById('btnGoogle').addEventListener('click', async () => {
     try {
