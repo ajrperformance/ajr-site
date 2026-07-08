@@ -703,6 +703,88 @@
   @media (max-width: 600px) {
     .dep-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
   }
+  /* ══════════════════════════════════
+     GIRO DE NOTÍCIAS (página SPA)
+  ══════════════════════════════════ */
+  #giro-noticias { display: none; }
+  body.giro-ativo #giro-noticias { display: block; }
+  body.giro-ativo > section:not(#giro-noticias),
+  body.giro-ativo > #hero { display: none !important; }
+
+  #giro-noticias {
+    background: #060e15;
+    min-height: 80vh;
+    padding: 70px 5% 100px;
+  }
+  .giro-header { max-width: 1180px; margin: 0 auto 3rem; }
+  .giro-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--gold); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .giro-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
+  .giro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    color: var(--white); font-weight: 900; line-height: 1.1;
+  }
+  .giro-title em { color: var(--gold); font-style: italic; }
+  .giro-sub { color: var(--gray); margin-top: 0.75rem; max-width: 620px; font-size: 0.98rem; }
+  .giro-atualizado { color: #3d5c72; font-size: 0.75rem; margin-top: 0.75rem; letter-spacing: 0.5px; }
+
+  .giro-filtros { display: flex; flex-wrap: wrap; gap: 0.5rem; max-width: 1180px; margin: 0 auto 2rem; }
+  .giro-filtro {
+    background: transparent; border: 1px solid rgba(201,168,76,0.25);
+    color: #7a9ab2; font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 600;
+    padding: 0.4rem 1rem; border-radius: 100px; cursor: pointer; transition: all 0.2s;
+  }
+  .giro-filtro:hover { border-color: var(--gold); color: var(--gold); }
+  .giro-filtro.ativo { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+
+  .giro-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem; max-width: 1180px; margin: 0 auto;
+  }
+  .noticia-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    display: flex; flex-direction: column;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .noticia-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201,168,76,0.4);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  }
+  .noticia-card.destaque { grid-column: 1 / -1; padding: 2.25rem; background: linear-gradient(135deg, var(--teal) 0%, var(--navy-mid) 100%); }
+  .noticia-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .noticia-tag {
+    background: rgba(201,168,76,0.12); color: var(--gold);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 100px;
+  }
+  .noticia-data { color: #3d5c72; font-size: 0.72rem; font-weight: 500; }
+  .noticia-fonte { color: #4a6575; font-size: 0.72rem; }
+  .noticia-titulo {
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    color: var(--white); font-size: 1.05rem; line-height: 1.35; margin-bottom: 0.75rem;
+  }
+  .noticia-card.destaque .noticia-titulo { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 900; }
+  .noticia-resumo { color: var(--gray); font-size: 0.88rem; line-height: 1.6; flex: 1; margin-bottom: 1.25rem; }
+  .noticia-link {
+    display: inline-flex; align-items: center; gap: 0.4rem; align-self: flex-start;
+    color: var(--gold); text-decoration: none; font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.3px; transition: gap 0.2s;
+  }
+  .noticia-link:hover { gap: 0.7rem; }
+  .noticia-link::after { content: '→'; }
+  .giro-vazio { grid-column: 1 / -1; text-align: center; color: var(--gray); padding: 4rem 1rem; }
+
+  @media (max-width: 768px) {
+    #giro-noticias { padding: 50px 5% 80px; }
+  }
   </style>
 </head>
 <body>
@@ -718,6 +800,7 @@
     <li><a href="#depoimentos">Depoimentos</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#giro" id="navGiro">Giro de Notícias</a></li>
     <li><a href="https://wa.me/5514997432182?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais!" class="nav-cta">Falar no WhatsApp</a></li>
   </ul>
 </nav>
@@ -1979,6 +2062,125 @@ function toggleFaq(btn) {
     ou me siga no Instagram <span>@aldemirjrtreinador</span>
   </a>
 </section>
+
+<!-- ═══════════ GIRO DE NOTÍCIAS (página SPA) ═══════════ -->
+<section id="giro-noticias">
+  <div class="giro-header">
+    <span class="giro-eyebrow">Performance · Esporte Mundial</span>
+    <h1 class="giro-title">Giro de <em>Notícias</em></h1>
+    <p class="giro-sub">As últimas do esporte e da ciência da performance, atualizadas automaticamente todos os dias. Curadoria AJR Avaliação Física e Performance.</p>
+    <div class="giro-atualizado" id="giroAtualizado"></div>
+  </div>
+  <div class="giro-filtros" id="giroFiltros"></div>
+  <div class="giro-grid" id="giroGrid">
+    <div class="giro-vazio">Carregando notícias…</div>
+  </div>
+</section>
+
+<script>
+/* ══════════ NAVEGAÇÃO SPA: Home ⇄ Giro de Notícias ══════════ */
+let noticiasCache = null;
+let filtroAtivo = 'Todas';
+
+function mostrarGiro() {
+  document.body.classList.add('giro-ativo');
+  window.scrollTo(0, 0);
+  if (history.replaceState) history.replaceState(null, '', '#giro');
+  if (!noticiasCache) carregarNoticias();
+}
+
+function mostrarHome() {
+  document.body.classList.remove('giro-ativo');
+}
+
+document.getElementById('navGiro').addEventListener('click', function (e) {
+  e.preventDefault();
+  mostrarGiro();
+});
+
+// Qualquer link âncora da página volta para a Home antes de rolar (delegado — cobre footer e conteúdo futuro)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+  if (a && a.id !== 'navGiro') mostrarHome();
+});
+
+// Deep-link: abrir direto em site.com/#giro
+if (location.hash === '#giro') mostrarGiro();
+
+/* ══════════ CARREGAMENTO DO noticias.json ══════════ */
+function formatarData(iso) {
+  try {
+    var d = new Date(iso);
+    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  } catch (e) { return ''; }
+}
+
+function escapeHtml(s) {
+  var div = document.createElement('div');
+  div.textContent = s || '';
+  return div.innerHTML;
+}
+
+function renderizarNoticias() {
+  var grid = document.getElementById('giroGrid');
+  var lista = (noticiasCache.noticias || []).filter(function (n) {
+    return filtroAtivo === 'Todas' || n.categoria === filtroAtivo;
+  });
+  if (!lista.length) {
+    grid.innerHTML = '<div class="giro-vazio">Nenhuma notícia nesta categoria por enquanto.</div>';
+    return;
+  }
+  grid.innerHTML = lista.map(function (n, i) {
+    return '<article class="noticia-card' + (i === 0 && filtroAtivo === 'Todas' ? ' destaque' : '') + '">' +
+      '<div class="noticia-meta">' +
+        '<span class="noticia-tag">' + escapeHtml(n.categoria) + '</span>' +
+        '<span class="noticia-data">' + formatarData(n.data) + '</span>' +
+        (n.fonte ? '<span class="noticia-fonte">· ' + escapeHtml(n.fonte) + '</span>' : '') +
+      '</div>' +
+      '<h3 class="noticia-titulo">' + escapeHtml(n.titulo) + '</h3>' +
+      '<p class="noticia-resumo">' + escapeHtml(n.resumo) + '</p>' +
+      '<a class="noticia-link" href="' + encodeURI(n.link) + '" target="_blank" rel="noopener noreferrer">Ler matéria original</a>' +
+    '</article>';
+  }).join('');
+}
+
+function renderizarFiltros() {
+  var cats = ['Todas'];
+  (noticiasCache.noticias || []).forEach(function (n) {
+    if (n.categoria && cats.indexOf(n.categoria) === -1) cats.push(n.categoria);
+  });
+  document.getElementById('giroFiltros').innerHTML = cats.map(function (c) {
+    return '<button class="giro-filtro' + (c === filtroAtivo ? ' ativo' : '') + '" data-cat="' + escapeHtml(c) + '">' + escapeHtml(c) + '</button>';
+  }).join('');
+  document.querySelectorAll('.giro-filtro').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filtroAtivo = btn.getAttribute('data-cat');
+      renderizarFiltros();
+      renderizarNoticias();
+    });
+  });
+}
+
+function carregarNoticias() {
+  fetch('noticias.json', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (dados) {
+      noticiasCache = dados;
+      if (dados.atualizado_em) {
+        document.getElementById('giroAtualizado').textContent =
+          'Última atualização: ' + formatarData(dados.atualizado_em);
+      }
+      renderizarFiltros();
+      renderizarNoticias();
+    })
+    .catch(function (err) {
+      document.getElementById('giroGrid').innerHTML =
+        '<div class="giro-vazio">Não foi possível carregar as notícias agora.<br>' +
+        '<small style="color:#3d5c72">O arquivo noticias.json precisa estar na mesma pasta do site (funciona quando publicado no GitHub Pages).</small></div>';
+      console.error('Giro de Notícias:', err);
+    });
+}
+</script>
 
 <!-- FOOTER -->
 <footer>
