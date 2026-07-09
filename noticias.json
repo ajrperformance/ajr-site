@@ -1,54 +1,102 @@
 {
-  "atualizado_em": "2026-07-08T12:00:00+00:00",
-  "total": 6,
+  "atualizado_em": "2026-07-08T20:30:00+00:00",
+  "total": 12,
   "noticias": [
     {
-      "titulo": "Bem-vindo ao Giro de Notícias AJR — atualização automática diária",
-      "resumo": "Este é um card de exemplo. Assim que o repositório for publicado no GitHub com o robô de atualização (GitHub Actions), este arquivo será substituído automaticamente todos os dias às 6h com as últimas notícias de esporte mundial e ciência da performance, coletadas de portais como ge, BBC Sport, ESPN e ScienceDaily.",
-      "link": "https://ge.globo.com",
-      "data": "2026-07-08T12:00:00+00:00",
-      "fonte": "AJR Performance",
-      "categoria": "Esporte"
-    },
-    {
-      "titulo": "Exemplo — Notícia de esporte mundial aparecerá aqui",
-      "resumo": "Cada card traz o título original da matéria, um resumo curto, a data de publicação, a fonte e a categoria. O botão abaixo leva o leitor à matéria completa no portal de origem.",
-      "link": "https://www.bbc.com/sport",
-      "data": "2026-07-08T11:00:00+00:00",
-      "fonte": "BBC Sport",
-      "categoria": "Esporte Mundial"
-    },
-    {
-      "titulo": "Exemplo — Estudo de ciência do esporte aparecerá aqui",
-      "resumo": "A categoria Ciência & Performance traz pesquisas recentes de medicina esportiva e fisiologia do exercício — o tipo de evidência que embasa as avaliações da AJR.",
-      "link": "https://www.sciencedaily.com/news/health_medicine/sports_medicine/",
-      "data": "2026-07-08T10:00:00+00:00",
-      "fonte": "ScienceDaily",
-      "categoria": "Ciência & Performance"
-    },
-    {
-      "titulo": "Exemplo — Notícia de fitness e treinamento aparecerá aqui",
-      "resumo": "Novidades sobre treinamento, condicionamento físico e saúde, selecionadas automaticamente todos os dias.",
-      "link": "https://www.sciencedaily.com/news/health_medicine/fitness/",
-      "data": "2026-07-08T09:00:00+00:00",
-      "fonte": "ScienceDaily",
-      "categoria": "Fitness"
-    },
-    {
-      "titulo": "Exemplo — Cobertura da ESPN aparecerá aqui",
-      "resumo": "Principais manchetes do esporte internacional, com link direto para a matéria original.",
-      "link": "https://www.espn.com",
-      "data": "2026-07-08T08:00:00+00:00",
+      "titulo": "Messi has no equals, and if not for him, Argentina would be on a flight home",
+      "resumo": "Argentina's unbelievable comeback win over Egypt on Tuesday was all down to Lionel Messi, who is seemingly dragging his team to another final.",
+      "link": "https://www.espn.com/soccer/story/_/id/49300589/where-argentina-not-lionel-messi-flight-home-world-cup",
+      "data": "2026-07-08T05:13:03+00:00",
       "fonte": "ESPN",
       "categoria": "Esporte Mundial"
     },
     {
-      "titulo": "Exemplo — Cobertura do ge (Globo Esporte) aparecerá aqui",
-      "resumo": "As últimas do esporte brasileiro e mundial em português, direto do ge.",
-      "link": "https://ge.globo.com",
-      "data": "2026-07-08T07:00:00+00:00",
-      "fonte": "ge (Globo Esporte)",
-      "categoria": "Esporte"
+      "titulo": "Argentina, Messi complete epic comeback with VAR drama",
+      "resumo": "Argentina muscled their way past Egypt in a game that had everything: Messi magic, VAR drama, underdog brilliance and another unforgettable World Cup moment.",
+      "link": "https://www.espn.com/soccer/story/_/id/49298199/argentina-lionel-messi-world-cup-round-16-egypt-var-mohamed-salah",
+      "data": "2026-07-08T05:13:03+00:00",
+      "fonte": "ESPN",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Wizards reunite with Mavs' Middleton in sign-and-trade deal",
+      "resumo": "The Washington Wizards are bringing back veteran Khris Middleton on a three-year, $17.6 million contract via a sign-and-trade deal, his agent told ESPN's Shams Charania.",
+      "link": "https://www.espn.com/nba/story/_/id/49301627/khris-middleton-back-wizards-2nd-stint-6-team-sign-trade-deal",
+      "data": "2026-07-08T04:59:53+00:00",
+      "fonte": "ESPN",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Tatum: 'Tough' to see Brown go but proud of era",
+      "resumo": "Jayson Tatum reflected on the \"abrupt ending\" of his longtime partnership with Jaylen Brown while appreciating what the pair accomplished together.",
+      "link": "https://www.espn.com/nba/story/_/id/49302907/tatum-tough-see-brown-go-proud-great-years-together",
+      "data": "2026-07-08T04:59:53+00:00",
+      "fonte": "ESPN",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Egypt bemoan 'injustice' after Argentina defeat",
+      "resumo": "Hossam Hassan said Egypt were the victim of an \"injustice\" in their 3-2 World Cup defeat against Argentina due to FIFA wanting Lionel Messi to \"stay in the running.\"",
+      "link": "https://www.espn.com/soccer/story/_/id/49298958/egypt-boss-bemoans-injustice-loss-argentina-world-cup",
+      "data": "2026-07-08T04:59:53+00:00",
+      "fonte": "ESPN",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "FIFA suspended 2 U.S. officials for Belgium game",
+      "resumo": "Two staff members of the United States men's soccer team were suspended by FIFA from Monday's round-of-16 game against Belgium.",
+      "link": "https://www.espn.com/soccer/story/_/id/49299468/fifa-suspended-usa-soccer-staff-members-belgium",
+      "data": "2026-07-08T04:59:53+00:00",
+      "fonte": "ESPN",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Fernandez header seals dramatic Argentina comeback",
+      "resumo": "Enzo Fernandez scores late to give Argentina the lead against Egypt in their last 16 match at the 2026 World Cup.",
+      "link": "https://www.bbc.co.uk/sport/football/videos/cdjk02y8133o",
+      "data": "2026-07-07T18:19:14+00:00",
+      "fonte": "BBC Sport",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "'How?!' — Gauff battles into first Wimbledon semi-final",
+      "resumo": "Coco Gauff surprised even herself by overcoming her recent grass-court struggles to reach a first Wimbledon semi-final against Karolina Muchova.",
+      "link": "https://www.bbc.co.uk/sport/tennis/articles/c0qyv12xyw5o",
+      "data": "2026-07-07T18:08:20+00:00",
+      "fonte": "BBC Sport",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "England players to get hoarding warning after freak Henderson injury",
+      "resumo": "England players will be advised not to jump over advertising hoardings after Jordan Henderson suffered a freak injury.",
+      "link": "https://www.bbc.co.uk/sport/football/articles/czx5qev7nqno",
+      "data": "2026-07-07T17:49:34+00:00",
+      "fonte": "BBC Sport",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Pogacar loses yellow jersey in Tour de France heat",
+      "resumo": "Mads Pedersen sprints clear from a breakaway to win the fourth stage of the Tour de France.",
+      "link": "https://www.bbc.co.uk/sport/cycling/articles/ce8kl2l8j1wo",
+      "data": "2026-07-07T16:30:23+00:00",
+      "fonte": "BBC Sport",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Inside Liverpool's pre-season plans as Iraola starts work",
+      "resumo": "New Liverpool head coach Andoni Iraola has arrived at the club's training ground and is preparing to start work with his new squad ahead of the Premier League season.",
+      "link": "https://www.bbc.co.uk/sport/football/articles/c5yz3g5pmzyo",
+      "data": "2026-07-07T15:43:40+00:00",
+      "fonte": "BBC Sport",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Russia could compete at LA 2028 Olympics",
+      "resumo": "Russian athletes could be allowed to compete for their country at the 2028 Olympic Games in Los Angeles after the International Olympic Committee provisionally lifted their suspension.",
+      "link": "https://www.bbc.co.uk/sport/olympics/articles/cp8leyjn38zo",
+      "data": "2026-07-07T15:09:02+00:00",
+      "fonte": "BBC Sport",
+      "categoria": "Esporte Mundial"
     }
   ]
 }
