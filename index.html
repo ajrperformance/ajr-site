@@ -31,7 +31,7 @@
     --white:     #ffffff;
     --off-white: #f0ede8;
     --gray:      #9aa0a8;
-    --radius:    14px;
+    --radius:    6px;
   }
 
   html { scroll-behavior: smooth; }
@@ -161,7 +161,7 @@
     width: 310px;
     background: rgba(23,25,29,0.82);
     border: 1px solid rgba(201,168,76,0.28);
-    border-radius: 8px;
+    border-radius: 4px;
     backdrop-filter: blur(12px);
     padding: 1.1rem 1.2rem;
     font-family: 'JetBrains Mono', monospace;
@@ -340,7 +340,7 @@
     position: absolute; bottom: 20px; left: 20px; right: 20px;
     background: rgba(23,25,29,0.92);
     border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 10px; padding: 1rem 1.25rem;
+    border-radius: 6px; padding: 1rem 1.25rem;
   }
   .pq-foto-quote {
     font-family: 'Chakra Petch', sans-serif;
@@ -370,7 +370,7 @@
 
   .av-highlight {
     background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 12px; padding: 1.5rem;
+    border-radius: 6px; padding: 1.5rem;
     margin-top: 2rem;
   }
   .av-highlight-title { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.75rem; letter-spacing: 0.5px; }
@@ -384,7 +384,7 @@
   .av-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px; padding: 1.4rem;
+    border-radius: 6px; padding: 1.4rem;
     transition: border-color 0.2s, background 0.2s;
     cursor: default;
   }
@@ -417,7 +417,7 @@
 
   .recebe-item {
     display: flex; gap: 1.25rem; align-items: flex-start;
-    background: rgba(255,255,255,0.05); border-radius: 12px;
+    background: rgba(255,255,255,0.05); border-radius: 6px;
     padding: 1.25rem 1.4rem;
     border: 1px solid rgba(255,255,255,0.07); box-shadow: none;
     transition: transform 0.2s;
@@ -427,7 +427,7 @@
   .recebe-num {
     flex-shrink: 0; width: 40px; height: 40px;
     background: var(--navy); color: var(--gold);
-    border-radius: 10px;
+    border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 0.9rem;
   }
@@ -480,10 +480,11 @@
 
   .plano-badge {
     position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-    background: var(--gold); color: var(--navy);
-    font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gold); color: #17191d;
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 2px;
     text-transform: uppercase; padding: 0.3rem 1.1rem;
-    border-radius: 20px; white-space: nowrap; z-index: 2;
+    border-radius: 3px; white-space: nowrap; z-index: 2;
   }
 
   .plano-img {
@@ -492,7 +493,7 @@
     display: block;
   }
   .plano-head { padding: 2.25rem 1.75rem 1.25rem; }
-  .plano-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+  .plano-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
   .plano-name { font-family: 'Chakra Petch', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--white); margin-bottom: 0.5rem; }
   .plano-desc { font-size: 0.84rem; color: rgba(196,200,206,0.65); line-height: 1.6; }
 
@@ -502,7 +503,7 @@
     font-size: 2.5rem; font-weight: 900; color: var(--gold); line-height: 1;
   }
   .preco-per { font-size: 0.9rem; font-weight: 500; color: rgba(196,200,206,0.65); }
-  .preco-note { font-size: 0.75rem; color: #3d4249; margin-top: 0.25rem; }
+  .preco-note { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.5px; text-transform: uppercase; color: #575e67; margin-top: 0.35rem; }
 
   .plano-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 0 1.75rem; }
 
@@ -519,19 +520,24 @@
 
   .btn-plano-gold {
     display: block; text-align: center;
-    background: var(--gold); color: var(--navy);
-    padding: 0.9rem; border-radius: 8px;
-    text-decoration: none; font-weight: 800; font-size: 0.95rem;
-    transition: background 0.2s;
+    font-family: 'Chakra Petch', sans-serif;
+    background: var(--gold); color: #17191d;
+    padding: 0.9rem; border-radius: 4px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 1px;
+    transition: all 0.25s;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
   }
-  .btn-plano-gold:hover { background: var(--gold-lt); }
+  .btn-plano-gold:hover { background: var(--gold-lt); box-shadow: 0 0 28px rgba(201,168,76,0.35); }
 
   .btn-plano-outline {
     display: block; text-align: center;
+    font-family: 'Chakra Petch', sans-serif;
     background: transparent; color: var(--gold);
-    padding: 0.9rem; border-radius: 8px;
-    text-decoration: none; font-weight: 700; font-size: 0.95rem;
-    border: 1.5px solid rgba(201,168,76,0.35);
+    padding: 0.9rem; border-radius: 4px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 1px;
+    border: 1px solid rgba(201,168,76,0.35);
     transition: all 0.2s;
   }
   .btn-plano-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
@@ -553,7 +559,7 @@
   .pd-fotos {
     display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
   }
-  .pd-foto { border-radius: 10px; overflow: hidden; }
+  .pd-foto { border-radius: 6px; overflow: hidden; }
   .pd-foto img { width: 100%; object-fit: cover; display: block; }
   .pd-foto:first-child { grid-column: span 2; }
   .pd-foto:first-child img { aspect-ratio: 16/9; }
@@ -565,13 +571,13 @@
   .pd-itens li {
     display: flex; align-items: flex-start; gap: 0.85rem;
     font-size: 0.92rem; color: rgba(225,225,225,0.82);
-    padding: 0.75rem 1rem; border-radius: 8px; background: rgba(255,255,255,0.05);
+    padding: 0.75rem 1rem; border-radius: 4px; background: rgba(255,255,255,0.05);
     box-shadow: none; border: 1px solid rgba(255,255,255,0.06);
   }
   .pd-itens li::before { content: "✦"; color: var(--gold); font-size: 0.55rem; margin-top: 5px; flex-shrink: 0; }
 
   .pd-price-box {
-    background: var(--navy); border-radius: 12px; padding: 1.5rem;
+    background: var(--navy); border-radius: 6px; padding: 1.5rem;
     margin-bottom: 1.5rem;
   }
   .pd-price-lbl { font-size: 0.7rem; color: var(--gold); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.25rem; }
@@ -607,7 +613,7 @@
     z-index: 1; white-space: nowrap;
     background: var(--gold); color: var(--navy);
     font-family: 'Chakra Petch', sans-serif; font-weight: 800; font-size: 0.82rem;
-    padding: 0.55rem 1.25rem; border-radius: 20px;
+    padding: 0.55rem 1.25rem; border-radius: 3px;
   }
 
   .sobre-content .section-title { color: var(--white); }
@@ -640,22 +646,27 @@
   }
   .cta-tag {
     display: inline-flex; align-items: center; gap: 0.5rem;
-    color: var(--gold); font-size: 0.7rem; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold); font-size: 0.68rem; font-weight: 700;
     letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1.25rem;
   }
   .cta-title {
     font-family: 'Chakra Petch', sans-serif;
-    font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 900;
-    color: var(--white); line-height: 1.1; margin-bottom: 1.25rem;
+    font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 700;
+    color: var(--white); line-height: 1.05; margin-bottom: 1.25rem;
+    text-transform: uppercase; letter-spacing: -1px;
   }
   .cta-title em { color: var(--gold); font-style: italic; }
   .cta-sub { color: rgba(196,200,206,0.65); font-size: 1rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.8; }
 
   .btn-wpp {
     display: inline-flex; align-items: center; gap: 0.85rem;
+    font-family: 'Chakra Petch', sans-serif;
     background: var(--gold); color: var(--navy);
-    padding: 1.15rem 2.5rem; border-radius: 10px;
-    text-decoration: none; font-weight: 800; font-size: 1.05rem;
+    padding: 1.15rem 2.5rem; border-radius: 4px;
+    text-decoration: none; font-weight: 700; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 1px;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
     box-shadow: 0 6px 30px rgba(201,168,76,0.3);
     transition: all 0.2s;
     position: relative; z-index: 1;
@@ -761,7 +772,7 @@
     font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 1rem;
   }
   .dep-name { font-weight: 700; font-size: 0.88rem; color: var(--white); }
-  .dep-role { font-size: 0.73rem; color: #9aa0a8; margin-top: 0.1rem; }
+  .dep-role { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.5px; text-transform: uppercase; color: #9aa0a8; margin-top: 0.15rem; }
 
   /* ══════════════════════════════════
      FAQ
@@ -799,20 +810,22 @@
   .maps-link {
     display: inline-flex; align-items: center; gap: 0.55rem;
     background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25);
-    color: var(--gold); padding: 0.65rem 1.2rem; border-radius: 8px;
-    text-decoration: none; font-size: 0.84rem; font-weight: 600;
+    color: var(--gold); padding: 0.65rem 1.2rem; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    text-decoration: none; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.5px;
     transition: all 0.2s; margin-top: 1rem;
   }
   .maps-link:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
 
   /* Plano lançamento */
-  .plano.launch { position: relative; border: 2px solid rgba(45,180,100,0.5); }
+  .plano.launch { position: relative; border: 1px solid rgba(201,168,76,0.55); }
   .plano-badge-green {
     position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-    background: linear-gradient(90deg,#1a8a4a,#2db36a); color: #fff;
-    font-size: 0.68rem; font-weight: 800; letter-spacing: 1.5px;
-    text-transform: uppercase; padding: 0.3rem 1.1rem;
-    border-radius: 20px; white-space: nowrap; z-index: 2;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gold); color: #17191d;
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; padding: 0.32rem 0.9rem;
+    border-radius: 3px; white-space: nowrap; z-index: 2;
   }
 
   @media (max-width: 960px) {
@@ -1088,7 +1101,7 @@ window.addEventListener('load', function () {
 .vo2-zona:nth-child(5) .vo2-zona-bar i { background: linear-gradient(90deg, var(--gold), var(--gold-lt)); }
 .vo2-zona-fc { font-size: 9.5px; color: var(--gray); text-align: right; }
 
-.vo2-foto { margin-top: 1.75rem; border-radius: 10px; overflow: hidden; position: relative; }
+.vo2-foto { margin-top: 1.75rem; border-radius: 6px; overflow: hidden; position: relative; }
 .vo2-foto img {
   width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: center 30%; display: block;
   filter: saturate(0.55) contrast(1.08) brightness(0.92);
@@ -1503,7 +1516,7 @@ window.addEventListener('load', function () {
       <div class="car-accent-bar"></div>
       <div class="car-slide-num">03</div>
       <div class="car-content">
-        <div class="car-badge-pill">⭐ Mais completo</div>
+        <div class="car-badge-pill">Mais completo</div>
         <div class="car-eyebrow">Presencial · Bauru</div>
         <h2 class="car-title">AJR <em>Performance</em></h2>
         <p class="car-desc">Diagnóstico físico profundo — VO2, BIA, força, mobilidade e assimetrias — com plano individualizado e 90 dias de acompanhamento.</p>
@@ -1645,7 +1658,7 @@ window.addEventListener('load', function () {
   display:flex; align-items:center; gap:1.25rem;
   background: rgba(255,255,255,0.03);
   border: 1.5px solid rgba(255,255,255,0.07);
-  border-radius: 12px; padding: 1.15rem 1.4rem;
+  border-radius: 6px; padding: 1.15rem 1.4rem;
   cursor:pointer; transition:all 0.2s;
   text-align:left; width:100%; font-family:'Space Grotesk',sans-serif;
 }
@@ -1687,12 +1700,12 @@ window.addEventListener('load', function () {
 .quiz-tag {
   background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2);
   color:var(--gold); font-size:0.72rem; font-weight:700; letter-spacing:1.5px;
-  text-transform:uppercase; padding:0.3rem 0.85rem; border-radius:20px;
+  text-transform:uppercase; padding:0.3rem 0.85rem; border-radius:3px;
 }
 .quiz-start {
   background:var(--gold); color:var(--navy);
   border:none; cursor:pointer; padding:1.05rem 2.5rem;
-  border-radius:8px; font-family:'Space Grotesk',sans-serif;
+  border-radius:4px; font-family:'Space Grotesk',sans-serif;
   font-weight:800; font-size:1.05rem; transition:all 0.2s;
   box-shadow:0 4px 20px rgba(201,168,76,0.25);
 }
@@ -1735,7 +1748,7 @@ window.addEventListener('load', function () {
 .result-perks li {
   display:flex; align-items:center; gap:0.75rem;
   font-size:0.9rem; color:#7f858e;
-  background:rgba(255,255,255,0.03); border-radius:8px; padding:0.6rem 1rem;
+  background:rgba(255,255,255,0.03); border-radius:4px; padding:0.6rem 1rem;
   border-left:2px solid var(--gold);
 }
 .result-price-box {
@@ -1750,7 +1763,7 @@ window.addEventListener('load', function () {
 .result-cta-btn {
   display:inline-flex; align-items:center; gap:0.75rem;
   background:var(--gold); color:var(--navy);
-  padding:1rem 2.25rem; border-radius:10px;
+  padding:1rem 2.25rem; border-radius:6px;
   text-decoration:none; font-weight:800; font-size:1rem;
   box-shadow:0 4px 20px rgba(201,168,76,0.25); transition:all 0.2s;
   margin-bottom:1rem;
@@ -2174,7 +2187,7 @@ window.addEventListener('load', function () {
 
     <!-- AJR Online — LANÇAMENTO -->
     <div class="plano launch">
-      <span class="plano-badge-green">🚀 Lançamento</span>
+      <span class="plano-badge-green">● Lançamento</span>
       <!-- Salve sua foto como "foto-ajr-online.jpg" nesta pasta -->
       <img src="foto-ajr-online.jpg" alt="AJR Online — Treino Online" class="plano-img" style="object-position: center 72%;" />
       <div class="plano-head">
@@ -2227,7 +2240,7 @@ window.addEventListener('load', function () {
 
     <!-- AJR Performance — DESTAQUE -->
     <div class="plano featured">
-      <span class="plano-badge">⭐ Mais completo</span>
+      <span class="plano-badge">Mais completo</span>
       <img src="foto-ajr-performance.jpg" alt="AJR Performance — Avaliação Completa" class="plano-img" style="position:relative;z-index:1" />
       <div class="plano-head">
         <div class="plano-tag">Presencial · Bauru</div>
