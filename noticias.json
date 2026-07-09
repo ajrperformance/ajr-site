@@ -1,0 +1,54 @@
+{
+  "atualizado_em": "2026-07-08T12:00:00+00:00",
+  "total": 6,
+  "noticias": [
+    {
+      "titulo": "Bem-vindo ao Giro de Notícias AJR — atualização automática diária",
+      "resumo": "Este é um card de exemplo. Assim que o repositório for publicado no GitHub com o robô de atualização (GitHub Actions), este arquivo será substituído automaticamente todos os dias às 6h com as últimas notícias de esporte mundial e ciência da performance, coletadas de portais como ge, BBC Sport, ESPN e ScienceDaily.",
+      "link": "https://ge.globo.com",
+      "data": "2026-07-08T12:00:00+00:00",
+      "fonte": "AJR Performance",
+      "categoria": "Esporte"
+    },
+    {
+      "titulo": "Exemplo — Notícia de esporte mundial aparecerá aqui",
+      "resumo": "Cada card traz o título original da matéria, um resumo curto, a data de publicação, a fonte e a categoria. O botão abaixo leva o leitor à matéria completa no portal de origem.",
+      "link": "https://www.bbc.com/sport",
+      "data": "2026-07-08T11:00:00+00:00",
+      "fonte": "BBC Sport",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Exemplo — Estudo de ciência do esporte aparecerá aqui",
+      "resumo": "A categoria Ciência & Performance traz pesquisas recentes de medicina esportiva e fisiologia do exercício — o tipo de evidência que embasa as avaliações da AJR.",
+      "link": "https://www.sciencedaily.com/news/health_medicine/sports_medicine/",
+      "data": "2026-07-08T10:00:00+00:00",
+      "fonte": "ScienceDaily",
+      "categoria": "Ciência & Performance"
+    },
+    {
+      "titulo": "Exemplo — Notícia de fitness e treinamento aparecerá aqui",
+      "resumo": "Novidades sobre treinamento, condicionamento físico e saúde, selecionadas automaticamente todos os dias.",
+      "link": "https://www.sciencedaily.com/news/health_medicine/fitness/",
+      "data": "2026-07-08T09:00:00+00:00",
+      "fonte": "ScienceDaily",
+      "categoria": "Fitness"
+    },
+    {
+      "titulo": "Exemplo — Cobertura da ESPN aparecerá aqui",
+      "resumo": "Principais manchetes do esporte internacional, com link direto para a matéria original.",
+      "link": "https://www.espn.com",
+      "data": "2026-07-08T08:00:00+00:00",
+      "fonte": "ESPN",
+      "categoria": "Esporte Mundial"
+    },
+    {
+      "titulo": "Exemplo — Cobertura do ge (Globo Esporte) aparecerá aqui",
+      "resumo": "As últimas do esporte brasileiro e mundial em português, direto do ge.",
+      "link": "https://ge.globo.com",
+      "data": "2026-07-08T07:00:00+00:00",
+      "fonte": "ge (Globo Esporte)",
+      "categoria": "Esporte"
+    }
+  ]
+}

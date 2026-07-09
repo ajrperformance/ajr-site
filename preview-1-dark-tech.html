@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Preview 1 · Dark Tech — AJR Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Archivo:ital,wght@0,400;0,600;0,800;0,900;1,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050b12;
+  --navy:#0B1E2D;
+  --panel:#0d1a26;
+  --gold:#C9A84C;
+  --gold-lt:#e8cd7d;
+  --gold-glow:rgba(201,168,76,0.35);
+  --white:#f4f1ea;
+  --gray:#7d92a3;
+  --line:rgba(201,168,76,0.14);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+::selection{background:var(--gold);color:var(--navy)}
+
+/* fundo: grid técnico + brilho */
+.tech-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,168,76,0.045) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 20%,#000 30%,transparent 75%);
+}
+.tech-bg::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 45% at 70% 10%,rgba(201,168,76,0.09),transparent 60%)}
+
+.tag-preview{position:fixed;top:14px;right:14px;z-index:99;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:2px;color:var(--gold);border:1px solid var(--line);
+  padding:6px 12px;border-radius:4px;background:rgba(5,11,18,0.8);backdrop-filter:blur(8px)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:64px;background:rgba(5,11,18,0.82);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line)}
+.logo{font-family:'Archivo',sans-serif;font-weight:900;font-size:1.15rem;letter-spacing:-0.5px}
+.logo span{color:var(--gold)}
+.logo small{display:block;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:8px;
+  letter-spacing:3px;color:var(--gray);text-transform:uppercase}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.82rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{border:1px solid var(--gold);color:var(--gold)!important;padding:.45rem 1.2rem;border-radius:4px;
+  font-weight:700!important;position:relative;overflow:hidden;transition:all .25s!important}
+.nav-cta:hover{background:var(--gold);color:var(--navy)!important;box-shadow:0 0 24px var(--gold-glow)}
+@media(max-width:768px){.nav-links li:not(:last-child){display:none}}
+
+/* HERO */
+#hero{position:relative;z-index:1;min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+  padding:90px 5% 70px}
+.hero-topline{display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:2rem}
+.hero-topline::before{content:'';width:40px;height:1px;background:var(--gold)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--gold-glow)}50%{box-shadow:0 0 0 8px transparent}}
+
+h1{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(3rem,9vw,7.5rem);
+  line-height:.95;letter-spacing:-3px;text-transform:uppercase}
+h1 .outline{color:transparent;-webkit-text-stroke:1.5px rgba(244,241,234,0.55)}
+h1 .gold{color:var(--gold);font-style:italic;text-shadow:0 0 60px var(--gold-glow)}
+
+.hero-sub{max-width:520px;color:var(--gray);font-size:1.02rem;margin:2rem 0 2.5rem}
+.hero-sub strong{color:var(--gold-lt);font-weight:600}
+
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{font-family:'Archivo',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:1px;
+  background:var(--gold);color:var(--navy);text-decoration:none;padding:1rem 2.2rem;border-radius:4px;
+  font-size:.85rem;position:relative;transition:all .25s;clip-path:polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%)}
+.btn-primary:hover{background:var(--gold-lt);box-shadow:0 0 40px var(--gold-glow);transform:translateY(-2px)}
+.btn-ghost{font-family:'JetBrains Mono',monospace;color:var(--gray);text-decoration:none;font-size:.8rem;
+  letter-spacing:1px;padding:1rem .5rem;border-bottom:1px solid transparent;transition:all .2s}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold)}
+
+/* linha de dados animada */
+.data-line{position:absolute;right:5%;top:20%;width:320px;opacity:.9}
+@media(max-width:900px){.data-line{display:none}}
+.data-line svg{width:100%}
+.dl-path{fill:none;stroke:var(--gold);stroke-width:2;stroke-dasharray:600;stroke-dashoffset:600;
+  animation:draw 3s ease forwards infinite alternate;filter:drop-shadow(0 0 6px var(--gold-glow))}
+@keyframes draw{to{stroke-dashoffset:0}}
+.data-label{font-family:'JetBrains Mono',monospace;font-size:9px;fill:var(--gray);letter-spacing:2px}
+
+/* STATS STRIP */
+.stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(13,26,38,0.5);backdrop-filter:blur(8px)}
+.stat{padding:2rem 1.5rem;border-right:1px solid var(--line);position:relative;overflow:hidden}
+.stat:last-child{border-right:none}
+.stat::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:0;background:var(--gold);transition:width .6s}
+.stat:hover::after{width:100%}
+.stat-num{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(1.6rem,3.5vw,2.6rem);color:var(--gold)}
+.stat-num sup{font-size:.5em;color:var(--gold-lt)}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin-top:4px}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:none}}
+
+/* SEÇÃO GIRO */
+#giro{position:relative;z-index:1;padding:100px 5%}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+  max-width:1180px;margin:0 auto 3rem}
+.sec-index{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:3px}
+h2{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,3.6rem);
+  text-transform:uppercase;letter-spacing:-1.5px;line-height:1}
+h2 em{color:var(--gold);font-style:italic}
+
+.card{max-width:1180px;margin:0 auto;background:linear-gradient(160deg,var(--panel),rgba(13,26,38,0.4));
+  border:1px solid var(--line);border-radius:6px;padding:2.2rem;position:relative;overflow:hidden;
+  transition:transform .3s,border-color .3s,box-shadow .3s}
+.card::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(201,168,76,0.45);box-shadow:0 24px 60px rgba(0,0,0,0.5)}
+.card:hover::before{opacity:1}
+.card-meta{display:flex;gap:1rem;align-items:center;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.1rem}
+.card-tag{color:var(--navy);background:var(--gold);padding:3px 10px;border-radius:3px;font-weight:700}
+.card-date{color:var(--gray)}
+.card h3{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.5px;margin-bottom:.7rem}
+.card p{color:var(--gray);font-size:.92rem;max-width:720px;margin-bottom:1.4rem}
+.card a{font-family:'JetBrains Mono',monospace;color:var(--gold);text-decoration:none;font-size:.8rem;
+  letter-spacing:1px;display:inline-flex;gap:.5rem;transition:gap .2s}
+.card a:hover{gap:1rem}
+.card a::after{content:'→'}
+
+footer{position:relative;z-index:1;text-align:center;padding:3rem 5%;color:#3d5468;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="tech-bg"></div>
+<div class="tag-preview">PREVIEW 01 · DARK TECH</div>
+
+<nav>
+  <div class="logo">AJR<span>.</span><small>Avaliação · Performance</small></div>
+  <ul class="nav-links">
+    <li><a href="#">Planos</a></li>
+    <li><a href="#">Avaliação</a></li>
+    <li><a href="#giro">Giro de Notícias</a></li>
+    <li><a href="#" class="nav-cta">WhatsApp</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-topline"><span class="pulse"></span> Bauru · SP — Clínica Vitallite</div>
+  <h1>
+    <span class="outline">Treine com</span><br>
+    dados.<br>
+    <span class="gold">Não com achismo.</span>
+  </h1>
+  <p class="hero-sub">Avaliação física completa com tecnologia de laboratório: composição corporal, força, mobilidade e VO₂ transformados em um <strong>plano de performance individualizado</strong>.</p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">Descobrir meu plano</a>
+    <a href="#giro" class="btn-ghost">// giro de notícias</a>
+  </div>
+
+  <div class="data-line">
+    <svg viewBox="0 0 320 140">
+      <path class="dl-path" d="M0,110 L40,105 L70,80 L100,88 L130,55 L160,62 L200,30 L240,38 L280,12 L320,18"/>
+      <text x="0" y="135" class="data-label">VO₂ MAX — EVOLUÇÃO 12 SEMANAS</text>
+    </svg>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">500<sup>+</sup></div><div class="stat-label">Atletas avaliados</div></div>
+  <div class="stat"><div class="stat-num">30<sup>+</sup></div><div class="stat-label">Métricas por avaliação</div></div>
+  <div class="stat"><div class="stat-num">12<sup>sem</sup></div><div class="stat-label">Ciclo de evolução</div></div>
+  <div class="stat"><div class="stat-num">100<sup>%</sup></div><div class="stat-label">Baseado em evidência</div></div>
+</div>
+
+<section id="giro">
+  <div class="sec-head">
+    <div>
+      <div class="sec-index">[ 04 ] — FEED DIÁRIO AUTOMATIZADO</div>
+      <h2>Giro de <em>Notícias</em></h2>
+    </div>
+  </div>
+  <article class="card">
+    <div class="card-meta">
+      <span class="card-tag">Ciência &amp; Performance</span>
+      <span class="card-date">08 JUL 2026 · SCIENCEDAILY</span>
+    </div>
+    <h3>Assim ficará o card de destaque do feed de notícias</h3>
+    <p>Título original da matéria, resumo editorial, fonte e categoria — atualizados automaticamente todos os dias às 6h pelo robô no GitHub. Visual de painel técnico, coerente com o resto do site.</p>
+    <a href="#">LER MATÉRIA ORIGINAL</a>
+  </article>
+</section>
+
+<footer>© 2026 AJR AVALIAÇÃO FÍSICA E PERFORMANCE — BAURU · SP</footer>
+</body>
+</html>

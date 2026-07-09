@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Preview 2 · Futurista Neon — AJR Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,700&family=Sora:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#030507;
+  --panel:#0a0f14;
+  --neon:#00ffa3;
+  --neon-dim:rgba(0,255,163,0.12);
+  --neon-glow:rgba(0,255,163,0.4);
+  --cyan:#22d3ee;
+  --white:#eefcf5;
+  --gray:#6b8577;
+  --line:rgba(0,255,163,0.15);
+}
+body{
+  font-family:'Sora',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+::selection{background:var(--neon);color:#000}
+
+/* fundo: scanlines + glow */
+.scan-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,255,163,0.07),transparent 65%),
+    repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,0.012) 3px 4px)}
+.scan-bg::after{content:'';position:absolute;left:0;right:0;height:120px;top:-120px;
+  background:linear-gradient(180deg,transparent,rgba(0,255,163,0.05),transparent);
+  animation:scan 7s linear infinite}
+@keyframes scan{to{transform:translateY(calc(100vh + 240px))}}
+
+.tag-preview{position:fixed;top:14px;right:14px;z-index:99;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:2px;color:var(--neon);border:1px solid var(--line);
+  padding:6px 12px;border-radius:4px;background:rgba(3,5,7,0.85);backdrop-filter:blur(8px)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:62px;background:rgba(3,5,7,0.85);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line)}
+.logo{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:1px}
+.logo span{color:var(--neon);text-shadow:0 0 12px var(--neon-glow)}
+.logo small{display:block;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:8px;
+  letter-spacing:3px;color:var(--gray);text-transform:uppercase}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:.82rem;font-weight:600;transition:all .2s}
+.nav-links a:hover{color:var(--neon);text-shadow:0 0 14px var(--neon-glow)}
+.nav-cta{border:1px solid var(--neon);color:var(--neon)!important;padding:.42rem 1.2rem;border-radius:2px;
+  font-weight:700!important;transition:all .25s!important;box-shadow:inset 0 0 0 0 var(--neon)}
+.nav-cta:hover{background:var(--neon);color:#000!important;box-shadow:0 0 28px var(--neon-glow);text-shadow:none}
+@media(max-width:768px){.nav-links li:not(:last-child){display:none}}
+
+/* HERO */
+#hero{position:relative;z-index:1;min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:90px 5% 70px}
+.hero-topline{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:3px;color:var(--neon);text-transform:uppercase;margin-bottom:2rem}
+.hero-topline::before{content:'▮▮';animation:blink 1.2s steps(2) infinite;font-size:9px}
+@keyframes blink{50%{opacity:.25}}
+
+h1{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(2.8rem,8.5vw,7rem);
+  line-height:.98;letter-spacing:-2px;text-transform:uppercase}
+h1 .dim{color:#2c3b34}
+h1 .neon{color:var(--neon);font-style:italic;text-shadow:0 0 40px var(--neon-glow),0 0 90px rgba(0,255,163,0.25)}
+h1 .glitch{position:relative;display:inline-block}
+h1 .glitch::after{content:attr(data-t);position:absolute;left:2px;top:0;color:var(--cyan);opacity:.35;
+  clip-path:inset(30% 0 40% 0);animation:glitch 3.5s infinite}
+@keyframes glitch{0%,92%,100%{transform:none;opacity:0}93%{transform:translateX(-3px);opacity:.4}96%{transform:translateX(3px);opacity:.35}}
+
+.hero-sub{max-width:520px;color:var(--gray);font-size:1rem;margin:2rem 0 2.5rem}
+.hero-sub strong{color:var(--neon);font-weight:600}
+
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.btn-primary{font-family:'Chakra Petch',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+  background:var(--neon);color:#000;text-decoration:none;padding:1rem 2.4rem;font-size:.85rem;border-radius:2px;
+  box-shadow:0 0 0 rgba(0,255,163,0);transition:all .25s}
+.btn-primary:hover{box-shadow:0 0 44px var(--neon-glow);transform:translateY(-2px)}
+.btn-ghost{font-family:'JetBrains Mono',monospace;color:var(--gray);text-decoration:none;font-size:.8rem;
+  letter-spacing:1px;border:1px solid rgba(107,133,119,0.3);padding:.95rem 1.4rem;border-radius:2px;transition:all .2s}
+.btn-ghost:hover{color:var(--neon);border-color:var(--neon)}
+
+/* HUD lateral */
+.hud{position:absolute;right:5%;top:22%;width:300px;border:1px solid var(--line);border-radius:4px;
+  background:rgba(10,15,20,0.7);backdrop-filter:blur(10px);padding:1.2rem;font-family:'JetBrains Mono',monospace}
+@media(max-width:900px){.hud{display:none}}
+.hud-title{font-size:9px;letter-spacing:3px;color:var(--gray);margin-bottom:1rem;display:flex;justify-content:space-between}
+.hud-title b{color:var(--neon)}
+.hud-row{display:flex;justify-content:space-between;font-size:11px;padding:.45rem 0;border-top:1px solid rgba(0,255,163,0.08)}
+.hud-row b{color:var(--neon)}
+.hud-bar{height:3px;background:rgba(0,255,163,0.12);border-radius:2px;margin-top:5px;overflow:hidden}
+.hud-bar i{display:block;height:100%;background:var(--neon);border-radius:2px;box-shadow:0 0 8px var(--neon-glow);
+  animation:load 2.4s ease forwards}
+@keyframes load{from{width:0}}
+
+/* STATS */
+.stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:2rem 1.5rem;border-right:1px solid var(--line);background:rgba(10,15,20,0.45)}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(1.6rem,3.5vw,2.6rem);color:var(--neon);
+  text-shadow:0 0 24px var(--neon-glow)}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:var(--gray);
+  text-transform:uppercase;margin-top:4px}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:none}}
+
+/* GIRO */
+#giro{position:relative;z-index:1;padding:100px 5%}
+.sec-head{max-width:1180px;margin:0 auto 3rem}
+.sec-index{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon);letter-spacing:3px}
+h2{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(2rem,5vw,3.4rem);
+  text-transform:uppercase;letter-spacing:-1px;line-height:1;margin-top:.4rem}
+h2 em{color:var(--neon);font-style:italic;text-shadow:0 0 30px var(--neon-glow)}
+
+.card{max-width:1180px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  padding:2.2rem;position:relative;transition:all .3s}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--neon);
+  box-shadow:0 0 16px var(--neon-glow);border-radius:4px 0 0 4px}
+.card:hover{transform:translateY(-4px);border-color:rgba(0,255,163,0.5);box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 40px rgba(0,255,163,0.07)}
+.card-meta{display:flex;gap:1rem;align-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:1.1rem}
+.card-tag{color:#000;background:var(--neon);padding:3px 10px;border-radius:2px;font-weight:700}
+.card-date{color:var(--gray)}
+.card h3{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:1.45rem;margin-bottom:.7rem}
+.card p{color:var(--gray);font-size:.92rem;max-width:720px;margin-bottom:1.4rem}
+.card a{font-family:'JetBrains Mono',monospace;color:var(--neon);text-decoration:none;font-size:.8rem;
+  letter-spacing:1px;display:inline-flex;gap:.5rem;transition:gap .2s}
+.card a:hover{gap:1rem;text-shadow:0 0 14px var(--neon-glow)}
+.card a::after{content:'→'}
+
+footer{position:relative;z-index:1;text-align:center;padding:3rem 5%;color:#2c3b34;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="scan-bg"></div>
+<div class="tag-preview">PREVIEW 02 · FUTURISTA NEON</div>
+
+<nav>
+  <div class="logo">AJR<span>_</span><small>Avaliação · Performance</small></div>
+  <ul class="nav-links">
+    <li><a href="#">Planos</a></li>
+    <li><a href="#">Avaliação</a></li>
+    <li><a href="#giro">Giro de Notícias</a></li>
+    <li><a href="#" class="nav-cta">WhatsApp</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-topline">Sistema de avaliação — Bauru · SP</div>
+  <h1>
+    <span class="dim">Seu corpo</span><br>
+    <span class="glitch" data-t="em modo">em modo</span><br>
+    <span class="neon">performance.</span>
+  </h1>
+  <p class="hero-sub">Composição corporal, força, mobilidade e VO₂ medidos com precisão de laboratório e convertidos em <strong>um protocolo individual de evolução</strong>.</p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">Iniciar avaliação</a>
+    <a href="#giro" class="btn-ghost">&gt;_ giro de notícias</a>
+  </div>
+
+  <div class="hud">
+    <div class="hud-title">TELEMETRIA <b>● LIVE</b></div>
+    <div class="hud-row"><span>VO₂ máx</span><b>52.4 ml/kg</b></div>
+    <div class="hud-bar"><i style="width:78%"></i></div>
+    <div class="hud-row"><span>Massa magra</span><b>+3.2 kg</b></div>
+    <div class="hud-bar"><i style="width:64%"></i></div>
+    <div class="hud-row"><span>Assimetria</span><b>-41%</b></div>
+    <div class="hud-bar"><i style="width:86%"></i></div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Atletas avaliados</div></div>
+  <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Métricas por avaliação</div></div>
+  <div class="stat"><div class="stat-num">12 sem</div><div class="stat-label">Ciclo de evolução</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Baseado em evidência</div></div>
+</div>
+
+<section id="giro">
+  <div class="sec-head">
+    <div class="sec-index">[ 04 ] — FEED DIÁRIO AUTOMATIZADO</div>
+    <h2>Giro de <em>Notícias</em></h2>
+  </div>
+  <article class="card">
+    <div class="card-meta">
+      <span class="card-tag">Ciência &amp; Performance</span>
+      <span class="card-date">08 JUL 2026 · SCIENCEDAILY</span>
+    </div>
+    <h3>Assim ficará o card de destaque do feed de notícias</h3>
+    <p>Título original da matéria, resumo editorial, fonte e categoria — atualizados automaticamente todos os dias às 6h pelo robô no GitHub. Visual de dashboard esportivo com barra neon lateral.</p>
+    <a href="#">LER MATÉRIA ORIGINAL</a>
+  </article>
+</section>
+
+<footer>© 2026 AJR AVALIAÇÃO FÍSICA E PERFORMANCE — BAURU · SP</footer>
+</body>
+</html>
