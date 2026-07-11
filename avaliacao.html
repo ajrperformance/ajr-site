@@ -3460,6 +3460,7 @@ async function gerarPDF() {
 
   const holder = document.createElement('div');
   const wrap = document.createElement('div');
+  let scrollAntes = 0;
   try {
     await carregarHtml2pdf();
     const nome = (v('nome') || 'aluno').trim().replace(/\s+/g, '_');
@@ -3473,6 +3474,14 @@ async function gerarPDF() {
     holder.appendChild(wrap);
     document.body.appendChild(holder);
     await new Promise(r => setTimeout(r, 150)); // layout + imagens data-url
+
+    // html2canvas captura errado com a página rolada → volta ao topo durante a captura
+    scrollAntes = window.scrollY;
+    window.scrollTo(0, 0);
+
+    // Safari tem limite de canvas — reduz a escala se o relatório for muito alto
+    const alturaRel = Math.max(wrap.scrollHeight, 1);
+    const escala = Math.max(1, Math.min(2, Math.sqrt(12000000 / (794 * alturaRel))));
 
     // sobe as fotos originais (se der) para linkar no fim do PDF
     let fotoLinks = [];
@@ -3488,7 +3497,7 @@ async function gerarPDF() {
       margin: 0,
       filename: `AJR_Avaliacao_${nome}_${dataArq}.pdf`,
       image: { type: 'jpeg', quality: 0.93 },
-      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#0e0f12', logging: false },
+      html2canvas: { scale: escala, useCORS: true, backgroundColor: '#0e0f12', logging: false, scrollX: 0, scrollY: 0 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'] }
     }).from(wrap).toPdf();
@@ -3525,6 +3534,7 @@ async function gerarPDF() {
     console.error('PDF error:', e);
   } finally {
     if (holder.parentNode) holder.remove();
+    window.scrollTo(0, scrollAntes);
     btn.disabled = false;
     btn.textContent = '⬇ Gerar PDF';
   }
