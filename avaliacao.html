@@ -2,7 +2,21 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-
+<script>
+/* ══ Acesso restrito — área do avaliador ══ */
+(function(){
+  var HASH='b99a992a5c8127f97000d6e6485415cd469932b7e18f819ed2e8d267198aa450';
+  if (sessionStorage.getItem('ajr_auth') === HASH) return;
+  document.documentElement.style.visibility='hidden';
+  var senha = prompt('Área restrita — digite a senha:');
+  if (senha === null) { location.replace('index.html'); return; }
+  crypto.subtle.digest('SHA-256', new TextEncoder().encode(senha)).then(function(buf){
+    var h = Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+    if (h === HASH) { sessionStorage.setItem('ajr_auth', HASH); document.documentElement.style.visibility=''; }
+    else { alert('Senha incorreta.'); location.replace('index.html'); }
+  });
+})();
+</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro de Avaliação Física · AJR Performance v2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1668,7 +1682,8 @@
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  // Auth ativo: apenas o e-mail do Aldemir acessa a ferramenta
+  // ⚠️ AUTH GOOGLE DESATIVADO (acesso via senha do index). Para reativar, descomente o bloco abaixo.
+  /*
   onAuthStateChanged(auth, user => {
     const overlay = document.getElementById('authOverlay');
     if (user && user.email === ALLOWED_EMAIL) {
@@ -1682,6 +1697,7 @@
       }
     }
   });
+  */
 
   document.getElementById('btnGoogle').addEventListener('click', async () => {
     try {
