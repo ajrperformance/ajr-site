@@ -4,27 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AJR Online — Formulário de Adesão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
 :root {
-  --black: #080f1a;
-  --dark: #0d1627;
-  --card: #101e33;
-  --card2: #0e1b2e;
-  --border: #1a2d4a;
-  --border-gold: rgba(201,162,39,.22);
-  --accent: #c9a227;
-  --accent-light: #e0b84a;
-  --accent2: #f0d080;
-  --accent-glow: rgba(201,162,39,.18);
-  --text: #f0f4ff;
-  --text-soft: #c8d3e8;
-  --muted: #5a6e8a;
+  --black: #08090b;
+  --dark: #101114;
+  --card: #17191d;
+  --card2: #1d2025;
+  --border: #26292f;
+  --border-gold: rgba(201,168,76,.25);
+  --accent: #C9A84C;
+  --accent-light: #e2c878;
+  --accent2: #e2c878;
+  --accent-glow: rgba(201,168,76,.18);
+  --text: #f0ede8;
+  --text-soft: #c2c6cb;
+  --muted: #8b929c;
   --danger: #ff4444;
   --success: #22c55e;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+body{background:var(--black);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;min-height:100vh;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:56px 56px;}
+h1,h2,h3,h4,.hero-logo,.section-title,.pricing-hero .logo{font-family:'Chakra Petch',sans-serif;}
 
 /* PROGRESS BAR */
 .progress-wrap{position:sticky;top:0;z-index:100;background:var(--dark);border-bottom:1px solid var(--border);padding:12px 16px;}
@@ -34,7 +38,7 @@ body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,
 .step-label{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;letter-spacing:.5px;text-transform:uppercase;}
 
 /* HERO */
-.hero{background:linear-gradient(160deg,#0d1627 0%,#081020 100%);border-bottom:1px solid var(--border-gold);padding:36px 20px 28px;text-align:center;}
+.hero{background:linear-gradient(160deg,#101114 0%,#08090b 100%);border-bottom:1px solid var(--border-gold);padding:36px 20px 28px;text-align:center;}
 .hero-logo{font-size:22px;font-weight:900;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:4px;}
 .hero-sub{font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
 .hero h1{font-size:clamp(22px,5vw,32px);font-weight:800;color:var(--text);margin:18px 0 8px;line-height:1.2;}
@@ -55,13 +59,13 @@ body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,
 .field{display:flex;flex-direction:column;gap:6px;}
 .field label{font-size:12px;font-weight:600;color:var(--text-soft);}
 .field input,.field select,.field textarea{
-  background:#0a1525;border:1px solid var(--border);border-radius:8px;
+  background:#0e0f12;border:1px solid var(--border);border-radius:8px;
   color:var(--text);font-size:14px;padding:10px 12px;outline:none;
   transition:border-color .2s;width:100%;
 }
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);}
 .field textarea{resize:vertical;min-height:80px;}
-.field select option{background:#0d1627;}
+.field select option{background:#101114;}
 
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
@@ -354,13 +358,13 @@ body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,
     <div id="metricsPanel" style="display:none;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
       <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">📊 Calculado automaticamente</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div id="cardIMC" style="display:none;background:#0a1525;border:1px solid var(--border-gold);border-radius:10px;padding:14px;text-align:center;">
+        <div id="cardIMC" style="display:none;background:#0e0f12;border:1px solid var(--border-gold);border-radius:10px;padding:14px;text-align:center;">
           <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">IMC</div>
           <div id="valIMC" style="font-size:26px;font-weight:800;color:var(--accent);">—</div>
           <div id="classIMC" style="font-size:11px;color:var(--text-soft);margin-top:4px;"></div>
           <div style="font-size:10px;color:var(--muted);margin-top:6px;">kg/m² · Quetelet</div>
         </div>
-        <div id="cardRCQ" style="display:none;background:#0a1525;border:1px solid var(--border-gold);border-radius:10px;padding:14px;text-align:center;">
+        <div id="cardRCQ" style="display:none;background:#0e0f12;border:1px solid var(--border-gold);border-radius:10px;padding:14px;text-align:center;">
           <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">RCQ</div>
           <div id="valRCQ" style="font-size:26px;font-weight:800;color:var(--accent);">—</div>
           <div id="classRCQ" style="font-size:11px;color:var(--text-soft);margin-top:4px;"></div>
@@ -783,7 +787,7 @@ function resizeCanvas(){
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   ctx.scale(dpr,dpr);
-  ctx.strokeStyle = '#c9a227';
+  ctx.strokeStyle = '#C9A84C';
   ctx.lineWidth = 2;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';

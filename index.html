@@ -113,12 +113,33 @@
   ══════════════════════════════════ */
   #hero {
     min-height: 92vh;
-    background:
-      radial-gradient(ellipse 60% 45% at 72% 12%, rgba(201,168,76,0.09), transparent 60%),
-      #08090b;
+    background: #08090b;
     display: flex;
     position: relative;
     overflow: hidden;
+  }
+
+  /* foto de fundo — avaliação */
+  .hero-photo {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('foto-hero-vo2.jpg') 70% 24% / cover no-repeat;
+    filter: grayscale(55%) contrast(1.06) brightness(0.9);
+  }
+  .hero-photo::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(8,9,11,0.97) 0%, rgba(8,9,11,0.88) 38%, rgba(8,9,11,0.55) 68%, rgba(8,9,11,0.35) 100%),
+      linear-gradient(to top, #08090b 2%, transparent 34%),
+      linear-gradient(to bottom, rgba(8,9,11,0.75), transparent 28%),
+      radial-gradient(ellipse 60% 45% at 72% 12%, rgba(201,168,76,0.10), transparent 60%);
+  }
+  @media (max-width: 900px) {
+    .hero-photo { background-position: 72% 20%; opacity: 0.7; }
+    .hero-photo::after {
+      background:
+        linear-gradient(rgba(8,9,11,0.68), rgba(8,9,11,0.68)),
+        linear-gradient(to top, #08090b 2%, transparent 40%);
+    }
   }
 
   .hero-left {
@@ -291,13 +312,10 @@
     padding: 100px 5%;
   }
 
-  .pq-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem; align-items: center;
+  .pq-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem; margin-top: 2.6rem;
   }
-
-  .pq-content {}
 
   .section-label {
     font-family: 'JetBrains Mono', monospace;
@@ -318,35 +336,42 @@
 
   .section-sub { color: rgba(194,198,203,0.7); font-size: 1rem; line-height: 1.8; max-width: 520px; }
 
-  .pq-list { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 0.85rem; }
-  .pq-list li {
-    display: flex; align-items: flex-start; gap: 1rem;
-    font-size: 0.95rem; color: rgba(230,230,230,0.8); font-weight: 500;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+  .pq-card {
+    background: rgba(23,25,29,0.85);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 1.9rem 1.7rem;
+    display: flex; flex-direction: column; gap: 0.9rem;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
   }
-  .pq-list li:last-child { border-bottom: none; }
-  .pq-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
-
-  .pq-foto {
-    border-radius: var(--radius); overflow: hidden;
-    position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  .pq-card:hover {
+    border-color: rgba(201,168,76,0.55);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 44px rgba(0,0,0,0.4);
   }
-  .pq-foto img {
-    width: 100%; aspect-ratio: 3/4;
-    object-fit: cover; object-position: center top; display: block;
+  .pq-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold);
+    display: flex; align-items: center; gap: 0.5rem;
   }
-  .pq-foto-badge {
-    position: absolute; bottom: 20px; left: 20px; right: 20px;
-    background: rgba(23,25,29,0.92);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 6px; padding: 1rem 1.25rem;
-  }
-  .pq-foto-quote {
+  .pq-tag::before { content: ''; width: 18px; height: 1px; background: var(--gold); }
+  .pq-card h3 {
     font-family: 'Chakra Petch', sans-serif;
-    font-style: italic; font-size: 1rem; color: var(--white); line-height: 1.5;
+    font-size: 1.3rem; font-weight: 700; color: var(--white);
+    line-height: 1.2; text-transform: uppercase; letter-spacing: -0.5px;
   }
-  .pq-foto-quote span { color: var(--gold); }
+  .pq-card p { font-size: 0.92rem; color: rgba(194,198,203,0.75); line-height: 1.7; flex: 1; }
+  .pq-card a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 1px;
+    color: var(--gold); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+  .pq-card a::before { content: '// '; opacity: 0.6; }
+  .pq-card a:hover { gap: 0.7rem; }
+  @media (max-width: 900px) { .pq-grid { grid-template-columns: 1fr; } }
 
 
   /* ══════════════════════════════════
@@ -715,8 +740,8 @@
   @media (max-width: 960px) {
     #hero { grid-template-columns: 1fr; }
     .hero-right { display: none; }
-    .pq-layout, .av-layout, .recebe-layout, .pd-layout, #sobre { grid-template-columns: 1fr; }
-    .pq-foto, .recebe-foto { display: none; }
+    .av-layout, .recebe-layout, .pd-layout, #sobre { grid-template-columns: 1fr; }
+    .recebe-foto { display: none; }
     #sobre { gap: 3rem; }
     .planos-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -946,6 +971,7 @@
 
 <!-- ═══════════ HERO ═══════════ -->
 <section id="hero">
+  <div class="hero-photo" aria-hidden="true"></div>
   <div class="hero-left">
     <span class="hero-eyebrow"><span class="hero-pulse"></span>Bauru · SP &nbsp;·&nbsp; Clínica Vitallite</span>
     <h1 class="hero-title">
@@ -956,7 +982,7 @@
     </p>
     <div class="hero-actions">
       <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" class="btn-gold">Agendar minha avaliação</a>
-      <a href="#planos-carousel" class="btn-ghost">Ver os planos</a>
+      <a href="#planos" class="btn-ghost">Ver os planos</a>
     </div>
   </div>
 
@@ -980,7 +1006,7 @@
 
 <!-- ═══════════ FAIXA DE ESTATÍSTICAS ═══════════ -->
 <div class="stats-strip">
-  <div class="stat-cell"><div class="stat-num" data-count="500" data-suffix="+">0</div><div class="stat-label">Atletas avaliados</div></div>
+  <div class="stat-cell"><div class="stat-num" data-count="120" data-suffix="+">0</div><div class="stat-label">Atletas avaliados</div></div>
   <div class="stat-cell"><div class="stat-num" data-count="30" data-suffix="+">0</div><div class="stat-label">Métricas por avaliação</div></div>
   <div class="stat-cell"><div class="stat-num" data-count="12" data-suffix=" sem">0</div><div class="stat-label">Ciclo de evolução</div></div>
   <div class="stat-cell"><div class="stat-num" data-count="100" data-suffix="%">0</div><div class="stat-label">Baseado em evidência</div></div>
@@ -1128,7 +1154,7 @@ window.addEventListener('load', function () {
       <div class="section-label">[ VO₂ MÁX ] — Padrão-ouro do condicionamento</div>
       <h2 class="section-title">Qual é a potência<br>do seu <em>motor aeróbio?</em></h2>
       <p class="vo2-desc">
-        O VO₂ máximo mede quanto oxigênio seu corpo consegue captar, transportar e usar no esforço máximo — <strong>o indicador que melhor prediz performance de resistência e longevidade</strong>. Na AJR, o teste é feito em esteira com protocolo progressivo e monitoramento contínuo, e o resultado vira zonas de treino individualizadas: você passa a treinar na intensidade exata que gera evolução.
+        O VO₂ máximo é <strong>o indicador que melhor prediz performance de resistência e longevidade</strong>. Na AJR, o teste em esteira vira zonas de treino individualizadas: você passa a treinar na intensidade exata que gera evolução.
       </p>
 
       <div class="vo2-protocolo">
@@ -1222,371 +1248,6 @@ window.addEventListener('load', function () {
     });
   }, { threshold: 0.35 });
   io.observe(painel);
-})();
-</script>
-
-<!-- ═══════════ CAROUSEL PLANOS ═══════════ -->
-<style>
-#planos-carousel {
-  position: relative; overflow: hidden;
-  background: #08090b;
-  height: 680px;
-  border-top: 1px solid rgba(201,168,76,0.15);
-  border-bottom: 1px solid rgba(201,168,76,0.15);
-}
-/* etiqueta técnica da seção */
-#planos-carousel::before {
-  content: '[ PLANOS ] — ESCOLHA SEU PROTOCOLO';
-  position: absolute; top: 26px; left: 8%; z-index: 10;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 3px; color: var(--gold);
-  text-transform: uppercase;
-}
-@media (max-width: 900px) { #planos-carousel { height: 560px; } }
-@media (max-width: 600px) { #planos-carousel { height: 520px; } }
-
-.car-track {
-  display: flex; height: 100%;
-  transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
-}
-.car-slide {
-  min-width: 100%; position: relative; overflow: hidden;
-}
-/* foto: painel diagonal à direita com duotone */
-.car-slide-bg {
-  position: absolute; top: 0; bottom: 0; right: 0; left: auto;
-  width: 56%;
-  background-size: cover; background-position: center;
-  transition: transform 7s ease; transform: scale(1.07);
-  filter: grayscale(0.35) brightness(0.6) contrast(1.08) saturate(0.75);
-  clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
-}
-.car-slide.active .car-slide-bg { transform: scale(1); }
-
-/* overlays: fusão à esquerda + grid técnico sobre a foto */
-.car-overlay {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(90deg, #08090b 40%, rgba(8,9,11,0.82) 52%, rgba(8,9,11,0.25) 72%, rgba(8,9,11,0.1) 100%),
-    linear-gradient(to top, rgba(8,9,11,0.85) 0%, transparent 35%),
-    linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px);
-  background-size: auto, auto, 56px 56px, 56px 56px;
-}
-
-/* Gold accent stripe */
-.car-accent-bar {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 4px;
-  background: linear-gradient(to bottom, transparent 5%, var(--gold) 30%, var(--gold) 70%, transparent 95%);
-  z-index: 3;
-}
-
-/* Slide number — contorno vazado dourado */
-.car-slide-num {
-  position: absolute; right: 4%; bottom: 1rem; z-index: 2;
-  font-family: 'Chakra Petch', sans-serif; font-weight: 700;
-  font-size: clamp(7rem, 15vw, 13rem); line-height: 1;
-  color: transparent; -webkit-text-stroke: 1.5px rgba(201,168,76,0.22);
-  pointer-events: none; user-select: none;
-  letter-spacing: -0.05em;
-}
-
-.car-content {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 110px 8% 30px; max-width: 640px; z-index: 4;
-}
-
-/* Eyebrow — mono técnico */
-.car-eyebrow {
-  display: inline-flex; align-items: center; gap: 0.6rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.66rem; font-weight: 700;
-  letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
-  margin-bottom: 1rem;
-}
-.car-eyebrow::before {
-  content: ''; display: block;
-  width: 32px; height: 1px;
-  background: var(--gold);
-}
-
-/* Main title */
-.car-title {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: clamp(2.6rem, 4.8vw, 4.3rem);
-  font-weight: 900; line-height: 0.97;
-  color: var(--white); margin-bottom: 1.25rem;
-  text-shadow: 0 4px 32px rgba(0,0,0,0.6);
-  letter-spacing: -0.01em;
-}
-.car-title em { color: var(--gold); font-style: italic; }
-
-/* Description */
-.car-desc {
-  font-size: 1rem; color: rgba(255,255,255,0.55); line-height: 1.75;
-  max-width: 420px; margin-bottom: 1.5rem;
-  font-weight: 400;
-}
-
-/* Price */
-.car-price {
-  font-family: 'Chakra Petch', sans-serif; font-weight: 900;
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-  color: var(--gold); margin-bottom: 2rem; line-height: 1;
-  display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
-}
-.car-price small {
-  font-size: 0.7rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
-  color: rgba(255,255,255,0.35); font-family: 'JetBrains Mono', monospace;
-}
-
-/* Badges — chips quadrados mono */
-.car-launch {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--gold); color: #17191d;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem; font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; padding: 0.32rem 0.8rem;
-  border-radius: 3px; margin-bottom: 0.9rem; width: fit-content;
-}
-.car-launch::before {
-  content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: #17191d; animation: heroPulse 1.6s infinite;
-}
-.car-badge-pill {
-  display: inline-flex; align-items: center;
-  background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.4);
-  color: var(--gold); font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  padding: 0.32rem 0.8rem; border-radius: 3px;
-  margin-bottom: 0.9rem; width: fit-content;
-}
-
-/* Buttons */
-.car-actions { display: flex; gap: 0.85rem; flex-wrap: wrap; }
-
-.car-btn-p {
-  background: var(--gold); color: #17191d;
-  padding: 1rem 2.1rem; border-radius: 4px;
-  text-decoration: none; font-weight: 700; font-size: 0.85rem;
-  font-family: 'Chakra Petch', sans-serif;
-  text-transform: uppercase; letter-spacing: 1px;
-  transition: all 0.25s; display: inline-block;
-  box-shadow: 0 6px 28px rgba(201,168,76,0.3);
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
-}
-.car-btn-p:hover { background: var(--gold-lt); transform: translateY(-3px); box-shadow: 0 0 40px rgba(201,168,76,0.45); }
-
-.car-btn-g {
-  background: transparent; color: rgba(255,255,255,0.7);
-  padding: 1rem 1.5rem; border-radius: 4px;
-  text-decoration: none; font-weight: 500; font-size: 0.78rem;
-  font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;
-  border: 1px solid rgba(255,255,255,0.18);
-  transition: all 0.25s; display: inline-block;
-}
-.car-btn-g:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); box-shadow: 0 0 24px rgba(201,168,76,0.15); }
-
-/* Navigation arrows — quadradas tech */
-.car-arrow {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  z-index: 10; background: rgba(8,9,11,0.75); backdrop-filter: blur(6px);
-  border: 1px solid rgba(201,168,76,0.3);
-  width: 48px; height: 48px; border-radius: 4px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 0.25s;
-  color: var(--gold); font-size: 1.4rem; line-height: 1;
-  user-select: none;
-}
-.car-arrow:hover { background: var(--gold); border-color: var(--gold); color: #17191d; box-shadow: 0 0 28px rgba(201,168,76,0.4); }
-.car-prev { left: 24px; }
-.car-next { right: 24px; }
-
-/* Progress bar at bottom */
-.car-progress {
-  position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
-  display: flex; height: 3px; background: rgba(255,255,255,0.06);
-}
-.car-progress-seg {
-  flex: 1; position: relative; cursor: pointer;
-}
-.car-progress-seg::after {
-  content: ''; position: absolute; inset: 0;
-  background: rgba(255,255,255,0.12); transition: background 0.2s;
-}
-.car-progress-seg:hover::after { background: rgba(201,168,76,0.3); }
-.car-progress-fill {
-  position: absolute; top: 0; left: 0; height: 100%;
-  background: var(--gold); width: 0;
-  transition: width 5.5s linear;
-}
-.car-progress-seg.active .car-progress-fill { width: 100%; }
-
-/* Slide counter — mono */
-.car-counter {
-  position: absolute; top: 24px; right: 28px; z-index: 10;
-  font-family: 'JetBrains Mono', monospace; font-weight: 700;
-  font-size: 0.7rem; letter-spacing: 2px;
-  color: rgba(255,255,255,0.35);
-  background: rgba(8,9,11,0.6); border: 1px solid rgba(201,168,76,0.2);
-  padding: 5px 10px; border-radius: 3px; backdrop-filter: blur(6px);
-}
-.car-counter span { color: var(--gold); }
-
-/* Dots — marcadores quadrados */
-.car-dots {
-  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 8px; z-index: 10;
-}
-.car-dot {
-  width: 7px; height: 7px; border-radius: 1px;
-  background: rgba(255,255,255,0.22); cursor: pointer; transition: all 0.35s;
-  transform: rotate(45deg);
-}
-.car-dot.active { background: var(--gold); box-shadow: 0 0 10px rgba(201,168,76,0.5); }
-
-@media (max-width: 768px) {
-  .car-content { padding: 0 6%; max-width: 100%; }
-  .car-btn-g { display: none; }
-  .car-prev { left: 12px; }
-  .car-next { right: 12px; }
-  .car-arrow { width: 42px; height: 42px; font-size: 1.3rem; }
-  .car-slide-num { font-size: clamp(6rem, 22vw, 10rem); right: 4%; }
-  .car-desc { display: none; }
-  /* no mobile a foto volta a ocupar o fundo inteiro, mais escura */
-  .car-slide-bg { width: 100%; clip-path: none; filter: grayscale(0.35) brightness(0.35) contrast(1.08); }
-  .car-overlay {
-    background:
-      linear-gradient(to top, rgba(8,9,11,0.92) 20%, rgba(8,9,11,0.5) 60%, rgba(8,9,11,0.3) 100%),
-      linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px);
-    background-size: auto, 56px 56px, 56px 56px;
-  }
-  #planos-carousel::before { left: 6%; }
-}
-</style>
-
-<section id="planos-carousel" aria-label="Nossos planos">
-  <div class="car-track" id="carTrack">
-
-    <!-- Slide 1: AJR Online -->
-    <div class="car-slide active" id="carSlide0">
-      <div class="car-slide-bg" style="background-image:url('foto-consultorio.jpg')"></div>
-      <div class="car-overlay"></div>
-      <div class="car-accent-bar"></div>
-      <div class="car-slide-num">01</div>
-      <div class="car-content">
-        <div class="car-launch">Lançamento</div>
-        <div class="car-eyebrow">Treino Online</div>
-        <h2 class="car-title">AJR <em>Online</em></h2>
-        <p class="car-desc">Prescrição de treino individualizada, ajuste mensal e suporte via WhatsApp — de onde você estiver.</p>
-        <div class="car-price">R$79,90<small>/mês · cancele quando quiser</small></div>
-        <div class="car-actions">
-          <a href="#planos" class="car-btn-p">Ver plano completo</a>
-          <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Online%20(R%2479%2C90%2Fm%C3%AAs).%20Quero%20saber%20mais%21" target="_blank" onclick="gtag('event','whatsapp_click',{plan:'ajr_online',source:'carousel'})" class="car-btn-g">Falar no WhatsApp →</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 2: VO2 Máximo -->
-    <div class="car-slide" id="carSlide1">
-      <div class="car-slide-bg" style="background-image:url('foto-vo2-teste.jpg');background-position:center 28%"></div>
-      <div class="car-overlay"></div>
-      <div class="car-accent-bar"></div>
-      <div class="car-slide-num">02</div>
-      <div class="car-content">
-        <div class="car-badge-pill">Diagnóstico Cardiorrespiratório</div>
-        <div class="car-eyebrow">Sessão Única · Presencial</div>
-        <h2 class="car-title">Teste de<br><em>VO2 Máximo</em></h2>
-        <p class="car-desc">Descubra sua capacidade aeróbica real — o indicador mais preciso de saúde cardiovascular e base para treino de alta performance.</p>
-        <div class="car-price">R$349,90<small>sessão única</small></div>
-        <div class="car-actions">
-          <a href="#planos" class="car-btn-p">Ver plano completo</a>
-          <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Teste%20de%20VO2%20M%C3%A1ximo%20(R%24349%2C90).%20Pode%20me%20ajudar%3F" target="_blank" onclick="gtag('event','whatsapp_click',{plan:'vo2',source:'carousel'})" class="car-btn-g">Agendar agora →</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 3: AJR Performance -->
-    <div class="car-slide" id="carSlide2">
-      <div class="car-slide-bg" style="background-image:url('foto-ajr-performance.jpg')"></div>
-      <div class="car-overlay"></div>
-      <div class="car-accent-bar"></div>
-      <div class="car-slide-num">03</div>
-      <div class="car-content">
-        <div class="car-badge-pill">Mais completo</div>
-        <div class="car-eyebrow">Presencial · Bauru</div>
-        <h2 class="car-title">AJR <em>Performance</em></h2>
-        <p class="car-desc">Diagnóstico físico profundo — VO2, BIA, força, mobilidade e assimetrias — com plano individualizado e 90 dias de acompanhamento.</p>
-        <div class="car-price">A partir de R$450<small>até 3x sem juros</small></div>
-        <div class="car-actions">
-          <a href="#planos" class="car-btn-p">Ver plano completo</a>
-          <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" target="_blank" onclick="gtag('event','whatsapp_click',{plan:'ajr_performance',source:'carousel'})" class="car-btn-g">Agendar avaliação →</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 4: Performance Day -->
-    <div class="car-slide" id="carSlide3">
-      <div class="car-slide-bg" style="background-image:url('foto-pd-apresentacao.jpg')"></div>
-      <div class="car-overlay"></div>
-      <div class="car-accent-bar"></div>
-      <div class="car-slide-num">04</div>
-      <div class="car-content">
-        <div class="car-badge-pill">Para Grupos · Evento Especial</div>
-        <div class="car-eyebrow">Boxes · Academias · Equipes</div>
-        <h2 class="car-title">Performance<br><em>Day</em></h2>
-        <p class="car-desc">Um dia de avaliação completa para toda a equipe — diagnóstico individual, kit personalizado e conteúdo para as redes.</p>
-        <div class="car-price">A partir de R$179,90<small>até 3x sem juros</small></div>
-        <div class="car-actions">
-          <a href="#planos" class="car-btn-p">Ver plano completo</a>
-          <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Performance%20Day%20para%20o%20meu%20grupo.%20Pode%20enviar%20uma%20proposta%3F" target="_blank" onclick="gtag('event','whatsapp_click',{plan:'performance_day',source:'carousel'})" class="car-btn-g">Pedir proposta →</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <button class="car-arrow car-prev" onclick="carMove(-1)" aria-label="Anterior">&#8249;</button>
-  <button class="car-arrow car-next" onclick="carMove(1)" aria-label="Próximo">&#8250;</button>
-
-  <div class="car-progress" id="carProgress">
-    <div class="car-progress-seg active" onclick="carGoTo(0)"><div class="car-progress-fill" id="cpf0"></div></div>
-    <div class="car-progress-seg" onclick="carGoTo(1)"><div class="car-progress-fill" id="cpf1"></div></div>
-    <div class="car-progress-seg" onclick="carGoTo(2)"><div class="car-progress-fill" id="cpf2"></div></div>
-    <div class="car-progress-seg" onclick="carGoTo(3)"><div class="car-progress-fill" id="cpf3"></div></div>
-  </div>
-</section>
-
-<script>
-(function(){
-  let cur = 0, total = 4, timer;
-  function startFill(idx) {
-    for(var i=0;i<total;i++){
-      var f=document.getElementById('cpf'+i);
-      if(!f) return;
-      f.style.transition='none'; f.style.width='0%';
-    }
-    var seg=document.getElementById('cpf'+idx);
-    if(seg){ requestAnimationFrame(function(){ requestAnimationFrame(function(){
-      seg.style.transition='width 5.3s linear'; seg.style.width='100%';
-    }); }); }
-  }
-  function upd() {
-    document.getElementById('carTrack').style.transform = 'translateX(-' + (cur*100) + '%)';
-    document.querySelectorAll('.car-progress-seg').forEach((d,i) => d.classList.toggle('active', i===cur));
-    document.querySelectorAll('.car-slide').forEach((s,i) => s.classList.toggle('active', i===cur));
-    startFill(cur);
-  }
-  window.carMove = function(d){ cur=(cur+d+total)%total; upd(); reset(); };
-  window.carGoTo = function(i){ cur=i; upd(); reset(); };
-  function reset(){ clearInterval(timer); timer=setInterval(()=>{ cur=(cur+1)%total; upd(); },5500); }
-  reset(); upd();
-  var el = document.getElementById('planos-carousel');
-  el.addEventListener('mouseenter',()=>clearInterval(timer));
-  el.addEventListener('mouseleave', reset);
 })();
 </script>
 
@@ -2087,28 +1748,28 @@ window.addEventListener('load', function () {
 
 <!-- ═══════════ PARA QUEM É ═══════════ -->
 <section id="para-quem">
-  <div class="pq-layout">
-    <div class="pq-content">
-      <div class="section-label">Para quem é essa avaliação</div>
-      <h2 class="section-title">Você se identifica com algum desses?</h2>
-      <p class="section-sub">A avaliação é indicada para quem deseja ir além do treino genérico e tomar decisões baseadas no próprio corpo.</p>
+  <div class="section-label">É pra você?</div>
+  <h2 class="section-title">Três motivos trazem alguém<br>até a <em>avaliação.</em></h2>
+  <p class="section-sub">Encontre o seu. O resto a gente resolve na sala de avaliação.</p>
 
-      <ul class="pq-list">
-        <li><span class="pq-icon">🏁</span> Iniciar atividade física com segurança e direção</li>
-        <li><span class="pq-icon">📈</span> Melhorar desempenho e quebrar platôs nos treinos</li>
-        <li><span class="pq-icon">🦵</span> Reduzir o risco de lesões identificando desequilíbrios musculares</li>
-        <li><span class="pq-icon">🔍</span> Descobrir o que está limitando sua evolução</li>
-        <li><span class="pq-icon">📊</span> Acompanhar a evolução física com dados reais ao longo do tempo</li>
-        <li><span class="pq-icon">❤️</span> Manter mobilidade, saúde e qualidade de vida com método</li>
-      </ul>
+  <div class="pq-grid">
+    <div class="pq-card">
+      <span class="pq-tag">Perfil 01</span>
+      <h3>Vou começar</h3>
+      <p>Quer sair do zero sem se machucar. A avaliação mostra o que seu corpo aguenta hoje e define o ponto de partida seguro.</p>
+      <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Quero%20come%C3%A7ar%20a%20treinar%20e%20quero%20agendar%20minha%20avalia%C3%A7%C3%A3o.">agendar avaliação →</a>
     </div>
-
-    <!-- foto: aldemir com medalhas ou foto profissional -->
-    <div class="pq-foto">
-      <img src="foto-aldemir-medalhas.jpg" alt="Aldemir Junior" />
-      <div class="pq-foto-badge">
-        <div class="pq-foto-quote">"Treinar melhor começa entendendo o <span>próprio corpo.</span>"</div>
-      </div>
+    <div class="pq-card">
+      <span class="pq-tag">Perfil 02</span>
+      <h3>Treino, mas travei</h3>
+      <p>Se dedica e não evolui. Força, assimetrias e VO2 revelam exatamente o que está segurando seu resultado — e o plano ataca isso.</p>
+      <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Treino%20mas%20estagnei%20—%20quero%20agendar%20uma%20avalia%C3%A7%C3%A3o.">destravar evolução →</a>
+    </div>
+    <div class="pq-card">
+      <span class="pq-tag">Perfil 03</span>
+      <h3>Quero durar</h3>
+      <p>Saúde para a vida toda. Coração, mobilidade e massa muscular monitorados com método para envelhecer forte.</p>
+      <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Quero%20cuidar%20da%20minha%20sa%C3%BAde%20com%20dados%20—%20quero%20agendar%20uma%20avalia%C3%A7%C3%A3o.">investir em saúde →</a>
     </div>
   </div>
 </section>
@@ -2117,11 +1778,7 @@ window.addEventListener('load', function () {
 <section id="avaliamos">
   <div class="section-label">O que avaliamos</div>
   <h2 class="section-title" style="color:var(--white)">Uma avaliação.<br>Sete dimensões do corpo.</h2>
-  <p class="section-sub">Cada métrica revela algo que treinos sem diagnóstico nunca vão mostrar.</p>
-
-  <p class="section-sub" style="color:#5d636b;max-width:680px;margin-top:1rem">
-    Composição corporal, mobilidade, flexibilidade, força muscular, assimetrias bilaterais, VO2, pressão arterial e saturação — cada métrica revela algo que treinos sem diagnóstico nunca vão mostrar.
-  </p>
+  <p class="section-sub">Composição corporal, mobilidade, flexibilidade, força, assimetrias, VO2, pressão arterial e saturação — cada métrica revela algo que treinos sem diagnóstico nunca vão mostrar.</p>
 </section>
 
 <!-- ═══════════ O QUE VOCÊ RECEBE ═══════════ -->
@@ -2301,7 +1958,6 @@ window.addEventListener('load', function () {
 <section id="depoimentos">
   <div class="section-label">O que dizem os alunos</div>
   <h2 class="section-title">Resultados reais de pessoas reais.</h2>
-  <p class="section-sub">Veja o que quem já passou pela avaliação tem a dizer.</p>
 
   <div class="dep-grid">
 
@@ -2394,31 +2050,11 @@ window.addEventListener('load', function () {
 
     <div class="faq-item">
       <button class="faq-btn" onclick="toggleFaq(this)">
-        Posso cancelar o AJR Online quando quiser?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        Sim. O AJR Online é um plano recorrente mensal — a cobrança é automática todo mês. Não há fidelidade nem multa: basta avisar pelo WhatsApp e a assinatura é cancelada imediatamente, sem burocracia.
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">
         O Performance Day funciona para grupos pequenos?
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
         O Performance Day é indicado a partir de 10 participantes. Para grupos menores, entre em contato pelo WhatsApp — é possível montar uma proposta adequada ao seu grupo.
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-btn" onclick="toggleFaq(this)">
-        Onde fica a Clínica Vitallite?
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-answer">
-        Rua Gérson França, 18-28, Jardim Estoril, Bauru-SP. Confira a localização na seção "Sobre" abaixo ou mande mensagem no WhatsApp para confirmar horário e endereço exato.
       </div>
     </div>
 
@@ -2447,10 +2083,7 @@ function toggleFaq(btn) {
     <div class="section-label">Sobre</div>
     <h2 class="section-title">Aldemir Junior</h2>
     <p class="section-sub">
-      Profissional de Educação Física com ampla experiência em avaliação física e treinamento resistido, sediado na Clínica Vitallite, em Bauru-SP. Ex-atleta de alto rendimento de judô, aplica a mesma mentalidade competitiva para transformar dados reais do corpo em planos concretos e resultados mensuráveis.
-    </p>
-    <p class="section-sub">
-      Atende atletas de crossfit, corredores, praticantes de musculação e quem está começando agora — todos com o mesmo nível de rigor: diagnóstico profundo e plano baseado em dados reais, não em achismo.
+      Profissional de Educação Física e ex-atleta de alto rendimento de judô. Na Clínica Vitallite, em Bauru-SP, atende de atletas a iniciantes com o mesmo rigor: diagnóstico profundo e plano baseado em dados reais, não em achismo.
     </p>
     <p class="section-sub" style="color:var(--gold);font-style:italic;font-family:'Chakra Petch',sans-serif;font-size:1.05rem;margin-top:0.5rem">
       "O diferencial não é só o treino — é o diagnóstico preciso que vem antes dele."
@@ -2629,9 +2262,66 @@ function carregarNoticias() {
     <a href="https://wa.me/5514997432182">WhatsApp</a>
     <a href="#planos">Planos</a>
     <a href="#planos">Performance Day</a>
+    <a href="#" onclick="abrirLogin(event)" title="Área do avaliador">🔒 Avaliador</a>
   </div>
   <div class="footer-info">© 2026 Aldemir Junior · AJR Avaliação Física e Performance · Gérson França 18-28, Jd. Estoril · Bauru, SP</div>
 </footer>
+
+<!-- ═══════════ LOGIN — ÁREA DO AVALIADOR ═══════════ -->
+<div id="loginOverlay" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(8,9,11,0.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px">
+  <div style="width:100%;max-width:380px;background:var(--navy);border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:2rem;box-shadow:0 30px 80px rgba(0,0,0,0.6)">
+    <div class="section-label" style="margin-bottom:1rem">Área do avaliador</div>
+
+    <div id="loginForm">
+      <h3 style="font-family:'Chakra Petch',sans-serif;font-weight:700;text-transform:uppercase;color:var(--white);font-size:1.15rem;margin-bottom:0.4rem">Acesso restrito</h3>
+      <p style="font-size:0.85rem;color:var(--gray);margin-bottom:1.25rem">Ferramentas de uso pessoal do Aldemir.</p>
+      <input type="password" id="loginSenha" placeholder="Senha"
+        style="width:100%;padding:0.8rem 1rem;background:#0e0f12;border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:var(--off-white);font-family:'Space Grotesk',sans-serif;font-size:1rem;outline:none;margin-bottom:0.75rem"
+        onkeydown="if(event.key==='Enter')validarLogin()">
+      <div id="loginErro" style="display:none;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#e05c5c;margin-bottom:0.75rem">// senha incorreta</div>
+      <button onclick="validarLogin()" class="btn-gold" style="width:100%;border:none;cursor:pointer;text-align:center">Entrar</button>
+      <button onclick="fecharLogin()" style="width:100%;background:none;border:none;color:var(--gray);font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:1px;margin-top:0.9rem;cursor:pointer">cancelar</button>
+    </div>
+
+    <div id="loginPainel" style="display:none">
+      <h3 style="font-family:'Chakra Petch',sans-serif;font-weight:700;text-transform:uppercase;color:var(--white);font-size:1.15rem;margin-bottom:1.25rem">Olá, Aldemir 👊</h3>
+      <a href="avaliacao.html" class="btn-gold" style="display:block;text-align:center;margin-bottom:0.75rem">+ Nova avaliação</a>
+      <a href="assimetria.html" style="display:block;text-align:center;padding:0.85rem;border:1px solid var(--gold);border-radius:4px;color:var(--gold);text-decoration:none;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem">Avaliação de assimetria</a>
+      <button onclick="sairLogin()" style="width:100%;background:none;border:none;color:var(--gray);font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:1px;cursor:pointer">// sair</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ Área do avaliador — gate simples (SHA-256 + sessionStorage) ══ */
+var AJR_HASH = 'b99a992a5c8127f97000d6e6485415cd469932b7e18f819ed2e8d267198aa450';
+async function ajrHash(txt) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+function abrirLogin(e) {
+  if (e) e.preventDefault();
+  document.getElementById('loginOverlay').style.display = 'flex';
+  var logado = sessionStorage.getItem('ajr_auth') === AJR_HASH;
+  document.getElementById('loginForm').style.display   = logado ? 'none' : 'block';
+  document.getElementById('loginPainel').style.display = logado ? 'block' : 'none';
+  if (!logado) setTimeout(function(){ document.getElementById('loginSenha').focus(); }, 100);
+}
+function fecharLogin() { document.getElementById('loginOverlay').style.display = 'none'; }
+async function validarLogin() {
+  var senha = document.getElementById('loginSenha').value;
+  if (await ajrHash(senha) === AJR_HASH) {
+    sessionStorage.setItem('ajr_auth', AJR_HASH);
+    document.getElementById('loginErro').style.display = 'none';
+    document.getElementById('loginSenha').value = '';
+    abrirLogin();
+  } else {
+    document.getElementById('loginErro').style.display = 'block';
+  }
+}
+function sairLogin() { sessionStorage.removeItem('ajr_auth'); fecharLogin(); }
+document.getElementById('loginOverlay').addEventListener('click', function(e){ if (e.target === this) fecharLogin(); });
+</script>
 
 <!--
   ══════════════════════════════════════════════════
