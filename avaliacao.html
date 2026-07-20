@@ -3173,7 +3173,115 @@ function asymColor(val) {
   return n > 15 ? '#c0392b' : '#27ae60';
 }
 
-function montarHTML() {
+/* ── Evolução: busca avaliações anteriores do mesmo aluno ── */
+async function buscarHistoricoAluno() {
+  if (!firebaseReady) return [];
+  const nomeAtual  = (v('nome') || '').trim().toLowerCase();
+  const emailAtual = (v('emailAluno') || '').trim().toLowerCase();
+  if (!nomeAtual && !emailAtual) return [];
+  const dataAtual = v('dataAvaliacao') || '9999-12-31';
+  try {
+    const { collection, getDocs, query, orderBy, limit } = window._fbModules;
+    const snap = await getDocs(query(collection(db, 'avaliacoes'), orderBy('criadoEm', 'desc'), limit(200)));
+    const docs = snap.docs.map(d => d.data()).filter(d => {
+      const mesmoAluno = (emailAtual && (d.emailAluno || '').toLowerCase() === emailAtual)
+        || (nomeAtual && (d.nome || '').trim().toLowerCase() === nomeAtual);
+      return mesmoAluno && d.dataAvaliacao && d.dataAvaliacao < dataAtual;
+    });
+    // dedupe por data (docs vêm do mais recente pro mais antigo → mantém o mais recente de cada data)
+    const porData = {};
+    docs.forEach(d => { if (!porData[d.dataAvaliacao]) porData[d.dataAvaliacao] = d; });
+    return Object.values(porData).sort((a,b) => a.dataAvaliacao.localeCompare(b.dataAvaliacao)).slice(-3);
+  } catch(e) { console.warn('Histórico indisponível para evolução:', e.message); return []; }
+}
+
+/* métricas comparáveis: melhor = +1 (subir é bom), -1 (descer é bom), 0 (neutro) */
+const EVO_METRICAS = [
+  { label:'Peso (kg)',            get:d=>d.peso,                     atual:()=>parseFloat(v('peso')),        melhor:0 },
+  { label:'IMC (kg/m²)',          get:d=>d.imc,                      atual:()=>parseFloat(v('imc')),         melhor:0 },
+  { label:'% Gordura',            get:d=>d.percentualGordura,        atual:()=>parseFloat(t('rGordura')),    melhor:-1 },
+  { label:'Massa Magra (kg)',     get:d=>d.massaMagra,               atual:()=>parseFloat(t('rMassaMagra')), melhor:1 },
+  { label:'Massa Gorda (kg)',     get:d=>d.massaGorda,               atual:()=>parseFloat(t('rMassaGorda')), melhor:-1 },
+  { label:'Soma Dobras (mm)',     get:d=>d.somaDobras,               atual:()=>parseFloat(t('rSomaDobras')), melhor:-1 },
+  { label:'Cintura (cm)',         get:d=>d.circunferencias?.cintura, atual:()=>parseFloat(document.querySelector('[data-circ="cintura"]')?.value), melhor:-1 },
+  { label:'RCQ',                  get:d=>d.rcq,                      atual:()=>parseFloat(v('rcq')),         melhor:-1 },
+  { label:'FC Repouso (bpm)',     get:d=>d.fcRepouso,                atual:()=>parseFloat(v('fcRepouso')),   melhor:-1 },
+  { label:'VO₂ Máx (ml/kg/min)',  get:d=>d.vo2Max,                   atual:()=>parseFloat(v('vo2Max')),      melhor:1 },
+  { label:'Preensão Dir. (kg)',   get:d=>d.maoDireita,               atual:()=>parseFloat(v('maoDireita')),  melhor:1 },
+  { label:'Preensão Esq. (kg)',   get:d=>d.maoEsquerda,              atual:()=>parseFloat(v('maoEsquerda')), melhor:1 },
+];
+
+/* mini-gráfico de tendência desenhado em canvas → dataURL (robusto no html2canvas) */
+function sparklineDataURL(pts) {
+  const W=260, H=64, P=10;
+  const c = document.createElement('canvas'); c.width = W*2; c.height = H*2;
+  const g = c.getContext('2d'); g.scale(2,2);
+  const min = Math.min(...pts), max = Math.max(...pts), range = (max-min) || 1;
+  const x = i => P + i*(W-2*P)/(pts.length-1);
+  const y = p => H-P - ((p-min)/range)*(H-2*P);
+  g.strokeStyle = 'rgba(201,168,76,0.25)'; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(P, H-P); g.lineTo(W-P, H-P); g.stroke();
+  g.strokeStyle = '#C9A84C'; g.lineWidth = 2; g.lineJoin = 'round';
+  g.beginPath(); pts.forEach((p,i) => i ? g.lineTo(x(i),y(p)) : g.moveTo(x(0),y(p))); g.stroke();
+  pts.forEach((p,i) => {
+    g.beginPath(); g.arc(x(i), y(p), i === pts.length-1 ? 3.5 : 2.5, 0, 7);
+    g.fillStyle = i === pts.length-1 ? '#e2c878' : '#C9A84C'; g.fill();
+  });
+  return c.toDataURL('image/png');
+}
+
+function montarEvolucaoHTML(historico, secTitle, subTitle, avoid) {
+  if (!historico || !historico.length) return '';
+  const fmtData = s => new Date(s+'T12:00').toLocaleDateString('pt-BR');
+  const num = x => (x == null || isNaN(x)) ? null : +x;
+  const fmt = x => x == null ? '—' : (+x).toLocaleString('pt-BR', {maximumFractionDigits:1});
+
+  const thS = 'padding:5px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#C9A84C;border-bottom:2px solid rgba(201,168,76,0.28);text-align:right;';
+  const tdS = 'padding:5px 8px;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.08);text-align:right;';
+
+  let head = `<tr><th style="${thS}text-align:left;">Métrica</th>${historico.map(h=>`<th style="${thS}">${fmtData(h.dataAvaliacao)}</th>`).join('')}<th style="${thS}color:#e2c878;">Atual</th><th style="${thS}">Δ</th></tr>`;
+  let rows = '', sparks = '';
+
+  EVO_METRICAS.forEach(m => {
+    const hist = historico.map(h => num(m.get(h)));
+    const atual = num(m.atual());
+    if (atual == null || !hist.some(x => x != null)) return; // sem o que comparar
+
+    // Δ vs a avaliação anterior mais recente que tem valor
+    const ultAnt = [...hist].reverse().find(x => x != null);
+    const delta = atual - ultAnt;
+    let cor = '#9aa0a8', seta = delta > 0 ? '▲' : delta < 0 ? '▼' : '—';
+    if (m.melhor !== 0 && Math.abs(delta) >= 0.05) cor = (delta * m.melhor > 0) ? '#27ae60' : '#c0392b';
+    const deltaTxt = Math.abs(delta) < 0.05 ? '=' : `${seta} ${delta>0?'+':''}${delta.toLocaleString('pt-BR',{maximumFractionDigits:1})}`;
+
+    rows += `<tr><td style="${tdS}text-align:left;color:#dfe2e6;">${m.label}</td>${hist.map(x=>`<td style="${tdS}color:#9aa0a8;">${fmt(x)}</td>`).join('')}<td style="${tdS}font-weight:700;color:#e2c878;">${fmt(atual)}</td><td style="${tdS}font-weight:700;color:${cor};">${deltaTxt}</td></tr>`;
+
+    // sparkline com 3+ pontos (histórico com valor + atual)
+    const pts = [...hist.filter(x => x != null), atual];
+    if (pts.length >= 3) {
+      sparks += `<div style="background:#17191d;border-radius:8px;padding:10px 12px;break-inside:avoid;page-break-inside:avoid;">
+        <div style="font-size:9px;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">${m.label}</div>
+        <img src="${sparklineDataURL(pts)}" style="width:100%;height:auto;display:block;" />
+        <div style="font-size:10px;color:${cor};font-weight:700;margin-top:2px;">${deltaTxt} vs anterior</div>
+      </div>`;
+    }
+  });
+
+  if (!rows) return '';
+  return `
+    <div style="margin-bottom:20px;">
+      <div class="pdf-avoid" style="${avoid}">
+        <div style="${secTitle}">Evolução — Comparativo com Avaliações Anteriores</div>
+        <table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:12px;">${head}${rows}</table>
+      </div>
+      ${sparks ? `<div class="pdf-avoid" style="${avoid}">
+        <div style="${subTitle}">Tendência (últimas ${historico.length + 1} avaliações)</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">${sparks}</div>
+      </div>` : ''}
+    </div>`;
+}
+
+function montarHTML(historico = []) {
   const secTitle = "font-family:'Chakra Petch',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;border-bottom:1px solid rgba(201,168,76,0.28);padding-bottom:5px;margin-bottom:12px;";
   const subTitle = 'font-size:9px;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:1px;margin:10px 0 6px;';
   const isPerformance = document.querySelector('input[name="protocolo"]:checked')?.value !== 'fit';
@@ -3272,14 +3380,14 @@ function montarHTML() {
     const leg = slot.querySelector('.foto-footer input')?.value || '';
     if (img && img.src && img.src.startsWith('data:')) {
       const g = slot.dataset.grupo || 'Outros Registros';
-      (fotoGrupos[g] = fotoGrupos[g] || []).push(`<div style="text-align:center;break-inside:avoid;">
+      (fotoGrupos[g] = fotoGrupos[g] || []).push(`<div style="text-align:center;break-inside:avoid;page-break-inside:avoid;">
         <img src="${img.src}" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px;border:1px solid rgba(201,168,76,0.28);" />
         ${leg ? `<div style="font-size:9px;color:#C9A84C;margin-top:4px;font-weight:600;text-transform:uppercase;">${leg}</div>` : ''}
       </div>`);
     }
   });
   let fotosHTML = Object.entries(fotoGrupos).map(([g, arr]) => `
-    <div style="margin-bottom:10px;break-inside:avoid;">
+    <div class="pdf-avoid" style="margin-bottom:10px;break-inside:avoid;page-break-inside:avoid;">
       <div style="font-size:9px;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">${g}</div>
       <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;">${arr.join('')}</div>
     </div>`).join('');
@@ -3292,6 +3400,23 @@ function montarHTML() {
   });
 
   const parecer = v('parecer'); const direcao = v('direcionamento');
+
+  // Saúde — patologias marcadas + tratamento + cirurgias + obs
+  const patologias = [...document.querySelectorAll('input[name="patologia"]:checked')].map(c => c.value);
+
+  // Checklist cócoras
+  const cocorasChecks = [
+    ['ckPlantar','Apoio plantar preservado'],
+    ['ckJoelho','Flexão de joelho >90°'],
+    ['ckLombar','Curvatura lombar mantida'],
+    ['ckEscapular','Retração escapular mantida'],
+  ].map(([id,label]) => {
+    const ok = document.getElementById(id)?.checked;
+    return `<span style="display:inline-block;margin-right:12px;color:${ok?'#27ae60':'#9aa0a8'};">${ok?'✓':'✗'} ${label}</span>`;
+  }).join('');
+
+  // evita corte de conteúdo entre páginas
+  const avoid = 'page-break-inside:avoid;break-inside:avoid;';
 
   return `
     <!-- HEADER -->
@@ -3308,44 +3433,51 @@ function montarHTML() {
     <div style="padding:24px 40px;">
 
       <!-- IDENTIFICAÇÃO -->
-      <div style="margin-bottom:20px;">
+      <div class="pdf-avoid" style="margin-bottom:20px;${avoid}">
         <div style="${secTitle}">1 · Identificação</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-          ${cell('Nome',v('nome'))}${cell('Idade',v('idade')?v('idade')+' anos':'')}${cell('Sexo',v('sexo')==='M'?'Masculino':v('sexo')==='F'?'Feminino':'')}
-          ${cell('Data Nasc.',v('dataNascimento')?new Date(v('dataNascimento')+'T12:00').toLocaleDateString('pt-BR'):'')}${cell('Data Aval.',data)}${cell('Objetivo',v('objetivo'))}
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+          ${cell('Nome',v('nome'))}${cell('E-mail',v('emailAluno'))}${cell('Idade',v('idade')?v('idade')+' anos':'')}${cell('Sexo',v('sexo')==='M'?'Masculino':v('sexo')==='F'?'Feminino':'')}
+          ${cell('Data Nasc.',v('dataNascimento')?new Date(v('dataNascimento')+'T12:00').toLocaleDateString('pt-BR'):'')}${cell('Data Aval.',data)}${cell('Protocolo',isPerformance?'Performance':'Fit')}${cell('Objetivo',v('objetivo'))}
         </div>
       </div>
 
       <!-- SAÚDE -->
       <div style="margin-bottom:20px;">
-        <div style="${secTitle}">2 · Saúde</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:#dfe2e6;margin-bottom:10px;">
-          <div><b>Contraindicação:</b> ${radio('contraindicacao')}</div><div><b>Dor relatada:</b> ${v('dor')||'—'}</div>
-          <div><b>EVA geral:</b> ${v('eva')||'0'}/10</div><div><b>Medicamentos:</b> ${v('medicamentos')||'—'}</div>
+        <div class="pdf-avoid" style="${avoid}">
+          <div style="${secTitle}">2 · Saúde</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:#dfe2e6;margin-bottom:10px;">
+            <div><b>Contraindicação:</b> ${radio('contraindicacao')}</div><div><b>Tratamento méd./fisio. recente:</b> ${radio('tratamento')}</div>
+            <div><b>Dor relatada:</b> ${v('dor')||'—'}</div><div><b>EVA geral:</b> ${v('eva')||'0'}/10</div>
+            <div><b>Medicamentos:</b> ${v('medicamentos')||'—'}</div><div><b>Cirurgias:</b> ${v('cirurgias')||'—'}</div>
+            <div style="grid-column:1/-1;"><b>Histórico de patologias:</b> ${patologias.length?patologias.join(', '):'Nenhuma relatada'}</div>
+            ${v('obsSaude')?`<div style="grid-column:1/-1;"><b>Obs. gerais de saúde:</b> ${v('obsSaude').replace(/\n/g,'<br>')}</div>`:''}
+          </div>
         </div>
-        ${painTableRows ? `<div style="font-size:9px;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Mapa de Dores por Região</div>${painTableRows}` : ''}
+        ${painTableRows ? `<div class="pdf-avoid" style="${avoid}"><div style="font-size:9px;font-weight:700;color:#C9A84C;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Mapa de Dores por Região</div>${painTableRows}</div>` : ''}
       </div>
 
       <!-- REPOUSO -->
-      <div style="margin-bottom:20px;">
+      <div class="pdf-avoid" style="margin-bottom:20px;${avoid}">
         <div style="${secTitle}">3 · Repouso</div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-          ${cell('Pressão Arterial',v('pa')+' mmHg')}${cell('FC Repouso',v('fcRepouso')+' bpm')}${cell('SpO₂',v('spo2')+'%')}
+          ${cell('Pressão Arterial',v('pa')?v('pa')+' mmHg':'')}${cell('FC Repouso',v('fcRepouso')?v('fcRepouso')+' bpm':'')}${cell('SpO₂',v('spo2')?v('spo2')+'%':'')}
         </div>
       </div>
 
       <!-- COMPOSIÇÃO CORPORAL -->
       <div style="margin-bottom:20px;">
-        <div style="${secTitle}">4 · Composição Corporal</div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
-          ${cell('Peso',v('peso')?v('peso')+' kg':'')}${cell('Altura',v('altura')?v('altura')+' cm':'')}${cell('IMC',v('imc')?v('imc')+' kg/m²':'')}${cell('Classif. IMC',v('imcClass'))}
+        <div class="pdf-avoid" style="${avoid}">
+          <div style="${secTitle}">4 · Composição Corporal</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
+            ${cell('Peso',v('peso')?v('peso')+' kg':'')}${cell('Altura',v('altura')?v('altura')+' cm':'')}${cell('IMC',v('imc')?v('imc')+' kg/m²':'')}${cell('Classif. IMC',v('imcClass'))}
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;background:#17191d;border-radius:8px;padding:12px;">${pollockCards}</div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:14px;background:#17191d;border-radius:8px;padding:12px;">${pollockCards}</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;">
+        <div class="pdf-avoid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;${avoid}">
           <div><div style="${subTitle}">Circunferências (cm)</div><table style="width:100%;border-collapse:collapse;font-size:11px;">${circRows}</table></div>
           <div><div style="${subTitle}">Dobras Cutâneas — Pollock 7 (mm)</div><table style="width:100%;border-collapse:collapse;font-size:11px;">${dobraRows}</table></div>
         </div>
-        <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;background:#17191d;border-radius:8px;padding:14px;">
+        <div class="pdf-avoid" style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;background:#17191d;border-radius:8px;padding:14px;${avoid}">
           ${donutDataURL ? `<div style="text-align:center;">
             <img src="${donutDataURL}" style="width:140px;height:140px;" />
             <div style="font-size:9px;color:#C9A84C;margin-top:4px;">% Gordura · Siri</div>
@@ -3366,40 +3498,46 @@ function montarHTML() {
       ${fotosHTML ? `<div style="margin-bottom:20px;"><div style="${secTitle}">Registro Fotográfico</div>${fotosHTML}</div>` : ''}
 
       <!-- FORÇA -->
-      <div style="margin-bottom:20px;">
+      <div class="pdf-avoid" style="margin-bottom:20px;${avoid}">
         <div style="${secTitle}">5 · Força Muscular e Assimetria</div>
         <table style="width:100%;border-collapse:collapse;font-size:11px;">${forcaRows}</table>
       </div>
 
       <!-- MOBILIDADE -->
-      <div style="margin-bottom:20px;">
+      <div class="pdf-avoid" style="margin-bottom:20px;${avoid}">
         <div style="${secTitle}">6 · Mobilidade e Flexibilidade</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:#dfe2e6;">
           <div><b>Cadeia Post. Dir.:</b> ${v('flexDireita')||'—'} cm</div><div><b>Cadeia Post. Esq.:</b> ${v('flexEsquerda')||'—'} cm</div>
           <div><b>Ombro Dir.:</b> ${v('ombroDireito')||'—'} cm</div><div><b>Ombro Esq.:</b> ${v('ombroEsquerdo')||'—'} cm</div>
           ${isPerformance ? `<div><b>Flex. Joelho Dir.:</b> ${v('flexJoelhoDireita')||'—'}</div><div><b>Flex. Joelho Esq.:</b> ${v('flexJoelhoEsquerda')||'—'}</div>` : ''}
           ${isPerformance ? `<div><b>Score Cócoras:</b> ${v('scoreCocoras')||'—'}/4</div>` : ''}
+          ${isPerformance ? `<div style="grid-column:1/-1;margin-top:2px;">${cocorasChecks}</div>` : ''}
         </div>
       </div>
 
       <!-- VO2 -->
       ${isPerformance ? `<div style="margin-bottom:20px;">
-        <div style="${secTitle}">7 · Avaliação Cardiorrespiratória — VO₂</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;">
-          ${cell('VO₂ Máx est.',v('vo2Max')?v('vo2Max')+' ml/kg/min':'',true)}${cell('Classificação',v('classVo2'),true)}${cell('Vel. Máxima',v('velMax')?v('velMax')+' km/h':'')}
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
-          ${cell('FC Máxima',v('fcMax')?v('fcMax')+' bpm':'')}${cell('FC Recuperação (1 min)',v('fcRecuperacao')?v('fcRecuperacao')+' bpm':'')}${cell('Delta FC',v('deltaFC')?v('deltaFC')+' bpm':'')}
+        <div class="pdf-avoid" style="${avoid}">
+          <div style="${secTitle}">7 · Avaliação Cardiorrespiratória — VO₂</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;">
+            ${cell('VO₂ Máx est.',v('vo2Max')?v('vo2Max')+' ml/kg/min':'',true)}${cell('Classificação',v('classVo2'),true)}${cell('Vel. Máxima',v('velMax')?v('velMax')+' km/h':'')}
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+            ${cell('FC Máxima',v('fcMax')?v('fcMax')+' bpm':'')}${cell('FC Recuperação (1 min)',v('fcRecuperacao')?v('fcRecuperacao')+' bpm':'')}${cell('Delta FC',v('deltaFC')?v('deltaFC')+' bpm':'')}
+          </div>
         </div>
         <table style="width:100%;border-collapse:collapse;font-size:10px;">${stRows}</table>
-        ${v('obsVo2')?`<div style="font-size:10px;color:#9aa0a8;margin-top:6px;">Obs.: ${v('obsVo2')}</div>`:''}
+        ${v('obsVo2')?`<div class="pdf-avoid" style="font-size:10px;color:#9aa0a8;margin-top:6px;${avoid}">Obs.: ${v('obsVo2')}</div>`:''}
       </div>` : ''}
+
+      <!-- EVOLUÇÃO -->
+      ${montarEvolucaoHTML(historico, secTitle, subTitle, avoid)}
 
       <!-- PARECER -->
       ${parecer||direcao ? `<div style="margin-bottom:16px;">
         <div style="${secTitle}">8 · Parecer Final e Direcionamento</div>
-        ${parecer?`<div style="${subTitle}">Parecer Geral</div><p style="font-size:11px;color:#dfe2e6;line-height:1.7;">${parecer.replace(/\n/g,'<br>')}</p>`:''}
-        ${direcao?`<div style="${subTitle}">Direcionamento Técnico</div><p style="font-size:11px;color:#dfe2e6;line-height:1.7;">${direcao.replace(/\n/g,'<br>')}</p>`:''}
+        ${parecer?`<div class="pdf-avoid" style="${avoid}"><div style="${subTitle}">Parecer Geral</div><p style="font-size:11px;color:#dfe2e6;line-height:1.7;">${parecer.replace(/\n/g,'<br>')}</p></div>`:''}
+        ${direcao?`<div class="pdf-avoid" style="${avoid}"><div style="${subTitle}">Direcionamento Técnico</div><p style="font-size:11px;color:#dfe2e6;line-height:1.7;">${direcao.replace(/\n/g,'<br>')}</p></div>`:''}
       </div>` : ''}
 
     </div>
@@ -3466,11 +3604,17 @@ async function gerarPDF() {
     const nome = (v('nome') || 'aluno').trim().replace(/\s+/g, '_');
     const dataArq = (v('dataAvaliacao') || new Date().toISOString().slice(0,10));
 
+    // histórico do aluno para a seção de evolução (segue sem ela se indisponível)
+    setStatus('Buscando avaliações anteriores…', '');
+    let historico = [];
+    try { historico = await buscarHistoricoAluno(); } catch(e) { console.warn(e); }
+    setStatus('Gerando PDF…', '');
+
     // wrap fica em fluxo normal (o clone do html2pdf precisa de altura real);
     // o holder esconde tudo da tela sem tirar o wrap do fluxo
     holder.style.cssText = 'height:0;overflow:hidden;';
     wrap.style.cssText = 'width:794px;background:#0e0f12;color:#f0ede8;font-family:\'Space Grotesk\',sans-serif;font-size:13px;line-height:1.5;';
-    wrap.innerHTML = montarHTML();
+    wrap.innerHTML = montarHTML(historico);
     holder.appendChild(wrap);
     document.body.appendChild(holder);
     await new Promise(r => setTimeout(r, 150)); // layout + imagens data-url
@@ -3499,7 +3643,7 @@ async function gerarPDF() {
       image: { type: 'jpeg', quality: 0.93 },
       html2canvas: { scale: escala, useCORS: true, backgroundColor: '#0e0f12', logging: false, scrollX: 0, scrollY: 0 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['css', 'legacy'] }
+      pagebreak: { mode: ['css', 'legacy'], avoid: ['.pdf-avoid', 'tr', 'img'] }
     }).from(wrap).toPdf();
 
     if (fotoLinks.length) {
