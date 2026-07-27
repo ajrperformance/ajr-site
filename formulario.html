@@ -814,30 +814,41 @@ function isSigEmpty(){
   return !d.some(v=>v!==0);
 }
 
-// ── IMGBB — upload de fotos em alta resolução ─────────────
+// ── FORMSUBMIT — endpoint ─────────────────────────────────
+// String aleatória do FormSubmit (esconde o e-mail real de bots de spam)
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/f7c25ce0b444de853c39d10db243e922';
+
+// ── IMGBB — upload de imagens em alta resolução ───────────
 const IMGBB_KEY = '844d77075aab73eefbc0518e9f0eae39';
+
+// Núcleo do upload: recebe base64 puro e devolve o link
+async function uploadBase64(base64, name){
+  const fd = new FormData();
+  fd.append('key', IMGBB_KEY);
+  fd.append('image', base64);
+  fd.append('name', name);
+  try{
+    const r = await fetch('https://api.imgbb.com/1/upload', {method:'POST', body:fd});
+    const d = await r.json();
+    if(d.success) return { ok:true, url: d.data.url, view: d.data.display_url };
+  } catch(_){}
+  return { ok:false };
+}
+
+function nomeArquivo(){ return (val('nome').replace(/\s+/g,'_') || 'aluno'); }
 
 async function uploadFoto(file, label){
   return new Promise((resolve)=>{
     const reader = new FileReader();
-    reader.onload = async (e)=>{
-      const base64 = e.target.result.split(',')[1];
-      const fd = new FormData();
-      fd.append('key', IMGBB_KEY);
-      fd.append('image', base64);
-      fd.append('name', label + '_' + val('nome').replace(/\s+/g,'_'));
-      try{
-        const r = await fetch('https://api.imgbb.com/1/upload', {method:'POST', body:fd});
-        const d = await r.json();
-        if(d.success){
-          resolve({ ok:true, url: d.data.url, view: d.data.display_url });
-        } else {
-          resolve({ ok:false });
-        }
-      } catch(_){ resolve({ ok:false }); }
-    };
+    reader.onload  = async (e)=> resolve(await uploadBase64(e.target.result.split(',')[1], label+'_'+nomeArquivo()));
+    reader.onerror = ()=> resolve({ ok:false });
     reader.readAsDataURL(file);
   });
+}
+
+// Assinatura: canvas → base64 → ImgBB (o endpoint AJAX do FormSubmit não aceita anexos)
+async function uploadAssinatura(){
+  return uploadBase64(canvas.toDataURL('image/png').split(',')[1], 'assinatura_'+nomeArquivo());
 }
 
 // ── SUBMIT ────────────────────────────────────────────────
@@ -935,27 +946,30 @@ async function submitForm(){
     fd.append('📸 Fotos', 'Nenhuma foto enviada');
   }
 
-  // 3. Envia assinatura + formulário
-  canvas.toBlob(async blob=>{
-    fd.append('assinatura_digital', blob, 'assinatura.png');
-    try{
-      const res = await fetch('https://formsubmit.co/ajax/aldemirjrpersonal@gmail.com',{method:'POST',body:fd});
-      const json = await res.json();
-      if(json.success==='true'||json.success===true){
-        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-        document.getElementById('secSuccess').classList.add('active');
-        document.getElementById('progressWrap').style.display='none';
-        document.getElementById('formHero').style.display='none';
-        window.scrollTo({top:0,behavior:'smooth'});
-      } else {
-        showErr('Ocorreu um erro ao enviar. Tente novamente ou entre em contato via WhatsApp.');
-        resetBtn();
-      }
-    } catch(e){
-      showErr('Erro de conexão. Verifique sua internet e tente novamente.');
+  // 3. Upload da assinatura (vira link, igual às fotos)
+  btnTxt.textContent = 'Enviando assinatura…';
+  const assinatura = await uploadAssinatura();
+  fd.append('✍️ Assinatura digital', assinatura.ok ? assinatura.url : 'falha no upload da assinatura');
+
+  // 4. Envia o formulário
+  btnTxt.textContent = 'Enviando formulário…';
+  try{
+    const res = await fetch(FORM_ENDPOINT,{method:'POST',body:fd});
+    const json = await res.json();
+    if(json.success==='true'||json.success===true){
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+      document.getElementById('secSuccess').classList.add('active');
+      document.getElementById('progressWrap').style.display='none';
+      document.getElementById('formHero').style.display='none';
+      window.scrollTo({top:0,behavior:'smooth'});
+    } else {
+      showErr('Ocorreu um erro ao enviar. Tente novamente ou entre em contato via WhatsApp.');
       resetBtn();
     }
-  },'image/png');
+  } catch(e){
+    showErr('Erro de conexão. Verifique sua internet e tente novamente.');
+    resetBtn();
+  }
 }
 
 function val(id){ return document.getElementById(id)?.value||''; }
