@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questionário Inicial — AJR Avaliação Física e Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ouro:#C9A84C;
+    --ouro-claro:#e2c878;
+    --ouro-escuro:#9f8038;
+    --ouro-tenue:rgba(201,168,76,.10);
+    --tinta:#14161a;
+    --tinta-suave:#5f666e;
+    --fundo:#f7f5f1;
+    --superficie:#ffffff;
+    --superficie-2:#fbfaf7;
+    --borda:#e4dfd2;
+    --borda-ouro:rgba(201,168,76,.30);
+    --verde:#2E7D32;
+    --alerta-bg:#fdf6e3;
+    --alerta-tx:#7a6220;
+    --r:6px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--fundo);
+    background-image:
+      linear-gradient(rgba(201,168,76,.07) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(201,168,76,.07) 1px,transparent 1px);
+    background-size:56px 56px;
+    color:var(--tinta);
+    font-family:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:740px;margin:0 auto;padding:0 0 56px;}
+
+  /* ---------- header ---------- */
+  header{
+    position:relative;overflow:hidden;
+    background:#101114;
+    color:#f0ede8;
+    padding:42px 26px 34px;
+    border-bottom:2px solid var(--ouro);
+  }
+  header::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(201,168,76,.10) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(201,168,76,.10) 1px,transparent 1px);
+    background-size:56px 56px;
+    pointer-events:none;
+  }
+  header > *{position:relative;}
+  header .marca{
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:11px;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--ouro);margin:0 0 14px;font-weight:500;
+  }
+  header h1{
+    font-family:"Chakra Petch",sans-serif;
+    margin:0 0 12px;font-size:31px;line-height:1.12;font-weight:700;
+    text-transform:uppercase;letter-spacing:.01em;
+  }
+  header h1 em{font-style:normal;color:var(--ouro);}
+  header p{margin:0;font-size:15px;color:#b9bcc1;max-width:54ch;}
+
+  /* ---------- fieldsets ---------- */
+  form{padding:0 20px;}
+  fieldset{
+    border:1px solid var(--borda);border-top:2px solid var(--ouro);
+    margin:20px 0 0;padding:22px;
+    background:var(--superficie);border-radius:var(--r);
+    box-shadow:0 1px 2px rgba(20,22,26,.04);
+  }
+  legend{
+    display:block;width:100%;padding:0;
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ouro-escuro);margin-bottom:18px;
+  }
+  legend b{color:var(--tinta);font-weight:500;}
+  .ajuda{font-size:13.5px;color:var(--tinta-suave);margin:-6px 0 18px;}
+
+  .campo{margin-bottom:18px;}
+  .campo:last-child{margin-bottom:0;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr;gap:0;}
+    .grid2 .campo{margin-bottom:18px;}}
+
+  label.rot{
+    display:block;font-size:12px;font-weight:500;margin-bottom:7px;
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    letter-spacing:.10em;text-transform:uppercase;color:#3f454c;
+  }
+  .req{color:var(--ouro-escuro);}
+  input[type=text],input[type=tel],input[type=email],input[type=date],
+  input[type=number],select,textarea{
+    width:100%;padding:12px;font-size:16px;font-family:inherit;color:var(--tinta);
+    background:var(--superficie-2);border:1px solid var(--borda);border-radius:var(--r);
+    transition:border-color .15s,box-shadow .15s,background .15s;
+  }
+  textarea{min-height:80px;resize:vertical;}
+  input::placeholder,textarea::placeholder{color:#a8aab0;}
+  input:focus,select:focus,textarea:focus{
+    outline:none;background:#fff;border-color:var(--ouro);
+    box-shadow:0 0 0 3px rgba(201,168,76,.20);
+  }
+
+  /* ---------- Sim / Não ---------- */
+  .parq{margin:0;padding:0;list-style:none;counter-reset:p;}
+  .parq li{
+    display:flex;align-items:center;gap:16px;justify-content:space-between;
+    padding:14px 0;border-bottom:1px solid var(--borda);
+  }
+  .parq li:first-child{padding-top:0;}
+  .parq li:last-child{border-bottom:none;padding-bottom:0;}
+  .parq .txt{font-size:14.5px;flex:1;}
+  .parq .txt::before{
+    counter-increment:p;content:counter(p,decimal-leading-zero)" ";
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:12px;font-weight:700;color:var(--ouro-escuro);letter-spacing:.06em;
+  }
+  .sn{display:flex;gap:8px;flex-shrink:0;}
+  .sn label{position:relative;cursor:pointer;}
+  .sn input{position:absolute;opacity:0;width:0;height:0;}
+  .sn span{
+    display:block;min-width:56px;text-align:center;padding:8px 10px;
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:11.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+    border-radius:var(--r);
+    border:1px solid var(--borda);background:var(--superficie-2);color:var(--tinta-suave);
+    transition:.15s;
+  }
+  .sn input:checked + span{
+    background:var(--ouro);border-color:var(--ouro-escuro);color:#101114;font-weight:700;
+  }
+  .sn input:focus-visible + span{box-shadow:0 0 0 3px rgba(201,168,76,.35);}
+
+  /* ---------- checkbox / radio ---------- */
+  .opcoes{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;}
+  @media(max-width:560px){.opcoes{grid-template-columns:1fr;}}
+  .opc{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;cursor:pointer;padding:3px 0;}
+  .opc input{margin:3px 0 0;width:17px;height:17px;accent-color:var(--ouro-escuro);flex-shrink:0;}
+
+  .aviso{
+    background:var(--alerta-bg);color:var(--alerta-tx);
+    border:1px solid rgba(201,168,76,.35);border-left:3px solid var(--ouro);
+    border-radius:var(--r);
+    padding:14px 16px;font-size:13.5px;margin:18px 0 0;
+  }
+  .aviso strong{
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    display:block;margin-bottom:4px;color:var(--ouro-escuro);
+  }
+  .termo{
+    display:flex;gap:12px;align-items:flex-start;font-size:14px;
+    background:var(--ouro-tenue);border:1px solid var(--borda-ouro);
+    padding:16px;border-radius:var(--r);cursor:pointer;
+  }
+  .termo input{margin:3px 0 0;width:18px;height:18px;accent-color:var(--ouro-escuro);flex-shrink:0;}
+
+  button{
+    width:100%;margin-top:20px;padding:17px;
+    font-family:"Chakra Petch",sans-serif;
+    font-size:16px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:#101114;background:var(--ouro);
+    border:none;cursor:pointer;transition:.15s;
+    clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));
+  }
+  button:hover{background:var(--ouro-claro);}
+  button:disabled{opacity:.55;cursor:default;}
+  .rodape{
+    text-align:center;margin-top:22px;padding:0 20px;
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#9aa0a8;
+  }
+  .rodape span{color:var(--ouro-escuro);}
+
+  #erro{
+    display:none;margin-top:16px;padding:14px 16px;border-radius:var(--r);
+    background:#fdecea;color:#a3261c;font-size:14px;border-left:3px solid #c62828;
+  }
+  #sucesso{
+    display:none;background:var(--superficie);margin:20px 20px 0;padding:48px 26px;
+    border:1px solid var(--borda);border-top:2px solid var(--ouro);border-radius:var(--r);
+    text-align:center;
+  }
+  #sucesso .check{
+    width:60px;height:60px;background:var(--ouro);color:#101114;
+    display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 20px;
+    clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  }
+  #sucesso h2{
+    font-family:"Chakra Petch",sans-serif;
+    margin:0 0 12px;font-size:22px;text-transform:uppercase;letter-spacing:.06em;
+  }
+  #sucesso p{margin:0 auto;color:var(--tinta-suave);font-size:15px;max-width:46ch;}
+  .hp{position:absolute;left:-9999px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="marca">AJR · Avaliação Física e Performance</p>
+    <h1>Questionário <em>inicial</em></h1>
+    <p>Antes da nossa primeira aula, preciso conhecer você um pouco melhor. São 3 minutos — e é isso que garante um treino seguro e feito pro seu objetivo.</p>
+  </header>
+
+  <form id="form" action="https://formsubmit.co/ajax/aldemirjrpersonal@gmail.com" method="POST">
+
+    <!-- Configurações FormSubmit -->
+    <input type="hidden" name="_subject" value="Novo questionário inicial — AJR Personal">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+
+    <fieldset>
+      <legend>01 — <b>Seus dados</b></legend>
+      <div class="campo">
+        <label class="rot" for="nome">Nome completo <span class="req">*</span></label>
+        <input type="text" id="nome" name="Nome completo" required>
+      </div>
+      <div class="grid2">
+        <div class="campo">
+          <label class="rot" for="nasc">Data de nascimento <span class="req">*</span></label>
+          <input type="date" id="nasc" name="Data de nascimento" required>
+        </div>
+        <div class="campo">
+          <label class="rot" for="tel">WhatsApp <span class="req">*</span></label>
+          <input type="tel" id="tel" name="WhatsApp" placeholder="(00) 00000-0000" required>
+        </div>
+      </div>
+      <div class="campo">
+        <label class="rot" for="email">E-mail</label>
+        <input type="email" id="email" name="E-mail" placeholder="opcional">
+      </div>
+      <div class="grid2">
+        <div class="campo">
+          <label class="rot" for="altura">Altura (cm)</label>
+          <input type="number" id="altura" name="Altura (cm)" min="100" max="230" placeholder="165">
+        </div>
+        <div class="campo">
+          <label class="rot" for="peso">Peso atual (kg)</label>
+          <input type="number" id="peso" name="Peso (kg)" min="30" max="250" step="0.1" placeholder="65">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>02 — <b>Prontidão para atividade física (PAR-Q)</b></legend>
+      <p class="ajuda">Responda com sinceridade. Nenhuma resposta “sim” impede você de treinar — só me diz por onde começar com cuidado.</p>
+      <ul class="parq">
+        <li>
+          <span class="txt">Algum médico já disse que você tem um problema de coração e que só deveria fazer atividade física com acompanhamento médico?</span>
+          <span class="sn">
+            <label><input type="radio" name="PAR-Q 1 (coração)" value="Sim" required><span>Sim</span></label>
+            <label><input type="radio" name="PAR-Q 1 (coração)" value="Não"><span>Não</span></label>
+          </span>
+        </li>
+        <li>
+          <span class="txt">Você sente dor no peito quando faz atividade física?</span>
+          <span class="sn">
+            <label><input type="radio" name="PAR-Q 2 (dor no peito ao exercitar)" value="Sim" required><span>Sim</span></label>
+            <label><input type="radio" name="PAR-Q 2 (dor no peito ao exercitar)" value="Não"><span>Não</span></label>
+          </span>
+        </li>
+        <li>
+          <span class="txt">No último mês, sentiu dor no peito mesmo em repouso?</span>
+          <span class="sn">
+            <label><input type="radio" name="PAR-Q 3 (dor no peito em repouso)" value="Sim" required><span>Sim</span></label>
+            <label><input type="radio" name="PAR-Q 3 (dor no peito em repouso)" value="Não"><span>Não</span></label>
+          </span>
+        </li>
+        <li>
+          <span class="txt">Já perdeu o equilíbrio por tontura ou chegou a desmaiar?</span>
+          <span class="sn">
+            <label><input type="radio" name="PAR-Q 4 (tontura/desmaio)" value="Sim" required><span>Sim</span></label>
+            <label><input type="radio" name="PAR-Q 4 (tontura/desmaio)" value="Não"><span>Não</span></label>
+          </span>
+        </li>
+        <li>
+          <span class="txt">Tem algum problema ósseo ou articular que pode piorar com exercício?</span>
+          <span class="sn">
+            <label><input type="radio" name="PAR-Q 5 (osso/articulação)" value="Sim" required><span>Sim</span></label>
+            <label><input type="radio" name="PAR-Q 5 (osso/articulação)" value="Não"><span>Não</span></label>
+          </span>
+        </li>
+        <li>
+          <span class="txt">Toma algum remédio para pressão alta ou para o coração?</span>
+          <span class="sn">
+            <label><input type="radio" name="PAR-Q 6 (medicação pressão/coração)" value="Sim" required><span>Sim</span></label>
+            <label><input type="radio" name="PAR-Q 6 (medicação pressão/coração)" value="Não"><span>Não</span></label>
+          </span>
+        </li>
+        <li>
+          <span class="txt">Sabe de alguma outra razão pela qual não deveria fazer atividade física?</span>
+          <span class="sn">
+            <label><input type="radio" name="PAR-Q 7 (outra razão)" value="Sim" required><span>Sim</span></label>
+            <label><input type="radio" name="PAR-Q 7 (outra razão)" value="Não"><span>Não</span></label>
+          </span>
+        </li>
+      </ul>
+      <div class="campo" style="margin-top:18px">
+        <label class="rot" for="parqdet">Se respondeu “sim” em alguma, me conta o que é</label>
+        <textarea id="parqdet" name="Detalhes das respostas Sim (PAR-Q)"></textarea>
+      </div>
+      <p class="aviso"><strong>Importante</strong>Se você marcou “sim” em qualquer uma das perguntas acima, é recomendado passar por avaliação médica antes de iniciar. Vamos conversar sobre isso antes da primeira aula.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>03 — <b>Lesões e restrições</b></legend>
+      <div class="campo">
+        <label class="rot">Você tem alguma dessas condições?</label>
+        <div class="opcoes">
+          <label class="opc"><input type="checkbox" name="Condições" value="Hipertensão"> Pressão alta</label>
+          <label class="opc"><input type="checkbox" name="Condições" value="Diabetes"> Diabetes</label>
+          <label class="opc"><input type="checkbox" name="Condições" value="Asma/bronquite"> Asma ou bronquite</label>
+          <label class="opc"><input type="checkbox" name="Condições" value="Hérnia de disco"> Hérnia de disco</label>
+          <label class="opc"><input type="checkbox" name="Condições" value="Dor lombar"> Dor lombar frequente</label>
+          <label class="opc"><input type="checkbox" name="Condições" value="Dor no joelho"> Dor no joelho</label>
+          <label class="opc"><input type="checkbox" name="Condições" value="Dor no ombro"> Dor no ombro</label>
+          <label class="opc"><input type="checkbox" name="Condições" value="Gestante ou pós-parto"> Gestante / pós-parto</label>
+          <label class="opc"><input type="checkbox" name="Condições" value="Nenhuma"> Nenhuma delas</label>
+        </div>
+      </div>
+      <div class="campo">
+        <label class="rot" for="lesao">Lesões, cirurgias ou dores atuais — onde e há quanto tempo?</label>
+        <textarea id="lesao" name="Lesões / cirurgias / dores" placeholder="Ex.: cirurgia no joelho direito em 2022; dor no ombro esquerdo ao levantar o braço"></textarea>
+      </div>
+      <div class="campo">
+        <label class="rot" for="med">Usa algum medicamento de uso contínuo?</label>
+        <input type="text" id="med" name="Medicamentos de uso contínuo" placeholder="Quais — ou escreva “nenhum”">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>04 — <b>Objetivo e experiência</b></legend>
+      <div class="campo">
+        <label class="rot">Qual seu principal objetivo? <span class="req">*</span></label>
+        <div class="opcoes">
+          <label class="opc"><input type="radio" name="Objetivo principal" value="Emagrecimento" required> Emagrecer</label>
+          <label class="opc"><input type="radio" name="Objetivo principal" value="Ganho de massa"> Ganhar massa muscular</label>
+          <label class="opc"><input type="radio" name="Objetivo principal" value="Condicionamento"> Condicionamento físico</label>
+          <label class="opc"><input type="radio" name="Objetivo principal" value="Saúde e qualidade de vida"> Saúde / qualidade de vida</label>
+          <label class="opc"><input type="radio" name="Objetivo principal" value="Postura e reabilitação"> Postura / reabilitação</label>
+          <label class="opc"><input type="radio" name="Objetivo principal" value="Outro"> Outro</label>
+        </div>
+      </div>
+      <div class="campo">
+        <label class="rot">Sua experiência com treino <span class="req">*</span></label>
+        <div class="opcoes">
+          <label class="opc"><input type="radio" name="Experiência" value="Nunca treinei" required> Nunca treinei</label>
+          <label class="opc"><input type="radio" name="Experiência" value="Já treinei, parei há mais de 6 meses"> Parei há mais de 6 meses</label>
+          <label class="opc"><input type="radio" name="Experiência" value="Treino há menos de 1 ano"> Treino há menos de 1 ano</label>
+          <label class="opc"><input type="radio" name="Experiência" value="Treino há mais de 1 ano"> Treino há mais de 1 ano</label>
+        </div>
+      </div>
+      <div class="campo">
+        <label class="rot" for="motiv">O que te fez procurar um personal agora?</label>
+        <textarea id="motiv" name="Motivação / o que busca"></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>05 — <b>Disponibilidade</b></legend>
+      <div class="grid2">
+        <div class="campo">
+          <label class="rot" for="freq">Dias por semana <span class="req">*</span></label>
+          <select id="freq" name="Frequência semanal" required>
+            <option value="">Selecione…</option>
+            <option>1x por semana</option>
+            <option>2x por semana</option>
+            <option>3x por semana</option>
+            <option>4x por semana</option>
+            <option>5x ou mais</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label class="rot" for="periodo">Melhor período <span class="req">*</span></label>
+          <select id="periodo" name="Período preferido" required>
+            <option value="">Selecione…</option>
+            <option>Manhã</option>
+            <option>Almoço</option>
+            <option>Tarde</option>
+            <option>Noite</option>
+            <option>Flexível</option>
+          </select>
+        </div>
+      </div>
+      <div class="campo">
+        <label class="rot" for="dias">Dias e horários que funcionam melhor pra você</label>
+        <input type="text" id="dias" name="Dias/horários preferidos" placeholder="Ex.: seg, qua e sex às 7h">
+      </div>
+      <div class="campo">
+        <label class="rot">Onde pretende treinar?</label>
+        <div class="opcoes">
+          <label class="opc"><input type="radio" name="Local de treino" value="Academia"> Academia</label>
+          <label class="opc"><input type="radio" name="Local de treino" value="Em casa"> Em casa</label>
+          <label class="opc"><input type="radio" name="Local de treino" value="Ar livre / praça"> Ar livre / praça</label>
+          <label class="opc"><input type="radio" name="Local de treino" value="A combinar"> A combinar</label>
+        </div>
+      </div>
+      <div class="campo">
+        <label class="rot" for="obs">Mais alguma coisa que eu precise saber?</label>
+        <textarea id="obs" name="Observações finais"></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>06 — <b>Declaração</b></legend>
+      <label class="termo">
+        <input type="checkbox" name="Declaração" value="Aceita" required>
+        <span>Declaro que as informações acima são verdadeiras e me comprometo a avisar o professor sobre qualquer mudança no meu estado de saúde, dor ou desconforto durante os treinos.</span>
+      </label>
+      <button type="submit" id="btn">Enviar questionário</button>
+      <div id="erro"></div>
+    </fieldset>
+  </form>
+
+  <div id="sucesso">
+    <div class="check">✓</div>
+    <h2>Recebido</h2>
+    <p>Obrigado. Vou revisar suas respostas antes da nossa primeira aula e já monto seu treino em cima delas. Qualquer dúvida, é só me chamar no WhatsApp.</p>
+  </div>
+
+  <p class="rodape">Seus dados são usados apenas para montar e acompanhar seu treino <span>·</span> AJR · CREF 182634-G/SP</p>
+</div>
+
+<script>
+(function(){
+  var form = document.getElementById('form');
+  var btn  = document.getElementById('btn');
+  var erro = document.getElementById('erro');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    erro.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    var dados = {};
+    var fd = new FormData(form);
+    fd.forEach(function(valor, chave){
+      dados[chave] = dados[chave] ? dados[chave] + ', ' + valor : valor;
+    });
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify(dados)
+    })
+    .then(function(r){ if(!r.ok) throw new Error('falha'); return r.json(); })
+    .then(function(){
+      form.style.display = 'none';
+      document.getElementById('sucesso').style.display = 'block';
+      window.scrollTo({top:0, behavior:'smooth'});
+    })
+    .catch(function(){
+      btn.disabled = false;
+      btn.textContent = 'Enviar questionário';
+      erro.style.display = 'block';
+      erro.innerHTML = 'Não consegui enviar agora. Tenta de novo em instantes — ou me manda uma mensagem no WhatsApp que a gente resolve por lá.';
+    });
+  });
+})();
+</script>
+</body>
+</html>
