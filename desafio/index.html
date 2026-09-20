@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Desafio AJR — Tenda AJR Performance</title>
+<meta name="description" content="Desafio do Levantamento Terra Isométrico — ranking oficial da Tenda AJR Performance.">
+<style>
+/* ===================================================================
+   AJR PERFORMANCE — TENDA · DESAFIO + CAPTAÇÃO
+   Personalize aqui: cores, fontes e logo.
+   =================================================================== */
+:root{
+  --bg:#0A0C0E;
+  --bg-2:#111519;
+  --panel:#151A1F;
+  --panel-2:#1B2229;
+  --line:#26303A;
+  --txt:#ECF2F6;
+  --txt-2:#9AA9B5;
+  --txt-3:#66757F;
+  --accent:#B6F03C;        /* cor de destaque AJR */
+  --accent-ink:#0A0C0E;
+  --ouro:#F2C94C;
+  --prata:#C6D0D8;
+  --bronze:#D08B4F;
+  --verde:#35C98A;
+  --amarelo:#F2C94C;
+  --vermelho:#E2664F;
+  --radius:16px;
+  --maxw:1080px;
+  --ff:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--txt);font-family:var(--ff);
+  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+img{max-width:100%;display:block}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+a{color:var(--accent)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+.topbar{
+  position:sticky;top:0;z-index:50;background:rgba(10,12,14,.88);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.topbar-in{max-width:var(--maxw);margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;font-size:14px}
+.brand .mark{
+  width:30px;height:30px;border-radius:9px;background:var(--accent);color:var(--accent-ink);
+  display:grid;place-items:center;font-size:12px;font-weight:900;letter-spacing:-.02em
+}
+.brand small{display:block;font-weight:500;letter-spacing:.02em;color:var(--txt-3);font-size:11px}
+.nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.nav button{
+  background:transparent;border:1px solid var(--line);color:var(--txt-2);
+  padding:8px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;transition:.15s
+}
+.nav button:hover{border-color:var(--txt-3);color:var(--txt)}
+.nav button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+section.view{display:none;padding:26px 0 90px}
+section.view.on{display:block}
+
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:800;margin:0 0 8px}
+h1{font-size:clamp(26px,5.2vw,42px);line-height:1.08;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
+h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--txt-2);margin:0 0 22px;max-width:56ch}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.card + .card{margin-top:14px}
+.muted{color:var(--txt-3);font-size:13px}
+
+/* ---------- chips de evento ---------- */
+.evbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.evbar select{
+  background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-weight:600
+}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--txt-2)
+}
+.badge.demo{border-color:#5a4a1d;background:#2a2412;color:var(--ouro)}
+.badge.live{border-color:#1e4436;background:#10241d;color:var(--verde)}
+
+/* ---------- formulário ---------- */
+.q{border-top:1px solid var(--line);padding:18px 0}
+.q:first-of-type{border-top:0;padding-top:4px}
+.q > label.qt, .qt{display:block;font-weight:700;margin-bottom:4px;font-size:16px}
+.qh{color:var(--txt-3);font-size:13px;margin:0 0 12px}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:0;height:0}
+.opt span{
+  display:inline-block;padding:11px 16px;border:1px solid var(--line);border-radius:12px;
+  background:var(--panel-2);cursor:pointer;font-weight:600;font-size:14.5px;transition:.12s;user-select:none
+}
+.opt input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+.opt input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opts.stack{flex-direction:column;align-items:stretch}
+.opts.stack .opt span{display:block;padding:14px 16px}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:700;margin-bottom:6px;font-size:14.5px}
+.field input, .field select{
+  width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);
+  background:var(--panel-2);outline:none;transition:.12s
+}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.grid2{grid-template-columns:1fr}}
+
+.consent{display:flex;gap:12px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:6px}
+.consent input{width:22px;height:22px;flex:0 0 auto;margin-top:2px;accent-color:var(--accent)}
+.consent p{margin:0;font-size:13px;color:var(--txt-2);line-height:1.45}
+
+.btn{
+  background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;
+  padding:15px 22px;font-weight:800;font-size:16px;cursor:pointer;transition:.12s;width:100%
+}
+.btn:hover{filter:brightness(1.06)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt);font-weight:700}
+.btn.sm{padding:9px 14px;font-size:13.5px;width:auto;border-radius:10px}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+.err{color:var(--vermelho);font-size:13px;font-weight:600;margin-top:8px;min-height:18px}
+
+/* ---------- tela de sucesso ---------- */
+.success{text-align:center;padding:36px 20px}
+.success .codigo{
+  font-size:clamp(40px,12vw,76px);font-weight:900;letter-spacing:.04em;color:var(--accent);
+  margin:14px 0;line-height:1;font-variant-numeric:tabular-nums
+}
+.success .ring{
+  width:66px;height:66px;border-radius:50%;background:rgba(182,240,60,.12);border:2px solid var(--accent);
+  display:grid;place-items:center;margin:0 auto 6px;font-size:30px;color:var(--accent)
+}
+
+/* ---------- ranking ---------- */
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tabs button{
+  background:var(--panel);border:1px solid var(--line);color:var(--txt-2);padding:10px 18px;
+  border-radius:999px;cursor:pointer;font-weight:700;font-size:14px
+}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tabs button[aria-selected="true"] .muted{color:inherit;opacity:.72}
+
+.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:620px){.podium{grid-template-columns:1fr}}
+.pod{
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px 16px;text-align:center;position:relative;overflow:hidden
+}
+.pod .pos{font-size:12px;font-weight:900;letter-spacing:.1em}
+.pod .nm{font-weight:800;font-size:17px;margin:8px 0 2px;letter-spacing:-.01em}
+.pod .vl{font-size:26px;font-weight:900;font-variant-numeric:tabular-nums}
+.pod .vl small{font-size:12px;font-weight:700;opacity:.75;margin-left:3px}
+.pod .un{font-size:12px;color:var(--txt-3);font-weight:700}
+.pod.p1{border-color:var(--ouro)} .pod.p1 .pos,.pod.p1 .vl{color:var(--ouro)}
+.pod.p2{border-color:var(--prata)} .pod.p2 .pos,.pod.p2 .vl{color:var(--prata)}
+.pod.p3{border-color:var(--bronze)} .pod.p3 .pos,.pod.p3 .vl{color:var(--bronze)}
+
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:14.5px}
+th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-3);font-weight:800}
+td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
+tr .rk{width:44px;font-weight:900;color:var(--txt-3);font-variant-numeric:tabular-nums}
+.empty{text-align:center;padding:40px 16px;color:var(--txt-3)}
+
+/* ---------- admin ---------- */
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.dot.verde{background:var(--verde)} .dot.amarelo{background:var(--amarelo)} .dot.vermelho{background:var(--vermelho)}
+.tagc{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px}
+.tagc.verde{background:rgba(53,201,138,.14);color:var(--verde)}
+.tagc.amarelo{background:rgba(242,201,76,.14);color:var(--amarelo)}
+.tagc.vermelho{background:rgba(226,102,79,.14);color:var(--vermelho)}
+.rowres{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rowres input{width:92px;padding:9px 10px;border-radius:9px;border:1px solid var(--line);background:var(--panel-2)}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.stat > div{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px}
+.stat b{display:block;font-size:24px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{font-size:11.5px;color:var(--txt-3);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:99;
+  background:var(--accent);color:var(--accent-ink);font-weight:800;padding:12px 20px;border-radius:999px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.25s
+}
+.toast.on{opacity:1;bottom:32px}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--txt-3);font-size:12.5px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="mark">AJR</div>
+      <div>TENDA AJR PERFORMANCE<small id="brandSub">Desafio do Levantamento Terra Isométrico</small></div>
+    </div>
+    <nav class="nav">
+      <button data-go="ranking" aria-current="true">Ranking</button>
+      <button data-go="inscricao">Inscrição</button>
+      <button data-go="admin">Painel</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= RANKING PÚBLICO ================= -->
+<section class="view on" id="v-ranking">
+  <div class="wrap">
+    <p class="eyebrow">Ranking oficial</p>
+    <h1>Desafio do Levantamento<br>Terra Isométrico</h1>
+    <p class="sub">Pico de força medido em dinamômetro na Tenda AJR Performance. Ranking atualizado ao vivo durante o evento.</p>
+
+    <div class="evbar">
+      <select id="rkEvento" aria-label="Evento"></select>
+      <span id="rkStatus" class="badge">—</span>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-sexo="M">Masculino</button>
+      <button role="tab" aria-selected="false" data-sexo="F">Feminino</button>
+    </div>
+    <div class="tabs" style="margin-top:-6px">
+      <button role="tab" aria-selected="true" data-modo="abs" style="font-size:12.5px;padding:7px 14px">Força absoluta (kgf)</button>
+      <button role="tab" aria-selected="false" data-modo="rel" style="font-size:12.5px;padding:7px 14px">Relativa ao peso (×)</button>
+    </div>
+
+    <div id="podium" class="podium"></div>
+    <div class="card scroll" id="rkCard" style="padding:6px 12px">
+      <table id="rkTable">
+        <thead><tr><th class="rk">#</th><th>Atleta</th><th>Cidade</th><th style="text-align:right" id="thVal">kgf</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="rkEmpty" class="empty">Nenhum resultado lançado ainda.</div>
+    </div>
+    <p class="muted" style="margin-top:12px">Os nomes aparecem de forma abreviada. Dados de contato não são publicados.</p>
+  </div>
+</section>
+
+<!-- ================= INSCRIÇÃO / PESQUISA ================= -->
+<section class="view" id="v-inscricao">
+  <div class="wrap">
+    <div id="formBox">
+      <p class="eyebrow">Inscrição no desafio</p>
+      <h1>Entre no ranking</h1>
+      <p class="sub">Menos de 2 minutos. Ao final você recebe o seu código — é com ele que o seu resultado entra no ranking.</p>
+
+      <div class="evbar">
+        <select id="insEvento" aria-label="Evento"></select>
+        <span id="insStatus" class="badge">—</span>
+      </div>
+
+      <form id="form" class="card" novalidate>
+        <div class="grid2">
+          <div class="field">
+            <label for="f_nome">Nome completo *</label>
+            <input id="f_nome" name="nome" autocomplete="name" placeholder="Ex.: Aldemir Rios Junior">
+          </div>
+          <div class="field">
+            <label for="f_whats">WhatsApp *</label>
+            <input id="f_whats" name="whatsapp" inputmode="numeric" placeholder="(14) 99999-9999">
+          </div>
+          <div class="field">
+            <label for="f_cidade">Cidade *</label>
+            <input id="f_cidade" name="cidade" autocomplete="address-level2" placeholder="Bauru">
+          </div>
+          <div class="field">
+            <label for="f_sexo">Categoria do ranking *</label>
+            <select id="f_sexo" name="sexo">
+              <option value="">Selecione</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="q">
+          <span class="qt">1. Você está competindo hoje ou veio apoiar/acompanhar alguém?</span>
+          <div class="opts" data-q="q1">
+            <label class="opt"><input type="radio" name="q1" value="atleta"><span>Atleta / corredor(a)</span></label>
+            <label class="opt"><input type="radio" name="q1" value="acompanhante"><span>Acompanhante / apoio</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <span class="qt">2. Qual sua área de atuação profissional?</span>
+          <div class="opts" data-q="q2">
+            <label class="opt"><input type="radio" name="q2" value="medicina"><span>Medicina</span></label>
+            <label class="opt"><input type="radio" name="q2" value="psicologia"><span>Psicologia</span></label>
+            <label class="opt"><input type="radio" name="q2" value="saude"><span>Saúde (outras áreas)</span></label>
+            <label class="opt"><input type="radio" name="q2" value="comex"><span>Comércio exterior / importação</span></label>
+            <label class="opt"><input type="radio" name="q2" value="tecnologia"><span>Tecnologia / gestão</span></label>
+            <label class="opt"><input type="radio" name="q2" value="outra"><span>Outra</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <span class="qt">3. Hoje você atua como...</span>
+          <div class="opts" data-q="q3">
+            <label class="opt"><input type="radio" name="q3" value="empresa"><span>Empresa própria / sócio(a)</span></label>
+            <label class="opt"><input type="radio" name="q3" value="autonomo"><span>Autônomo(a)</span></label>
+            <label class="opt"><input type="radio" name="q3" value="clt"><span>CLT / funcionário(a)</span></label>
+            <label class="opt"><input type="radio" name="q3" value="estudante"><span>Estudante</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <span class="qt">4. Qual(is) frase(s) mais combina(m) com você agora?</span>
+          <p class="qh">Pode marcar mais de uma — ou nenhuma.</p>
+          <div class="opts stack" data-q="q4">
+            <label class="opt"><input type="checkbox" name="q4" value="processos"><span>Vivo buscando otimizar processos e ganhar tempo no meu negócio</span></label>
+            <label class="opt"><input type="checkbox" name="q4" value="fornecedores"><span>Já compro ou penso em comprar de fornecedores fora do Brasil</span></label>
+            <label class="opt"><input type="checkbox" name="q4" value="limite"><span>Minha rotina de trabalho tem me deixado no limite e sei que preciso cuidar mais de mim</span></label>
+            <label class="opt"><input type="checkbox" name="q4" value="saude_freq"><span>Faço acompanhamento de saúde com frequência — exames, remédios, suplementos</span></label>
+            <label class="opt"><input type="checkbox" name="q4" value="performance"><span>Treino com foco em resultado e performance</span></label>
+          </div>
+        </div>
+
+        <div class="q">
+          <span class="qt">5. Prefere ser contatado essa semana ou só ficar por dentro das novidades?</span>
+          <div class="opts" data-q="q5">
+            <label class="opt"><input type="radio" name="q5" value="semana"><span>Contato essa semana</span></label>
+            <label class="opt"><input type="radio" name="q5" value="novidades"><span>Só novidades por enquanto</span></label>
+          </div>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="f_consent">
+          <p>Autorizo a AJR Performance a tratar os dados informados e a compartilhá-los com as empresas parceiras da Tenda AJR, para contato sobre produtos e serviços. Posso pedir a exclusão dos meus dados a qualquer momento pelo WhatsApp <b>(14) 99743-2182</b>. (LGPD — Lei 13.709/2018)</p>
+        </label>
+
+        <div class="err" id="formErr"></div>
+        <button class="btn" type="submit" id="submitBtn" style="margin-top:6px">Confirmar inscrição</button>
+      </form>
+    </div>
+
+    <div id="successBox" class="card success" style="display:none">
+      <div class="ring">✓</div>
+      <h2 style="font-size:15px;color:var(--txt-2);font-weight:600">Inscrição confirmada. Seu código é:</h2>
+      <div class="codigo" id="outCodigo">—</div>
+      <p class="sub" style="margin:0 auto 22px">Mostre este código para a equipe AJR antes de fazer o desafio. O resultado entra no ranking na hora.</p>
+      <div class="btnrow" style="justify-content:center">
+        <button class="btn sm" id="btnNovo">Nova inscrição</button>
+        <button class="btn sm ghost" id="btnVerRanking">Ver ranking</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAINEL (ADMIN) ================= -->
+<section class="view" id="v-admin">
+  <div class="wrap">
+    <div id="loginBox">
+      <p class="eyebrow">Acesso restrito</p>
+      <h1>Painel da Tenda</h1>
+      <p class="sub">Lançamento de resultados, leads qualificados por patrocinador e exportação.</p>
+      <form class="card" id="loginForm" style="max-width:380px">
+        <div class="field">
+          <label for="f_pin">Senha do painel</label>
+          <input id="f_pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••">
+        </div>
+        <div class="err" id="loginErr"></div>
+        <button class="btn" type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <div id="panelBox" style="display:none">
+      <div class="evbar">
+        <select id="admEvento" aria-label="Evento"></select>
+        <span id="admStatus" class="badge">—</span>
+        <button class="btn sm ghost" id="btnReload">Atualizar</button>
+        <button class="btn sm ghost" id="btnSair">Sair</button>
+      </div>
+
+      <div class="stat" id="admStats"></div>
+
+      <div class="tabs">
+        <button role="tab" aria-selected="true" data-adm="res">Lançar resultados</button>
+        <button role="tab" aria-selected="false" data-adm="leads">Leads por patrocinador</button>
+      </div>
+
+      <!-- resultados -->
+      <div id="adm-res">
+        <div class="card">
+          <div class="field" style="margin-bottom:12px">
+            <input id="buscaRes" placeholder="Buscar por código ou nome…">
+          </div>
+          <div class="scroll">
+            <table id="tRes">
+              <thead><tr><th>Código</th><th>Nome</th><th>Cat.</th><th>Resultado (kgf)</th><th>Peso (kg)</th><th></th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- leads -->
+      <div id="adm-leads" style="display:none">
+        <div class="tabs" id="spTabs"></div>
+        <div class="card">
+          <div class="btnrow" style="margin-bottom:14px">
+            <button class="btn sm" id="btnCsvSp">Exportar CSV deste patrocinador</button>
+            <button class="btn sm ghost" id="btnCsvAll">Exportar CSV geral do evento</button>
+          </div>
+          <div class="scroll">
+            <table id="tLeads">
+              <thead><tr><th>Prioridade</th><th>Nome</th><th>WhatsApp</th><th>Cidade</th><th>Por quê</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    AJR Performance · Bauru/SP · <a href="https://ajrperformance.com.br">ajrperformance.com.br</a> · WhatsApp (14) 99743-2182
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================================================================
+   1) CONFIGURAÇÃO — é só aqui que você mexe
+   =================================================================== */
+const CONFIG = {
+
+  // Cole a URL do Web App do Google Apps Script (termina em /exec).
+  // Deixando em branco, a página roda em MODO DEMONSTRAÇÃO (dados só neste aparelho).
+  API_URL: "https://script.google.com/macros/s/AKfycbw9OiAQEVrDEV6pGR087kBVKOTUC7BuUS95H2gK4I2EDcyH3zA08B_u28SzJRmO8fS7Kg/exec",
+
+  // Eventos. Para um evento novo, basta acrescentar uma linha aqui.
+  // "prefixo" é o começo do código de inscrição (ex.: 96FM-001).
+  EVENTOS: [
+    { id: "96fm-2026", nome: "Corrida 96 FM", prefixo: "96FM", data: "2026", local: "Bauru/SP" }
+  ],
+
+  // Patrocinadores da tenda — a ordem aparece no painel.
+  PATROCINADORES: [
+    { id:"ajr",       nome:"AJR Performance", desc:"avaliação física" },
+    { id:"g4",        nome:"G4",              desc:"automação" },
+    { id:"mori",      nome:"Mori Consulting", desc:"comércio exterior" },
+    { id:"vitallite", nome:"Vitallite",       desc:"médicos e psicólogos" },
+    { id:"salutem",   nome:"Salutem",         desc:"farmácia" }
+  ],
+
+  UNIDADE: "kgf"
+};
+
+/* ===================================================================
+   2) MOTOR DE QUALIFICAÇÃO (verde / amarelo / vermelho)
+   Critérios conforme o material "Captação e Qualificação de Leads".
+   =================================================================== */
+function qualificar(L){
+  const q4   = Array.isArray(L.q4) ? L.q4 : String(L.q4||"").split("|").filter(Boolean);
+  const tem  = s => q4.indexOf(s) > -1;
+  const sem  = L.q5 === "semana";
+  const out  = {};
+
+  // --- AJR Performance ---
+  if (L.q1==="atleta" && tem("performance") && sem)
+    out.ajr = ["verde","Atleta + frase de performance + quer contato essa semana"];
+  else if (L.q1==="atleta" || tem("performance"))
+    out.ajr = ["amarelo", L.q1==="atleta" && !tem("performance") ? "Atleta, sem marcar a frase de performance" : "Marcou performance, mas prefere só novidades"];
+  else out.ajr = ["vermelho","Veio acompanhar e não marcou sinal de performance"];
+
+  // --- G4 (automação) ---
+  if (L.q3==="empresa" && tem("processos") && sem)
+    out.g4 = ["verde","Empresa própria + otimizar processos + contato essa semana"];
+  else if (tem("processos"))
+    out.g4 = ["amarelo", L.q3==="clt" ? "CLT com a frase de processos marcada" : "Marcou otimizar processos, sem urgência declarada"];
+  else out.g4 = ["vermelho","Sem marcação relacionada a otimizar processos"];
+
+  // --- Mori Consulting (comércio exterior) ---
+  const sinalComex = (L.q2==="comex") || tem("fornecedores");
+  if (L.q3==="empresa" && sinalComex && sem)
+    out.mori = ["verde","Empresa própria + sinal de comércio exterior + contato essa semana"];
+  else if (sinalComex)
+    out.mori = ["amarelo", sem ? "Sinal de comércio exterior, mas não é empresa própria" : "Sinal de comércio exterior, prefere só novidades"];
+  else out.mori = ["vermelho","Sem sinal relacionado a comércio exterior"];
+
+  // --- Vitallite (médicos e psicólogos) ---
+  const medpsi = (L.q2==="medicina" || L.q2==="psicologia");
+  if (medpsi && (tem("limite") || sem))
+    out.vitallite = ["verde", (L.q2==="medicina"?"Medicina":"Psicologia") + (tem("limite") ? " + rotina no limite" : " + contato essa semana")];
+  else if (medpsi)
+    out.vitallite = ["amarelo","Médico(a)/psicólogo(a), mas quer só novidades"];
+  else if (L.q2==="saude" && tem("limite"))
+    out.vitallite = ["amarelo","Outra área da saúde com a frase de rotina no limite"];
+  else out.vitallite = ["vermelho","Fora da área médica/psicológica e sem a frase marcada"];
+
+  // --- Salutem (farmácia) ---
+  if (tem("saude_freq") && sem)
+    out.salutem = ["verde","Acompanhamento de saúde frequente + contato essa semana"];
+  else if (tem("saude_freq"))
+    out.salutem = ["amarelo","Acompanhamento de saúde frequente, prefere só novidades"];
+  else if (L.q1==="atleta")
+    out.salutem = ["amarelo","Atleta — potencial de suplementação"];
+  else out.salutem = ["vermelho","Sem sinal relacionado a saúde/medicação"];
+
+  return out;
+}
+
+/* ===================================================================
+   3) CAMADA DE DADOS (API ou modo demonstração)
+   =================================================================== */
+const ONLINE = !!CONFIG.API_URL;
+let MEM = [];                                   // fallback em memória
+
+function lsGet(){ try{ return JSON.parse(localStorage.getItem("ajr_tenda")||"[]"); }catch(e){ return MEM; } }
+function lsSet(v){ MEM = v; try{ localStorage.setItem("ajr_tenda", JSON.stringify(v)); }catch(e){} }
+
+async function api(action, payload){
+  if(!ONLINE) return demo(action, payload||{});
+  const res = await fetch(CONFIG.API_URL, {
+    method:"POST",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body: JSON.stringify(Object.assign({action:action}, payload||{}))
+  });
+  if(!res.ok) throw new Error("HTTP "+res.status);
+  const j = await res.json();
+  if(!j.ok) throw new Error(j.erro||"Erro desconhecido");
+  return j;
+}
+
+function demo(action, p){
+  const base = lsGet();
+  if(action==="inscricao"){
+    const ev = CONFIG.EVENTOS.find(e=>e.id===p.evento) || CONFIG.EVENTOS[0];
+    const n  = base.filter(r=>r.evento===p.evento).length + 1;
+    const codigo = ev.prefixo + "-" + String(n).padStart(3,"0");
+    base.push(Object.assign({}, p, {codigo:codigo, ts:new Date().toISOString(), kgf:"", peso:""}));
+    lsSet(base);
+    return Promise.resolve({ok:true, codigo:codigo});
+  }
+  if(action==="resultado"){
+    const r = base.find(x=>x.evento===p.evento && x.codigo===p.codigo);
+    if(!r) return Promise.reject(new Error("Código não encontrado"));
+    r.kgf = p.kgf; r.peso = p.peso; r.resultado_em = new Date().toISOString();
+    lsSet(base);
+    return Promise.resolve({ok:true});
+  }
+  if(action==="ranking"){
+    return Promise.resolve({ok:true, itens: base.filter(r=>r.evento===p.evento && Number(r.kgf)>0)
+      .map(r=>({nome:nomePublico(r.nome), cidade:r.cidade, sexo:r.sexo, kgf:Number(r.kgf), peso:Number(r.peso)||0}))});
+  }
+  if(action==="leads"){
+    return Promise.resolve({ok:true, itens: base.filter(r=>r.evento===p.evento)});
+  }
+  return Promise.reject(new Error("Ação inválida"));
+}
+
+/* ===================================================================
+   4) UTILITÁRIOS
+   =================================================================== */
+function nomePublico(nome){
+  const p = String(nome||"").trim().split(/\s+/).filter(Boolean);
+  if(!p.length) return "Participante";
+  if(p.length===1) return p[0];
+  return p[0] + " " + p[p.length-1][0].toUpperCase() + ".";
+}
+function maskTel(v){
+  const d = String(v).replace(/\D/g,"").slice(0,11);
+  if(d.length<=2) return d.length?"("+d:"";
+  if(d.length<=6) return "("+d.slice(0,2)+") "+d.slice(2);
+  if(d.length<=10) return "("+d.slice(0,2)+") "+d.slice(2,6)+"-"+d.slice(6);
+  return "("+d.slice(0,2)+") "+d.slice(2,7)+"-"+d.slice(7);
+}
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("on");
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove("on"), 2200);
+}
+function fillEventos(sel){
+  sel.innerHTML = CONFIG.EVENTOS.map(e=>`<option value="${esc(e.id)}">${esc(e.nome)}${e.data?" · "+esc(e.data):""}</option>`).join("");
+}
+function statusBadge(el){
+  el.className = "badge " + (ONLINE?"live":"demo");
+  el.textContent = ONLINE ? "ONLINE" : "MODO DEMONSTRAÇÃO";
+}
+
+/* ===================================================================
+   5) NAVEGAÇÃO
+   =================================================================== */
+const views = {ranking:"v-ranking", inscricao:"v-inscricao", admin:"v-admin"};
+function go(name, push){
+  Object.keys(views).forEach(k=>document.getElementById(views[k]).classList.toggle("on", k===name));
+  document.querySelectorAll(".nav button").forEach(b=>b.setAttribute("aria-current", b.dataset.go===name ? "true":"false"));
+  if(push!==false) history.replaceState(null,"","#"+name);
+  window.scrollTo(0,0);
+  if(name==="ranking") carregarRanking();
+}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+
+/* ===================================================================
+   6) RANKING
+   =================================================================== */
+let RK = [], rkSexo = "M", rkModo = "abs";
+
+document.querySelectorAll('[data-sexo]').forEach(b=>b.addEventListener("click",()=>{
+  rkSexo = b.dataset.sexo;
+  document.querySelectorAll('[data-sexo]').forEach(x=>x.setAttribute("aria-selected", x===b?"true":"false"));
+  renderRanking();
+}));
+document.querySelectorAll('[data-modo]').forEach(b=>b.addEventListener("click",()=>{
+  rkModo = b.dataset.modo;
+  document.querySelectorAll('[data-modo]').forEach(x=>x.setAttribute("aria-selected", x===b?"true":"false"));
+  renderRanking();
+}));
+
+async function carregarRanking(){
+  const ev = document.getElementById("rkEvento").value || CONFIG.EVENTOS[0].id;
+  try{
+    const r = await api("ranking", {evento:ev});
+    RK = r.itens || [];
+  }catch(e){ RK = []; }
+  renderRanking();
+}
+function renderRanking(){
+  let lista = RK.filter(x=>x.sexo===rkSexo);
+  if(rkModo==="rel") lista = lista.filter(x=>Number(x.peso)>0);
+  lista = lista.map(x=>Object.assign({}, x, {valor: rkModo==="rel" ? Number(x.kgf)/Number(x.peso) : Number(x.kgf)}))
+               .sort((a,b)=>b.valor-a.valor);
+
+  const un  = rkModo==="rel" ? "× peso" : CONFIG.UNIDADE;
+  const fmt = v => rkModo==="rel" ? v.toFixed(2)+"×" : (Math.round(v*10)/10).toLocaleString("pt-BR");
+  document.getElementById("thVal").textContent = un;
+
+  const pod = document.getElementById("podium");
+  pod.innerHTML = lista.slice(0,3).map((x,i)=>`
+    <div class="pod p${i+1}">
+      <div class="pos">${i+1}º LUGAR</div>
+      <div class="nm">${esc(x.nome)}</div>
+      <div class="vl">${fmt(x.valor)}${rkModo==="rel"?"":`<small>${esc(CONFIG.UNIDADE)}</small>`}</div>
+      <div class="un">${esc(x.cidade||"")}</div>
+    </div>`).join("");
+
+  const tb = document.querySelector("#rkTable tbody");
+  tb.innerHTML = lista.slice(3).map((x,i)=>`
+    <tr><td class="rk">${i+4}</td><td>${esc(x.nome)}</td><td>${esc(x.cidade||"")}</td><td class="n">${fmt(x.valor)}</td></tr>`).join("");
+
+  const vazio = lista.length===0;
+  document.getElementById("rkEmpty").style.display = vazio ? "block":"none";
+  document.getElementById("rkTable").style.display = lista.length>3 ? "table":"none";
+  document.getElementById("rkCard").style.display  = (vazio || lista.length>3) ? "block":"none";
+  document.getElementById("rkEmpty").textContent = rkModo==="rel"
+    ? "Nenhum resultado com peso corporal informado ainda."
+    : "Nenhum resultado lançado ainda.";
+}
+
+/* ===================================================================
+   7) FORMULÁRIO DE INSCRIÇÃO
+   =================================================================== */
+const form = document.getElementById("form");
+document.getElementById("f_whats").addEventListener("input", e=>{ e.target.value = maskTel(e.target.value); });
+
+form.addEventListener("submit", async e=>{
+  e.preventDefault();
+  const errEl = document.getElementById("formErr");
+  const get = n => (form.querySelector(`[name="${n}"]:checked`)||{}).value || "";
+  const evSel = document.getElementById("insEvento").value;
+  const dados = {
+    evento:   evSel,
+    prefixo:  (CONFIG.EVENTOS.find(e=>e.id===evSel)||{}).prefixo || "AJR",
+    nome:     document.getElementById("f_nome").value.trim(),
+    whatsapp: document.getElementById("f_whats").value.trim(),
+    cidade:   document.getElementById("f_cidade").value.trim(),
+    sexo:     document.getElementById("f_sexo").value,
+    q1: get("q1"), q2: get("q2"), q3: get("q3"),
+    q4: Array.from(form.querySelectorAll('[name="q4"]:checked')).map(i=>i.value),
+    q5: get("q5")
+  };
+
+  const faltando = [];
+  if(dados.nome.split(/\s+/).length < 2) faltando.push("nome completo");
+  if(dados.whatsapp.replace(/\D/g,"").length < 10) faltando.push("WhatsApp");
+  if(!dados.cidade) faltando.push("cidade");
+  if(!dados.sexo) faltando.push("categoria");
+  ["q1","q2","q3","q5"].forEach((q,i)=>{ if(!dados[q]) faltando.push("pergunta "+(i<3?i+1:5)); });
+  if(!document.getElementById("f_consent").checked) faltando.push("autorização de contato");
+
+  if(faltando.length){ errEl.textContent = "Falta preencher: " + faltando.join(", ") + "."; return; }
+  errEl.textContent = "";
+
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true; btn.textContent = "Enviando…";
+  try{
+    const r = await api("inscricao", Object.assign({consent:"sim"}, dados, {q4: dados.q4.join("|")}));
+    document.getElementById("outCodigo").textContent = r.codigo;
+    document.getElementById("formBox").style.display = "none";
+    document.getElementById("successBox").style.display = "block";
+    window.scrollTo(0,0);
+  }catch(err){
+    errEl.textContent = "Não foi possível enviar: " + err.message + ". Tente de novo.";
+  }finally{
+    btn.disabled = false; btn.textContent = "Confirmar inscrição";
+  }
+});
+
+document.getElementById("btnNovo").addEventListener("click", ()=>{
+  form.reset();
+  document.getElementById("successBox").style.display = "none";
+  document.getElementById("formBox").style.display = "block";
+  document.getElementById("f_nome").focus();
+});
+document.getElementById("btnVerRanking").addEventListener("click", ()=>{
+  document.getElementById("btnNovo").click();
+  go("ranking");
+});
+
+/* ===================================================================
+   8) PAINEL
+   =================================================================== */
+let PIN = "", LEADS = [], spAtivo = CONFIG.PATROCINADORES[0].id, admAba = "res";
+
+document.getElementById("loginForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  PIN = document.getElementById("f_pin").value.trim();
+  const errEl = document.getElementById("loginErr");
+  errEl.textContent = "Verificando…";
+  try{
+    await carregarLeads();
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("panelBox").style.display = "block";
+    errEl.textContent = "";
+  }catch(err){
+    errEl.textContent = "Senha incorreta ou falha de conexão.";
+  }
+});
+document.getElementById("btnSair").addEventListener("click", ()=>{
+  PIN=""; LEADS=[];
+  document.getElementById("f_pin").value="";
+  document.getElementById("panelBox").style.display="none";
+  document.getElementById("loginBox").style.display="block";
+});
+document.getElementById("btnReload").addEventListener("click", async ()=>{
+  try{ await carregarLeads(); toast("Atualizado"); }catch(e){ toast("Falha ao atualizar"); }
+});
+document.querySelectorAll('[data-adm]').forEach(b=>b.addEventListener("click",()=>{
+  admAba = b.dataset.adm;
+  document.querySelectorAll('[data-adm]').forEach(x=>x.setAttribute("aria-selected", x===b?"true":"false"));
+  document.getElementById("adm-res").style.display   = admAba==="res"?"block":"none";
+  document.getElementById("adm-leads").style.display = admAba==="leads"?"block":"none";
+}));
+document.getElementById("buscaRes").addEventListener("input", renderRes);
+
+async function carregarLeads(){
+  const ev = document.getElementById("admEvento").value || CONFIG.EVENTOS[0].id;
+  const r = await api("leads", {evento:ev, pin:PIN});
+  LEADS = (r.itens||[]).map(x=>Object.assign({}, x, {q4: String(x.q4||"").split("|").filter(Boolean)}));
+  renderStats(); renderRes(); renderSpTabs(); renderLeads();
+}
+function renderStats(){
+  const total = LEADS.length;
+  const comRes = LEADS.filter(x=>Number(x.kgf)>0).length;
+  const quentes = LEADS.filter(x=>x.q5==="semana").length;
+  document.getElementById("admStats").innerHTML = `
+    <div><b>${total}</b><span>Inscritos</span></div>
+    <div><b>${comRes}</b><span>Com resultado</span></div>
+    <div><b>${quentes}</b><span>Querem contato</span></div>
+    <div><b>${LEADS.filter(x=>x.sexo==="F").length}/${LEADS.filter(x=>x.sexo==="M").length}</b><span>Fem / Masc</span></div>`;
+}
+function renderRes(){
+  const termo = document.getElementById("buscaRes").value.toLowerCase().trim();
+  const lista = LEADS.filter(x=> !termo
+    || String(x.codigo||"").toLowerCase().includes(termo)
+    || String(x.nome||"").toLowerCase().includes(termo));
+  const tb = document.querySelector("#tRes tbody");
+  tb.innerHTML = lista.map(x=>`
+    <tr data-cod="${esc(x.codigo)}">
+      <td><b>${esc(x.codigo)}</b></td>
+      <td>${esc(x.nome)}</td>
+      <td>${x.sexo==="F"?"Fem":"Masc"}</td>
+      <td><div class="rowres"><input class="i-kgf" inputmode="decimal" value="${esc(x.kgf||"")}" placeholder="0,0"></div></td>
+      <td><div class="rowres"><input class="i-peso" inputmode="decimal" value="${esc(x.peso||"")}" placeholder="opcional"></div></td>
+      <td><button class="btn sm b-salvar">Salvar</button></td>
+    </tr>`).join("") || `<tr><td colspan="6" class="empty">Nenhuma inscrição ainda.</td></tr>`;
+
+  tb.querySelectorAll(".b-salvar").forEach(b=>b.addEventListener("click", async ()=>{
+    const tr = b.closest("tr");
+    const kgf  = tr.querySelector(".i-kgf").value.replace(",",".");
+    const peso = tr.querySelector(".i-peso").value.replace(",",".");
+    if(!(Number(kgf)>0)){ toast("Informe o resultado em kgf"); return; }
+    b.disabled = true; b.textContent = "…";
+    try{
+      await api("resultado", {evento:document.getElementById("admEvento").value, codigo:tr.dataset.cod, kgf:Number(kgf), peso:Number(peso)||"", pin:PIN});
+      const L = LEADS.find(x=>x.codigo===tr.dataset.cod);
+      if(L){ L.kgf = Number(kgf); L.peso = Number(peso)||""; }
+      renderStats(); toast(tr.dataset.cod + " salvo");
+    }catch(e){ toast("Erro ao salvar"); }
+    finally{ b.disabled=false; b.textContent="Salvar"; }
+  }));
+}
+function renderSpTabs(){
+  document.getElementById("spTabs").innerHTML = CONFIG.PATROCINADORES.map(s=>{
+    const n = LEADS.filter(l=>qualificar(l)[s.id] && qualificar(l)[s.id][0]==="verde").length;
+    return `<button role="tab" aria-selected="${s.id===spAtivo}" data-sp="${s.id}">${esc(s.nome)} <span class="muted" style="font-weight:700">· ${n} verde${n===1?"":"s"}</span></button>`;
+  }).join("");
+  document.querySelectorAll("[data-sp]").forEach(b=>b.addEventListener("click", ()=>{
+    spAtivo = b.dataset.sp; renderSpTabs(); renderLeads();
+  }));
+}
+const ordem = {verde:0, amarelo:1, vermelho:2};
+function leadsOrdenados(){
+  return LEADS.map(l=>{ const q = qualificar(l)[spAtivo]; return Object.assign({}, l, {cor:q[0], motivo:q[1]}); })
+              .sort((a,b)=> ordem[a.cor]-ordem[b.cor] || String(a.nome).localeCompare(String(b.nome)));
+}
+function renderLeads(){
+  const lista = leadsOrdenados();
+  document.querySelector("#tLeads tbody").innerHTML = lista.map(x=>`
+    <tr>
+      <td><span class="tagc ${x.cor}">${x.cor}</span></td>
+      <td>${esc(x.nome)}</td>
+      <td>${esc(x.whatsapp)}</td>
+      <td>${esc(x.cidade)}</td>
+      <td class="muted">${esc(x.motivo)}</td>
+    </tr>`).join("") || `<tr><td colspan="5" class="empty">Nenhum lead ainda.</td></tr>`;
+}
+
+/* ---------- exportação CSV ---------- */
+function baixarCSV(nome, linhas){
+  const csv = linhas.map(l=>l.map(c=>`"${String(c==null?"":c).replace(/"/g,'""')}"`).join(";")).join("\r\n");
+  const blob = new Blob(["﻿"+csv], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = nome; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+document.getElementById("btnCsvSp").addEventListener("click", ()=>{
+  const sp = CONFIG.PATROCINADORES.find(s=>s.id===spAtivo);
+  const ev = document.getElementById("admEvento").value;
+  const linhas = [["Prioridade","Nome","WhatsApp","Cidade","Motivo","Quer contato","Perfil","Vínculo"]];
+  leadsOrdenados().forEach(x=>linhas.push([x.cor.toUpperCase(), x.nome, x.whatsapp, x.cidade, x.motivo,
+    x.q5==="semana"?"Sim, essa semana":"Só novidades", x.q2, x.q3]));
+  baixarCSV(`leads_${ev}_${sp.id}.csv`, linhas);
+});
+document.getElementById("btnCsvAll").addEventListener("click", ()=>{
+  const ev = document.getElementById("admEvento").value;
+  const cab = ["Código","Nome","WhatsApp","Cidade","Categoria","Resultado (kgf)","Peso (kg)","Atleta/Acomp.","Área","Vínculo","Sinais","Contato"];
+  CONFIG.PATROCINADORES.forEach(s=>cab.push(s.nome));
+  const linhas = [cab];
+  LEADS.forEach(x=>{
+    const q = qualificar(x);
+    const l = [x.codigo,x.nome,x.whatsapp,x.cidade,x.sexo==="F"?"Feminino":"Masculino",x.kgf||"",x.peso||"",
+               x.q1,x.q2,x.q3,(x.q4||[]).join(", "),x.q5==="semana"?"Essa semana":"Só novidades"];
+    CONFIG.PATROCINADORES.forEach(s=>l.push(q[s.id][0].toUpperCase()));
+    linhas.push(l);
+  });
+  baixarCSV(`leads_${ev}_geral.csv`, linhas);
+});
+
+/* ===================================================================
+   9) BOOT
+   =================================================================== */
+["rkEvento","insEvento","admEvento"].forEach(id=>{
+  const el = document.getElementById(id);
+  fillEventos(el);
+  el.addEventListener("change", ()=>{
+    ["rkEvento","insEvento","admEvento"].forEach(o=>{ document.getElementById(o).value = el.value; });
+    if(id==="admEvento" && PIN) carregarLeads().catch(()=>{});
+    carregarRanking();
+  });
+});
+statusBadge(document.getElementById("rkStatus"));
+statusBadge(document.getElementById("insStatus"));
+statusBadge(document.getElementById("admStatus"));
+document.getElementById("brandSub").textContent = (CONFIG.EVENTOS[0]||{}).nome || "Desafio";
+
+const hash = (location.hash||"").replace("#","");
+go(views[hash] ? hash : "ranking", false);
+carregarRanking();
+setInterval(()=>{ if(document.getElementById("v-ranking").classList.contains("on")) carregarRanking(); }, 25000);
+</script>
+</body>
+</html>
