@@ -799,6 +799,30 @@
   .dep-name { font-weight: 700; font-size: 0.88rem; color: var(--white); }
   .dep-role { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.5px; text-transform: uppercase; color: #9aa0a8; margin-top: 0.15rem; }
 
+  /* Caixa Google (depoimentos) */
+  .g-box {
+    display: grid; grid-template-columns: 320px 1fr; gap: 1.5rem;
+    margin-top: 3rem; align-items: stretch;
+  }
+  .g-resumo {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.22);
+    border-radius: var(--radius); padding: 2rem 1.75rem; text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem;
+  }
+  .g-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.35rem; letter-spacing: -0.5px; background: #fff; padding: 0.25rem 0.8rem; border-radius: 4px; margin-bottom: 0.6rem; }
+  .g-nota { font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 3.4rem; line-height: 1; color: var(--white); }
+  .g-estrelas { color: #FBBC05; font-size: 1.3rem; letter-spacing: 3px; }
+  .g-txt { color: var(--gray); font-size: 0.88rem; line-height: 1.6; margin: 0.6rem 0 1rem; }
+  .g-btn { display: block; width: 100%; text-align: center; }
+  .g-btn2 { justify-content: center; width: 100%; margin-top: 0.6rem; }
+  .g-mapa { border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(201,168,76,0.22); min-height: 340px; background: #101114; }
+  .g-mapa iframe { width: 100%; height: 100%; min-height: 340px; border: 0; display: block; }
+  #depoimentos .dep-grid { margin-top: 1.5rem; }
+  @media (max-width: 860px) {
+    .g-box { grid-template-columns: 1fr; }
+    .g-mapa, .g-mapa iframe { min-height: 300px; }
+  }
+
   /* ══════════════════════════════════
      FAQ
   ══════════════════════════════════ */
@@ -964,7 +988,6 @@
     <li><a href="#depoimentos">Depoimentos</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#giro" id="navGiro">Giro de Notícias</a></li>
     <li><a href="https://wa.me/5514997432182?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais!" class="nav-cta">Falar no WhatsApp</a></li>
   </ul>
 </nav>
@@ -1954,45 +1977,57 @@ window.addEventListener('load', function () {
 </section>
 
 
-<!-- ═══════════ DEPOIMENTOS ═══════════ -->
+<!-- ═══════════ DEPOIMENTOS (Google) ═══════════ -->
 <section id="depoimentos">
   <div class="section-label">O que dizem os alunos</div>
-  <h2 class="section-title">Resultados reais de pessoas reais.</h2>
+  <h2 class="section-title">Avaliações reais, direto do Google.</h2>
+
+  <div class="g-box">
+    <div class="g-resumo">
+      <div class="g-logo"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></div>
+      <div class="g-nota">5,0</div>
+      <div class="g-estrelas">★★★★★</div>
+      <p class="g-txt">Nota máxima de quem já passou pela avaliação na AJR, em Bauru.</p>
+      <a class="btn-gold g-btn" href="https://search.google.com/local/reviews?placeid=ChIJjfra41Bnv5QRGUmoa0ZVUxU" target="_blank" rel="noopener">Ver todas as avaliações</a>
+      <a class="maps-link g-btn2" href="https://search.google.com/local/writereview?placeid=ChIJjfra41Bnv5QRGUmoa0ZVUxU" target="_blank" rel="noopener">★ Deixar minha avaliação</a>
+    </div>
+    <div class="g-mapa">
+      <iframe title="AJR Avaliação Física e Performance no Google Maps" src="https://maps.google.com/maps?q=AJR+Avalia%C3%A7%C3%A3o+F%C3%ADsica+e+Performance,+R.+G%C3%A9rson+Fran%C3%A7a,+18-28+-+Estoril,+Bauru+-+SP&hl=pt-BR&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+  </div>
 
   <div class="dep-grid">
 
     <div class="dep-card">
       <div class="dep-stars">★★★★★</div>
-      <p class="dep-text">Antes da avaliação eu achava que estava fazendo tudo certo. O Aldemir me mostrou um desequilíbrio muscular que vinha me sabotando há meses. Meu desempenho nas WODs melhorou muito depois que ajustei o treino com base nos dados.</p>
+      <p class="dep-text">“Sou cliente da AJR há 3 anos e só tenho a agradecer. Sou ex-atleta de basquete e, em um quadro de condropatia grau 4, eles fizeram ajustes que realmente fizeram diferença no meu dia a dia e na forma como eu consigo me cuidar. Recomendo sem pensar duas vezes.”</p>
       <div class="dep-author">
-        <div class="dep-avatar">R</div>
+        <div class="dep-avatar">G</div>
         <div>
-          <div class="dep-name">Rafael S.</div>
-          <div class="dep-role">Atleta de CrossFit · Bauru</div>
+          <div class="dep-name">Cliente AJR</div>
+          <div class="dep-role">Cliente há 3 anos · Avaliação no Google</div>
         </div>
       </div>
     </div>
-
     <div class="dep-card">
       <div class="dep-stars">★★★★★</div>
-      <p class="dep-text">Tentei emagrecer de várias formas e sempre travava no mesmo ponto. Com a avaliação completa entendi o que estava errado — e pela primeira vez tenho um plano que faz sentido para o meu corpo.</p>
+      <p class="dep-text">“Ambiente acolhedor, ótimo profissional tirando todas as dúvidas e explicando cada procedimento com detalhes que fazem toda a diferença para o entendimento. Realizei o teste de VO2 — poucos profissionais possuem tal equipamento disponível. Um baita investimento, recomendo demais!”</p>
       <div class="dep-author">
-        <div class="dep-avatar">C</div>
+        <div class="dep-avatar">G</div>
         <div>
-          <div class="dep-name">Carla M.</div>
-          <div class="dep-role">Professora · 38 anos</div>
+          <div class="dep-name">Cliente AJR</div>
+          <div class="dep-role">Teste de VO₂ · Avaliação no Google</div>
         </div>
       </div>
     </div>
-
     <div class="dep-card">
       <div class="dep-stars">★★★★★</div>
-      <p class="dep-text">Fiz a avaliação antes de me preparar para uma meia maratona. O relatório com as zonas de treino foi decisivo — cheguei na prova sem lesão e bati meu recorde pessoal pela primeira vez.</p>
+      <p class="dep-text">“Excelente! Avaliação física completa para entender seu momento e traçar objetivos. O Aldemir é um profissional competente e com muita experiência.”</p>
       <div class="dep-author">
-        <div class="dep-avatar">T</div>
+        <div class="dep-avatar">G</div>
         <div>
-          <div class="dep-name">Thiago P.</div>
-          <div class="dep-role">Corredor amador · Bauru</div>
+          <div class="dep-name">Cliente AJR</div>
+          <div class="dep-role">Avaliação física · Avaliação no Google</div>
         </div>
       </div>
     </div>
@@ -2126,133 +2161,6 @@ function toggleFaq(btn) {
     ou me siga no Instagram <span>@aldemirjrtreinador</span>
   </a>
 </section>
-
-<!-- ═══════════ GIRO DE NOTÍCIAS (página SPA) ═══════════ -->
-<section id="giro-noticias">
-  <div class="giro-header">
-    <span class="giro-eyebrow">Performance · Esporte Mundial</span>
-    <h1 class="giro-title">Giro de <em>Notícias</em></h1>
-    <p class="giro-sub">As últimas do esporte e da ciência da performance, atualizadas automaticamente todos os dias. Curadoria AJR Avaliação Física e Performance.</p>
-    <div class="giro-atualizado" id="giroAtualizado"></div>
-  </div>
-  <div class="giro-filtros" id="giroFiltros"></div>
-  <div class="giro-grid" id="giroGrid">
-    <div class="giro-vazio">Carregando notícias…</div>
-  </div>
-
-  <!-- CTA comercial dentro do Giro: notícia informa, avaliação transforma -->
-  <div style="max-width:1180px;margin:3.5rem auto 0;background:linear-gradient(135deg,var(--teal) 0%,var(--navy-mid) 100%);border:1px solid rgba(201,168,76,0.3);border-radius:var(--radius);padding:2.5rem;text-align:center">
-    <div class="section-label" style="justify-content:center">Da leitura para a prática</div>
-    <h3 style="font-family:'Chakra Petch',sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-size:clamp(1.4rem,3vw,2rem);color:var(--white);margin-bottom:0.75rem">Notícia informa. <em style="color:var(--gold)">Dados seus transformam.</em></h3>
-    <p style="color:var(--gray);max-width:520px;margin:0 auto 1.75rem;font-size:0.95rem">Acompanhar o esporte é ótimo — evoluir no seu é melhor. Faça sua avaliação física completa e treine com as suas métricas.</p>
-    <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20minha%20avalia%C3%A7%C3%A3o." class="btn-gold">Agendar minha avaliação</a>
-  </div>
-</section>
-
-<script>
-/* ══════════ NAVEGAÇÃO SPA: Home ⇄ Giro de Notícias ══════════ */
-let noticiasCache = null;
-let filtroAtivo = 'Todas';
-
-function mostrarGiro() {
-  document.body.classList.add('giro-ativo');
-  window.scrollTo(0, 0);
-  if (history.replaceState) history.replaceState(null, '', '#giro');
-  if (!noticiasCache) carregarNoticias();
-}
-
-function mostrarHome() {
-  document.body.classList.remove('giro-ativo');
-}
-
-document.getElementById('navGiro').addEventListener('click', function (e) {
-  e.preventDefault();
-  mostrarGiro();
-});
-
-// Qualquer link âncora da página volta para a Home antes de rolar (delegado — cobre footer e conteúdo futuro)
-document.addEventListener('click', function (e) {
-  var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
-  if (a && a.id !== 'navGiro') mostrarHome();
-});
-
-// Deep-link: abrir direto em site.com/#giro
-if (location.hash === '#giro') mostrarGiro();
-
-/* ══════════ CARREGAMENTO DO noticias.json ══════════ */
-function formatarData(iso) {
-  try {
-    var d = new Date(iso);
-    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
-  } catch (e) { return ''; }
-}
-
-function escapeHtml(s) {
-  var div = document.createElement('div');
-  div.textContent = s || '';
-  return div.innerHTML;
-}
-
-function renderizarNoticias() {
-  var grid = document.getElementById('giroGrid');
-  var lista = (noticiasCache.noticias || []).filter(function (n) {
-    return filtroAtivo === 'Todas' || n.categoria === filtroAtivo;
-  });
-  if (!lista.length) {
-    grid.innerHTML = '<div class="giro-vazio">Nenhuma notícia nesta categoria por enquanto.</div>';
-    return;
-  }
-  grid.innerHTML = lista.map(function (n, i) {
-    return '<article class="noticia-card' + (i === 0 && filtroAtivo === 'Todas' ? ' destaque' : '') + '">' +
-      '<div class="noticia-meta">' +
-        '<span class="noticia-tag">' + escapeHtml(n.categoria) + '</span>' +
-        '<span class="noticia-data">' + formatarData(n.data) + '</span>' +
-        (n.fonte ? '<span class="noticia-fonte">· ' + escapeHtml(n.fonte) + '</span>' : '') +
-      '</div>' +
-      '<h3 class="noticia-titulo">' + escapeHtml(n.titulo) + '</h3>' +
-      '<p class="noticia-resumo">' + escapeHtml(n.resumo) + '</p>' +
-      '<a class="noticia-link" href="' + encodeURI(n.link) + '" target="_blank" rel="noopener noreferrer">Ler matéria original</a>' +
-    '</article>';
-  }).join('');
-}
-
-function renderizarFiltros() {
-  var cats = ['Todas'];
-  (noticiasCache.noticias || []).forEach(function (n) {
-    if (n.categoria && cats.indexOf(n.categoria) === -1) cats.push(n.categoria);
-  });
-  document.getElementById('giroFiltros').innerHTML = cats.map(function (c) {
-    return '<button class="giro-filtro' + (c === filtroAtivo ? ' ativo' : '') + '" data-cat="' + escapeHtml(c) + '">' + escapeHtml(c) + '</button>';
-  }).join('');
-  document.querySelectorAll('.giro-filtro').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      filtroAtivo = btn.getAttribute('data-cat');
-      renderizarFiltros();
-      renderizarNoticias();
-    });
-  });
-}
-
-function carregarNoticias() {
-  fetch('noticias.json', { cache: 'no-store' })
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (dados) {
-      noticiasCache = dados;
-      if (dados.atualizado_em) {
-        document.getElementById('giroAtualizado').textContent =
-          'Última atualização: ' + formatarData(dados.atualizado_em);
-      }
-      renderizarFiltros();
-      renderizarNoticias();
-    })
-    .catch(function (err) {
-      document.getElementById('giroGrid').innerHTML =
-        '<div class="giro-vazio">Não foi possível carregar as notícias agora.<br>' +
-        '<small style="color:#575e67">O arquivo noticias.json precisa estar na mesma pasta do site (funciona quando publicado no GitHub Pages).</small></div>';
-      console.error('Giro de Notícias:', err);
-    });
-}
-</script>
 
 <!-- FOOTER -->
 <footer>
