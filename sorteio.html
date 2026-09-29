@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sorteio FIB — AJR Performance × Clutch</title>
+<meta name="theme-color" content="#08090b">
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo-ajr.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+/* Tela de projetor: um nome gigante no centro, controles discretos embaixo */
+:root{
+  --gold:#C9A84C; --gold-lt:#e2c878; --rust:#AB4726; --rust-lt:#d0714c;
+  --navy:#17191d; --surface:#101114; --bg:#08090b; --input:#0e0f12;
+  --border:rgba(201,168,76,.22); --gray:#a3a9b1; --dim:#7a8088; --off:#f0ede8; --bad:#E0685F; --ok:#4CAF7D;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--off);
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
+  background-size:56px 56px;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;font:700 15px 'Chakra Petch',sans-serif;letter-spacing:2px;color:var(--gold)}
+.brand img{width:44px;height:44px;object-fit:contain}
+.brand span{color:var(--off)} .brand b{color:var(--rust-lt)}
+.count{font:400 13px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)}
+.count strong{color:var(--gold);font-size:18px}
+
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 16px;gap:18px;min-height:0}
+.premio{font:700 clamp(14px,1.8vw,20px) 'JetBrains Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+.nome{font:700 clamp(40px,8vw,120px)/1.02 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff;max-width:100%;overflow-wrap:anywhere;text-wrap:balance}
+.nome.rolling{color:var(--gray)}
+.nome.win{color:var(--gold-lt);animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+.sub{font-size:clamp(14px,1.6vw,18px);color:var(--gray)}
+@keyframes pop{from{transform:scale(.8);opacity:.3}to{transform:none;opacity:1}}
+
+.panel{padding:18px 28px 26px;display:grid;gap:14px;border-top:1px solid var(--border);background:rgba(16,17,20,.85)}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+label{font:700 11px 'JetBrains Mono',monospace;color:var(--gold);text-transform:uppercase;letter-spacing:2px}
+input,select{padding:11px 12px;background:var(--input);border:1px solid rgba(255,255,255,.12);border-radius:4px;font-size:15px;color:var(--off);font-family:inherit;outline:none}
+input:focus,select:focus{border-color:var(--gold)}
+#chave{width:130px;text-transform:uppercase;letter-spacing:2px;font-family:'JetBrains Mono',monospace}
+#premio{width:240px}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--gray);padding-bottom:10px}
+.chk input{width:18px;height:18px;accent-color:var(--gold)}
+button{padding:12px 18px;border:1px solid var(--gold);border-radius:4px;background:transparent;color:var(--gold);font:700 14px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+button:hover{background:rgba(201,168,76,.1)}
+button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
+#btnSortear{background:var(--gold);color:#101114;padding:14px 34px;font-size:17px;margin-left:auto}
+#btnSortear:hover{background:var(--gold-lt)}
+.msg{font-size:13px;color:var(--bad);min-height:1em}
+.hist{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--gray)}
+.hist .tag{padding:5px 10px;border:1px solid var(--border);border-radius:4px;color:var(--off)}
+.hist .tag small{color:var(--gold);font-family:'JetBrains Mono',monospace;margin-right:6px}
+@media (max-width:640px){ #btnSortear{margin-left:0;width:100%} #premio{width:100%} .field{flex:1 1 100%} }
+@media (prefers-reduced-motion:reduce){ .nome.win{animation:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="logo-ajr.png" alt="AJR Performance">AJR PERFORMANCE <span>×</span> CLUTCH<b>.APP</b></div>
+  <div class="count" id="count">Sorteio · palestra FIB</div>
+</header>
+
+<section class="stage" aria-live="polite">
+  <div class="premio" id="premioShow">Semana da Saúde FIB</div>
+  <div class="nome" id="nome">Sorteio</div>
+  <div class="sub" id="sub">Digite a chave e carregue os participantes</div>
+</section>
+
+<section class="panel">
+  <div class="controls">
+    <div class="field">
+      <label for="chave">Chave</label>
+      <input type="password" id="chave" autocomplete="off" placeholder="••••••">
+    </div>
+    <button type="button" id="btnCarregar">Carregar</button>
+    <div class="field">
+      <label for="filtro">Quem concorre</label>
+      <select id="filtro">
+        <option value="todos">Todas as palestras</option>
+        <option value="Aldemir Junior">Só a palestra do Aldemir</option>
+        <option value="Outra palestra">Só a outra palestra</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="premio">Prêmio</label>
+      <input type="text" id="premio" placeholder="Ex.: Avaliação AJR PERFORMANCE">
+    </div>
+    <label class="chk" for="semRepetir"><input type="checkbox" id="semRepetir" checked>Sem repetir ganhador</label>
+    <button type="button" id="btnSortear" disabled>Sortear</button>
+  </div>
+  <div class="msg" id="msg" role="alert"></div>
+  <div class="hist" id="hist"></div>
+</section>
+
+<script>
+/* Mesma URL do fib.html (passo a passo em COMO-CONFIGURAR-FIB.md) */
+var CONFIG = { endpoint: '' };
+
+var participantes = [], ganhadores = [];
+var $ = function(id){ return document.getElementById(id); };
+
+try { var k = localStorage.getItem('ajr-fib-chave'); if (k) $('chave').value = k; } catch(e){}
+
+function post(body){
+  return fetch(CONFIG.endpoint, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(body)})
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+}
+
+function elegiveis(){
+  var f = $('filtro').value;
+  return participantes.filter(function(p){
+    if (f !== 'todos' && p.palestra !== f) return false;
+    if ($('semRepetir').checked && ganhadores.some(function(g){ return g.nome === p.nome; })) return false;
+    return true;
+  });
+}
+
+function atualizaContagem(){
+  var n = elegiveis().length;
+  $('count').innerHTML = '<strong>' + participantes.length + '</strong> cadastrados · <strong>' + n + '</strong> concorrendo';
+  $('btnSortear').disabled = n === 0;
+}
+
+function carregar(){
+  $('msg').textContent = '';
+  if (!CONFIG.endpoint){ $('msg').textContent = 'Cole a URL do Apps Script no CONFIG desta página.'; return Promise.resolve(); }
+  var chave = $('chave').value.trim().toUpperCase();
+  if (!chave){ $('msg').textContent = 'Digite a chave do sorteio.'; $('chave').focus(); return Promise.resolve(); }
+  $('btnCarregar').disabled = true; $('btnCarregar').textContent = 'Carregando...';
+  return post({acao:'lista', chave: chave}).then(function(res){
+    if (!res.ok) throw new Error(res.erro === 'chave incorreta' ? 'Chave incorreta.' : 'Erro: ' + res.erro);
+    try { localStorage.setItem('ajr-fib-chave', chave); } catch(e){}
+    participantes = res.participantes || [];
+    ganhadores = (res.ganhadores || []).map(function(n){ return {nome:n, premio:''}; });
+    desenhaHistorico();
+    atualizaContagem();
+    $('sub').textContent = participantes.length ? 'Tudo pronto. Boa sorte!' : 'Ninguém cadastrado ainda.';
+  }).catch(function(e){
+    $('msg').textContent = (e instanceof TypeError || e.message.indexOf('HTTP') === 0)
+      ? 'Sem conexão com a planilha. Confira a internet e tente de novo.' : e.message;
+  }).finally(function(){ $('btnCarregar').disabled = false; $('btnCarregar').textContent = 'Atualizar'; });
+}
+
+function aleatorio(n){
+  var a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] % n;
+}
+
+function sortear(){
+  var lista = elegiveis();
+  if (!lista.length) return;
+  $('btnSortear').disabled = true; $('btnCarregar').disabled = true;
+  var premio = $('premio').value.trim();
+  $('premioShow').textContent = premio || 'Sorteio';
+  $('sub').textContent = 'Sorteando entre ' + lista.length + ' pessoas...';
+  var ganhador = lista[aleatorio(lista.length)];
+  var el = $('nome'); el.className = 'nome rolling';
+  var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var passos = reduz ? 1 : 34, i = 0;
+  (function gira(){
+    if (i < passos - 1){
+      el.textContent = lista[aleatorio(lista.length)].nome;
+      i++; setTimeout(gira, 40 + i * i * 0.35);
+    } else {
+      el.textContent = ganhador.nome; el.className = 'nome win';
+      $('sub').textContent = ganhador.palestra === 'Outra palestra' ? 'Cadastrado(a) na outra palestra' : 'Parabéns!';
+      ganhadores.push({nome: ganhador.nome, premio: premio});
+      desenhaHistorico(); atualizaContagem();
+      $('btnCarregar').disabled = false;
+      post({acao:'ganhador', chave: $('chave').value.trim().toUpperCase(), nome: ganhador.nome, palestra: ganhador.palestra, premio: premio})
+        .catch(function(){ $('msg').textContent = 'Ganhador não foi salvo na planilha (sem conexão). Anote o nome.'; });
+    }
+  })();
+}
+
+function desenhaHistorico(){
+  var h = $('hist'); h.textContent = '';
+  if (!ganhadores.length) return;
+  var t = document.createElement('span'); t.textContent = 'Ganhadores:'; h.appendChild(t);
+  ganhadores.forEach(function(g, i){
+    var s = document.createElement('span'); s.className = 'tag';
+    var n = document.createElement('small'); n.textContent = (i + 1) + 'º';
+    s.appendChild(n); s.appendChild(document.createTextNode(g.nome + (g.premio ? ' · ' + g.premio : '')));
+    h.appendChild(s);
+  });
+}
+
+$('btnCarregar').addEventListener('click', carregar);
+$('chave').addEventListener('keydown', function(e){ if (e.key === 'Enter') carregar(); });
+$('btnSortear').addEventListener('click', sortear);
+$('filtro').addEventListener('change', atualizaContagem);
+$('semRepetir').addEventListener('change', atualizaContagem);
+</script>
+</body>
+</html>

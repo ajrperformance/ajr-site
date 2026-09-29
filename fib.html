@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Palestra FIB — AJR Performance × Clutch</title>
+<meta name="description" content="Cadastre-se para ganhar 1 mês grátis no Clutch, 20% de desconto na avaliação física AJR e concorrer aos sorteios da palestra.">
+<meta name="theme-color" content="#08090b">
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo-ajr.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+/* Mesma identidade do site AJR (navy + dourado) com o ferrugem do Clutch só no card do app */
+:root{
+  --gold:#C9A84C; --gold-lt:#e2c878; --gold-dk:#9f8038;
+  --rust:#AB4726; --rust-lt:#d0714c;
+  --navy:#17191d; --surface:#101114; --bg:#08090b; --input:#0e0f12;
+  --border:rgba(201,168,76,.22);
+  --gray:#a3a9b1; --dim:#7a8088; --off:#f0ede8;
+  --ok:#4CAF7D; --bad:#E0685F;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:'Space Grotesk',system-ui,sans-serif; background:var(--bg);
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
+  background-size:56px 56px; background-attachment:fixed;
+  color:var(--off); min-height:100vh; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:520px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom,0px))}
+
+.hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.hdr img{width:44px;height:44px;object-fit:contain}
+.brand{font:700 13px 'Chakra Petch',sans-serif;letter-spacing:2px;color:var(--gold)}
+.brand span{color:var(--off)}
+.brand b{color:var(--rust-lt);font-weight:700}
+.event{font:400 11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:4px}
+
+h1{font:700 30px/1.08 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff;letter-spacing:-.3px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--gold)}
+.lead{font-size:15px;line-height:1.55;color:var(--gray);margin:10px 0 20px}
+
+.perks{display:grid;gap:10px;margin-bottom:22px}
+.perk{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:16px;border-radius:6px;background:var(--navy);border:1px solid var(--border)}
+.perk.clutch{border-color:rgba(171,71,38,.55)}
+.perk .big{font:700 30px/1 'Chakra Petch',sans-serif;color:var(--gold);width:92px;text-align:center}
+.perk.clutch .big{color:var(--rust-lt)}
+.perk .big small{display:block;font:700 11px 'JetBrains Mono',monospace;letter-spacing:1.5px;margin-top:4px}
+.perk h2{font:700 14px 'Chakra Petch',sans-serif;letter-spacing:1px;text-transform:uppercase;color:#fff}
+.perk p{font-size:13px;line-height:1.45;color:var(--gray);margin-top:3px}
+.perk.sorteio{grid-template-columns:1fr;text-align:center;padding:12px;background:transparent;border-style:dashed}
+.perk.sorteio p{margin:0;color:var(--off);font-size:14px}
+
+.card{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:22px 18px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.field{margin-bottom:18px}
+label,.lbl{font:700 11px 'JetBrains Mono',monospace;color:var(--gold);text-transform:uppercase;letter-spacing:2px;display:block;margin-bottom:8px}
+.lbl .opt{color:var(--dim);letter-spacing:1px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row .field{min-width:0}
+input[type=text],input[type=email],input[type=tel],select{
+  width:100%;padding:13px 14px;background:var(--input);border:1px solid rgba(255,255,255,.12);
+  border-radius:4px;font-size:16px;color:var(--off);font-family:'Space Grotesk',sans-serif;
+  outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
+::placeholder{color:#5d636b}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.15)}
+select{background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23C9A84C' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;background-size:11px;padding-right:34px}
+.invalid{border-color:var(--bad)!important}
+.err{font-size:12px;color:var(--bad);margin-top:6px;display:none}
+.field.has-err .err{display:block}
+
+.consent{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font:400 13px/1.5 'Space Grotesk',sans-serif;letter-spacing:0;text-transform:none;color:var(--gray);cursor:pointer;margin:0}
+.consent input{width:20px;height:20px;margin-top:1px;accent-color:var(--gold)}
+
+.btn{width:100%;margin-top:20px;padding:16px;border:0;border-radius:4px;background:var(--gold);color:#101114;
+  font:700 15px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .15s}
+.btn:hover{background:var(--gold-lt)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.msg{margin-top:14px;font-size:13px;line-height:1.5;color:var(--bad);display:none}
+
+.done{display:none;text-align:left}
+.done .check{width:56px;height:56px;border-radius:50%;border:2px solid var(--ok);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.done h2{font:700 24px/1.1 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff}
+.done .lead{margin-bottom:16px}
+.list{display:grid;gap:10px}
+.item{padding:14px;border-radius:6px;background:var(--surface);border:1px solid var(--border)}
+.item.clutch{border-color:rgba(171,71,38,.55)}
+.item b{display:block;font:700 13px 'Chakra Petch',sans-serif;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:4px}
+.item p{font-size:13.5px;line-height:1.5;color:var(--gray)}
+.cupom{display:inline-block;margin-top:6px;padding:4px 10px;border:1px dashed var(--gold);border-radius:4px;font:700 15px 'JetBrains Mono',monospace;letter-spacing:2px;color:var(--gold)}
+a.btn{display:block;text-align:center;text-decoration:none}
+
+.foot{margin-top:22px;text-align:center;font:400 11px 'JetBrains Mono',monospace;letter-spacing:1px;color:var(--dim);line-height:1.8}
+.foot a{color:var(--gray)}
+@media (max-width:360px){ .row{grid-template-columns:1fr} h1{font-size:26px} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="hdr">
+    <img src="logo-ajr.png" alt="AJR Performance">
+    <div>
+      <div class="brand">AJR PERFORMANCE <span>×</span> CLUTCH<b>.APP</b></div>
+      <div class="event">Semana da Saúde FIB · 01/10/2026</div>
+    </div>
+  </header>
+
+  <section id="intro">
+    <h1>Cadastre-se e <em>concorra</em> aos sorteios</h1>
+    <p class="lead">Um cadastro só ativa os dois presentes e coloca seu nome no sorteio do fim da palestra.</p>
+
+    <div class="perks">
+      <div class="perk clutch">
+        <div class="big">1 MÊS<small>GRÁTIS</small></div>
+        <div><h2>Clutch</h2><p>Acesso ao app + suporte personalizado da equipe. Liberado no lançamento, em novembro.</p></div>
+      </div>
+      <div class="perk">
+        <div class="big">20%<small>OFF</small></div>
+        <div><h2>Avaliação AJR</h2><p>Desconto em qualquer protocolo de avaliação física, até <span class="js-validade">31/10/2026</span>.</p></div>
+      </div>
+      <div class="perk sorteio"><p>Sorteio de brindes no final · fique até o fim</p></div>
+    </div>
+  </section>
+
+  <form class="card" id="form" novalidate>
+    <div class="field" id="f-nome">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Como vai aparecer no sorteio" required>
+      <div class="err">Escreva seu nome e sobrenome.</div>
+    </div>
+    <div class="field" id="f-whatsapp">
+      <label for="whatsapp">WhatsApp</label>
+      <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel-national" inputmode="numeric" placeholder="(14) 99999-9999" required>
+      <div class="err">Coloque o DDD e o número.</div>
+    </div>
+    <div class="field" id="f-email">
+      <label for="email">E-mail <span class="opt">(opcional)</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="voce@email.com">
+      <div class="err">Confira o e-mail.</div>
+    </div>
+    <div class="row">
+      <div class="field" id="f-curso">
+        <label for="curso">Curso</label>
+        <select id="curso" name="curso" required>
+          <option value="">Escolha</option>
+          <option>Educação Física</option>
+          <option>Nutrição</option>
+          <option>Fisioterapia</option>
+          <option>Outro</option>
+        </select>
+        <div class="err">Escolha o curso.</div>
+      </div>
+      <div class="field" id="f-periodo">
+        <label for="periodo">Período</label>
+        <select id="periodo" name="periodo">
+          <option value="">Escolha</option>
+          <option>1º</option><option>2º</option><option>3º</option><option>4º</option>
+          <option>5º</option><option>6º</option><option>7º</option><option>8º</option>
+          <option>Já formado(a)</option>
+          <option>Não sou estudante</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" id="f-palestra">
+      <label for="palestra">Você está em qual palestra?</label>
+      <select id="palestra" name="palestra" required>
+        <option value="Aldemir Junior">Aldemir Junior</option>
+        <option value="Outra palestra">Outra palestra do dia</option>
+      </select>
+    </div>
+
+    <div class="field" id="f-consent">
+      <label class="consent" for="consent">
+        <input type="checkbox" id="consent" name="consent">
+        <span>Autorizo a AJR Performance e o Clutch a usarem meus dados para contato sobre o mês grátis, o desconto e os sorteios. Posso pedir a exclusão a qualquer momento.</span>
+      </label>
+      <div class="err">Marque a autorização para participar.</div>
+    </div>
+
+    <button class="btn" type="submit" id="btnSend">Quero participar</button>
+    <p class="msg" id="msg" role="alert"></p>
+  </form>
+
+  <section class="card done" id="done" aria-live="polite">
+    <div class="check" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4CAF7D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </div>
+    <h2 id="doneTitle">Tudo certo!</h2>
+    <p class="lead" id="doneLead">Seu nome já está no sorteio. Fique até o final da palestra.</p>
+    <div class="list">
+      <div class="item clutch">
+        <b>Clutch · 1 mês grátis</b>
+        <p>Garantido. No lançamento, em novembro, a equipe Clutch chama você no WhatsApp com o acesso.</p>
+      </div>
+      <div class="item">
+        <b>AJR · 20% na avaliação</b>
+        <p>Vale para qualquer protocolo até <span class="js-validade">31/10/2026</span>. Ao agendar, informe o cupom:</p>
+        <span class="cupom js-cupom">FIB20</span>
+      </div>
+    </div>
+    <a class="btn" id="btnAgendar" href="#" target="_blank" rel="noopener">Agendar avaliação no WhatsApp</a>
+    <a class="btn ghost" href="https://ajrperformance.com.br/" target="_blank" rel="noopener">Conhecer a AJR Performance</a>
+  </section>
+
+  <p class="foot">ajrperformance.com.br · clutch.app<br>Bauru/SP</p>
+</main>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — cole a URL do Google Apps Script (passo a passo
+   em COMO-CONFIGURAR-FIB.md)
+   ============================================================ */
+var CONFIG = {
+  endpoint : '',                 // ex: 'https://script.google.com/macros/s/AKfy.../exec'
+  whatsapp : '5514997432182',
+  validade : '31/10/2026',
+  cupom    : 'FIB20',
+  versao   : '1.0'
+};
+
+document.querySelectorAll('.js-validade').forEach(function(el){ el.textContent = CONFIG.validade; });
+document.querySelectorAll('.js-cupom').forEach(function(el){ el.textContent = CONFIG.cupom; });
+document.getElementById('btnAgendar').href = 'https://wa.me/' + CONFIG.whatsapp + '?text=' +
+  encodeURIComponent('Olá, Aldemir! Me cadastrei na palestra da FIB e quero agendar minha avaliação com o cupom ' + CONFIG.cupom + '.');
+
+/* ?p=outra pré-seleciona a outra palestra (use no QR do outro palestrante) */
+(function(){
+  var p = new URLSearchParams(location.search).get('p');
+  if (p === 'outra') document.getElementById('palestra').value = 'Outra palestra';
+})();
+
+/* máscara do WhatsApp */
+var zap = document.getElementById('whatsapp');
+zap.addEventListener('input', function(){
+  var d = zap.value.replace(/\D/g,'').slice(0,11), o = '';
+  if (d.length > 0) o = '(' + d.slice(0,2);
+  if (d.length >= 3) o += ') ' + d.slice(2, d.length > 10 ? 7 : 6);
+  if (d.length >= 7) o += '-' + d.slice(d.length > 10 ? 7 : 6);
+  zap.value = o;
+});
+
+function marca(id, ok){
+  var f = document.getElementById('f-' + id);
+  f.classList.toggle('has-err', !ok);
+  var inp = f.querySelector('input,select');
+  if (inp && inp.type !== 'checkbox') inp.classList.toggle('invalid', !ok);
+  return ok;
+}
+
+function valida(){
+  var nome = document.getElementById('nome').value.trim();
+  var d = zap.value.replace(/\D/g,'');
+  var email = document.getElementById('email').value.trim();
+  var ok = true;
+  ok = marca('nome', nome.split(/\s+/).length >= 2 && nome.length >= 5) && ok;
+  ok = marca('whatsapp', d.length >= 10) && ok;
+  ok = marca('email', !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) && ok;
+  ok = marca('curso', !!document.getElementById('curso').value) && ok;
+  ok = marca('consent', document.getElementById('consent').checked) && ok;
+  if (!ok){
+    var primeiro = document.querySelector('.field.has-err input, .field.has-err select');
+    if (primeiro) primeiro.focus();
+  }
+  return ok;
+}
+
+function payload(){
+  return {
+    acao: 'cadastro',
+    enviadoEm: new Date().toISOString(),
+    nome: document.getElementById('nome').value.trim().replace(/\s+/g,' '),
+    whatsapp: zap.value,
+    email: document.getElementById('email').value.trim(),
+    curso: document.getElementById('curso').value,
+    periodo: document.getElementById('periodo').value,
+    palestra: document.getElementById('palestra').value,
+    consentimento: 'Sim',
+    versao: CONFIG.versao
+  };
+}
+
+function erro(texto){
+  var m = document.getElementById('msg');
+  m.textContent = texto; m.style.display = 'block';
+  var b = document.getElementById('btnSend');
+  b.disabled = false; b.textContent = 'Tentar de novo';
+}
+
+document.getElementById('form').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  document.getElementById('msg').style.display = 'none';
+  if (!valida()) return;
+  if (!CONFIG.endpoint) return erro('O cadastro ainda não foi ligado à planilha. Avise o palestrante.');
+
+  var btn = document.getElementById('btnSend');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  var p = payload();
+  var ctrl = new AbortController();
+  var to = setTimeout(function(){ ctrl.abort(); }, 15000);
+
+  fetch(CONFIG.endpoint, {
+    method: 'POST',
+    headers: {'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(p),
+    signal: ctrl.signal
+  })
+  .then(function(r){ clearTimeout(to); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(function(res){
+    if (!res.ok) throw new Error(res.erro || 'falha');
+    sucesso(p.nome.split(' ')[0], res.jaCadastrado);
+  })
+  .catch(function(){
+    clearTimeout(to);
+    erro('Não conseguimos enviar agora. Confira a internet e toque em "Tentar de novo". Seus dados continuam preenchidos.');
+  });
+});
+
+function sucesso(primeiroNome, jaTinha){
+  document.getElementById('form').style.display = 'none';
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('doneTitle').textContent = 'Tudo certo, ' + primeiroNome + '!';
+  if (jaTinha) document.getElementById('doneLead').textContent =
+    'Esse WhatsApp já estava cadastrado, então seu nome já está no sorteio. Fique até o final da palestra.';
+  document.getElementById('done').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>

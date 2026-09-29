@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MK8HJ8QF9G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MK8HJ8QF9G');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aldemir Junior — Avaliação Física e Performance · Bauru</title>
+  <meta name="description" content="Avaliação física completa em Bauru-SP. Composição corporal, força, mobilidade, VO2 e plano de performance individualizado. Treine com dados, não com achismo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:      #17191d;
+    --navy-mid:  #1d2025;
+    --teal:      #1f2227;
+    --teal-mid:  #262a30;
+    --gold:      #C9A84C;
+    --gold-lt:   #e2c878;
+    --gold-dk:   #9f8038;
+    --white:     #ffffff;
+    --off-white: #f0ede8;
+    --gray:      #9aa0a8;
+    --radius:    6px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #08090b;
+    color: var(--off-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── FUNDO TECH: grid + brilho dourado ── */
+  .tech-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 15%, #000 25%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 15%, #000 25%, transparent 75%);
+  }
+  .tech-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 45% at 70% 8%, rgba(201,168,76,0.08), transparent 60%);
+  }
+  section, footer, nav { position: relative; z-index: 1; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* ══════════════════════════════════
+     NAV
+  ══════════════════════════════════ */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(23,25,29,0.97);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .nav-logo img {
+    height: 46px;
+    background: white;
+    border-radius: 6px;
+    padding: 4px 10px;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { color: #989fa8; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    border: 1px solid var(--gold);
+    background: transparent; color: var(--gold) !important;
+    padding: 0.45rem 1.2rem; border-radius: 4px;
+    font-weight: 700 !important; font-size: 0.85rem !important;
+    transition: all 0.25s !important; letter-spacing: 0 !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--navy) !important; box-shadow: 0 0 24px rgba(201,168,76,0.35); }
+
+  /* logo em texto — dark tech */
+  .nav-logo-txt {
+    font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 1.15rem;
+    letter-spacing: -0.5px; color: var(--white); text-decoration: none; line-height: 1.1;
+  }
+  .nav-logo-txt span { color: var(--gold); }
+  .nav-logo-txt small {
+    display: block; font-family: 'JetBrains Mono', monospace; font-weight: 400;
+    font-size: 8px; letter-spacing: 3px; color: var(--gray); text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════════
+     HERO — Fullscreen statement
+  ══════════════════════════════════ */
+  #hero {
+    min-height: 92vh;
+    background: #08090b;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* foto de fundo — avaliação */
+  .hero-photo {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('foto-hero-vo2.jpg') 70% 24% / cover no-repeat;
+    filter: grayscale(55%) contrast(1.06) brightness(0.9);
+  }
+  .hero-photo::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(8,9,11,0.97) 0%, rgba(8,9,11,0.88) 38%, rgba(8,9,11,0.55) 68%, rgba(8,9,11,0.35) 100%),
+      linear-gradient(to top, #08090b 2%, transparent 34%),
+      linear-gradient(to bottom, rgba(8,9,11,0.75), transparent 28%),
+      radial-gradient(ellipse 60% 45% at 72% 12%, rgba(201,168,76,0.10), transparent 60%);
+  }
+  @media (max-width: 900px) {
+    .hero-photo { background-position: 72% 20%; opacity: 0.7; }
+    .hero-photo::after {
+      background:
+        linear-gradient(rgba(8,9,11,0.68), rgba(8,9,11,0.68)),
+        linear-gradient(to top, #08090b 2%, transparent 40%);
+    }
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 90px 5% 80px 7%;
+    position: relative; z-index: 2;
+    max-width: 860px;
+  }
+  @media (min-width: 901px) { .hero-left { padding-right: 380px; max-width: none; width: 100%; } }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold); font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
+  .hero-pulse {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
+    animation: heroPulse 1.6s infinite;
+  }
+  @keyframes heroPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); }
+    50% { box-shadow: 0 0 0 9px transparent; }
+  }
+
+  .hero-title {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: clamp(2.5rem, 4.8vw, 4.4rem);
+    font-weight: 900; line-height: 0.98;
+    color: var(--white); margin-bottom: 1.5rem;
+    text-transform: uppercase; letter-spacing: -2px;
+  }
+  .hero-title em { color: var(--gold); font-style: italic; text-shadow: 0 0 60px rgba(201,168,76,0.35); }
+  .hero-title .outline { color: transparent; -webkit-text-stroke: 1.5px rgba(240,237,232,0.5); }
+
+  /* ── HUD DE TELEMETRIA (hero) ── */
+  .hero-hud {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%); z-index: 3;
+    width: 310px;
+    background: rgba(23,25,29,0.82);
+    border: 1px solid rgba(201,168,76,0.28);
+    border-radius: 4px;
+    backdrop-filter: blur(12px);
+    padding: 1.1rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  }
+  .hud-head {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 9px; letter-spacing: 3px; color: var(--gray);
+    text-transform: uppercase; margin-bottom: 0.9rem;
+  }
+  .hud-head b { color: var(--gold); display: inline-flex; align-items: center; gap: 5px; }
+  .hud-head b::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: heroPulse 1.6s infinite; }
+  .hud-row { display: flex; justify-content: space-between; font-size: 11px; color: #b4bac2; padding-top: 0.55rem; }
+  .hud-row b { color: var(--gold-lt); }
+  .hud-bar { height: 3px; background: rgba(201,168,76,0.14); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+  .hud-bar i {
+    display: block; height: 100%; width: 0; background: var(--gold); border-radius: 2px;
+    box-shadow: 0 0 8px rgba(201,168,76,0.5);
+    transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hud-chart { margin-top: 0.9rem; border-top: 1px solid rgba(201,168,76,0.12); padding-top: 0.8rem; }
+  .hud-chart svg { width: 100%; display: block; }
+  .hud-chart-path {
+    fill: none; stroke: var(--gold); stroke-width: 2;
+    stroke-dasharray: 420; stroke-dashoffset: 420;
+    filter: drop-shadow(0 0 5px rgba(201,168,76,0.5));
+    animation: hudDraw 3.2s ease forwards infinite alternate;
+  }
+  @keyframes hudDraw { to { stroke-dashoffset: 0; } }
+  .hud-chart-label { font-size: 8.5px; fill: #6e747d; letter-spacing: 2px; }
+  @media (max-width: 900px) { .hero-hud { display: none; } }
+
+  /* ── FAIXA DE ESTATÍSTICAS ── */
+  .stats-strip {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    background: rgba(29,32,37,0.55); backdrop-filter: blur(8px);
+  }
+  .stat-cell { padding: 2rem 1.5rem; border-right: 1px solid rgba(201,168,76,0.12); position: relative; overflow: hidden; }
+  .stat-cell:last-child { border-right: none; }
+  .stat-cell::after { content: ''; position: absolute; bottom: 0; left: 0; height: 2px; width: 0; background: var(--gold); transition: width 0.6s; }
+  .stat-cell:hover::after { width: 100%; }
+  .stat-num {
+    font-family: 'Chakra Petch', sans-serif; font-weight: 900;
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem); color: var(--gold);
+  }
+  .stat-num sup { font-size: 0.5em; color: var(--gold-lt); }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    letter-spacing: 2px; color: var(--gray); text-transform: uppercase; margin-top: 4px;
+  }
+  @media (max-width: 700px) {
+    .stats-strip { grid-template-columns: 1fr 1fr; }
+    .stat-cell:nth-child(2) { border-right: none; }
+  }
+
+  .hero-sub {
+    font-size: 1.05rem; color: #8b929c;
+    max-width: 480px; line-height: 1.8; margin-bottom: 2.5rem;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+
+  .btn-gold {
+    font-family: 'Chakra Petch', sans-serif;
+    background: var(--gold); color: var(--navy);
+    padding: 1rem 2.2rem; border-radius: 4px;
+    text-decoration: none; font-weight: 800; font-size: 0.88rem;
+    text-transform: uppercase; letter-spacing: 1px;
+    transition: all 0.25s; display: inline-block;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.25);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+  }
+  .btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 0 40px rgba(201,168,76,0.4); }
+
+  .btn-ghost {
+    font-family: 'JetBrains Mono', monospace;
+    color: #989fa8; text-decoration: none; font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 1px;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.5rem 0.2rem;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+  .btn-ghost::before { content: '// '; opacity: 0.6; }
+  .btn-ghost::after { content: '↓'; }
+
+  /* hero right — foto */
+  .hero-right {
+    position: relative;
+    background: var(--teal);
+  }
+  .hero-right img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    opacity: 0.7;
+    mix-blend-mode: luminosity;
+  }
+  .hero-right-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, transparent 40%),
+                linear-gradient(to top, var(--navy) 0%, transparent 30%);
+  }
+
+  /* quote strip */
+  .hero-quote {
+    position: absolute; bottom: 40px; right: 5%; z-index: 3;
+    max-width: 340px;
+  }
+  .hero-quote blockquote {
+    font-family: 'Chakra Petch', sans-serif;
+    font-style: italic; font-size: 1.4rem; line-height: 1.4;
+    color: var(--white);
+  }
+  .hero-quote blockquote::before { content: '"'; color: var(--gold); font-size: 2rem; line-height: 0; vertical-align: -0.4em; margin-right: 2px; }
+  .hero-quote blockquote::after { content: '"'; color: var(--gold); font-size: 2rem; line-height: 0; vertical-align: -0.4em; margin-left: 2px; }
+
+
+  /* ══════════════════════════════════
+     PARA QUEM É — identidade/desejo
+  ══════════════════════════════════ */
+  #para-quem {
+    background: #101114;
+    padding: 100px 5%;
+  }
+
+  .pq-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem; margin-top: 2.6rem;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.65rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+
+  .section-title {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: clamp(1.9rem, 3.4vw, 3rem);
+    font-weight: 900; line-height: 1.02; margin-bottom: 1.25rem;
+    color: var(--white);
+    text-transform: uppercase; letter-spacing: -1px;
+  }
+  .section-title em { color: var(--gold); font-style: italic; }
+
+  .section-sub { color: rgba(194,198,203,0.7); font-size: 1rem; line-height: 1.8; max-width: 520px; }
+
+  .pq-card {
+    background: rgba(23,25,29,0.85);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 1.9rem 1.7rem;
+    display: flex; flex-direction: column; gap: 0.9rem;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  }
+  .pq-card:hover {
+    border-color: rgba(201,168,76,0.55);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 44px rgba(0,0,0,0.4);
+  }
+  .pq-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .pq-tag::before { content: ''; width: 18px; height: 1px; background: var(--gold); }
+  .pq-card h3 {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--white);
+    line-height: 1.2; text-transform: uppercase; letter-spacing: -0.5px;
+  }
+  .pq-card p { font-size: 0.92rem; color: rgba(194,198,203,0.75); line-height: 1.7; flex: 1; }
+  .pq-card a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 1px;
+    color: var(--gold); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+  .pq-card a::before { content: '// '; opacity: 0.6; }
+  .pq-card a:hover { gap: 0.7rem; }
+  @media (max-width: 900px) { .pq-grid { grid-template-columns: 1fr; } }
+
+
+  /* ══════════════════════════════════
+     O QUE AVALIAMOS
+  ══════════════════════════════════ */
+  #avaliamos {
+    background: var(--navy);
+    padding: 100px 5%;
+  }
+
+  #avaliamos .section-title { color: var(--white); }
+  #avaliamos .section-sub { color: rgba(196,200,206,0.6); }
+
+  .av-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 5rem; align-items: start; margin-top: 3.5rem;
+  }
+
+  .av-intro {}
+
+  .av-highlight {
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px; padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  .av-highlight-title { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.75rem; letter-spacing: 0.5px; }
+  .av-highlight p { font-size: 0.9rem; color: #989fa8; line-height: 1.7; }
+
+  .av-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .av-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px; padding: 1.4rem;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+  .av-card:hover {
+    border-color: rgba(201,168,76,0.3);
+    background: rgba(201,168,76,0.05);
+  }
+  .av-card-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+  .av-card-title {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 0.85rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem;
+  }
+  .av-card-text { font-size: 0.78rem; color: #575e67; line-height: 1.6; }
+
+  /* ══════════════════════════════════
+     O QUE VOCÊ RECEBE — o close
+  ══════════════════════════════════ */
+  #recebe {
+    background: var(--navy);
+    padding: 100px 5%;
+  }
+
+  .recebe-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5rem; align-items: center; margin-top: 3.5rem;
+  }
+
+  .recebe-items { display: flex; flex-direction: column; gap: 1.1rem; }
+
+  .recebe-item {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    background: rgba(255,255,255,0.05); border-radius: 6px;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid rgba(255,255,255,0.07); box-shadow: none;
+    transition: transform 0.2s;
+  }
+  .recebe-item:hover { transform: translateX(4px); }
+
+  .recebe-num {
+    flex-shrink: 0; width: 40px; height: 40px;
+    background: var(--navy); color: var(--gold);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 0.9rem;
+  }
+
+  .recebe-body {}
+  .recebe-title { font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--white); margin-bottom: 0.2rem; }
+  .recebe-text { font-size: 0.82rem; color: rgba(196,200,206,0.65); line-height: 1.5; }
+
+  .recebe-foto {
+    position: relative; border-radius: var(--radius); overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  .recebe-foto img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+  .recebe-foto-cta {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(23,25,29,0.95) 0%, transparent 100%);
+    padding: 3rem 1.75rem 1.75rem;
+    text-align: center;
+  }
+
+  /* ══════════════════════════════════
+     PLANOS
+  ══════════════════════════════════ */
+  #planos {
+    background: var(--navy);
+    padding: 100px 5%;
+  }
+
+  #planos .section-title { color: var(--white); }
+  #planos .section-sub { color: rgba(196,200,206,0.6); }
+
+  .planos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+
+  .plano {
+    border-radius: var(--radius); overflow: hidden;
+    display: flex; flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: var(--navy-mid);
+    transition: transform 0.2s;
+  }
+  .plano:hover { transform: translateY(-5px); }
+  .plano.featured {
+    border: 2px solid var(--gold);
+    position: relative;
+  }
+
+  .plano-badge {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gold); color: #17191d;
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; padding: 0.3rem 1.1rem;
+    border-radius: 3px; white-space: nowrap; z-index: 2;
+  }
+
+  .plano-img {
+    width: 100%; aspect-ratio: 4/3;
+    object-fit: cover; object-position: center top;
+    display: block;
+  }
+  .plano-head { padding: 2.25rem 1.75rem 1.25rem; }
+  .plano-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+  .plano-name { font-family: 'Chakra Petch', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--white); margin-bottom: 0.5rem; }
+  .plano-desc { font-size: 0.84rem; color: rgba(196,200,206,0.65); line-height: 1.6; }
+
+  .plano-preco { padding: 0 1.75rem 1rem; }
+  .preco-val {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 2.5rem; font-weight: 900; color: var(--gold); line-height: 1;
+  }
+  .preco-per { font-size: 0.9rem; font-weight: 500; color: rgba(196,200,206,0.65); }
+  .preco-note { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.5px; text-transform: uppercase; color: #575e67; margin-top: 0.35rem; }
+
+  .plano-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 0 1.75rem; }
+
+  .plano-lista { list-style: none; padding: 1.25rem 1.75rem; flex: 1; }
+  .plano-lista li {
+    font-size: 0.86rem; color: #7f858e;
+    padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: flex-start; gap: 0.65rem;
+  }
+  .plano-lista li:last-child { border-bottom: none; }
+  .plano-lista li::before { content: "✓"; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .plano-foot { padding: 1rem 1.75rem 1.75rem; }
+
+  .btn-plano-gold {
+    display: block; text-align: center;
+    font-family: 'Chakra Petch', sans-serif;
+    background: var(--gold); color: #17191d;
+    padding: 0.9rem; border-radius: 4px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 1px;
+    transition: all 0.25s;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  }
+  .btn-plano-gold:hover { background: var(--gold-lt); box-shadow: 0 0 28px rgba(201,168,76,0.35); }
+
+  .btn-plano-outline {
+    display: block; text-align: center;
+    font-family: 'Chakra Petch', sans-serif;
+    background: transparent; color: var(--gold);
+    padding: 0.9rem; border-radius: 4px;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 1px;
+    border: 1px solid rgba(201,168,76,0.35);
+    transition: all 0.2s;
+  }
+  .btn-plano-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+  /* ══════════════════════════════════
+     PERFORMANCE DAY
+  ══════════════════════════════════ */
+  #performance-day {
+    background: #101114;
+    padding: 100px 5%;
+  }
+
+  .pd-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center; margin-top: 3.5rem;
+  }
+
+  .pd-fotos {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .pd-foto { border-radius: 6px; overflow: hidden; }
+  .pd-foto img { width: 100%; object-fit: cover; display: block; }
+  .pd-foto:first-child { grid-column: span 2; }
+  .pd-foto:first-child img { aspect-ratio: 16/9; }
+  .pd-foto:not(:first-child) img { aspect-ratio: 1/1; }
+
+  .pd-content .section-sub { color: rgba(194,198,203,0.7); }
+
+  .pd-itens { list-style: none; margin: 2rem 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .pd-itens li {
+    display: flex; align-items: flex-start; gap: 0.85rem;
+    font-size: 0.92rem; color: rgba(225,225,225,0.82);
+    padding: 0.75rem 1rem; border-radius: 4px; background: rgba(255,255,255,0.05);
+    box-shadow: none; border: 1px solid rgba(255,255,255,0.06);
+  }
+  .pd-itens li::before { content: "✦"; color: var(--gold); font-size: 0.55rem; margin-top: 5px; flex-shrink: 0; }
+
+  .pd-price-box {
+    background: var(--navy); border-radius: 6px; padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .pd-price-lbl { font-size: 0.7rem; color: var(--gold); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .pd-price-val { font-family: 'Chakra Petch', sans-serif; font-size: 2rem; font-weight: 900; color: var(--white); }
+  .pd-price-note { font-size: 0.78rem; color: rgba(196,200,206,0.6); margin-top: 0.2rem; }
+
+  /* ══════════════════════════════════
+     SOBRE
+  ══════════════════════════════════ */
+  #sobre {
+    background: var(--navy);
+    padding: 100px 5%;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 6rem; align-items: center;
+  }
+
+  .sobre-foto {
+    position: relative; border-radius: var(--radius); overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+  }
+  .sobre-foto img {
+    width: 100%; aspect-ratio: 3/4;
+    object-fit: cover; object-position: center top; display: block;
+  }
+  .sobre-foto::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(23,25,29,0.6) 0%, transparent 50%);
+  }
+  .sobre-foto-badge {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 1; white-space: nowrap;
+    background: var(--gold); color: var(--navy);
+    font-family: 'Chakra Petch', sans-serif; font-weight: 800; font-size: 0.82rem;
+    padding: 0.55rem 1.25rem; border-radius: 3px;
+  }
+
+  .sobre-content .section-title { color: var(--white); }
+  .sobre-content .section-sub { color: rgba(196,200,206,0.65); max-width: 100%; margin-bottom: 1rem; }
+
+  .sobre-itens { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.85rem; }
+  .sobre-item {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.9rem; color: #6e747d; font-weight: 500;
+  }
+  .sobre-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+  }
+
+  /* ══════════════════════════════════
+     CTA FINAL
+  ══════════════════════════════════ */
+  #cta {
+    background: var(--teal);
+    padding: 120px 5%;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-glow {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold); font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1.25rem;
+  }
+  .cta-title {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 700;
+    color: var(--white); line-height: 1.05; margin-bottom: 1.25rem;
+    text-transform: uppercase; letter-spacing: -1px;
+  }
+  .cta-title em { color: var(--gold); font-style: italic; }
+  .cta-sub { color: rgba(196,200,206,0.65); font-size: 1rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.8; }
+
+  .btn-wpp {
+    display: inline-flex; align-items: center; gap: 0.85rem;
+    font-family: 'Chakra Petch', sans-serif;
+    background: var(--gold); color: var(--navy);
+    padding: 1.15rem 2.5rem; border-radius: 4px;
+    text-decoration: none; font-weight: 700; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 1px;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+    box-shadow: 0 6px 30px rgba(201,168,76,0.3);
+    transition: all 0.2s;
+    position: relative; z-index: 1;
+  }
+  .btn-wpp:hover { background: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 10px 40px rgba(201,168,76,0.4); }
+  .btn-wpp svg { width: 26px; height: 26px; fill: var(--navy); }
+
+  .cta-insta {
+    display: block; margin-top: 1.5rem; position: relative; z-index: 1;
+    color: rgba(196,200,206,0.5); font-size: 0.85rem; text-decoration: none; transition: color 0.2s;
+  }
+  .cta-insta:hover { color: var(--gold); }
+  .cta-insta span { color: var(--gold); }
+
+  /* ══════════════════════════════════
+     FOOTER
+  ══════════════════════════════════ */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 2.5rem 5%;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo img { height: 34px; background: white; border-radius: 4px; padding: 3px 8px; opacity: 0.7; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: 'JetBrains Mono', monospace; color: #3d4249; text-decoration: none; font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-info { font-family: 'JetBrains Mono', monospace; color: #2c3037; font-size: 0.66rem; letter-spacing: 1.5px; text-transform: uppercase; width: 100%; text-align: center; padding-top: 0.5rem; }
+
+  /* ══════════════════════════════════
+     WPP FLOAT
+  ══════════════════════════════════ */
+  .wpp-float {
+    position: fixed; bottom: 24px; right: 24px; z-index: 999;
+    background: #25D366; width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none; transition: transform 0.2s;
+  }
+  .wpp-float:hover { transform: scale(1.1); }
+  .wpp-float svg { width: 32px; height: 32px; fill: white; }
+
+  /* ══════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════ */
+  @media (max-width: 960px) {
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .av-layout, .recebe-layout, .pd-layout, #sobre { grid-template-columns: 1fr; }
+    .recebe-foto { display: none; }
+    #sobre { gap: 3rem; }
+    .planos-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .planos-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .hero-left { padding: 60px 5%; }
+    .hero-quote { display: none; }
+    .av-grid { grid-template-columns: 1fr; }
+    section, #planos, #avaliamos, #recebe, #sobre, #cta, #performance-day, #para-quem { padding: 70px 5%; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-actions { flex-direction: column; }
+    .pd-fotos { grid-template-columns: 1fr; }
+    .pd-foto:first-child { grid-column: auto; }
+  }
+
+  /* ══════════════════════════════════
+     DEPOIMENTOS
+  ══════════════════════════════════ */
+  #depoimentos {
+    background: var(--navy);
+    padding: 100px 5%;
+  }
+  .dep-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+  .dep-card {
+    background: rgba(255,255,255,0.04); border-radius: var(--radius);
+    padding: 1.75rem; display: flex; flex-direction: column; gap: 1.1rem;
+    box-shadow: none;
+    border: 1px solid rgba(201,168,76,0.14);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .dep-card:hover { transform: translateY(-3px); box-shadow: 0 4px 24px rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.3); }
+  .dep-stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; }
+  .dep-text { font-size: 0.93rem; color: rgba(210,215,220,0.75); line-height: 1.75; font-style: italic; flex: 1; }
+  .dep-author {
+    display: flex; align-items: center; gap: 0.85rem;
+    padding-top: 0.85rem; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .dep-avatar {
+    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+    background: var(--navy); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 1rem;
+  }
+  .dep-name { font-weight: 700; font-size: 0.88rem; color: var(--white); }
+  .dep-role { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.5px; text-transform: uppercase; color: #9aa0a8; margin-top: 0.15rem; }
+
+  /* ══════════════════════════════════
+     FAQ
+  ══════════════════════════════════ */
+  #faq {
+    background: var(--navy);
+    padding: 100px 5%;
+  }
+  #faq .section-title { color: var(--white); }
+  #faq .section-sub { color: rgba(196,200,206,0.6); }
+  .faq-list { max-width: 780px; margin: 3.5rem auto 0; }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .faq-btn {
+    width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+    padding: 1.4rem 0;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600;
+    color: var(--white); transition: color 0.2s;
+  }
+  .faq-btn:hover { color: var(--gold); }
+  .faq-btn.open { color: var(--gold); }
+  .faq-icon {
+    flex-shrink: 0; color: var(--gold); font-size: 1.4rem;
+    font-weight: 300; transition: transform 0.3s; line-height: 1;
+  }
+  .faq-btn.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.3s ease;
+    font-size: 0.92rem; color: rgba(196,200,206,0.7); line-height: 1.8;
+  }
+  .faq-answer.open { max-height: 400px; padding-bottom: 1.5rem; }
+
+  /* Maps */
+  .maps-link {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold); padding: 0.65rem 1.2rem; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    text-decoration: none; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.5px;
+    transition: all 0.2s; margin-top: 1rem;
+  }
+  .maps-link:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
+
+  /* Plano lançamento */
+  .plano.launch { position: relative; border: 1px solid rgba(201,168,76,0.55); }
+  .plano-badge-green {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gold); color: #17191d;
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; padding: 0.32rem 0.9rem;
+    border-radius: 3px; white-space: nowrap; z-index: 2;
+  }
+
+  @media (max-width: 960px) {
+    .dep-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .dep-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+  }
+  /* ══════════════════════════════════
+     GIRO DE NOTÍCIAS (página SPA)
+  ══════════════════════════════════ */
+  #giro-noticias { display: none; }
+  body.giro-ativo #giro-noticias { display: block; }
+  body.giro-ativo > section:not(#giro-noticias),
+  body.giro-ativo > .stats-strip,
+  body.giro-ativo > #hero { display: none !important; }
+
+  #giro-noticias {
+    background: #0b0c0e;
+    min-height: 80vh;
+    padding: 70px 5% 100px;
+  }
+  .giro-header { max-width: 1180px; margin: 0 auto 3rem; }
+  .giro-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--gold); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .giro-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
+  .giro-title {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    color: var(--white); font-weight: 900; line-height: 1;
+    text-transform: uppercase; letter-spacing: -1.5px;
+  }
+  .giro-title em { color: var(--gold); font-style: italic; text-shadow: 0 0 40px rgba(201,168,76,0.3); }
+  .giro-sub { color: var(--gray); margin-top: 0.75rem; max-width: 620px; font-size: 0.98rem; }
+  .giro-atualizado { color: #575e67; font-size: 0.75rem; margin-top: 0.75rem; letter-spacing: 0.5px; }
+
+  .giro-filtros { display: flex; flex-wrap: wrap; gap: 0.5rem; max-width: 1180px; margin: 0 auto 2rem; }
+  .giro-filtro {
+    background: transparent; border: 1px solid rgba(201,168,76,0.25);
+    color: #989fa8; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .giro-filtro:hover { border-color: var(--gold); color: var(--gold); }
+  .giro-filtro.ativo { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+
+  .giro-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem; max-width: 1180px; margin: 0 auto;
+  }
+  .noticia-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    display: flex; flex-direction: column;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .noticia-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201,168,76,0.4);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  }
+  .noticia-card.destaque { grid-column: 1 / -1; padding: 2.25rem; background: linear-gradient(135deg, var(--teal) 0%, var(--navy-mid) 100%); }
+  .noticia-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .noticia-tag {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--gold); color: var(--navy);
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 3px;
+  }
+  .noticia-data { font-family: 'JetBrains Mono', monospace; color: #575e67; font-size: 0.68rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+  .noticia-fonte { font-family: 'JetBrains Mono', monospace; color: #5d636b; font-size: 0.68rem; letter-spacing: 1px; }
+  .noticia-titulo {
+    font-family: 'Chakra Petch', sans-serif; font-weight: 800;
+    color: var(--white); font-size: 1.08rem; line-height: 1.3; margin-bottom: 0.75rem;
+    letter-spacing: -0.3px;
+  }
+  .noticia-card.destaque { border-left: 3px solid var(--gold); }
+  .noticia-card.destaque .noticia-titulo { font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 900; letter-spacing: -0.8px; }
+  .noticia-link { font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; font-size: 0.74rem; }
+  .noticia-resumo { color: var(--gray); font-size: 0.88rem; line-height: 1.6; flex: 1; margin-bottom: 1.25rem; }
+  .noticia-link {
+    display: inline-flex; align-items: center; gap: 0.4rem; align-self: flex-start;
+    color: var(--gold); text-decoration: none; font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.3px; transition: gap 0.2s;
+  }
+  .noticia-link:hover { gap: 0.7rem; }
+  .noticia-link::after { content: '→'; }
+  .giro-vazio { grid-column: 1 / -1; text-align: center; color: var(--gray); padding: 4rem 1rem; }
+
+  @media (max-width: 768px) {
+    #giro-noticias { padding: 50px 5% 80px; }
+  }
+  </style>
+</head>
+<body>
+
+<div class="tech-bg"></div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <a href="#hero" class="nav-logo-txt">AJR<span>.</span><small>Avaliação · Performance</small></a>
+  <ul class="nav-links">
+    <li><a href="#quiz" style="color:var(--gold);font-weight:700">Descobrir meu plano</a></li>
+    <li><a href="#vo2">VO₂ Máx</a></li>
+    <li><a href="#planos">Planos</a></li>
+    <li><a href="#depoimentos">Depoimentos</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#giro" id="navGiro">Giro de Notícias</a></li>
+    <li><a href="https://wa.me/5514997432182?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais!" class="nav-cta">Falar no WhatsApp</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-photo" aria-hidden="true"></div>
+  <div class="hero-left">
+    <span class="hero-eyebrow"><span class="hero-pulse"></span>Bauru · SP &nbsp;·&nbsp; Clínica Vitallite</span>
+    <h1 class="hero-title">
+      <span class="outline">Treine com</span><br>dados.<br><em>Não com achismo.</em>
+    </h1>
+    <p class="hero-sub">
+      Você não precisa treinar mais — precisa treinar <strong style="color:#c9a84c;font-weight:600">certo</strong>. A avaliação física completa transforma dados reais do seu corpo em um plano concreto para emagrecer, evoluir ou viver com mais saúde e segurança.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" class="btn-gold">Agendar minha avaliação</a>
+      <a href="#planos" class="btn-ghost">Ver os planos</a>
+    </div>
+  </div>
+
+  <!-- HUD de telemetria -->
+  <div class="hero-hud" id="heroHud">
+    <div class="hud-head"><span>TELEMETRIA</span><b>LIVE</b></div>
+    <div class="hud-row"><span>VO₂ máx</span><b>52.4 ml/kg/min</b></div>
+    <div class="hud-bar"><i data-w="78%"></i></div>
+    <div class="hud-row"><span>Massa magra</span><b>+3.2 kg</b></div>
+    <div class="hud-bar"><i data-w="64%"></i></div>
+    <div class="hud-row"><span>Assimetria</span><b>−41%</b></div>
+    <div class="hud-bar"><i data-w="86%"></i></div>
+    <div class="hud-chart">
+      <svg viewBox="0 0 260 78">
+        <path class="hud-chart-path" d="M0,62 L30,58 L55,44 L80,49 L105,32 L130,37 L160,20 L195,25 L230,9 L260,13"/>
+        <text x="0" y="76" class="hud-chart-label">VO₂ MAX — EVOLUÇÃO 12 SEMANAS</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FAIXA DE ESTATÍSTICAS ═══════════ -->
+<div class="stats-strip">
+  <div class="stat-cell"><div class="stat-num" data-count="120" data-suffix="+">0</div><div class="stat-label">Atletas avaliados</div></div>
+  <div class="stat-cell"><div class="stat-num" data-count="30" data-suffix="+">0</div><div class="stat-label">Métricas por avaliação</div></div>
+  <div class="stat-cell"><div class="stat-num" data-count="12" data-suffix=" sem">0</div><div class="stat-label">Ciclo de evolução</div></div>
+  <div class="stat-cell"><div class="stat-num" data-count="100" data-suffix="%">0</div><div class="stat-label">Baseado em evidência</div></div>
+</div>
+
+<script>
+/* HUD: anima as barras ao carregar */
+window.addEventListener('load', function () {
+  document.querySelectorAll('.hud-bar i').forEach(function (bar) {
+    setTimeout(function () { bar.style.width = bar.getAttribute('data-w'); }, 300);
+  });
+});
+
+/* Números que contam ao entrar na tela */
+(function () {
+  function animarNumero(el) {
+    var alvo = parseInt(el.getAttribute('data-count'), 10);
+    var sufixo = el.getAttribute('data-suffix') || '';
+    var inicio = null, dur = 1600;
+    function passo(ts) {
+      if (!inicio) inicio = ts;
+      var p = Math.min((ts - inicio) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.innerHTML = Math.round(alvo * eased) + '<sup>' + sufixo + '</sup>';
+      if (p < 1) requestAnimationFrame(passo);
+    }
+    requestAnimationFrame(passo);
+  }
+  var vistos = new WeakSet();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting && !vistos.has(e.target)) {
+        vistos.add(e.target);
+        animarNumero(e.target);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.stat-num[data-count]').forEach(function (el) { io.observe(el); });
+  window.__ioContador = io; // reutilizado pela seção VO2
+})();
+</script>
+
+<!-- ═══════════ VO₂ MÁXIMO — seção protagonista ═══════════ -->
+<style>
+#vo2 {
+  background: linear-gradient(180deg, #0b0c0e 0%, var(--navy) 50%, #0b0c0e 100%);
+  padding: 110px 5%;
+  position: relative; overflow: hidden;
+}
+.vo2-layout {
+  display: grid; grid-template-columns: 1.05fr 0.95fr;
+  gap: 4.5rem; max-width: 1180px; margin: 0 auto; align-items: center;
+}
+@media (max-width: 900px) { .vo2-layout { grid-template-columns: 1fr; gap: 3rem; } }
+
+.vo2-desc { color: rgba(194,198,203,0.75); font-size: 1rem; line-height: 1.8; max-width: 540px; margin-bottom: 1.5rem; }
+.vo2-desc strong { color: var(--gold-lt); font-weight: 600; }
+
+/* etapas do protocolo */
+.vo2-protocolo { margin: 2rem 0 2.5rem; display: flex; flex-direction: column; }
+.vo2-etapa {
+  display: flex; gap: 1.1rem; align-items: flex-start;
+  padding: 1rem 0; border-top: 1px solid rgba(201,168,76,0.12);
+}
+.vo2-etapa:last-child { border-bottom: 1px solid rgba(201,168,76,0.12); }
+.vo2-etapa-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700;
+  color: var(--gold); border: 1px solid rgba(201,168,76,0.35); border-radius: 4px;
+  padding: 4px 8px; flex-shrink: 0; margin-top: 2px;
+}
+.vo2-etapa h4 { font-family: 'Chakra Petch', sans-serif; font-weight: 800; font-size: 0.95rem; color: var(--white); text-transform: uppercase; letter-spacing: 0.3px; }
+.vo2-etapa p { color: var(--gray); font-size: 0.86rem; line-height: 1.6; margin-top: 2px; }
+
+/* painel direito: gauge + zonas */
+.vo2-painel {
+  background: rgba(29,32,37,0.75);
+  border: 1px solid rgba(201,168,76,0.22);
+  border-radius: var(--radius);
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+}
+.vo2-painel-head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 3px;
+  color: var(--gray); text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.vo2-painel-head b { color: var(--gold); display: inline-flex; align-items: center; gap: 5px; }
+.vo2-painel-head b::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: heroPulse 1.6s infinite; }
+
+.vo2-gauge { position: relative; width: 230px; margin: 0 auto 1.75rem; }
+.vo2-gauge svg { width: 100%; display: block; }
+.vo2-gauge-track { fill: none; stroke: rgba(201,168,76,0.12); stroke-width: 12; stroke-linecap: round; }
+.vo2-gauge-fill {
+  fill: none; stroke: var(--gold); stroke-width: 12; stroke-linecap: round;
+  filter: drop-shadow(0 0 10px rgba(201,168,76,0.45));
+  stroke-dasharray: 330; stroke-dashoffset: 330;
+  transition: stroke-dashoffset 2.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.vo2-gauge-val {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding-top: 12px;
+}
+.vo2-gauge-num { font-family: 'Chakra Petch', sans-serif; font-weight: 900; font-size: 2.6rem; color: var(--gold); line-height: 1; }
+.vo2-gauge-unid { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gray); margin-top: 6px; text-transform: uppercase; }
+
+.vo2-zonas { display: flex; flex-direction: column; gap: 0.6rem; }
+.vo2-zona { display: grid; grid-template-columns: 34px 1fr 58px; gap: 0.7rem; align-items: center; font-family: 'JetBrains Mono', monospace; }
+.vo2-zona-tag { font-size: 10px; font-weight: 700; color: var(--gold-lt); }
+.vo2-zona-bar { height: 8px; background: rgba(201,168,76,0.1); border-radius: 4px; overflow: hidden; }
+.vo2-zona-bar i {
+  display: block; height: 100%; width: 0; border-radius: 4px;
+  background: linear-gradient(90deg, var(--gold-dk), var(--gold));
+  box-shadow: 0 0 8px rgba(201,168,76,0.4);
+  transition: width 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.vo2-zona:nth-child(5) .vo2-zona-bar i { background: linear-gradient(90deg, var(--gold), var(--gold-lt)); }
+.vo2-zona-fc { font-size: 9.5px; color: var(--gray); text-align: right; }
+
+.vo2-foto { margin-top: 1.75rem; border-radius: 6px; overflow: hidden; position: relative; }
+.vo2-foto img {
+  width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: center 30%; display: block;
+  filter: saturate(0.55) contrast(1.08) brightness(0.92);
+}
+/* tratamento navy/dourado sobre a foto real */
+.vo2-foto::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(11,12,14,0.55) 0%, transparent 45%),
+    linear-gradient(135deg, rgba(23,25,29,0.35) 0%, rgba(201,168,76,0.08) 100%);
+  mix-blend-mode: multiply;
+}
+.vo2-foto-tag {
+  position: absolute; bottom: 10px; left: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 2px;
+  color: var(--gold); background: rgba(11,12,14,0.85); border: 1px solid rgba(201,168,76,0.3);
+  padding: 5px 10px; border-radius: 4px; text-transform: uppercase;
+}
+</style>
+
+<section id="vo2">
+  <div class="vo2-layout">
+    <div>
+      <div class="section-label">[ VO₂ MÁX ] — Padrão-ouro do condicionamento</div>
+      <h2 class="section-title">Qual é a potência<br>do seu <em>motor aeróbio?</em></h2>
+      <p class="vo2-desc">
+        O VO₂ máximo é <strong>o indicador que melhor prediz performance de resistência e longevidade</strong>. Na AJR, o teste em esteira vira zonas de treino individualizadas: você passa a treinar na intensidade exata que gera evolução.
+      </p>
+
+      <div class="vo2-protocolo">
+        <div class="vo2-etapa">
+          <span class="vo2-etapa-num">01</span>
+          <div><h4>Triagem e preparação</h4><p>Anamnese, pressão arterial e aquecimento padronizado antes do teste.</p></div>
+        </div>
+        <div class="vo2-etapa">
+          <span class="vo2-etapa-num">02</span>
+          <div><h4>Protocolo progressivo em esteira</h4><p>A intensidade sobe em estágios controlados enquanto a frequência cardíaca é monitorada em tempo real.</p></div>
+        </div>
+        <div class="vo2-etapa">
+          <span class="vo2-etapa-num">03</span>
+          <div><h4>Identificação dos limiares</h4><p>Detectamos seus limiares ventilatórios — as fronteiras fisiológicas que separam o treino leve, o moderado e o intenso.</p></div>
+        </div>
+        <div class="vo2-etapa">
+          <span class="vo2-etapa-num">04</span>
+          <div><h4>Relatório + zonas de treino</h4><p>Você recebe seu VO₂ máx, classificação por idade e as 5 zonas de FC para aplicar no treino já na semana seguinte.</p></div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Quero%20agendar%20um%20teste%20de%20VO2%20m%C3%A1ximo." class="btn-gold">Agendar teste de VO₂ máx</a>
+        <a href="#planos" class="btn-ghost">Ver nos planos</a>
+      </div>
+    </div>
+
+    <div class="vo2-painel" id="vo2Painel">
+      <div class="vo2-painel-head"><span>RESULTADO DO TESTE</span><b>EXEMPLO REAL</b></div>
+
+      <div class="vo2-gauge">
+        <svg viewBox="0 0 230 130">
+          <path class="vo2-gauge-track" d="M 20 120 A 95 95 0 0 1 210 120"/>
+          <path class="vo2-gauge-fill" id="vo2GaugeFill" d="M 20 120 A 95 95 0 0 1 210 120"/>
+        </svg>
+        <div class="vo2-gauge-val">
+          <div class="vo2-gauge-num" id="vo2Num">0</div>
+          <div class="vo2-gauge-unid">ml/kg/min · Excelente</div>
+        </div>
+      </div>
+
+      <div class="vo2-zonas">
+        <div class="vo2-zona"><span class="vo2-zona-tag">Z1</span><div class="vo2-zona-bar"><i data-w="35%"></i></div><span class="vo2-zona-fc">&lt; 120 bpm</span></div>
+        <div class="vo2-zona"><span class="vo2-zona-tag">Z2</span><div class="vo2-zona-bar"><i data-w="52%"></i></div><span class="vo2-zona-fc">120–139</span></div>
+        <div class="vo2-zona"><span class="vo2-zona-tag">Z3</span><div class="vo2-zona-bar"><i data-w="68%"></i></div><span class="vo2-zona-fc">140–155</span></div>
+        <div class="vo2-zona"><span class="vo2-zona-tag">Z4</span><div class="vo2-zona-bar"><i data-w="84%"></i></div><span class="vo2-zona-fc">156–171</span></div>
+        <div class="vo2-zona"><span class="vo2-zona-tag">Z5</span><div class="vo2-zona-bar"><i data-w="100%"></i></div><span class="vo2-zona-fc">&gt; 172 bpm</span></div>
+      </div>
+
+      <div class="vo2-foto">
+        <img src="foto-vo2-teste.jpg" onerror="this.onerror=null;this.src='foto-vo2.jpg'" alt="Teste de VO2 máximo real na AJR Performance — protocolo progressivo em esteira com análise de gases" loading="lazy" />
+        <span class="vo2-foto-tag">TESTE REAL · CLÍNICA VITALLITE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Painel VO2: gauge + zonas animam quando entram na tela */
+(function () {
+  var painel = document.getElementById('vo2Painel');
+  if (!painel) return;
+  var rodou = false;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting || rodou) return;
+      rodou = true;
+
+      // gauge: 52.4 de uma escala até ~70 → ~75% do arco
+      var fill = document.getElementById('vo2GaugeFill');
+      fill.style.strokeDashoffset = 330 - (330 * 0.75);
+
+      // número do gauge
+      var alvo = 52.4, inicio = null, dur = 2000;
+      var num = document.getElementById('vo2Num');
+      function passo(ts) {
+        if (!inicio) inicio = ts;
+        var p = Math.min((ts - inicio) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        num.textContent = (alvo * eased).toFixed(1);
+        if (p < 1) requestAnimationFrame(passo);
+      }
+      requestAnimationFrame(passo);
+
+      // zonas em cascata
+      painel.querySelectorAll('.vo2-zona-bar i').forEach(function (bar, i) {
+        setTimeout(function () { bar.style.width = bar.getAttribute('data-w'); }, 250 + i * 160);
+      });
+
+      io.disconnect();
+    });
+  }, { threshold: 0.35 });
+  io.observe(painel);
+})();
+</script>
+
+<!-- ═══════════ QUIZ ═══════════ -->
+<style>
+#quiz {
+  background: var(--navy);
+  padding: 90px 5%;
+}
+.quiz-wrap { max-width: 760px; margin: 0 auto; }
+
+/* Steps indicator */
+.quiz-steps-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-bottom: 3rem;
+}
+.quiz-step-node {
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  position: relative;
+}
+.quiz-step-node:not(:last-child)::after {
+  content: ''; position: absolute; left: 50%; top: 18px;
+  width: calc(100% + 2rem); height: 1px;
+  background: rgba(255,255,255,0.08);
+  z-index: 0;
+}
+.quiz-step-node.done::after { background: rgba(201,168,76,0.4); }
+.quiz-step-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Chakra Petch', sans-serif; font-weight: 800; font-size: 0.8rem;
+  color: rgba(196,200,206,0.7); transition: all 0.3s; position: relative; z-index:1;
+}
+.quiz-step-node.active .quiz-step-circle {
+  background: var(--gold); border-color: var(--gold); color: var(--navy);
+}
+.quiz-step-node.done .quiz-step-circle {
+  background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold);
+}
+.quiz-step-label {
+  font-size: 0.62rem; color: rgba(196,200,206,0.55); text-transform: uppercase;
+  letter-spacing: 1px; font-weight: 600; text-align: center; max-width: 80px;
+}
+.quiz-step-node.active .quiz-step-label { color: var(--gold); }
+.quiz-steps-bar { gap: 2rem; }
+
+/* Question */
+.quiz-question-wrap { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+.quiz-q-label {
+  font-size: 0.68rem; font-weight:700; letter-spacing:3px;
+  text-transform:uppercase; color:var(--gold); margin-bottom:0.65rem;
+  display:flex; align-items:center; gap:0.5rem;
+}
+.quiz-q-label::before { content:''; display:block; width:20px; height:1px; background:var(--gold); }
+
+.quiz-question {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: clamp(1.5rem,3vw,2.1rem); font-weight:700;
+  color: var(--white); margin-bottom:0.6rem; line-height:1.2;
+}
+.quiz-subtitle { font-size:0.9rem; color:#575e67; margin-bottom:2rem; }
+
+/* Options */
+.quiz-opts { display:flex; flex-direction:column; gap:0.9rem; }
+.quiz-opt-btn {
+  display:flex; align-items:center; gap:1.25rem;
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(255,255,255,0.07);
+  border-radius: 6px; padding: 1.15rem 1.4rem;
+  cursor:pointer; transition:all 0.2s;
+  text-align:left; width:100%; font-family:'Space Grotesk',sans-serif;
+}
+.quiz-opt-btn:hover { border-color:var(--gold); background:rgba(201,168,76,0.06); transform:translateX(4px); }
+.quiz-opt-btn.chosen { border-color:var(--gold); background:rgba(201,168,76,0.1); }
+.qob-icon { font-size:1.7rem; flex-shrink:0; }
+.qob-body { display:flex; flex-direction:column; gap:0.2rem; flex:1; }
+.qob-label { font-size:0.97rem; font-weight:600; color:var(--white); }
+.qob-desc { font-size:0.78rem; color:#575e67; line-height:1.4; }
+.qob-check {
+  width:22px; height:22px; border-radius:50%; flex-shrink:0;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.7rem; color:transparent; transition:all 0.2s;
+}
+.quiz-opt-btn.chosen .qob-check { background:var(--gold); border-color:var(--gold); color:var(--navy); }
+
+/* 2-col layout for 2-option steps */
+.quiz-opts.two-col { display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; }
+@media (max-width:600px) { .quiz-opts.two-col { grid-template-columns:1fr; } }
+
+/* Intro */
+.quiz-intro-wrap { text-align:center; padding: 2rem 0; }
+.quiz-intro-icon {
+  font-size:2.5rem; margin-bottom:1rem;
+  display:flex; justify-content:center;
+}
+.quiz-intro-title {
+  font-family:'Chakra Petch',sans-serif;
+  font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:900;
+  color:var(--white); line-height:1.12; margin-bottom:0.85rem;
+}
+.quiz-intro-title em { color:var(--gold); font-style:italic; }
+.quiz-intro-sub { color:#575e67; font-size:0.98rem; margin-bottom:0.5rem; line-height:1.7; }
+.quiz-tags {
+  display:flex; justify-content:center; gap:0.75rem; flex-wrap:wrap;
+  margin:1.5rem 0 2rem;
+}
+.quiz-tag {
+  background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2);
+  color:var(--gold); font-size:0.72rem; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; padding:0.3rem 0.85rem; border-radius:3px;
+}
+.quiz-start {
+  background:var(--gold); color:var(--navy);
+  border:none; cursor:pointer; padding:1.05rem 2.5rem;
+  border-radius:4px; font-family:'Space Grotesk',sans-serif;
+  font-weight:800; font-size:1.05rem; transition:all 0.2s;
+  box-shadow:0 4px 20px rgba(201,168,76,0.25);
+}
+.quiz-start:hover { background:var(--gold-lt); transform:translateY(-2px); }
+
+/* Result */
+.quiz-result-wrap { animation:fadeIn 0.4s ease; text-align:center; }
+.result-match-ring {
+  width:80px; height:80px; border-radius:50%;
+  background: conic-gradient(var(--gold) 0% 95%, rgba(255,255,255,0.05) 95%);
+  display:flex; align-items:center; justify-content:center;
+  margin: 0 auto 1.5rem; position:relative;
+}
+.result-match-ring::after {
+  content:''; position:absolute; inset:6px;
+  border-radius:50%; background:var(--navy);
+}
+.result-match-inner {
+  position:relative; z-index:1;
+  font-family:'Chakra Petch',sans-serif; font-weight:900;
+  font-size:0.85rem; color:var(--gold);
+}
+.result-plan-tag {
+  font-size:0.68rem; font-weight:700; letter-spacing:3px;
+  text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem;
+}
+.result-title {
+  font-family:'Chakra Petch',sans-serif;
+  font-size:clamp(1.7rem,3vw,2.4rem); font-weight:900;
+  color:var(--white); margin-bottom:1rem; line-height:1.15;
+}
+.result-why {
+  font-size:0.95rem; color:#5d636b; line-height:1.8;
+  max-width:560px; margin:0 auto 1.5rem;
+}
+.result-perks {
+  list-style:none; max-width:480px; margin:0 auto 1.75rem;
+  display:flex; flex-direction:column; gap:0.55rem;
+}
+.result-perks li {
+  display:flex; align-items:center; gap:0.75rem;
+  font-size:0.9rem; color:#7f858e;
+  background:rgba(255,255,255,0.03); border-radius:4px; padding:0.6rem 1rem;
+  border-left:2px solid var(--gold);
+}
+.result-price-box {
+  background:rgba(201,168,76,0.08); border:1px solid rgba(201,168,76,0.2);
+  border-radius:12px; padding:1.25rem 2rem; display:inline-block;
+  margin-bottom:1.75rem;
+}
+.result-price-val {
+  font-family:'Chakra Petch',sans-serif; font-size:2rem; font-weight:900; color:var(--gold); line-height:1;
+}
+.result-price-note { font-size:0.78rem; color:#575e67; margin-top:0.2rem; }
+.result-cta-btn {
+  display:inline-flex; align-items:center; gap:0.75rem;
+  background:var(--gold); color:var(--navy);
+  padding:1rem 2.25rem; border-radius:6px;
+  text-decoration:none; font-weight:800; font-size:1rem;
+  box-shadow:0 4px 20px rgba(201,168,76,0.25); transition:all 0.2s;
+  margin-bottom:1rem;
+}
+.result-cta-btn:hover { background:var(--gold-lt); transform:translateY(-2px); }
+.result-restart {
+  display:block; margin:0.75rem auto 0;
+  background:none; border:none; cursor:pointer;
+  color:#575e67; font-size:0.82rem; font-family:'Space Grotesk',sans-serif;
+  text-decoration:underline; transition:color 0.2s;
+}
+.result-restart:hover { color:var(--gold); }
+
+@media (max-width:768px) {
+  .quiz-steps-bar { gap:1rem; }
+  .quiz-step-label { display:none; }
+  .quiz-step-node::after { display:none; }
+}
+</style>
+
+<section id="quiz">
+<div class="quiz-wrap">
+
+  <!-- INTRO -->
+  <div id="qIntro">
+    <div class="quiz-intro-wrap">
+      <div class="quiz-intro-icon">🎯</div>
+      <h2 class="quiz-intro-title">Qual plano é <em>certo para você?</em></h2>
+      <p class="quiz-intro-sub">Responda 4 perguntas rápidas e receba uma recomendação personalizada baseada no seu objetivo, nível e preferência de atendimento.</p>
+      <div class="quiz-tags">
+        <span class="quiz-tag">4 perguntas</span>
+        <span class="quiz-tag">2 minutos</span>
+        <span class="quiz-tag">Resultado personalizado</span>
+      </div>
+      <button class="quiz-start" onclick="qStart()">Descobrir meu plano →</button>
+    </div>
+  </div>
+
+  <!-- STEPS INDICATOR -->
+  <div id="qStepsBar" class="quiz-steps-bar" style="display:none">
+    <div class="quiz-step-node active" id="qNode1">
+      <div class="quiz-step-circle" id="qCircle1">1</div>
+      <div class="quiz-step-label">Objetivo</div>
+    </div>
+    <div class="quiz-step-node" id="qNode2">
+      <div class="quiz-step-circle" id="qCircle2">2</div>
+      <div class="quiz-step-label">Atendimento</div>
+    </div>
+    <div class="quiz-step-node" id="qNode3">
+      <div class="quiz-step-circle" id="qCircle3">3</div>
+      <div class="quiz-step-label">Experiência</div>
+    </div>
+    <div class="quiz-step-node" id="qNode4">
+      <div class="quiz-step-circle" id="qCircle4">4</div>
+      <div class="quiz-step-label">Foco</div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="qBody" style="display:none">
+
+    <!-- Q1: Objetivo -->
+    <div id="qStep1" class="quiz-question-wrap">
+      <div class="quiz-q-label">Pergunta 1 de 4</div>
+      <h3 class="quiz-question">Qual é o seu objetivo principal?</h3>
+      <p class="quiz-subtitle">Escolha o que melhor descreve o que você busca agora.</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt-btn" onclick="qAnswer(1,'emagrecimento')">
+          <span class="qob-icon">⚖️</span>
+          <span class="qob-body">
+            <span class="qob-label">Emagrecer e redefinir o corpo</span>
+            <span class="qob-desc">Composição corporal, reduzir gordura, entender o que está travando</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(1,'performance')">
+          <span class="qob-icon">🏆</span>
+          <span class="qob-body">
+            <span class="qob-label">Melhorar desempenho esportivo</span>
+            <span class="qob-desc">CrossFit, corrida, musculação — evoluir além do platô</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(1,'saude')">
+          <span class="qob-icon">❤️</span>
+          <span class="qob-body">
+            <span class="qob-label">Cuidar da saúde com método</span>
+            <span class="qob-desc">Iniciar, voltar a treinar ou manter qualidade de vida com segurança</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(1,'grupo')">
+          <span class="qob-icon">👥</span>
+          <span class="qob-body">
+            <span class="qob-label">Avaliar meu grupo ou equipe</span>
+            <span class="qob-desc">Box, academia, time esportivo ou empresa</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q2: Atendimento -->
+    <div id="qStep2" class="quiz-question-wrap" style="display:none">
+      <div class="quiz-q-label">Pergunta 2 de 4</div>
+      <h3 class="quiz-question">Como prefere ser atendido?</h3>
+      <p class="quiz-subtitle">Isso define o formato do seu plano e as possibilidades de avaliação.</p>
+      <div class="quiz-opts two-col">
+        <button class="quiz-opt-btn" onclick="qAnswer(2,'presencial')">
+          <span class="qob-icon">📍</span>
+          <span class="qob-body">
+            <span class="qob-label">Presencial em Bauru</span>
+            <span class="qob-desc">Clínica Vitallite — avaliação completa com equipamentos profissionais</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(2,'online')">
+          <span class="qob-icon">📱</span>
+          <span class="qob-body">
+            <span class="qob-label">Online, de onde estiver</span>
+            <span class="qob-desc">Formulário + prescrição de treino sem sair de casa</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q3: Experiência -->
+    <div id="qStep3" class="quiz-question-wrap" style="display:none">
+      <div class="quiz-q-label">Pergunta 3 de 4</div>
+      <h3 class="quiz-question">Qual é o seu nível de experiência com exercícios?</h3>
+      <p class="quiz-subtitle">Ajuda a calibrar o diagnóstico e a prescrição do plano.</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt-btn" onclick="qAnswer(3,'iniciante')">
+          <span class="qob-icon">🌱</span>
+          <span class="qob-body">
+            <span class="qob-label">Nunca treinei ou estou voltando</span>
+            <span class="qob-desc">Quero começar com segurança e entender meu ponto de partida</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(3,'basico')">
+          <span class="qob-icon">💪</span>
+          <span class="qob-body">
+            <span class="qob-label">Treino há menos de 1 ano</span>
+            <span class="qob-desc">Já tenho uma base, quero entender como evoluir melhor</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(3,'intermediario')">
+          <span class="qob-icon">🔥</span>
+          <span class="qob-body">
+            <span class="qob-label">Treino regularmente há mais de 1 ano</span>
+            <span class="qob-desc">Busco dados precisos para quebrar o platô e evoluir de verdade</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(3,'avancado')">
+          <span class="qob-icon">🏅</span>
+          <span class="qob-body">
+            <span class="qob-label">Atleta ou competidor</span>
+            <span class="qob-desc">Preciso de avaliação de alto nível para otimizar meu esporte</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q4: Foco -->
+    <div id="qStep4" class="quiz-question-wrap" style="display:none">
+      <div class="quiz-q-label">Pergunta 4 de 4</div>
+      <h3 class="quiz-question">O que você busca nessa avaliação?</h3>
+      <p class="quiz-subtitle">Última pergunta — promessa! Sua recomendação já está quase pronta.</p>
+      <div class="quiz-opts two-col">
+        <button class="quiz-opt-btn" onclick="qAnswer(4,'vo2')">
+          <span class="qob-icon">🫀</span>
+          <span class="qob-body">
+            <span class="qob-label">Medir minha capacidade cardiorrespiratória</span>
+            <span class="qob-desc">Teste de VO2 Máximo — o indicador mais preciso de saúde aeróbica</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(4,'completo')">
+          <span class="qob-icon">🎯</span>
+          <span class="qob-body">
+            <span class="qob-label">Diagnóstico completo + acompanhamento</span>
+            <span class="qob-desc">BIA, VO2, força, mobilidade, relatório + 90 dias de suporte</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESULT -->
+  <div id="qResult" style="display:none" class="quiz-result-wrap">
+    <div class="result-match-ring">
+      <div class="result-match-inner" id="rMatch">✓</div>
+    </div>
+    <div class="result-plan-tag">Recomendação personalizada</div>
+    <h3 class="result-title" id="rTitle"></h3>
+    <p class="result-why" id="rWhy"></p>
+    <ul class="result-perks" id="rPerks"></ul>
+    <div class="result-price-box">
+      <div class="result-price-val" id="rPrice"></div>
+      <div class="result-price-note" id="rNote"></div>
+    </div>
+    <br>
+    <a class="result-cta-btn" id="rCta" href="#" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar com Aldemir agora
+    </a>
+    <button class="result-restart" onclick="qRestart()">← Refazer o quiz</button>
+  </div>
+
+</div>
+</section>
+
+<script>
+(function(){
+  const ans = {};
+  const results = {
+    'performance-day': {
+      title: 'Performance Day é feito para vocês',
+      why: 'Você tem um grupo que merece uma avaliação de verdade. O Performance Day leva avaliação física completa, kit personalizado, relatório individual e conteúdo para as redes — tudo em um único evento.',
+      perks: ['Avaliação completa por atleta do grupo','Kit personalizado por participante','Registro fotográfico e conteúdo para redes','Apresentação coletiva dos resultados'],
+      price: 'A partir de R$179,90', note: 'até 3x sem juros · mínimo 10 participantes',
+      wpp: 'Fiz+o+quiz+e+tenho+interesse+no+Performance+Day+para+o+meu+grupo!+Quero+uma+proposta.'
+    },
+    'ajr-online': {
+      title: 'AJR Online é a sua melhor escolha',
+      why: 'Você quer orientação profissional com praticidade total. O AJR Online entrega prescrição de treino individualizada, ajuste mensal e suporte via WhatsApp — sem sair de casa.',
+      perks: ['Prescrição de treino 100% individualizada','Ajuste mensal do programa','Suporte direto via WhatsApp','Cancele quando quiser — sem fidelidade'],
+      price: 'R$79,90', note: 'por mês · plano recorrente',
+      wpp: 'Fiz+o+quiz+e+o+resultado+foi+AJR+Online.+Quero+saber+mais!'
+    },
+    'vo2': {
+      title: 'Teste de VO2 Máximo é a avaliação certa para você',
+      why: 'Você quer conhecer sua capacidade aeróbica real. O Teste de VO2 Máximo é o padrão-ouro para avaliar saúde cardiovascular e definir zonas de treino precisas — uma sessão presencial com protocolo científico.',
+      perks: ['Protocolo científico de esforço máximo','Cálculo do VO2 máximo individualizado','Zonas de treinamento aeróbico e anaeróbico','Frequência cardíaca máxima e de reserva','Relatório digital completo em uma sessão'],
+      price: 'R$349,90', note: 'sessão única · presencial em Bauru',
+      wpp: 'Fiz+o+quiz+e+o+resultado+foi+Teste+de+VO2+M%C3%A1ximo.+Quero+agendar!'
+    },
+    'ajr-performance': {
+      title: 'AJR Performance é o caminho certo para você',
+      why: 'Você está pronto para um diagnóstico completo e acompanhamento real. Avaliação física profunda — BIA, dobras, VO2, força, mobilidade, assimetrias — com plano individualizado e 90 dias de suporte.',
+      perks: ['BIA + dobras + composição corporal','VO2, FC, pressão arterial e saturação','Força muscular e assimetrias bilaterais','Mobilidade e padrão de movimento','Relatório completo + orientação via app','90 dias de acompanhamento contínuo'],
+      price: 'A partir de R$450', note: 'até 3x sem juros · conforme plano',
+      wpp: 'Fiz+o+quiz+e+o+resultado+foi+AJR+Performance.+Quero+agendar+minha+avalia%C3%A7%C3%A3o!'
+    }
+  };
+
+  function showStep(n) {
+    document.querySelectorAll('[id^=qStep]').forEach(s => s.style.display='none');
+    const el = document.getElementById('qStep'+n);
+    if(el) el.style.display='block';
+    // Update steps bar
+    [1,2,3,4].forEach(i => {
+      const node = document.getElementById('qNode'+i);
+      const circ = document.getElementById('qCircle'+i);
+      if(i < n){ node.classList.add('done'); node.classList.remove('active'); circ.textContent='✓'; }
+      else if(i === n){ node.classList.add('active'); node.classList.remove('done'); circ.textContent=i; }
+      else{ node.classList.remove('active','done'); circ.textContent=i; }
+    });
+  }
+
+  function showResult(key) {
+    document.getElementById('qBody').style.display='none';
+    document.getElementById('qStepsBar').style.display='none';
+    const r = results[key];
+    document.getElementById('rTitle').textContent = r.title;
+    document.getElementById('rWhy').textContent = r.why;
+    document.getElementById('rPrice').textContent = r.price;
+    document.getElementById('rNote').textContent = r.note;
+    document.getElementById('rCta').href = 'https://wa.me/5514997432182?text='+r.wpp;
+    const perks = document.getElementById('rPerks');
+    perks.innerHTML = '';
+    r.perks.forEach(p => { const li=document.createElement('li'); li.textContent=p; perks.appendChild(li); });
+    document.getElementById('qResult').style.display='block';
+    document.getElementById('qResult').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  window.qStart = function(){
+    document.getElementById('qIntro').style.display='none';
+    document.getElementById('qStepsBar').style.display='flex';
+    document.getElementById('qBody').style.display='block';
+    showStep(1);
+  };
+
+  window.qAnswer = function(step, val){
+    ans[step] = val;
+    // Highlight chosen
+    document.querySelectorAll('#qStep'+step+' .quiz-opt-btn').forEach(b => b.classList.remove('chosen'));
+    event.currentTarget.classList.add('chosen');
+    setTimeout(function(){
+      if(step===1){
+        if(val==='grupo'){ showResult('performance-day'); return; }
+        showStep(2);
+      } else if(step===2){
+        if(val==='online'){ showResult('ajr-online'); return; }
+        showStep(3);
+      } else if(step===3){
+        showStep(4);
+      } else if(step===4){
+        if(val==='vo2'){ showResult('vo2'); }
+        else { showResult('ajr-performance'); }
+      }
+    }, 380);
+  };
+
+  window.qRestart = function(){
+    Object.keys(ans).forEach(k=>delete ans[k]);
+    document.getElementById('qResult').style.display='none';
+    document.getElementById('qIntro').style.display='block';
+    document.querySelectorAll('.quiz-opt-btn').forEach(b=>b.classList.remove('chosen'));
+  };
+})();
+</script>
+
+
+<!-- ═══════════ PARA QUEM É ═══════════ -->
+<section id="para-quem">
+  <div class="section-label">É pra você?</div>
+  <h2 class="section-title">Três motivos trazem alguém<br>até a <em>avaliação.</em></h2>
+  <p class="section-sub">Encontre o seu. O resto a gente resolve na sala de avaliação.</p>
+
+  <div class="pq-grid">
+    <div class="pq-card">
+      <span class="pq-tag">Perfil 01</span>
+      <h3>Vou começar</h3>
+      <p>Quer sair do zero sem se machucar. A avaliação mostra o que seu corpo aguenta hoje e define o ponto de partida seguro.</p>
+      <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Quero%20come%C3%A7ar%20a%20treinar%20e%20quero%20agendar%20minha%20avalia%C3%A7%C3%A3o.">agendar avaliação →</a>
+    </div>
+    <div class="pq-card">
+      <span class="pq-tag">Perfil 02</span>
+      <h3>Treino, mas travei</h3>
+      <p>Se dedica e não evolui. Força, assimetrias e VO2 revelam exatamente o que está segurando seu resultado — e o plano ataca isso.</p>
+      <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Treino%20mas%20estagnei%20—%20quero%20agendar%20uma%20avalia%C3%A7%C3%A3o.">destravar evolução →</a>
+    </div>
+    <div class="pq-card">
+      <span class="pq-tag">Perfil 03</span>
+      <h3>Quero durar</h3>
+      <p>Saúde para a vida toda. Coração, mobilidade e massa muscular monitorados com método para envelhecer forte.</p>
+      <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Quero%20cuidar%20da%20minha%20sa%C3%BAde%20com%20dados%20—%20quero%20agendar%20uma%20avalia%C3%A7%C3%A3o.">investir em saúde →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ O QUE AVALIAMOS ═══════════ -->
+<section id="avaliamos">
+  <div class="section-label">O que avaliamos</div>
+  <h2 class="section-title" style="color:var(--white)">Uma avaliação.<br>Sete dimensões do corpo.</h2>
+  <p class="section-sub">Composição corporal, mobilidade, flexibilidade, força, assimetrias, VO2, pressão arterial e saturação — cada métrica revela algo que treinos sem diagnóstico nunca vão mostrar.</p>
+</section>
+
+<!-- ═══════════ O QUE VOCÊ RECEBE ═══════════ -->
+<section id="recebe">
+  <div class="section-label">O que você recebe</div>
+  <h2 class="section-title">Após a avaliação, você sai com um plano completo.</h2>
+  <p class="section-sub">Não é só uma medição. É um diagnóstico com plano de ação.</p>
+  <div style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:0.9rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.4);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:0.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:0.4rem 0.9rem;border-radius:3px">
+    ✓ Tudo isso incluso no plano AJR Performance
+  </div>
+
+  <div class="recebe-layout">
+    <div class="recebe-items">
+      <div class="recebe-item">
+        <div class="recebe-num">01</div>
+        <div class="recebe-body">
+          <div class="recebe-title">Relatório funcional completo</div>
+          <div class="recebe-text">Todos os dados organizados em um relatório claro, com suas métricas e o que cada número significa para seu treino.</div>
+        </div>
+      </div>
+      <div class="recebe-item">
+        <div class="recebe-num">02</div>
+        <div class="recebe-body">
+          <div class="recebe-title">Orientação de treino personalizada via app</div>
+          <div class="recebe-text">Programa de treino prescrito especificamente para o seu corpo e objetivos, acessível pelo aplicativo.</div>
+        </div>
+      </div>
+      <div class="recebe-item">
+        <div class="recebe-num">03</div>
+        <div class="recebe-body">
+          <div class="recebe-title">Definição das suas zonas de treino</div>
+          <div class="recebe-text">FC e intensidades ideais baseadas no seu VO2 e cardiorrespiratório — treino na zona certa, resultado garantido.</div>
+        </div>
+      </div>
+      <div class="recebe-item">
+        <div class="recebe-num">04</div>
+        <div class="recebe-body">
+          <div class="recebe-title">90 dias de acompanhamento</div>
+          <div class="recebe-text">Suporte contínuo durante o processo. Com retorno em até 45 dias para ajustes no plano.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- foto: avaliação PA ou aldemir explicando -->
+    <div class="recebe-foto">
+      <img src="foto-avaliacao-pa.jpg" alt="Avaliação física AJR Performance" />
+      <div class="recebe-foto-cta">
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" class="btn-gold" style="font-size:0.95rem">
+          Quero meu relatório completo →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PLANOS ═══════════ -->
+<section id="planos">
+  <div class="section-label">Planos e Investimento</div>
+  <h2 class="section-title" style="color:var(--white)">Escolha como quer começar</h2>
+  <p class="section-sub">Do plano online acessível ao acompanhamento completo presencial.</p>
+
+  <div class="planos-grid">
+
+    <!-- AJR Online — LANÇAMENTO -->
+    <div class="plano launch">
+      <span class="plano-badge-green">● Lançamento</span>
+      <!-- Salve sua foto como "foto-ajr-online.jpg" nesta pasta -->
+      <img src="foto-ajr-online.jpg" alt="AJR Online — Treino Online" class="plano-img" style="object-position: center 72%;" />
+      <div class="plano-head">
+        <div class="plano-tag">Treino Online</div>
+        <div class="plano-name">AJR Online</div>
+        <div class="plano-desc">Estrutura e orientação profissional com praticidade. 100% remoto, de onde você estiver.</div>
+      </div>
+      <div class="plano-preco">
+        <div class="preco-val">R$79<span style="font-size:1.1rem">,90</span><span class="preco-per">/mês</span></div>
+        <div class="preco-note">Cancele quando quiser · sem fidelidade</div>
+      </div>
+      <div class="plano-divider" style="margin-top:1.25rem"></div>
+      <ul class="plano-lista">
+        <li>Formulário de anamnese completo</li>
+        <li>Prescrição de treino individualizada</li>
+        <li>Ajuste mensal do programa</li>
+        <li>Suporte via WhatsApp</li>
+        <li>Progressão de carga orientada</li>
+        <li>Emagrecimento, hipertrofia ou condicionamento</li>
+      </ul>
+      <div class="plano-foot">
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Online%20(R%2479%2C90%2Fm%C3%AAs).%20Quero%20saber%20mais%21" onclick="gtag('event','whatsapp_click',{plan:'ajr_online',source:'card'})" class="btn-plano-gold">Começar agora</a>
+      </div>
+    </div>
+
+    <!-- Teste de VO2 Máximo -->
+    <div class="plano">
+      <img src="foto-vo2-teste.jpg" alt="Teste de VO2 Máximo real na AJR Performance" class="plano-img" style="object-position:center 30%" />
+      <div class="plano-head">
+        <div class="plano-tag">Diagnóstico Cardiorrespiratório</div>
+        <div class="plano-name">Teste de VO2 Máximo</div>
+        <div class="plano-desc">Protocolo científico de esforço para medir sua capacidade aeróbica real e definir zonas de treino precisas.</div>
+      </div>
+      <div class="plano-preco">
+        <div class="preco-val">R$349<span style="font-size:1.1rem">,90</span></div>
+        <div class="preco-note">Sessão única · presencial</div>
+      </div>
+      <div class="plano-divider" style="margin-top:1.25rem"></div>
+      <ul class="plano-lista">
+        <li>Protocolo científico de esforço máximo</li>
+        <li>Cálculo do VO2 máximo individualizado</li>
+        <li>Zonas de treinamento aeróbico e anaeróbico</li>
+        <li>Frequência cardíaca máxima e de reserva</li>
+        <li>Relatório digital completo</li>
+      </ul>
+      <div class="plano-foot">
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Teste%20de%20VO2%20M%C3%A1ximo%20(R%24349%2C90).%20Pode%20me%20ajudar%3F" onclick="gtag('event','whatsapp_click',{plan:'vo2',source:'card'})" class="btn-plano-outline">Agendar teste de VO2</a>
+      </div>
+    </div>
+
+    <!-- AJR Performance — DESTAQUE -->
+    <div class="plano featured">
+      <span class="plano-badge">Mais completo</span>
+      <img src="foto-ajr-performance.jpg" alt="AJR Performance — Avaliação Completa" class="plano-img" style="position:relative;z-index:1" />
+      <div class="plano-head">
+        <div class="plano-tag">Presencial · Bauru</div>
+        <div class="plano-name">AJR Performance</div>
+        <div class="plano-desc">Diagnóstico profundo e acompanhamento individual. O produto central da AJR.</div>
+      </div>
+      <div class="plano-preco">
+        <div class="preco-val" style="font-size:1.8rem">a partir de<br>R$450</div>
+        <div class="preco-note">até 3x sem juros · plano de 3 meses</div>
+      </div>
+      <div class="plano-divider" style="margin-top:1.25rem"></div>
+      <ul class="plano-lista">
+        <li>Bioimpedância (BIA) + dobras cutâneas</li>
+        <li>Mobilidade e padrão de movimento</li>
+        <li>Força muscular e funcional</li>
+        <li>Assimetrias musculares bilateral</li>
+        <li>VO2, FC, PA e saturação</li>
+        <li>Relatório funcional completo</li>
+        <li>Orientação via aplicativo</li>
+        <li>Acompanhamento por 90 dias</li>
+      </ul>
+      <div class="plano-foot">
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" onclick="gtag('event','whatsapp_click',{plan:'ajr_performance',source:'card'})" class="btn-plano-gold">Agendar avaliação</a>
+      </div>
+    </div>
+
+    <!-- Performance Day -->
+    <div class="plano">
+      <img src="foto-pd-grupo.jpg" alt="Performance Day — Avaliação em Grupo" class="plano-img" />
+      <div class="plano-head">
+        <div class="plano-tag">Para Grupos</div>
+        <div class="plano-name">Performance Day</div>
+        <div class="plano-desc">Avaliação coletiva para boxes, academias e equipes.</div>
+      </div>
+      <div class="plano-preco">
+        <div class="preco-val" style="font-size:1.8rem">R$179<span style="font-size:1rem">,90</span></div>
+        <div class="preco-note">A partir de · até 3x sem juros</div>
+      </div>
+      <div class="plano-divider" style="margin-top:1.25rem"></div>
+      <ul class="plano-lista">
+        <li>Avaliação completa por atleta</li>
+        <li>Apresentação coletiva dos resultados</li>
+        <li>Kit personalizado por participante</li>
+        <li>Relatório digital individual</li>
+        <li>Registro fotográfico do evento</li>
+        <li>Conteúdo para redes sociais</li>
+      </ul>
+      <div class="plano-foot">
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Performance%20Day%20para%20o%20meu%20grupo.%20Pode%20enviar%20uma%20proposta%3F" onclick="gtag('event','whatsapp_click',{plan:'performance_day',source:'card'})" class="btn-plano-outline">Pedir proposta</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════ DEPOIMENTOS ═══════════ -->
+<section id="depoimentos">
+  <div class="section-label">O que dizem os alunos</div>
+  <h2 class="section-title">Resultados reais de pessoas reais.</h2>
+
+  <div class="dep-grid">
+
+    <div class="dep-card">
+      <div class="dep-stars">★★★★★</div>
+      <p class="dep-text">Antes da avaliação eu achava que estava fazendo tudo certo. O Aldemir me mostrou um desequilíbrio muscular que vinha me sabotando há meses. Meu desempenho nas WODs melhorou muito depois que ajustei o treino com base nos dados.</p>
+      <div class="dep-author">
+        <div class="dep-avatar">R</div>
+        <div>
+          <div class="dep-name">Rafael S.</div>
+          <div class="dep-role">Atleta de CrossFit · Bauru</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dep-card">
+      <div class="dep-stars">★★★★★</div>
+      <p class="dep-text">Tentei emagrecer de várias formas e sempre travava no mesmo ponto. Com a avaliação completa entendi o que estava errado — e pela primeira vez tenho um plano que faz sentido para o meu corpo.</p>
+      <div class="dep-author">
+        <div class="dep-avatar">C</div>
+        <div>
+          <div class="dep-name">Carla M.</div>
+          <div class="dep-role">Professora · 38 anos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dep-card">
+      <div class="dep-stars">★★★★★</div>
+      <p class="dep-text">Fiz a avaliação antes de me preparar para uma meia maratona. O relatório com as zonas de treino foi decisivo — cheguei na prova sem lesão e bati meu recorde pessoal pela primeira vez.</p>
+      <div class="dep-author">
+        <div class="dep-avatar">T</div>
+        <div>
+          <div class="dep-name">Thiago P.</div>
+          <div class="dep-role">Corredor amador · Bauru</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section id="faq">
+  <div class="section-label">Dúvidas frequentes</div>
+  <h2 class="section-title">Maiores dúvidas</h2>
+  <p class="section-sub">Se ainda ficou alguma pergunta, é só mandar mensagem no WhatsApp.</p>
+
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Quanto tempo dura a avaliação completa?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Em torno de 60 a 90 minutos, dependendo da modalidade. A avaliação AJR Performance é mais detalhada e pode levar até 2 horas com todas as etapas. O Teste de VO2 Máximo dura em média 40 a 60 minutos com protocolo completo.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Preciso estar em forma para fazer a avaliação?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Não — muito pelo contrário. A avaliação é indicada justamente para quem quer entender o ponto de partida antes de treinar. Quanto mais cedo você fizer, melhor o diagnóstico e mais seguro o início do treino.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Qual a diferença entre o AJR Online e o AJR Performance?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        O AJR Online é 100% remoto: você preenche o formulário de anamnese e recebe um programa de treino personalizado pelo app. O AJR Performance é presencial em Bauru, com avaliação física completa — BIA, dobras, VO2, força, mobilidade — e acompanhamento de 90 dias.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        O Teste de VO2 Máximo substitui a avaliação completa?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Não, eles se complementam. O Teste de VO2 Máximo é focado em capacidade cardiorrespiratória e zonas de treino aeróbico. A avaliação completa inclui composição corporal, força muscular, mobilidade, pressão arterial, assimetrias e muito mais — é um diagnóstico integral do corpo.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        O Performance Day funciona para grupos pequenos?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        O Performance Day é indicado a partir de 10 participantes. Para grupos menores, entre em contato pelo WhatsApp — é possível montar uma proposta adequada ao seu grupo.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = btn.classList.contains('open');
+  document.querySelectorAll('.faq-btn').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+  if (!isOpen) { btn.classList.add('open'); answer.classList.add('open'); }
+}
+</script>
+
+<!-- ═══════════ SOBRE ═══════════ -->
+<section id="sobre">
+  <div class="sobre-foto">
+    <img src="foto-aldemir-medalhas.jpg" alt="Aldemir Junior" />
+    <div class="sobre-foto-badge">Aldemir Junior · Bauru, SP</div>
+  </div>
+
+  <div class="sobre-content">
+    <div class="section-label">Sobre</div>
+    <h2 class="section-title">Aldemir Junior</h2>
+    <p class="section-sub">
+      Profissional de Educação Física e ex-atleta de alto rendimento de judô. Na Clínica Vitallite, em Bauru-SP, atende de atletas a iniciantes com o mesmo rigor: diagnóstico profundo e plano baseado em dados reais, não em achismo.
+    </p>
+    <p class="section-sub" style="color:var(--gold);font-style:italic;font-family:'Chakra Petch',sans-serif;font-size:1.05rem;margin-top:0.5rem">
+      "O diferencial não é só o treino — é o diagnóstico preciso que vem antes dele."
+    </p>
+
+    <div class="sobre-itens">
+      <div class="sobre-item"><div class="sobre-dot"></div>📍 Clínica Vitallite · Rua Gérson França, 18-28, Jd. Estoril · Bauru, SP</div>
+      <div class="sobre-item"><div class="sobre-dot"></div>CREF 182634-G/SP</div>
+      <div class="sobre-item"><div class="sobre-dot"></div>Instagram: @aldemirjrtreinador</div>
+      <div class="sobre-item"><div class="sobre-dot"></div>WhatsApp: (14) 99743-2182</div>
+      <div class="sobre-item"><div class="sobre-dot"></div>Avaliação individual e em grupo (Performance Day)</div>
+    </div>
+
+    <a href="https://maps.google.com/?q=Rua+Gérson+França,18,+Jardim+Estoril,+Bauru,+SP" target="_blank" class="maps-link">
+      📍 Ver no Google Maps
+    </a>
+
+    <div style="margin-top:1.5rem;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.3)">
+      <iframe
+        src="https://maps.google.com/maps?q=Rua+Gerçon+França+18+Jardim+Estoril+Bauru+SP&output=embed&z=15"
+        width="100%" height="240" style="border:0;display:block" allowfullscreen loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA FINAL ═══════════ -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-tag">Pronto para evoluir?</div>
+  <h2 class="cta-title">Conhecer o corpo é o<br>primeiro passo para evoluir<br>com <em>segurança.</em></h2>
+  <p class="cta-sub">Manda mensagem agora. A gente entende o seu momento e indica o melhor plano — online ou presencial.</p>
+  <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" onclick="gtag('event','whatsapp_click',{plan:'geral',source:'cta'})" class="btn-wpp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Falar com o Aldemir agora
+  </a>
+  <a href="https://instagram.com/aldemirjrtreinador" class="cta-insta" target="_blank">
+    ou me siga no Instagram <span>@aldemirjrtreinador</span>
+  </a>
+</section>
+
+<!-- ═══════════ GIRO DE NOTÍCIAS (página SPA) ═══════════ -->
+<section id="giro-noticias">
+  <div class="giro-header">
+    <span class="giro-eyebrow">Performance · Esporte Mundial</span>
+    <h1 class="giro-title">Giro de <em>Notícias</em></h1>
+    <p class="giro-sub">As últimas do esporte e da ciência da performance, atualizadas automaticamente todos os dias. Curadoria AJR Avaliação Física e Performance.</p>
+    <div class="giro-atualizado" id="giroAtualizado"></div>
+  </div>
+  <div class="giro-filtros" id="giroFiltros"></div>
+  <div class="giro-grid" id="giroGrid">
+    <div class="giro-vazio">Carregando notícias…</div>
+  </div>
+
+  <!-- CTA comercial dentro do Giro: notícia informa, avaliação transforma -->
+  <div style="max-width:1180px;margin:3.5rem auto 0;background:linear-gradient(135deg,var(--teal) 0%,var(--navy-mid) 100%);border:1px solid rgba(201,168,76,0.3);border-radius:var(--radius);padding:2.5rem;text-align:center">
+    <div class="section-label" style="justify-content:center">Da leitura para a prática</div>
+    <h3 style="font-family:'Chakra Petch',sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-size:clamp(1.4rem,3vw,2rem);color:var(--white);margin-bottom:0.75rem">Notícia informa. <em style="color:var(--gold)">Dados seus transformam.</em></h3>
+    <p style="color:var(--gray);max-width:520px;margin:0 auto 1.75rem;font-size:0.95rem">Acompanhar o esporte é ótimo — evoluir no seu é melhor. Faça sua avaliação física completa e treine com as suas métricas.</p>
+    <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20minha%20avalia%C3%A7%C3%A3o." class="btn-gold">Agendar minha avaliação</a>
+  </div>
+</section>
+
+<script>
+/* ══════════ NAVEGAÇÃO SPA: Home ⇄ Giro de Notícias ══════════ */
+let noticiasCache = null;
+let filtroAtivo = 'Todas';
+
+function mostrarGiro() {
+  document.body.classList.add('giro-ativo');
+  window.scrollTo(0, 0);
+  if (history.replaceState) history.replaceState(null, '', '#giro');
+  if (!noticiasCache) carregarNoticias();
+}
+
+function mostrarHome() {
+  document.body.classList.remove('giro-ativo');
+}
+
+document.getElementById('navGiro').addEventListener('click', function (e) {
+  e.preventDefault();
+  mostrarGiro();
+});
+
+// Qualquer link âncora da página volta para a Home antes de rolar (delegado — cobre footer e conteúdo futuro)
+document.addEventListener('click', function (e) {
+  var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+  if (a && a.id !== 'navGiro') mostrarHome();
+});
+
+// Deep-link: abrir direto em site.com/#giro
+if (location.hash === '#giro') mostrarGiro();
+
+/* ══════════ CARREGAMENTO DO noticias.json ══════════ */
+function formatarData(iso) {
+  try {
+    var d = new Date(iso);
+    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  } catch (e) { return ''; }
+}
+
+function escapeHtml(s) {
+  var div = document.createElement('div');
+  div.textContent = s || '';
+  return div.innerHTML;
+}
+
+function renderizarNoticias() {
+  var grid = document.getElementById('giroGrid');
+  var lista = (noticiasCache.noticias || []).filter(function (n) {
+    return filtroAtivo === 'Todas' || n.categoria === filtroAtivo;
+  });
+  if (!lista.length) {
+    grid.innerHTML = '<div class="giro-vazio">Nenhuma notícia nesta categoria por enquanto.</div>';
+    return;
+  }
+  grid.innerHTML = lista.map(function (n, i) {
+    return '<article class="noticia-card' + (i === 0 && filtroAtivo === 'Todas' ? ' destaque' : '') + '">' +
+      '<div class="noticia-meta">' +
+        '<span class="noticia-tag">' + escapeHtml(n.categoria) + '</span>' +
+        '<span class="noticia-data">' + formatarData(n.data) + '</span>' +
+        (n.fonte ? '<span class="noticia-fonte">· ' + escapeHtml(n.fonte) + '</span>' : '') +
+      '</div>' +
+      '<h3 class="noticia-titulo">' + escapeHtml(n.titulo) + '</h3>' +
+      '<p class="noticia-resumo">' + escapeHtml(n.resumo) + '</p>' +
+      '<a class="noticia-link" href="' + encodeURI(n.link) + '" target="_blank" rel="noopener noreferrer">Ler matéria original</a>' +
+    '</article>';
+  }).join('');
+}
+
+function renderizarFiltros() {
+  var cats = ['Todas'];
+  (noticiasCache.noticias || []).forEach(function (n) {
+    if (n.categoria && cats.indexOf(n.categoria) === -1) cats.push(n.categoria);
+  });
+  document.getElementById('giroFiltros').innerHTML = cats.map(function (c) {
+    return '<button class="giro-filtro' + (c === filtroAtivo ? ' ativo' : '') + '" data-cat="' + escapeHtml(c) + '">' + escapeHtml(c) + '</button>';
+  }).join('');
+  document.querySelectorAll('.giro-filtro').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filtroAtivo = btn.getAttribute('data-cat');
+      renderizarFiltros();
+      renderizarNoticias();
+    });
+  });
+}
+
+function carregarNoticias() {
+  fetch('noticias.json', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (dados) {
+      noticiasCache = dados;
+      if (dados.atualizado_em) {
+        document.getElementById('giroAtualizado').textContent =
+          'Última atualização: ' + formatarData(dados.atualizado_em);
+      }
+      renderizarFiltros();
+      renderizarNoticias();
+    })
+    .catch(function (err) {
+      document.getElementById('giroGrid').innerHTML =
+        '<div class="giro-vazio">Não foi possível carregar as notícias agora.<br>' +
+        '<small style="color:#575e67">O arquivo noticias.json precisa estar na mesma pasta do site (funciona quando publicado no GitHub Pages).</small></div>';
+      console.error('Giro de Notícias:', err);
+    });
+}
+</script>
+
+<!-- FOOTER -->
+<footer>
+  <span class="nav-logo-txt" style="opacity:0.6">AJR<span>.</span><small>Avaliação · Performance</small></span>
+  <div class="footer-links">
+    <a href="https://instagram.com/aldemirjrtreinador" target="_blank">@aldemirjrtreinador</a>
+    <a href="https://wa.me/5514997432182">WhatsApp</a>
+    <a href="#planos">Planos</a>
+    <a href="#planos">Performance Day</a>
+    <a href="aluno.html">Área do Aluno</a>
+    <a href="#" onclick="abrirLogin(event)" title="Área do avaliador">🔒 Avaliador</a>
+  </div>
+  <div class="footer-info">© 2026 Aldemir Junior · AJR Avaliação Física e Performance · Gérson França 18-28, Jd. Estoril · Bauru, SP</div>
+</footer>
+
+<!-- ═══════════ LOGIN — ÁREA DO AVALIADOR ═══════════ -->
+<div id="loginOverlay" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(8,9,11,0.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px">
+  <div style="width:100%;max-width:380px;background:var(--navy);border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:2rem;box-shadow:0 30px 80px rgba(0,0,0,0.6)">
+    <div class="section-label" style="margin-bottom:1rem">Área do avaliador</div>
+
+    <div id="loginForm">
+      <h3 style="font-family:'Chakra Petch',sans-serif;font-weight:700;text-transform:uppercase;color:var(--white);font-size:1.15rem;margin-bottom:0.4rem">Acesso restrito</h3>
+      <p style="font-size:0.85rem;color:var(--gray);margin-bottom:1.25rem">Ferramentas de uso pessoal do Aldemir.</p>
+      <input type="password" id="loginSenha" placeholder="Senha"
+        style="width:100%;padding:0.8rem 1rem;background:#0e0f12;border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:var(--off-white);font-family:'Space Grotesk',sans-serif;font-size:1rem;outline:none;margin-bottom:0.75rem"
+        onkeydown="if(event.key==='Enter')validarLogin()">
+      <div id="loginErro" style="display:none;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#e05c5c;margin-bottom:0.75rem">// senha incorreta</div>
+      <button onclick="validarLogin()" class="btn-gold" style="width:100%;border:none;cursor:pointer;text-align:center">Entrar</button>
+      <button onclick="fecharLogin()" style="width:100%;background:none;border:none;color:var(--gray);font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:1px;margin-top:0.9rem;cursor:pointer">cancelar</button>
+    </div>
+
+    <div id="loginPainel" style="display:none">
+      <h3 style="font-family:'Chakra Petch',sans-serif;font-weight:700;text-transform:uppercase;color:var(--white);font-size:1.15rem;margin-bottom:1.25rem">Olá, Aldemir 👊</h3>
+      <a href="avaliacao.html" class="btn-gold" style="display:block;text-align:center;margin-bottom:0.75rem">+ Nova avaliação</a>
+      <a href="assimetria.html" style="display:block;text-align:center;padding:0.85rem;border:1px solid var(--gold);border-radius:4px;color:var(--gold);text-decoration:none;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.75rem">Avaliação de assimetria</a>
+      <a href="aluno.html" style="display:block;text-align:center;padding:0.85rem;border:1px solid var(--gold);border-radius:4px;color:var(--gold);text-decoration:none;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem">👥 Meus alunos</a>
+      <button onclick="sairLogin()" style="width:100%;background:none;border:none;color:var(--gray);font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:1px;cursor:pointer">// sair</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ Área do avaliador — gate simples (SHA-256 + sessionStorage) ══ */
+var AJR_HASH = 'b99a992a5c8127f97000d6e6485415cd469932b7e18f819ed2e8d267198aa450';
+async function ajrHash(txt) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+function abrirLogin(e) {
+  if (e) e.preventDefault();
+  document.getElementById('loginOverlay').style.display = 'flex';
+  var logado = sessionStorage.getItem('ajr_auth') === AJR_HASH;
+  document.getElementById('loginForm').style.display   = logado ? 'none' : 'block';
+  document.getElementById('loginPainel').style.display = logado ? 'block' : 'none';
+  if (!logado) setTimeout(function(){ document.getElementById('loginSenha').focus(); }, 100);
+}
+function fecharLogin() { document.getElementById('loginOverlay').style.display = 'none'; }
+async function validarLogin() {
+  var senha = document.getElementById('loginSenha').value;
+  if (await ajrHash(senha) === AJR_HASH) {
+    sessionStorage.setItem('ajr_auth', AJR_HASH);
+    document.getElementById('loginErro').style.display = 'none';
+    document.getElementById('loginSenha').value = '';
+    abrirLogin();
+  } else {
+    document.getElementById('loginErro').style.display = 'block';
+  }
+}
+function sairLogin() { sessionStorage.removeItem('ajr_auth'); fecharLogin(); }
+document.getElementById('loginOverlay').addEventListener('click', function(e){ if (e.target === this) fecharLogin(); });
+</script>
+
+<!--
+  ══════════════════════════════════════════════════
+  VÍDEO EXPLICATIVO — descomente quando quiser ativar
+  Coloque o ID do seu vídeo do YouTube no lugar de SEU_VIDEO_ID
+  ══════════════════════════════════════════════════
+
+<section id="video-consulta" style="background:var(--teal);padding:80px 5%;text-align:center">
+  <div class="section-label">Veja como funciona</div>
+  <h2 class="section-title" style="color:var(--white);margin-bottom:2rem">Como é uma consulta de avaliação?</h2>
+  <div style="max-width:720px;margin:0 auto;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+    <iframe width="100%" height="405"
+      src="https://www.youtube.com/embed/SEU_VIDEO_ID"
+      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen style="display:block">
+    </iframe>
+  </div>
+</section>
+
+  ══════════════════════════════════════════════════ -->
+
+<!-- WPP FLUTUANTE -->
+<a href="https://wa.me/5514997432182?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20AJR%20Performance!" class="wpp-float" target="_blank" title="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+</body>
+</html>
