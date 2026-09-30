@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Desafio — AJR Performance</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#08090b">
+<link rel="icon" href="logo-ajr.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --gold:#C9A84C; --gold-lt:#e2c878; --silver:#c9ced6; --bronze:#c98a5a;
+  --navy:#17191d; --surface:#101114; --bg:#08090b; --input:#0e0f12;
+  --border:rgba(201,168,76,.22);
+  --gray:#a3a9b1; --dim:#7a8088; --off:#f0ede8;
+  --ok:#4CAF7D; --bad:#E0685F;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--off);min-height:100vh;
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
+  background-size:56px 56px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1500px;margin:0 auto;padding:clamp(16px,2.5vw,36px)}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:clamp(16px,2vw,28px)}
+.top img{width:48px;height:48px;object-fit:contain}
+.brand{font:700 14px 'Chakra Petch',sans-serif;letter-spacing:2px;color:var(--gold)}
+.event{font:400 11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:4px}
+.tabs{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{padding:10px 16px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--gray);
+  font:700 13px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--gold);color:#101114;border-color:var(--gold)}
+.status{font:400 11px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:1px;width:100%;text-align:right}
+.status b{color:var(--ok)}
+h1{font:700 clamp(30px,4vw,56px)/1.05 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff;margin-bottom:clamp(14px,2vw,26px)}
+h1 em{font-style:normal;color:var(--gold)}
+.login{max-width:420px;margin:12vh auto 0;background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:26px}
+.login label{font:700 11px 'JetBrains Mono',monospace;color:var(--gold);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px}
+.login input{width:100%;padding:13px 14px;background:var(--input);border:1px solid rgba(255,255,255,.12);border-radius:4px;font:700 18px 'JetBrains Mono',monospace;color:var(--off);letter-spacing:3px;text-transform:uppercase;outline:none}
+.login input:focus{border-color:var(--gold)}
+.btn{width:100%;margin-top:16px;padding:15px;border:0;border-radius:4px;background:var(--gold);color:#101114;font:700 15px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.msg{margin-top:12px;font-size:14px;color:var(--bad)}
+.view{display:none}
+.view.on{display:block}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.2vw,18px)}
+@media (max-width:1000px){.grid4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid4{grid-template-columns:1fr}.tabs{margin-left:0}}
+.box{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:clamp(16px,1.6vw,24px)}
+.box h2{font:700 clamp(15px,1.4vw,20px) 'Chakra Petch',sans-serif;letter-spacing:1px;text-transform:uppercase;color:#fff}
+.box .unit{font:400 12px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:1px;margin-top:4px}
+.pod{margin-top:clamp(12px,1.4vw,20px);display:grid;gap:10px}
+.pos{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-radius:6px;background:var(--surface)}
+.pos .n{font:700 20px 'Chakra Petch',sans-serif;color:var(--dim);text-align:center}
+.pos:nth-child(1) .n{color:var(--gold)} .pos:nth-child(2) .n{color:var(--silver)} .pos:nth-child(3) .n{color:var(--bronze)}
+.pos:nth-child(1){border:1px solid var(--gold)}
+.pos .who{min-width:0}
+.pos .who b{display:block;font-size:clamp(14px,1.2vw,18px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pos .who small{font:400 12px 'JetBrains Mono',monospace;color:var(--gold);letter-spacing:1px}
+.pos .v{font:700 clamp(20px,2vw,30px) 'JetBrains Mono',monospace;color:#fff}
+.empty{color:var(--dim);font-size:14px;padding:10px 0}
+/* personagem */
+.ze{display:grid;grid-template-columns:minmax(260px,.8fr) 1.6fr;gap:clamp(12px,1.4vw,20px)}
+@media (max-width:900px){.ze{grid-template-columns:1fr}}
+.perfil{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.avatar{width:clamp(120px,12vw,180px);height:clamp(120px,12vw,180px);border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:var(--surface)}
+.perfil .nm{font:700 clamp(36px,4vw,60px) 'Chakra Petch',sans-serif;color:#fff;text-transform:uppercase}
+.perfil p{color:var(--gray);font-size:clamp(14px,1.2vw,18px);line-height:1.5}
+.perfil .meta{margin-top:6px;padding:10px 14px;border:1px dashed var(--gold);border-radius:6px;color:var(--gold);font-weight:700}
+.marcas{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.2vw,16px)}
+@media (max-width:560px){.marcas{grid-template-columns:1fr}}
+.marca{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:clamp(16px,1.6vw,24px)}
+.marca h3{font:700 12px 'JetBrains Mono',monospace;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+.marca .v{font:700 clamp(40px,4.6vw,72px)/1.05 'Chakra Petch',sans-serif;color:var(--bad);margin-top:8px;transition:filter .5s}
+.marca .v small{font:700 clamp(14px,1.3vw,20px) 'JetBrains Mono',monospace;color:var(--dim);margin-left:6px}
+.marca .de{font-size:14px;color:var(--gray);margin-top:6px}
+.hide .marca .v,.hide .marca .de{filter:blur(18px)}
+.zonas{grid-column:1/-1}
+.zrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+@media (max-width:700px){.zrow{grid-template-columns:1fr 1fr}}
+.z{padding:12px;border-radius:6px;background:var(--surface)}
+.z b{display:block;font:700 12px 'JetBrains Mono',monospace;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase}
+.z span{font:700 clamp(20px,2vw,30px) 'JetBrains Mono',monospace;color:#fff}
+.revelar{margin:clamp(14px,1.6vw,22px) auto 0;display:block;max-width:360px}
+/* participantes */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font:700 11px 'JetBrains Mono',monospace;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;text-align:left;padding:10px;border-bottom:1px solid var(--border)}
+td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.06)}
+td.num{font-family:'JetBrains Mono',monospace;text-align:right}
+th.num{text-align:right}
+td .x{background:transparent;border:1px solid rgba(224,104,95,.5);color:var(--bad);border-radius:4px;padding:5px 9px;cursor:pointer;font-size:12px}
+.tbl{overflow-x:auto}
+.count{font:400 13px 'JetBrains Mono',monospace;color:var(--gray);margin-bottom:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <img src="logo-ajr.png" alt="AJR Performance">
+    <div>
+      <div class="brand">AJR PERFORMANCE</div>
+      <div class="event">Desafio das turmas · Semana da Saúde FIB</div>
+    </div>
+    <nav class="tabs" role="tablist" id="tabs" hidden>
+      <button role="tab" data-v="marcas" aria-selected="true">Melhores marcas</button>
+      <button role="tab" data-v="ze" aria-selected="false">Personagem</button>
+      <button role="tab" data-v="lista" aria-selected="false">Participantes</button>
+    </nav>
+    <div class="status" id="status"></div>
+  </header>
+
+  <section class="login" id="login">
+    <label for="chave">Chave do painel</label>
+    <input id="chave" autocomplete="off" placeholder="••••••">
+    <button class="btn" id="btnEntrar">Abrir painel</button>
+    <p class="msg" id="msg" role="alert"></p>
+  </section>
+
+  <!-- MELHORES MARCAS -->
+  <section class="view" id="v-marcas">
+    <h1>Melhores <em>marcas</em></h1>
+    <div class="grid4" id="podios"></div>
+  </section>
+
+  <!-- PERSONAGEM -->
+  <section class="view" id="v-ze">
+    <h1>Conheça o <em id="zeNome">Zé</em></h1>
+    <div class="ze hide" id="zeBox">
+      <div class="box perfil">
+        <div class="avatar" aria-hidden="true">
+          <svg width="46%" height="46%" viewBox="0 0 24 24" fill="#C9A84C"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 21c0-4.6 4-8 9-8s9 3.4 9 8z"/></svg>
+        </div>
+        <div class="nm" id="zeNome2">Zé</div>
+        <p id="zePerfil"></p>
+        <div class="meta" id="zeMeta"></div>
+      </div>
+      <div class="marcas" id="zeMarcas"></div>
+    </div>
+    <button class="btn revelar" id="btnRevelar">Revelar as marcas</button>
+  </section>
+
+  <!-- PARTICIPANTES -->
+  <section class="view" id="v-lista">
+    <h1>Participantes</h1>
+    <div class="count" id="count"></div>
+    <div class="box tbl"><table>
+      <thead><tr><th>Nome</th><th>Turma</th><th>Sexo</th><th class="num">Sentar (cm)</th><th class="num">Preensão (kgf)</th><th class="num">Terra (kgf)</th><th class="num">FC (bpm)</th><th class="num">VO₂</th><th></th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table></div>
+  </section>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO
+   ============================================================ */
+var CONFIG = {
+  endpoint: 'https://script.google.com/macros/s/AKfycbzx2_XQTLBH0lKlj5EgALoR6fJBFq3ZtbrCeaxzpsksZRkB8jIPgZL5EJ6A80I6aSwJMw/exec',
+  atualizarCada: 8,                 // segundos
+  personagem: { nome: 'Zé', idade: 35, fcRepouso: 78,
+                perfil: '35 anos · analista · 9 h por dia sentado',
+                meta: 'Quer correr os 5 km da Meia de Bauru em 8 semanas' }
+};
+var TESTES = [
+  { k:'sentar',   nome:'Sentar e alcançar', un:'cm',        casas:1 },
+  { k:'preensao', nome:'Preensão manual',   un:'kgf',       casas:1 },
+  { k:'terra',    nome:'Terra isométrico',  un:'kgf',       casas:0 },
+  { k:'vo2',      nome:'VO₂ no step',       un:'ml/kg/min', casas:1 }
+];
+var $ = function(id){ return document.getElementById(id); };
+var dados = [], chave = '', timer = null;
+
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function fmt(n, c){ return Number(n).toFixed(c).replace('.', ','); }
+function tem(v){ return v !== '' && v !== null && v !== undefined && isFinite(Number(v)); }
+
+function post(body){
+  return fetch(CONFIG.endpoint, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(body) })
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+}
+
+function carregar(){
+  return post({ acao:'desafioLista', chave: chave }).then(function(res){
+    if (!res.ok) throw new Error(res.erro === 'chave incorreta' ? 'Chave incorreta.' :
+      res.erro === 'acao desconhecida' ? 'Atualize o Apps Script (Nova versão) — veja COMO-CONFIGURAR-DESAFIO.md.' : 'Erro: ' + res.erro);
+    dados = res.participantes || [];
+    render();
+    var h = new Date();
+    $('status').innerHTML = '<b>●</b> ao vivo · ' + dados.length + ' participante' + (dados.length === 1 ? '' : 's') +
+      ' · atualizado ' + h.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  });
+}
+
+function ordenados(k, desc){
+  return dados.filter(function(p){ return tem(p[k]); })
+    .sort(function(a, b){ return desc ? b[k] - a[k] : a[k] - b[k]; });
+}
+
+function render(){
+  // pódios
+  $('podios').innerHTML = TESTES.map(function(t){
+    var top = ordenados(t.k, true).slice(0, 3);
+    var li = top.length ? top.map(function(p, i){
+      return '<div class="pos"><div class="n">' + (i + 1) + 'º</div><div class="who"><b>' + esc(p.nome) + '</b><small>' + esc(p.turma) + '</small></div>' +
+             '<div class="v">' + fmt(p[t.k], t.casas) + '</div></div>';
+    }).join('') : '<div class="empty">Aguardando resultados…</div>';
+    return '<div class="box"><h2>' + t.nome + '</h2><div class="unit">' + t.un + '</div><div class="pod">' + li + '</div></div>';
+  }).join('');
+
+  // personagem: a pior marca de cada teste
+  var P = CONFIG.personagem;
+  $('zeNome').textContent = P.nome; $('zeNome2').textContent = P.nome;
+  $('zePerfil').innerHTML = esc(P.perfil) + '<br>FC de repouso: ' + P.fcRepouso + ' bpm';
+  $('zeMeta').textContent = P.meta;
+  var fcmax = Math.floor(208 - 0.7 * P.idade), fcr = fcmax - P.fcRepouso;
+  function z(p){ return Math.round(fcr * p + P.fcRepouso); }
+  var marcas = TESTES.map(function(t){
+    var pior = ordenados(t.k, false)[0];
+    return '<div class="marca"><h3>' + t.nome + '</h3>' +
+      (pior ? '<div class="v">' + fmt(pior[t.k], t.casas) + '<small>' + t.un + '</small></div><div class="de">pior marca · ' + esc(pior.turma) + '</div>'
+            : '<div class="v" style="color:var(--dim)">—</div><div class="de">sem resultado ainda</div>') + '</div>';
+  }).join('');
+  marcas += '<div class="marca zonas"><h3>FC do ' + esc(P.nome) + ' · Tanaka + Karvonen (sem limiar medido)</h3><div class="zrow">' +
+    '<div class="z"><b>FCmáx</b><span>' + fcmax + '</span></div>' +
+    '<div class="z"><b>Leve 30–39%</b><span>' + z(.30) + '–' + z(.39) + '</span></div>' +
+    '<div class="z"><b>Moderado 40–59%</b><span>' + z(.40) + '–' + z(.59) + '</span></div>' +
+    '<div class="z"><b>Vigoroso 60–89%</b><span>' + z(.60) + '–' + z(.89) + '</span></div></div></div>';
+  $('zeMarcas').innerHTML = marcas;
+
+  // participantes
+  $('count').textContent = dados.length + ' representante' + (dados.length === 1 ? '' : 's') + ' · ' +
+    Array.from(new Set(dados.map(function(p){ return p.turma; }))).length + ' turma(s)';
+  $('tbody').innerHTML = dados.map(function(p){
+    function c(k, cs){ return '<td class="num">' + (tem(p[k]) ? fmt(p[k], cs) : '—') + '</td>'; }
+    return '<tr><td>' + esc(p.nome) + '</td><td>' + esc(p.turma) + '</td><td>' + esc(p.sexo) + '</td>' +
+      c('sentar',1) + c('preensao',1) + c('terra',0) + c('fc',0) + c('vo2',1) +
+      '<td><button class="x" data-id="' + esc(p.id) + '" data-nome="' + esc(p.nome) + '">apagar</button></td></tr>';
+  }).join('') || '<tr><td colspan="9" class="empty">Ninguém lançou resultados ainda.</td></tr>';
+}
+
+$('tbody').addEventListener('click', function(ev){
+  var b = ev.target.closest('.x'); if (!b) return;
+  if (!confirm('Apagar ' + b.dataset.nome + ' do desafio?')) return;
+  b.disabled = true;
+  post({ acao:'desafioApagar', chave: chave, id: b.dataset.id }).then(carregar).catch(function(e){ alert(e.message); b.disabled = false; });
+});
+
+document.querySelectorAll('#tabs button').forEach(function(b){
+  b.addEventListener('click', function(){
+    document.querySelectorAll('#tabs button').forEach(function(x){ x.setAttribute('aria-selected', String(x === b)); });
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.toggle('on', v.id === 'v-' + b.dataset.v); });
+  });
+});
+
+$('btnRevelar').addEventListener('click', function(){
+  var box = $('zeBox'), escondido = box.classList.toggle('hide');
+  this.textContent = escondido ? 'Revelar as marcas' : 'Esconder as marcas';
+});
+
+function entrar(){
+  chave = $('chave').value.trim().toUpperCase();
+  $('msg').textContent = '';
+  if (!chave){ $('chave').focus(); return; }
+  $('btnEntrar').disabled = true; $('btnEntrar').textContent = 'Abrindo...';
+  carregar().then(function(){
+    try { localStorage.setItem('ajr-fib-chave', chave); } catch(e){}
+    $('login').style.display = 'none'; $('tabs').hidden = false; $('v-marcas').classList.add('on');
+    clearInterval(timer);
+    timer = setInterval(function(){ carregar().catch(function(){ $('status').innerHTML = '<span style="color:var(--bad)">●</span> sem conexão — tentando de novo'; }); }, CONFIG.atualizarCada * 1000);
+  }).catch(function(e){
+    $('msg').textContent = e.message === 'Failed to fetch' ? 'Sem conexão com a planilha.' : e.message;
+  }).then(function(){ $('btnEntrar').disabled = false; $('btnEntrar').textContent = 'Abrir painel'; });
+}
+$('btnEntrar').addEventListener('click', entrar);
+$('chave').addEventListener('keydown', function(e){ if (e.key === 'Enter') entrar(); });
+try { var k = new URLSearchParams(location.search).get('k') || localStorage.getItem('ajr-fib-chave'); if (k) { $('chave').value = k; } } catch(e){}
+</script>
+</body>
+</html>
