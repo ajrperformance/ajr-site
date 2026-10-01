@@ -63,6 +63,16 @@ button:disabled{opacity:.45;cursor:not-allowed}
 </style>
 </head>
 <body>
+<style>
+.ajr-abas{flex:0 0 auto;position:sticky;top:0;z-index:50;display:flex;justify-content:center;gap:4px;padding:8px 10px calc(8px);
+  background:rgba(8,9,11,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,168,76,.22)}
+.ajr-abas a{flex:0 1 130px;text-align:center;padding:9px 6px;border-radius:4px;border:1px solid rgba(201,168,76,.22);color:#a3a9b1;
+  font:700 12px 'Chakra Petch',system-ui,sans-serif;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+.ajr-abas a:hover{color:#f0ede8;border-color:#C9A84C}
+.ajr-abas a.on{background:#C9A84C;border-color:#C9A84C;color:#101114}
+</style>
+<nav class="ajr-abas" aria-label="Páginas da palestra"><a href="fib.html">Cadastro</a><a href="fib.html?modo=desafio">Desafio</a><a href="fib.html?modo=painel">Telão</a><a href="sorteio.html" class="on" aria-current="page">Sorteio</a></nav>
+
 <header class="top">
   <div class="brand"><img src="logo-ajr.png" alt="AJR Performance">AJR PERFORMANCE <span>×</span> CLUTCH<b>.APP</b></div>
   <div class="count" id="count">Sorteio · palestra FIB</div>
@@ -102,7 +112,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 <script>
 /* Mesma URL do fib.html (passo a passo em COMO-CONFIGURAR-FIB.md) */
-var CONFIG = { endpoint: 'https://script.google.com/macros/s/AKfycbzx2_XQTLBH0lKlj5EgALoR6fJBFq3ZtbrCeaxzpsksZRkB8jIPgZL5EJ6A80I6aSwJMw/exec' };
+var CONFIG = { endpoint: 'https://script.google.com/macros/s/AKfycbzpRTVcyrMnfZUN1kQpiKJtrD2-fsiYh4SgkK4enWMRTYovhbZxHw3k_NedRt2VRYiKOQ/exec' };
 
 var participantes = [], ganhadores = [];
 var $ = function(id){ return document.getElementById(id); };
