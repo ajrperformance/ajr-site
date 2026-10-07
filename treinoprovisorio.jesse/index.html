@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Treino do Jesse · AJR</title>
+<title>Treinos do Jesse · AJR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* Layout: coluna única pensada para celular na academia — blocos na ordem de execução, vídeo carrega ao tocar */
+/* Layout: tela inicial com escolha A/B/C; cada treino em coluna única para celular, na ordem de execução */
 :root{
   --bg:#faf8f3; --card:#f4f1e8; --line:#e0d9c7; --ink:#2a2722; --text:#4d4740; --muted:#847c6e;
   --gold:#a8862c; --gold-dk:#8a6d1e; --gold-lt:#c9a94f; --ok:#4a7c59;
@@ -23,11 +23,21 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.5 var(--sans)}
 .wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:calc(20px + env(safe-area-inset-top,0px)) calc(40px + env(safe-area-inset-bottom,0px))}
-header .brand{font:600 11px/1 var(--sans);letter-spacing:3px;text-transform:uppercase;color:var(--gold-dk)}
-header h1{font:600 28px/1.15 var(--serif);color:var(--ink);margin:8px 0 4px;text-wrap:balance}
+.brand{font:600 11px/1 var(--sans);letter-spacing:3px;text-transform:uppercase;color:var(--gold-dk)}
+h1{font:600 28px/1.15 var(--serif);color:var(--ink);margin:8px 0 4px;text-wrap:balance}
 header p{margin:0;color:var(--muted);font-size:13px}
 .rule{height:2px;margin:16px 0 8px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:2px}
-.progress{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);margin:4px 0 4px}
+.back{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:4px 0;margin-bottom:10px;color:var(--gold-dk);font:500 13px var(--sans);cursor:pointer}
+.menu{display:grid;gap:12px;margin-top:22px}
+.pick{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 16px;cursor:pointer;color:inherit;font:inherit}
+.pick:hover{border-color:var(--gold-lt)}
+.letter{flex:none;width:52px;height:52px;border-radius:50%;background:var(--gold);color:#fff;font:600 24px/52px var(--serif);text-align:center}
+.pick-txt{flex:1;min-width:0}
+.pick-txt strong{display:block;font:600 17px/1.2 var(--sans);color:var(--ink)}
+.pick-txt span{display:block;margin-top:3px;font-size:13px;color:var(--muted)}
+.pick-prog{flex:none;font-size:12px;color:var(--ok);font-weight:500}
+.arrow{flex:none;color:var(--gold-dk);font-size:20px}
+.progress{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);margin:4px 0}
 .bar{flex:1;height:6px;background:var(--line);border-radius:6px;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
 section{margin-top:26px}
@@ -39,154 +49,227 @@ section{margin-top:26px}
 .num{flex:none;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;font:600 12px/24px var(--sans);text-align:center}
 .ex-name{flex:1;min-width:0}
 .ex-name h3{margin:0;font:600 15px/1.3 var(--sans);color:var(--ink)}
-.dose{margin-top:4px;display:flex;flex-wrap:wrap;gap:6px}
+.dose{margin-top:5px;display:flex;flex-wrap:wrap;gap:6px}
 .pill{font:500 12px/1 var(--sans);padding:5px 9px;border-radius:20px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-variant-numeric:tabular-nums}
 .pill.note{color:var(--gold-dk)}
 .check{flex:none;width:30px;height:30px;border-radius:8px;border:1.5px solid var(--gold-lt);background:var(--bg);cursor:pointer;display:grid;place-items:center;color:transparent;font-size:16px}
 .check[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
-.check:focus-visible,.play:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.video{margin-top:12px;position:relative;aspect-ratio:16/9;max-width:100%;border-radius:8px;overflow:hidden;background:#000}
+.check:focus-visible,.play:focus-visible,.pick:focus-visible,.back:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.vids{display:grid;gap:12px;margin-top:12px}
+.vids.two{grid-template-columns:1fr 1fr}
+.vids.three{grid-template-columns:1fr 1fr 1fr}
+.vcol{min-width:0}
+.vcol h4{margin:0 0 6px;font:500 13px/1.3 var(--sans);color:var(--ink)}
+.video{position:relative;aspect-ratio:9/16;width:100%;max-width:200px;border-radius:8px;overflow:hidden;background:#000}
+.vids.one .video{margin:0 auto}
+.vids.one .vcol{text-align:center}
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .play{position:absolute;inset:0;width:100%;border:0;padding:0;cursor:pointer;background:#000 center/cover no-repeat}
-.play::after{content:"";position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:rgba(168,134,44,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='white'/%3E%3C/svg%3E") 55% 50%/26px no-repeat;box-shadow:0 2px 10px rgba(0,0,0,.35)}
-.sub{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
-.sub h4{margin:0;font:500 14px/1.3 var(--sans);color:var(--ink)}
-.yt{display:inline-block;margin-top:8px;font-size:12px;color:var(--gold-dk);text-decoration:none}
-.yt:hover{text-decoration:underline}
-.circ-info{font-size:13px;color:var(--text);margin:6px 0 0}
+.play::after{content:"";position:absolute;left:50%;top:50%;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:50%;background:rgba(168,134,44,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='white'/%3E%3C/svg%3E") 55% 50%/22px no-repeat;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.yt{display:inline-block;margin-top:6px;font-size:11px;color:var(--gold-dk);text-decoration:none}
+.info{font-size:13px;color:var(--text);margin:8px 0 0}
 footer{margin-top:30px;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.5px}
 .reset{margin-top:10px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:6px 14px;font:500 12px var(--sans);cursor:pointer}
+@media (max-width:420px){.vids.three{grid-template-columns:1fr 1fr}}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="brand">AJR Performance</div>
-    <h1>Treino do Jesse</h1>
-    <p>Toque no vídeo para ver a execução. Marque ✓ ao terminar cada exercício.</p>
-    <div class="rule"></div>
-    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="count">0 de 0</span></div>
-  </header>
-  <main id="app"></main>
-  <footer>
-    AJR Avaliação Física e Performance · Bauru/SP<br>
-    <button class="reset" id="reset" type="button">Zerar marcações</button>
-  </footer>
-</div>
+<div class="wrap" id="root"></div>
 
 <script>
-/* Biblioteca de vídeos — um link por exercício, reaproveitável para qualquer aluno */
+/* Biblioteca de vídeos — YouTube Shorts de até 10 s. Reaproveitável para qualquer aluno. */
 const VIDEOS = {
-  flexQuadrilMiniband: "HO2hTXloWm8",
-  pranchaLateralAbducao: "aJ7nKihbBt8",
-  copenhagenAdaptado: "yj7VyP_YOdk",
-  pogoJump: "q78thYeb0jw",
-  agachamentoBanco: "BpKhzwbWuWY",
-  cadeiraExtensora: "xnSb4yxm7I4",
-  supinoInclinadoHalter: "G-i3jMIbDmo",
-  tricepsPoliaBarraReta: "afkbiAZbGxM",
-  flexaoBraco: "Azw6BZ8-wSM",
-  abdominalRemador: "pNRpcChQmq0",
-  kettlebellSwing: "MB87gQFA_y0"
+  flexQuadrilMiniband:  "3jz8htG2XyY",
+  pranchaLateralAbd:    "B4CY-Z2ky-A",
+  copenhagenAdaptado:   "MLjo8mx-tNY",
+  pogoJump:             "XHPEwQXXGP8",
+  agachamentoBanco:     "lzvwWLNW6lI",
+  cadeiraExtensora:     "u68RNdfZymA",
+  supinoInclinadoHalter:"CXK3RxBjmG0",
+  tricepsPoliaBarra:    "UdfF_LQ1iak",
+  flexaoBraco:          "IED65msJZU4",
+  abdominalRemador:     "hWZ3MGBqwrw",
+  kettlebellSwing:      "A_6w4Mh5GHg",
+  elevQuadrilUniBanco:  "H_aWIaCxXBE",
+  superman:             "RaHn_82tANI",
+  pranchaFrontalBaixa:  "ylVv56oHavk",
+  stiffUniHalter:       "jM1TFT0iGHU",
+  nordicaAdaptada:      "VsUAPYRcE7k",
+  terraBarra:           "k0EiboX1QUU",
+  panturrilhaSentHalter:"LkN-pYZHUkE",
+  remadaCurvadaBarra:   "-HqME2slJBc",
+  pulldownElastico:     "D8vxiBe__fQ",
+  roscaBarraReta:       "JcjUd2dVrCc",
+  deadBug:              "F5z-lTBbvDw",
+  pallofElastico:       "GVXfy-LTF3w",
+  elevPelvicaMiniband:  "ieIdU3xm338",
+  saltoCaixote:         "-EhQFjzeQH0",
+  bulgaroHalteres:      "cCTC06-Yjqk",
+  desenvolvimentoHalter:"5I7ogOjvdnc",
+  remadaUniHalter:      "tOFzYBCJOQg",
+  farmerWalk:           "NJ-7GLhudPI",
+  escalador:            "BDwbCNsr5EU",
+  agachamentoGoblet:    "jBS3ZSyuPe8"
 };
 
-/* Treino do aluno */
-const TREINO = {
-  aluno: "jesse",
-  blocos: [
+const ALUNO = { id: "jesse", nome: "Jesse" };
+
+/* Treinos. Item com "sub" = exercícios combinados (bi-set / circuito). */
+const BISET = "Faça os dois em sequência e descanse só depois do segundo.";
+const TREINOS = {
+  a: { nome: "Treino A", foco: "Ativação, potência e força", blocos: [
     { titulo: "Ativação e prevenção", itens: [
       { nome: "Flexão de quadril deitado com mini band", dose: ["2 × 15"], video: "flexQuadrilMiniband" },
-      { nome: "Prancha lateral com abdução de quadril (mini band)", dose: ["2 × 15"], video: "pranchaLateralAbducao" },
-      { nome: "Copenhagen plank adaptado", dose: ["2 × 30 s"], video: "copenhagenAdaptado" }
-    ]},
+      { nome: "Prancha lateral com abdução de quadril (mini band)", dose: ["2 × 15"], video: "pranchaLateralAbd" },
+      { nome: "Copenhagen plank adaptado", dose: ["2 × 30 s"], video: "copenhagenAdaptado" } ]},
     { titulo: "Potência", itens: [
-      { nome: "Pogo jump", dose: ["3 × 10"], video: "pogoJump" }
-    ]},
+      { nome: "Pogo jump", dose: ["3 × 10"], video: "pogoJump" } ]},
     { titulo: "Força", itens: [
       { nome: "Agachamento no banco com barra nas costas", dose: ["4 × 8–12", "progressão de carga"], video: "agachamentoBanco" },
       { nome: "Cadeira extensora", dose: ["4 × 8–12", "progressão de carga"], video: "cadeiraExtensora" },
       { nome: "Supino inclinado com halteres", dose: ["4 × 8–12"], video: "supinoInclinadoHalter" },
-      { nome: "Tríceps na polia com barra reta", dose: ["4 × 8–12"], video: "tricepsPoliaBarraReta" }
-    ]},
+      { nome: "Tríceps na polia com barra reta", dose: ["4 × 8–12"], video: "tricepsPoliaBarra" } ]},
     { titulo: "Circuito final", itens: [
-      { nome: "Circuito: flexão + remador + swing", dose: ["3 voltas", "15 de cada"],
-        info: "Faça os três em sequência e só descanse ao fim da volta.",
-        sub: [
-          { nome: "Flexão de braço", video: "flexaoBraco" },
-          { nome: "Abdominal remador", video: "abdominalRemador" },
-          { nome: "Kettlebell swing", video: "kettlebellSwing" }
-        ] }
-    ]}
-  ]
+      { nome: "Flexão de braço + abdominal remador + kettlebell swing", dose: ["3 voltas", "15 de cada"],
+        info: "Faça os três em sequência e descanse só ao fim da volta.",
+        sub: [ { nome: "Flexão de braço", video: "flexaoBraco" },
+               { nome: "Abdominal remador", video: "abdominalRemador" },
+               { nome: "Kettlebell swing", video: "kettlebellSwing" } ] } ]}
+  ]},
+  b: { nome: "Treino B", foco: "Posterior, core e puxadas", blocos: [
+    { titulo: "Ativação e core", itens: [
+      { nome: "Elevação de quadril unilateral no banco", dose: ["3 × 10"], video: "elevQuadrilUniBanco" },
+      { nome: "Superman", dose: ["3 × 10"], video: "superman" },
+      { nome: "Prancha frontal baixa (cotovelos)", dose: ["3 × 30 s"], video: "pranchaFrontalBaixa" } ]},
+    { titulo: "Força", itens: [
+      { nome: "Stiff unilateral com halter", dose: ["3 × 10–12"], video: "stiffUniHalter" } ]},
+    { titulo: "Bi-sets", itens: [
+      { nome: "Flexão nórdica adaptada + levantamento terra com barra", dose: ["3 × 8–12"], info: BISET,
+        sub: [ { nome: "Flexão nórdica adaptada", video: "nordicaAdaptada" },
+               { nome: "Levantamento terra com barra", video: "terraBarra" } ] },
+      { nome: "Panturrilha sentada com halter + remada curvada com barra reta", dose: ["4 × 8–12"], info: BISET,
+        sub: [ { nome: "Panturrilha sentada com halter", video: "panturrilhaSentHalter" },
+               { nome: "Remada curvada com barra reta", video: "remadaCurvadaBarra" } ] },
+      { nome: "Pulldown com faixa elástica + rosca alternada com barra reta", dose: ["4 × 8–12"], info: BISET,
+        sub: [ { nome: "Pulldown com faixa elástica", video: "pulldownElastico" },
+               { nome: "Rosca com barra reta", video: "roscaBarraReta" } ] } ]}
+  ]},
+  c: { nome: "Treino C", foco: "Full body", blocos: [
+    { titulo: "Ativação e core", itens: [
+      { nome: "Dead bug", dose: ["3 × 10"], video: "deadBug" },
+      { nome: "Pallof press com elástico", dose: ["3 × 10", "cada lado"], video: "pallofElastico" },
+      { nome: "Elevação de quadril com mini band", dose: ["3 × 15"], video: "elevPelvicaMiniband" } ]},
+    { titulo: "Potência", itens: [
+      { nome: "Salto no caixote", dose: ["3 × 6"], video: "saltoCaixote" } ]},
+    { titulo: "Força", itens: [
+      { nome: "Agachamento búlgaro com halteres", dose: ["3 × 8–12", "cada perna"], video: "bulgaroHalteres" },
+      { nome: "Desenvolvimento com halteres + remada unilateral com halter", dose: ["4 × 8–12"], info: BISET,
+        sub: [ { nome: "Desenvolvimento com halteres", video: "desenvolvimentoHalter" },
+               { nome: "Remada unilateral com halter", video: "remadaUniHalter" } ] } ]},
+    { titulo: "Circuito final", itens: [
+      { nome: "Farmer walk + escalador + agachamento goblet", dose: ["3 voltas", "30 m · 20 · 12"],
+        info: "Farmer walk 30 m, escalador 20 repetições e agachamento goblet 12. Descanse só ao fim da volta.",
+        sub: [ { nome: "Farmer walk", video: "farmerWalk" },
+               { nome: "Escalador", video: "escalador" },
+               { nome: "Agachamento goblet", video: "agachamentoGoblet" } ] } ]}
+  ]}
 };
 
-const KEY = "ajr-treino-" + TREINO.aluno;
+const KEY = "ajr-treinos-" + ALUNO.id;
 let feitos = {};
 try { feitos = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { feitos = {}; }
-function salvar(){ try { localStorage.setItem(KEY, JSON.stringify(feitos)); } catch(e) {} }
+const salvar = () => { try { localStorage.setItem(KEY, JSON.stringify(feitos)); } catch(e) {} };
+const totalItens = t => TREINOS[t].blocos.reduce((s,b)=>s+b.itens.length,0);
+const feitosDe = t => Object.keys(feitos).filter(k=>k.startsWith(t+"-") && feitos[k]).length;
 
-function videoHTML(id, nome){
-  const yid = VIDEOS[id];
-  return `<div class="video"><button class="play" type="button" data-yid="${yid}" aria-label="Ver vídeo: ${nome}"
-    style="background-image:url('https://i.ytimg.com/vi/${yid}/hqdefault.jpg')"></button></div>
-    <a class="yt" href="https://www.youtube.com/watch?v=${yid}" target="_blank" rel="noopener">Abrir no YouTube ↗</a>`;
+const root = document.getElementById("root");
+
+function home(){
+  document.title = "Treinos do " + ALUNO.nome + " · AJR";
+  root.innerHTML = `<header><div class="brand">AJR Performance</div>
+    <h1>Treinos do ${ALUNO.nome}</h1><p>Escolha o treino de hoje.</p><div class="rule"></div></header>
+    <div class="menu">${Object.keys(TREINOS).map(t => {
+      const f = feitosDe(t), n = totalItens(t);
+      return `<button class="pick" type="button" data-go="${t}">
+        <span class="letter">${t.toUpperCase()}</span>
+        <span class="pick-txt"><strong>${TREINOS[t].nome}</strong><span>${TREINOS[t].foco} · ${n} exercícios</span></span>
+        ${f ? `<span class="pick-prog">${f}/${n}</span>` : ""}<span class="arrow">›</span></button>`; }).join("")}
+    </div><footer>AJR Avaliação Física e Performance · Bauru/SP</footer>`;
+  window.scrollTo(0,0);
 }
 
-function render(){
-  const app = document.getElementById("app");
-  let n = 0, html = "";
-  TREINO.blocos.forEach(b => {
+function videoHTML(id){
+  const y = VIDEOS[id];
+  return `<div class="video"><button class="play" type="button" data-yid="${y}" aria-label="Ver vídeo"
+    style="background-image:url('https://i.ytimg.com/vi/${y}/oardefault.jpg'),url('https://i.ytimg.com/vi/${y}/hqdefault.jpg')"></button></div>
+    <a class="yt" href="https://www.youtube.com/shorts/${y}" target="_blank" rel="noopener">Abrir no YouTube ↗</a>`;
+}
+
+function treino(t){
+  const T = TREINOS[t]; let n = 0, html = "";
+  document.title = T.nome + " · " + ALUNO.nome + " · AJR";
+  T.blocos.forEach(b => {
     html += `<section><div class="sec-title">${b.titulo}</div>`;
     b.itens.forEach(ex => {
-      n++;
-      const k = "ex" + n;
-      const pills = ex.dose.map((d,i) => `<span class="pill${i ? " note" : ""}">${d}</span>`).join("");
-      let corpo = ex.sub
-        ? `<p class="circ-info">${ex.info}</p>` + ex.sub.map(s => `<div class="sub"><h4>${s.nome}</h4>${videoHTML(s.video, s.nome)}</div>`).join("")
-        : videoHTML(ex.video, ex.nome);
-      html += `<article class="ex${feitos[k] ? " done" : ""}" id="${k}">
+      n++; const k = t + "-" + n;
+      const pills = ex.dose.map((d,i)=>`<span class="pill${i?" note":""}">${d}</span>`).join("");
+      const cols = ex.sub ? ex.sub.length : 1;
+      const cls = cols === 3 ? "three" : cols === 2 ? "two" : "one";
+      const vids = ex.sub
+        ? ex.sub.map(s=>`<div class="vcol"><h4>${s.nome}</h4>${videoHTML(s.video)}</div>`).join("")
+        : `<div class="vcol">${videoHTML(ex.video)}</div>`;
+      html += `<article class="ex${feitos[k]?" done":""}" id="${k}">
         <div class="ex-head"><span class="num">${n}</span>
-          <div class="ex-name"><h3>${ex.nome}</h3><div class="dose">${pills}</div></div>
-          <button class="check" type="button" data-k="${k}" aria-pressed="${!!feitos[k]}" aria-label="Marcar ${ex.nome} como feito">✓</button>
-        </div>${corpo}</article>`;
+          <div class="ex-name"><h3>${ex.nome}</h3><div class="dose">${pills}</div>${ex.info?`<p class="info">${ex.info}</p>`:""}</div>
+          <button class="check" type="button" data-k="${k}" aria-pressed="${!!feitos[k]}" aria-label="Marcar como feito">✓</button>
+        </div><div class="vids ${cls}">${vids}</div></article>`;
     });
     html += `</section>`;
   });
-  app.innerHTML = html;
-  atualizar(n);
+  root.innerHTML = `<header><button class="back" type="button" data-go="">‹ Trocar treino</button>
+    <div class="brand">AJR Performance · ${ALUNO.nome}</div><h1>${T.nome}</h1><p>${T.foco}. Toque no vídeo para ver a execução e marque ✓ ao terminar.</p>
+    <div class="rule"></div><div class="progress"><div class="bar"><i id="bar"></i></div><span id="count"></span></div></header>
+    <main>${html}</main>
+    <footer>AJR Avaliação Física e Performance · Bauru/SP<br><button class="reset" type="button" data-reset="${t}">Zerar marcações deste treino</button></footer>`;
+  progresso(t); window.scrollTo(0,0);
 }
 
-function atualizar(total){
-  total = total || document.querySelectorAll(".check").length;
-  const f = Object.values(feitos).filter(Boolean).length;
-  document.getElementById("count").textContent = f + " de " + total;
-  document.getElementById("bar").style.width = (total ? f / total * 100 : 0) + "%";
+function progresso(t){
+  const f = feitosDe(t), n = totalItens(t);
+  const c = document.getElementById("count"), b = document.getElementById("bar");
+  if (c) c.textContent = f + " de " + n;
+  if (b) b.style.width = (n ? f/n*100 : 0) + "%";
+}
+
+function rota(){
+  const t = location.hash.replace("#","").toLowerCase();
+  TREINOS[t] ? treino(t) : home();
 }
 
 document.addEventListener("click", e => {
+  const go = e.target.closest("[data-go]");
+  if (go) { if (go.dataset.go) { location.hash = go.dataset.go; } else { history.pushState("", document.title, location.pathname); rota(); } return; }
   const p = e.target.closest(".play");
   if (p) {
-    const f = document.createElement("iframe");
-    f.src = "https://www.youtube-nocookie.com/embed/" + p.dataset.yid + "?autoplay=1&rel=0&playsinline=1";
+    const y = p.dataset.yid, f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + y + "?autoplay=1&mute=1&loop=1&playlist=" + y + "&rel=0&playsinline=1";
     f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-    f.allowFullscreen = true;
-    f.title = p.getAttribute("aria-label");
-    p.replaceWith(f);
-    return;
+    f.allowFullscreen = true; f.title = "Vídeo do exercício";
+    p.replaceWith(f); return;
   }
   const c = e.target.closest(".check");
   if (c) {
-    const k = c.dataset.k;
-    feitos[k] = !feitos[k];
+    const k = c.dataset.k; feitos[k] = !feitos[k];
     c.setAttribute("aria-pressed", feitos[k]);
     document.getElementById(k).classList.toggle("done", feitos[k]);
-    salvar(); atualizar();
+    salvar(); progresso(k.split("-")[0]); return;
   }
+  const r = e.target.closest("[data-reset]");
+  if (r) { const t = r.dataset.reset; Object.keys(feitos).forEach(k=>{ if(k.startsWith(t+"-")) delete feitos[k]; }); salvar(); treino(t); }
 });
-document.getElementById("reset").addEventListener("click", () => { feitos = {}; salvar(); render(); });
-
-render();
+window.addEventListener("hashchange", rota);
+rota();
 </script>
 </body>
 </html>
