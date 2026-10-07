@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Treino do Jesse · AJR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: coluna única pensada para celular na academia — blocos na ordem de execução, vídeo carrega ao tocar */
+:root{
+  --bg:#faf8f3; --card:#f4f1e8; --line:#e0d9c7; --ink:#2a2722; --text:#4d4740; --muted:#847c6e;
+  --gold:#a8862c; --gold-dk:#8a6d1e; --gold-lt:#c9a94f; --ok:#4a7c59;
+  --serif:"Lora",Georgia,"Times New Roman",serif;
+  --sans:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#1c1a16; --card:#26231d; --line:#3a352b; --ink:#f1ece0; --text:#d4cdbd; --muted:#9c937f;
+  --gold:#c9a94f; --gold-dk:#d8b95e; --gold-lt:#8a6d1e; --ok:#79ad88; color-scheme:dark;}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.5 var(--sans)}
+.wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:calc(20px + env(safe-area-inset-top,0px)) calc(40px + env(safe-area-inset-bottom,0px))}
+header .brand{font:600 11px/1 var(--sans);letter-spacing:3px;text-transform:uppercase;color:var(--gold-dk)}
+header h1{font:600 28px/1.15 var(--serif);color:var(--ink);margin:8px 0 4px;text-wrap:balance}
+header p{margin:0;color:var(--muted);font-size:13px}
+.rule{height:2px;margin:16px 0 8px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:2px}
+.progress{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);margin:4px 0 4px}
+.bar{flex:1;height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+section{margin-top:26px}
+.sec-title{display:flex;align-items:center;gap:10px;font:600 11px/1 var(--sans);letter-spacing:2px;text-transform:uppercase;color:var(--gold-dk);margin-bottom:12px}
+.sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+.ex.done{opacity:.6}
+.ex-head{display:flex;align-items:flex-start;gap:12px}
+.num{flex:none;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;font:600 12px/24px var(--sans);text-align:center}
+.ex-name{flex:1;min-width:0}
+.ex-name h3{margin:0;font:600 15px/1.3 var(--sans);color:var(--ink)}
+.dose{margin-top:4px;display:flex;flex-wrap:wrap;gap:6px}
+.pill{font:500 12px/1 var(--sans);padding:5px 9px;border-radius:20px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-variant-numeric:tabular-nums}
+.pill.note{color:var(--gold-dk)}
+.check{flex:none;width:30px;height:30px;border-radius:8px;border:1.5px solid var(--gold-lt);background:var(--bg);cursor:pointer;display:grid;place-items:center;color:transparent;font-size:16px}
+.check[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.check:focus-visible,.play:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.video{margin-top:12px;position:relative;aspect-ratio:16/9;max-width:100%;border-radius:8px;overflow:hidden;background:#000}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.play{position:absolute;inset:0;width:100%;border:0;padding:0;cursor:pointer;background:#000 center/cover no-repeat}
+.play::after{content:"";position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:rgba(168,134,44,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='white'/%3E%3C/svg%3E") 55% 50%/26px no-repeat;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.sub{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.sub h4{margin:0;font:500 14px/1.3 var(--sans);color:var(--ink)}
+.yt{display:inline-block;margin-top:8px;font-size:12px;color:var(--gold-dk);text-decoration:none}
+.yt:hover{text-decoration:underline}
+.circ-info{font-size:13px;color:var(--text);margin:6px 0 0}
+footer{margin-top:30px;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.5px}
+.reset{margin-top:10px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:6px 14px;font:500 12px var(--sans);cursor:pointer}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">AJR Performance</div>
+    <h1>Treino do Jesse</h1>
+    <p>Toque no vídeo para ver a execução. Marque ✓ ao terminar cada exercício.</p>
+    <div class="rule"></div>
+    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="count">0 de 0</span></div>
+  </header>
+  <main id="app"></main>
+  <footer>
+    AJR Avaliação Física e Performance · Bauru/SP<br>
+    <button class="reset" id="reset" type="button">Zerar marcações</button>
+  </footer>
+</div>
+
+<script>
+/* Biblioteca de vídeos — um link por exercício, reaproveitável para qualquer aluno */
+const VIDEOS = {
+  flexQuadrilMiniband: "HO2hTXloWm8",
+  pranchaLateralAbducao: "aJ7nKihbBt8",
+  copenhagenAdaptado: "yj7VyP_YOdk",
+  pogoJump: "q78thYeb0jw",
+  agachamentoBanco: "BpKhzwbWuWY",
+  cadeiraExtensora: "xnSb4yxm7I4",
+  supinoInclinadoHalter: "G-i3jMIbDmo",
+  tricepsPoliaBarraReta: "afkbiAZbGxM",
+  flexaoBraco: "Azw6BZ8-wSM",
+  abdominalRemador: "pNRpcChQmq0",
+  kettlebellSwing: "MB87gQFA_y0"
+};
+
+/* Treino do aluno */
+const TREINO = {
+  aluno: "jesse",
+  blocos: [
+    { titulo: "Ativação e prevenção", itens: [
+      { nome: "Flexão de quadril deitado com mini band", dose: ["2 × 15"], video: "flexQuadrilMiniband" },
+      { nome: "Prancha lateral com abdução de quadril (mini band)", dose: ["2 × 15"], video: "pranchaLateralAbducao" },
+      { nome: "Copenhagen plank adaptado", dose: ["2 × 30 s"], video: "copenhagenAdaptado" }
+    ]},
+    { titulo: "Potência", itens: [
+      { nome: "Pogo jump", dose: ["3 × 10"], video: "pogoJump" }
+    ]},
+    { titulo: "Força", itens: [
+      { nome: "Agachamento no banco com barra nas costas", dose: ["4 × 8–12", "progressão de carga"], video: "agachamentoBanco" },
+      { nome: "Cadeira extensora", dose: ["4 × 8–12", "progressão de carga"], video: "cadeiraExtensora" },
+      { nome: "Supino inclinado com halteres", dose: ["4 × 8–12"], video: "supinoInclinadoHalter" },
+      { nome: "Tríceps na polia com barra reta", dose: ["4 × 8–12"], video: "tricepsPoliaBarraReta" }
+    ]},
+    { titulo: "Circuito final", itens: [
+      { nome: "Circuito: flexão + remador + swing", dose: ["3 voltas", "15 de cada"],
+        info: "Faça os três em sequência e só descanse ao fim da volta.",
+        sub: [
+          { nome: "Flexão de braço", video: "flexaoBraco" },
+          { nome: "Abdominal remador", video: "abdominalRemador" },
+          { nome: "Kettlebell swing", video: "kettlebellSwing" }
+        ] }
+    ]}
+  ]
+};
+
+const KEY = "ajr-treino-" + TREINO.aluno;
+let feitos = {};
+try { feitos = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { feitos = {}; }
+function salvar(){ try { localStorage.setItem(KEY, JSON.stringify(feitos)); } catch(e) {} }
+
+function videoHTML(id, nome){
+  const yid = VIDEOS[id];
+  return `<div class="video"><button class="play" type="button" data-yid="${yid}" aria-label="Ver vídeo: ${nome}"
+    style="background-image:url('https://i.ytimg.com/vi/${yid}/hqdefault.jpg')"></button></div>
+    <a class="yt" href="https://www.youtube.com/watch?v=${yid}" target="_blank" rel="noopener">Abrir no YouTube ↗</a>`;
+}
+
+function render(){
+  const app = document.getElementById("app");
+  let n = 0, html = "";
+  TREINO.blocos.forEach(b => {
+    html += `<section><div class="sec-title">${b.titulo}</div>`;
+    b.itens.forEach(ex => {
+      n++;
+      const k = "ex" + n;
+      const pills = ex.dose.map((d,i) => `<span class="pill${i ? " note" : ""}">${d}</span>`).join("");
+      let corpo = ex.sub
+        ? `<p class="circ-info">${ex.info}</p>` + ex.sub.map(s => `<div class="sub"><h4>${s.nome}</h4>${videoHTML(s.video, s.nome)}</div>`).join("")
+        : videoHTML(ex.video, ex.nome);
+      html += `<article class="ex${feitos[k] ? " done" : ""}" id="${k}">
+        <div class="ex-head"><span class="num">${n}</span>
+          <div class="ex-name"><h3>${ex.nome}</h3><div class="dose">${pills}</div></div>
+          <button class="check" type="button" data-k="${k}" aria-pressed="${!!feitos[k]}" aria-label="Marcar ${ex.nome} como feito">✓</button>
+        </div>${corpo}</article>`;
+    });
+    html += `</section>`;
+  });
+  app.innerHTML = html;
+  atualizar(n);
+}
+
+function atualizar(total){
+  total = total || document.querySelectorAll(".check").length;
+  const f = Object.values(feitos).filter(Boolean).length;
+  document.getElementById("count").textContent = f + " de " + total;
+  document.getElementById("bar").style.width = (total ? f / total * 100 : 0) + "%";
+}
+
+document.addEventListener("click", e => {
+  const p = e.target.closest(".play");
+  if (p) {
+    const f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + p.dataset.yid + "?autoplay=1&rel=0&playsinline=1";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    f.title = p.getAttribute("aria-label");
+    p.replaceWith(f);
+    return;
+  }
+  const c = e.target.closest(".check");
+  if (c) {
+    const k = c.dataset.k;
+    feitos[k] = !feitos[k];
+    c.setAttribute("aria-pressed", feitos[k]);
+    document.getElementById(k).classList.toggle("done", feitos[k]);
+    salvar(); atualizar();
+  }
+});
+document.getElementById("reset").addEventListener("click", () => { feitos = {}; salvar(); render(); });
+
+render();
+</script>
+</body>
+</html>
