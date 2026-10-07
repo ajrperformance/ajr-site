@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Treinos da Larissa · AJR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: tela inicial com escolha A/B/C; cada treino em coluna única para celular, na ordem de execução */
+:root{
+  --bg:#faf8f3; --card:#f4f1e8; --line:#e0d9c7; --ink:#2a2722; --text:#4d4740; --muted:#847c6e;
+  --gold:#a8862c; --gold-dk:#8a6d1e; --gold-lt:#c9a94f; --ok:#4a7c59;
+  --serif:"Lora",Georgia,"Times New Roman",serif;
+  --sans:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#1c1a16; --card:#26231d; --line:#3a352b; --ink:#f1ece0; --text:#d4cdbd; --muted:#9c937f;
+  --gold:#c9a94f; --gold-dk:#d8b95e; --gold-lt:#8a6d1e; --ok:#79ad88; color-scheme:dark;}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.5 var(--sans)}
+.wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:calc(20px + env(safe-area-inset-top,0px)) calc(40px + env(safe-area-inset-bottom,0px))}
+.brand{font:600 11px/1 var(--sans);letter-spacing:3px;text-transform:uppercase;color:var(--gold-dk)}
+h1{font:600 28px/1.15 var(--serif);color:var(--ink);margin:8px 0 4px;text-wrap:balance}
+header p{margin:0;color:var(--muted);font-size:13px}
+.rule{height:2px;margin:16px 0 8px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:2px}
+.back{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:4px 0;margin-bottom:10px;color:var(--gold-dk);font:500 13px var(--sans);cursor:pointer}
+.menu{display:grid;gap:12px;margin-top:22px}
+.pick{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 16px;cursor:pointer;color:inherit;font:inherit}
+.pick:hover{border-color:var(--gold-lt)}
+.letter{flex:none;width:52px;height:52px;border-radius:50%;background:var(--gold);color:#fff;font:600 24px/52px var(--serif);text-align:center}
+.pick-txt{flex:1;min-width:0}
+.pick-txt strong{display:block;font:600 17px/1.2 var(--sans);color:var(--ink)}
+.pick-txt span{display:block;margin-top:3px;font-size:13px;color:var(--muted)}
+.pick-prog{flex:none;font-size:12px;color:var(--ok);font-weight:500}
+.arrow{flex:none;color:var(--gold-dk);font-size:20px}
+.progress{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);margin:4px 0}
+.bar{flex:1;height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+section{margin-top:26px}
+.sec-title{display:flex;align-items:center;gap:10px;font:600 11px/1 var(--sans);letter-spacing:2px;text-transform:uppercase;color:var(--gold-dk);margin-bottom:12px}
+.sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+.ex.done{opacity:.6}
+.ex-head{display:flex;align-items:flex-start;gap:12px}
+.num{flex:none;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;font:600 12px/24px var(--sans);text-align:center}
+.ex-name{flex:1;min-width:0}
+.ex-name h3{margin:0;font:600 15px/1.3 var(--sans);color:var(--ink)}
+.dose{margin-top:5px;display:flex;flex-wrap:wrap;gap:6px}
+.pill{font:500 12px/1 var(--sans);padding:5px 9px;border-radius:20px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-variant-numeric:tabular-nums}
+.pill.note{color:var(--gold-dk)}
+.check{flex:none;width:30px;height:30px;border-radius:8px;border:1.5px solid var(--gold-lt);background:var(--bg);cursor:pointer;display:grid;place-items:center;color:transparent;font-size:16px}
+.check[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.check:focus-visible,.play:focus-visible,.pick:focus-visible,.back:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.vids{display:grid;gap:12px;margin-top:12px}
+.vids.two{grid-template-columns:1fr 1fr}
+.vids.three{grid-template-columns:1fr 1fr 1fr}
+.vcol{min-width:0}
+.vcol h4{margin:0 0 6px;font:500 13px/1.3 var(--sans);color:var(--ink)}
+.video{position:relative;aspect-ratio:9/16;width:100%;max-width:200px;border-radius:8px;overflow:hidden;background:#000}
+.vids.one .video{margin:0 auto}
+.vids.one .vcol{text-align:center}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.play{position:absolute;inset:0;width:100%;border:0;padding:0;cursor:pointer;background:#000 center/cover no-repeat}
+.play::after{content:"";position:absolute;left:50%;top:50%;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:50%;background:rgba(168,134,44,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='white'/%3E%3C/svg%3E") 55% 50%/22px no-repeat;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.yt{display:inline-block;margin-top:6px;font-size:11px;color:var(--gold-dk);text-decoration:none}
+.aviso{margin-top:12px;font-size:13px;line-height:1.5;color:var(--text);background:var(--card);border-left:3px solid var(--gold-lt);border-radius:6px;padding:10px 12px}
+.info{font-size:13px;color:var(--text);margin:8px 0 0}
+footer{margin-top:30px;text-align:center;font-size:11px;color:var(--muted);letter-spacing:.5px}
+.reset{margin-top:10px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:6px 14px;font:500 12px var(--sans);cursor:pointer}
+@media (max-width:420px){.vids.three{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap" id="root"></div>
+
+<script>
+/* Biblioteca de vídeos — YouTube Shorts de até 10 s, modelos femininas. */
+const VIDEOS = {
+  pranchaInclinada:   "UnkNv3k1HD0",
+  birdDog:            "CBPKeAkqyaw",
+  ostraMiniband:      "EByLjnoF2PU",
+  elevPelvicaBanco:   "ULmy6nAj3Qc",
+  afundoLateral:      "CI6XIYWKp5s",
+  agachamentoSumo:    "tGrnxcbvQY4",
+  cadeiraFlexora:     "YFnD1ybRPZY",
+  cadeiraAdutora:     "1tnsk-j5CA0",
+  pallofPress:        "PyVq1IK7m5E",
+  pranchaLatJoelhos:  "N3cwN00AqKo",
+  remadaUniApoio:     "NpZhtfnybbA",
+  puxadaTriangulo:    "K4_uHQIXynA",
+  supinoInclinado:    "gT1PkP8JcOY",
+  desenvMaquina:      "RE_--APPVGw",
+  tricepsFrances:     "GoFAKhm_Pw4",
+  roscaAlternada:     "9THL3SWRuk0",
+  remadaBaixa:        "vplfg7HGLSQ",
+  afundoEstatico:     "YKbU76FU1_4",
+  stiffHalteres:      "YEBY6go8Tv4",
+  panturrilhaSentada: "YQ0x6NCwuaQ",
+  elevacaoLateral:    "ikYlyi7N1iM",
+  tricepsCorda:       "_qQTG0TfjZg",
+  peckDeck:           "Fl7ouk_G1tk",
+  gatoCamelo:         "SCgRw9UxFvk",
+  quadril9090:        "dZeZ402GJ3U",
+  rotacaoToracica:    "oO0yZ0ONBfA",
+  circulosQuadril:    "BMQXk159YQ0",
+  agachamentoProfundo:"WEfVXXxkn74",
+  alongFlexorQuadril: "TyBaI_JZpz4",
+  borboleta:          "v9EsWK-0LuM",
+  alongPosterior:     "waFhV3_hUNU",
+  alongPeitoral:      "MKvpGuIjCLk",
+  posturaCrianca:     "vvf7NVnMqB4",
+  alongLateralTronco: "zcwkNF_eWe4"
+};
+
+const ALUNO = { id: "larissa", nome: "Larissa" };
+const AVISO = "Treinos adaptados para a gestação. Mantenha um ritmo em que você consiga conversar, beba água e descanse o quanto precisar. Pare e me avise se sentir tontura, dor, falta de ar, contrações ou sangramento.";
+
+const CARDIO = { nome: "Cardio", dose: ["20 min"], info: "Bicicleta, elíptico ou caminhada na esteira. Ritmo leve a moderado, em que você consiga conversar." };
+const TREINOS = {
+  "1": { nome: "Treino 1", foco: "Inferiores", blocos: [
+    { titulo: "Cardio", itens: [ CARDIO ]},
+    { titulo: "Core e ativação", itens: [
+      { nome: "Prancha inclinada (mãos no banco)", dose: ["3 × 20 s"], video: "pranchaInclinada" },
+      { nome: "Bird dog", dose: ["3 × 8", "cada lado"], video: "birdDog" },
+      { nome: "Ostra com mini band", dose: ["3 × 15", "cada lado"], video: "ostraMiniband" } ]},
+    { titulo: "Força", itens: [
+      { nome: "Elevação pélvica no banco", dose: ["3 × 12"], video: "elevPelvicaBanco" },
+      { nome: "Afundo lateral", dose: ["3 × 10", "cada lado"], info: "Se precisar, apoie uma mão em um suporte para o equilíbrio.", video: "afundoLateral" },
+      { nome: "Agachamento sumô com halter", dose: ["4 × 10–12"], video: "agachamentoSumo" },
+      { nome: "Cadeira flexora", dose: ["4 × 10–12"], video: "cadeiraFlexora" },
+      { nome: "Cadeira adutora", dose: ["2 × 12–15"], video: "cadeiraAdutora" } ]}
+  ]},
+  "2": { nome: "Treino 2", foco: "Superiores", blocos: [
+    { titulo: "Cardio", itens: [ CARDIO ]},
+    { titulo: "Core", itens: [
+      { nome: "Pallof press com elástico", dose: ["3 × 10", "cada lado"], video: "pallofPress" },
+      { nome: "Prancha lateral com joelhos apoiados", dose: ["3 × 20 s", "cada lado"], video: "pranchaLatJoelhos" } ]},
+    { titulo: "Força", itens: [
+      { nome: "Remada unilateral com apoio no banco", dose: ["3 × 10–12", "cada lado"], video: "remadaUniApoio" },
+      { nome: "Puxada frontal com triângulo", dose: ["4 × 10–12"], video: "puxadaTriangulo" },
+      { nome: "Supino inclinado com halteres", dose: ["4 × 10–12"], video: "supinoInclinado" },
+      { nome: "Desenvolvimento na máquina", dose: ["3 × 10–12"], video: "desenvMaquina" },
+      { nome: "Tríceps francês com halter, sentada", dose: ["2 × 12"], video: "tricepsFrances" },
+      { nome: "Rosca alternada com halteres, sentada", dose: ["2 × 12"], video: "roscaAlternada" } ]}
+  ]},
+  "3": { nome: "Treino 3", foco: "Geral", blocos: [
+    { titulo: "Cardio", itens: [ CARDIO ]},
+    { titulo: "Core", itens: [
+      { nome: "Pallof press com elástico", dose: ["3 × 10", "cada lado"], video: "pallofPress" } ]},
+    { titulo: "Força", itens: [
+      { nome: "Remada baixa com triângulo", dose: ["4 × 10–12"], video: "remadaBaixa" },
+      { nome: "Afundo estático com halteres", dose: ["3 × 10", "cada perna"], video: "afundoEstatico" },
+      { nome: "Stiff com halteres", dose: ["3 × 10–12"], video: "stiffHalteres" },
+      { nome: "Panturrilha sentada", dose: ["4 × 15"], video: "panturrilhaSentada" },
+      { nome: "Elevação lateral com halteres", dose: ["3 × 12"], video: "elevacaoLateral" },
+      { nome: "Tríceps na polia com corda", dose: ["3 × 12"], video: "tricepsCorda" },
+      { nome: "Crucifixo na máquina (peck deck)", dose: ["3 × 12"], video: "peckDeck" } ]}
+  ]},
+  "4": { nome: "Treino 4", foco: "Mobilidade", blocos: [
+    { titulo: "Cardio", itens: [ CARDIO ]},
+    { titulo: "Mobilidade", itens: [
+      { nome: "Gato-camelo", dose: ["2 × 10"], video: "gatoCamelo" },
+      { nome: "Mobilidade de quadril 90/90", dose: ["2 × 8", "cada lado"], video: "quadril9090" },
+      { nome: "Rotação torácica em quatro apoios", dose: ["2 × 8", "cada lado"], video: "rotacaoToracica" },
+      { nome: "Círculos de quadril em pé", dose: ["2 × 10", "cada lado"], info: "Apoie a mão na parede para o equilíbrio.", video: "circulosQuadril" },
+      { nome: "Agachamento profundo com apoio", dose: ["3 × 30 s"], info: "Segure em um apoio firme e desça só até onde for confortável.", video: "agachamentoProfundo" } ]}
+  ]},
+  "5": { nome: "Treino 5", foco: "Alongamento", nota: "Na gestação as articulações ficam mais soltas. Alongue só até sentir um estiramento leve, sem dor.", blocos: [
+    { titulo: "Cardio", itens: [ CARDIO ]},
+    { titulo: "Alongamento", itens: [
+      { nome: "Alongamento do flexor do quadril, ajoelhada", dose: ["2 × 30 s", "cada lado"], video: "alongFlexorQuadril" },
+      { nome: "Borboleta (adutores)", dose: ["2 × 30 s"], video: "borboleta" },
+      { nome: "Posterior de coxa, sentada", dose: ["2 × 30 s", "cada lado"], video: "alongPosterior" },
+      { nome: "Peitoral na parede", dose: ["2 × 30 s", "cada lado"], video: "alongPeitoral" },
+      { nome: "Postura da criança (joelhos afastados)", dose: ["2 × 30 s"], video: "posturaCrianca" },
+      { nome: "Alongamento lateral do tronco, sentada", dose: ["2 × 30 s", "cada lado"], video: "alongLateralTronco" } ]}
+  ]}
+};
+
+const KEY = "ajr-treinos-" + ALUNO.id;
+let feitos = {};
+try { feitos = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { feitos = {}; }
+const salvar = () => { try { localStorage.setItem(KEY, JSON.stringify(feitos)); } catch(e) {} };
+const totalItens = t => TREINOS[t].blocos.reduce((s,b)=>s+b.itens.length,0);
+const feitosDe = t => Object.keys(feitos).filter(k=>k.startsWith(t+"-") && feitos[k]).length;
+
+const root = document.getElementById("root");
+
+function home(){
+  document.title = "Treinos da " + ALUNO.nome + " · AJR";
+  root.innerHTML = `<header><div class="brand">AJR Performance</div>
+    <h1>Treinos da ${ALUNO.nome}</h1><p>Escolha o treino de hoje. Os 20 min de cardio entram em todos.</p><div class="aviso">${AVISO}</div><div class="rule"></div></header>
+    <div class="menu">${Object.keys(TREINOS).map(t => {
+      const f = feitosDe(t), n = totalItens(t);
+      return `<button class="pick" type="button" data-go="${t}">
+        <span class="letter">${t}</span>
+        <span class="pick-txt"><strong>${TREINOS[t].nome}</strong><span>${TREINOS[t].foco} · ${n} itens</span></span>
+        ${f ? `<span class="pick-prog">${f}/${n}</span>` : ""}<span class="arrow">›</span></button>`; }).join("")}
+    </div><footer>AJR Avaliação Física e Performance · Bauru/SP</footer>`;
+  window.scrollTo(0,0);
+}
+
+function videoHTML(id){
+  const y = VIDEOS[id];
+  return `<div class="video"><button class="play" type="button" data-yid="${y}" aria-label="Ver vídeo"
+    style="background-image:url('https://i.ytimg.com/vi/${y}/oardefault.jpg'),url('https://i.ytimg.com/vi/${y}/hqdefault.jpg')"></button></div>
+    <a class="yt" href="https://www.youtube.com/shorts/${y}" target="_blank" rel="noopener">Abrir no YouTube ↗</a>`;
+}
+
+function treino(t){
+  const T = TREINOS[t]; let n = 0, html = "";
+  document.title = T.nome + " · " + ALUNO.nome + " · AJR";
+  T.blocos.forEach(b => {
+    html += `<section><div class="sec-title">${b.titulo}</div>`;
+    b.itens.forEach(ex => {
+      n++; const k = t + "-" + n;
+      const pills = ex.dose.map((d,i)=>`<span class="pill${i?" note":""}">${d}</span>`).join("");
+      const cols = ex.sub ? ex.sub.length : 1;
+      const cls = cols === 3 ? "three" : cols === 2 ? "two" : "one";
+      const vids = ex.sub
+        ? ex.sub.map(s=>`<div class="vcol"><h4>${s.nome}</h4>${videoHTML(s.video)}</div>`).join("")
+        : ex.video ? `<div class="vcol">${videoHTML(ex.video)}</div>` : "";
+      html += `<article class="ex${feitos[k]?" done":""}" id="${k}">
+        <div class="ex-head"><span class="num">${n}</span>
+          <div class="ex-name"><h3>${ex.nome}</h3><div class="dose">${pills}</div>${ex.info?`<p class="info">${ex.info}</p>`:""}</div>
+          <button class="check" type="button" data-k="${k}" aria-pressed="${!!feitos[k]}" aria-label="Marcar como feito">✓</button>
+        </div>${vids?`<div class="vids ${cls}">${vids}</div>`:""}</article>`;
+    });
+    html += `</section>`;
+  });
+  root.innerHTML = `<header><button class="back" type="button" data-go="">‹ Trocar treino</button>
+    <div class="brand">AJR Performance · ${ALUNO.nome}</div><h1>${T.nome}</h1><p>${T.foco}. Toque no vídeo para ver a execução e marque ✓ ao terminar.</p>${T.nota?`<div class="aviso">${T.nota}</div>`:""}
+    <div class="rule"></div><div class="progress"><div class="bar"><i id="bar"></i></div><span id="count"></span></div></header>
+    <main>${html}</main>
+    <footer>AJR Avaliação Física e Performance · Bauru/SP<br><button class="reset" type="button" data-reset="${t}">Zerar marcações deste treino</button></footer>`;
+  progresso(t); window.scrollTo(0,0);
+}
+
+function progresso(t){
+  const f = feitosDe(t), n = totalItens(t);
+  const c = document.getElementById("count"), b = document.getElementById("bar");
+  if (c) c.textContent = f + " de " + n;
+  if (b) b.style.width = (n ? f/n*100 : 0) + "%";
+}
+
+function rota(){
+  const t = location.hash.replace("#","").toLowerCase();
+  TREINOS[t] ? treino(t) : home();
+}
+
+document.addEventListener("click", e => {
+  const go = e.target.closest("[data-go]");
+  if (go) { if (go.dataset.go) { location.hash = go.dataset.go; } else { history.pushState("", document.title, location.pathname); rota(); } return; }
+  const p = e.target.closest(".play");
+  if (p) {
+    const y = p.dataset.yid, f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + y + "?autoplay=1&mute=1&loop=1&playlist=" + y + "&rel=0&playsinline=1";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true; f.title = "Vídeo do exercício";
+    p.replaceWith(f); return;
+  }
+  const c = e.target.closest(".check");
+  if (c) {
+    const k = c.dataset.k; feitos[k] = !feitos[k];
+    c.setAttribute("aria-pressed", feitos[k]);
+    document.getElementById(k).classList.toggle("done", feitos[k]);
+    salvar(); progresso(k.split("-")[0]); return;
+  }
+  const r = e.target.closest("[data-reset]");
+  if (r) { const t = r.dataset.reset; Object.keys(feitos).forEach(k=>{ if(k.startsWith(t+"-")) delete feitos[k]; }); salvar(); treino(t); }
+});
+window.addEventListener("hashchange", rota);
+rota();
+</script>
+</body>
+</html>
