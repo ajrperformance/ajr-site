@@ -5,31 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Desafio AJR — Tenda AJR Performance</title>
 <meta name="description" content="Desafio do Levantamento Terra Isométrico — ranking oficial da Tenda AJR Performance.">
+<meta name="theme-color" content="#08090b">
+<link rel="icon" href="../logo-ajr.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ===================================================================
    AJR PERFORMANCE — TENDA · DESAFIO + CAPTAÇÃO
    Personalize aqui: cores, fontes e logo.
    =================================================================== */
 :root{
-  --bg:#0A0C0E;
-  --bg-2:#111519;
-  --panel:#151A1F;
-  --panel-2:#1B2229;
-  --line:#26303A;
-  --txt:#ECF2F6;
-  --txt-2:#9AA9B5;
-  --txt-3:#66757F;
-  --accent:#B6F03C;        /* cor de destaque AJR */
-  --accent-ink:#0A0C0E;
-  --ouro:#F2C94C;
+  --bg:#08090b;
+  --bg-2:#101114;
+  --panel:rgba(23,25,29,.62);
+  --panel-2:rgba(8,9,11,.55);
+  --line:rgba(255,255,255,.09);
+  --line-gold:rgba(201,168,76,.22);
+  --txt:#f0ede8;
+  --txt-2:#a3a9b1;
+  --txt-3:#7a8088;
+  --accent:#C9A84C;        /* dourado da Tenda AJR */
+  --accent-lt:#e2c878;
+  --accent-ink:#08090b;
+  --ouro:#E2C878;
   --prata:#C6D0D8;
   --bronze:#D08B4F;
-  --verde:#35C98A;
-  --amarelo:#F2C94C;
-  --vermelho:#E2664F;
-  --radius:16px;
+  --verde:#4CAF7D;
+  --amarelo:#E0A84F;
+  --vermelho:#E0685F;
+  --radius:14px;
   --maxw:1080px;
-  --ff:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --ff:'Space Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --ff-h:'Chakra Petch',sans-serif;
+  --ff-m:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:dark;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
@@ -39,38 +49,44 @@ body{
   min-height:100vh;
 }
 img{max-width:100%;display:block}
+.bgph{position:fixed;inset:0;z-index:-1;pointer-events:none;background:#08090b url("../foto-tenda-agenda.jpg") center 30%/cover no-repeat}
+.bgph::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,11,.78) 0%,rgba(8,9,11,.62) 30%,rgba(8,9,11,.88) 70%,rgba(8,9,11,.97) 100%)}
+.bgph::after{content:"";position:absolute;inset:0;opacity:.6;background-image:linear-gradient(rgba(201,168,76,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.05) 1px,transparent 1px);background-size:56px 56px}
 button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
 a{color:var(--accent)}
 
 /* ---------- layout ---------- */
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
 .topbar{
-  position:sticky;top:0;z-index:50;background:rgba(10,12,14,.88);
+  position:sticky;top:0;z-index:50;background:rgba(8,9,11,.72);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
 }
 .topbar-in{max-width:var(--maxw);margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;font-size:14px}
+.brand{display:flex;align-items:center;gap:10px;font:700 13px var(--ff-h);letter-spacing:2px;color:var(--accent)}
+.brand img{width:34px;height:34px;object-fit:contain;border-radius:50%;background:#fff}
 .brand .mark{
   width:30px;height:30px;border-radius:9px;background:var(--accent);color:var(--accent-ink);
   display:grid;place-items:center;font-size:12px;font-weight:900;letter-spacing:-.02em
 }
-.brand small{display:block;font-weight:500;letter-spacing:.02em;color:var(--txt-3);font-size:11px}
+.brand small{display:block;font:400 10px var(--ff-m);letter-spacing:1.2px;text-transform:uppercase;color:var(--txt-2);margin-top:2px}
 .nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
 .nav button{
   background:transparent;border:1px solid var(--line);color:var(--txt-2);
-  padding:8px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;transition:.15s
+  padding:8px 14px;border-radius:999px;cursor:pointer;font:700 11px var(--ff-m);letter-spacing:1px;text-transform:uppercase;transition:.15s
 }
-.nav button:hover{border-color:var(--txt-3);color:var(--txt)}
+.nav button:hover{border-color:var(--accent);color:var(--txt)}
 .nav button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 
 section.view{display:none;padding:26px 0 90px}
 section.view.on{display:block}
 
-.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:800;margin:0 0 8px}
-h1{font-size:clamp(26px,5.2vw,42px);line-height:1.08;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
-h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 10.5px var(--ff-m);letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(201,168,76,.25);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(201,168,76,0)}}
+h1{font:700 clamp(28px,6vw,44px)/1.02 var(--ff-h);text-transform:uppercase;letter-spacing:.5px;color:#fff;margin:0 0 12px;text-shadow:0 4px 30px rgba(0,0,0,.6)}
+h2{font:700 19px var(--ff-h);margin:0 0 4px;letter-spacing:.3px}
 .sub{color:var(--txt-2);margin:0 0 22px;max-width:56ch}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:0 16px 48px rgba(0,0,0,.45);backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%)}
 .card + .card{margin-top:14px}
 .muted{color:var(--txt-3);font-size:13px}
 
@@ -80,11 +96,11 @@ h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
   background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-weight:600
 }
 .badge{
-  display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;
-  text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--txt-2)
+  display:inline-flex;align-items:center;gap:6px;font:700 10px var(--ff-m);letter-spacing:1px;
+  text-transform:uppercase;padding:5px 9px;border-radius:4px;border:1px solid var(--line-gold);color:var(--txt-2)
 }
-.badge.demo{border-color:#5a4a1d;background:#2a2412;color:var(--ouro)}
-.badge.live{border-color:#1e4436;background:#10241d;color:var(--verde)}
+.badge.demo{border-color:rgba(224,168,79,.5);color:var(--amarelo)}
+.badge.live{border-color:rgba(76,175,125,.5);color:var(--verde)}
 
 /* ---------- formulário ---------- */
 .q{border-top:1px solid var(--line);padding:18px 0}
@@ -104,7 +120,7 @@ h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
 .opts.stack .opt span{display:block;padding:14px 16px}
 
 .field{margin-bottom:14px}
-.field label{display:block;font-weight:700;margin-bottom:6px;font-size:14.5px}
+.field label{display:block;font:700 10.5px var(--ff-m);letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-2);margin-bottom:8px}
 .field input, .field select{
   width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);
   background:var(--panel-2);outline:none;transition:.12s
@@ -118,13 +134,14 @@ h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
 .consent p{margin:0;font-size:13px;color:var(--txt-2);line-height:1.45}
 
 .btn{
-  background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;
-  padding:15px 22px;font-weight:800;font-size:16px;cursor:pointer;transition:.12s;width:100%
+  background:var(--accent);color:var(--accent-ink);border:0;border-radius:6px;
+  padding:15px 22px;font:700 15px var(--ff);letter-spacing:.3px;cursor:pointer;transition:.12s;width:100%
 }
-.btn:hover{filter:brightness(1.06)}
+.btn:hover{background:var(--accent-lt)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt);font-weight:700}
-.btn.sm{padding:9px 14px;font-size:13.5px;width:auto;border-radius:10px}
+.btn.ghost{background:transparent;border:1px solid var(--line-gold);color:var(--txt)}
+.btn.ghost:hover{border-color:var(--accent);background:transparent}
+.btn.sm{padding:9px 14px;font-size:13px;width:auto;border-radius:5px;min-height:38px}
 .btnrow{display:flex;gap:10px;flex-wrap:wrap}
 
 .err{color:var(--vermelho);font-size:13px;font-weight:600;margin-top:8px;min-height:18px}
@@ -132,11 +149,11 @@ h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
 /* ---------- tela de sucesso ---------- */
 .success{text-align:center;padding:36px 20px}
 .success .codigo{
-  font-size:clamp(40px,12vw,76px);font-weight:900;letter-spacing:.04em;color:var(--accent);
+  font:700 clamp(44px,13vw,80px) var(--ff-h);letter-spacing:.06em;color:var(--accent);
   margin:14px 0;line-height:1;font-variant-numeric:tabular-nums
 }
 .success .ring{
-  width:66px;height:66px;border-radius:50%;background:rgba(182,240,60,.12);border:2px solid var(--accent);
+  width:66px;height:66px;border-radius:50%;background:rgba(201,168,76,.12);border:2px solid var(--accent);
   display:grid;place-items:center;margin:0 auto 6px;font-size:30px;color:var(--accent)
 }
 
@@ -144,7 +161,7 @@ h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
 .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .tabs button{
   background:var(--panel);border:1px solid var(--line);color:var(--txt-2);padding:10px 18px;
-  border-radius:999px;cursor:pointer;font-weight:700;font-size:14px
+  border-radius:999px;cursor:pointer;font-weight:700;font-size:14px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)
 }
 .tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .tabs button[aria-selected="true"] .muted{color:inherit;opacity:.72}
@@ -155,9 +172,9 @@ h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
   background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);
   border-radius:var(--radius);padding:18px 16px;text-align:center;position:relative;overflow:hidden
 }
-.pod .pos{font-size:12px;font-weight:900;letter-spacing:.1em}
-.pod .nm{font-weight:800;font-size:17px;margin:8px 0 2px;letter-spacing:-.01em}
-.pod .vl{font-size:26px;font-weight:900;font-variant-numeric:tabular-nums}
+.pod .pos{font:700 11px var(--ff-m);letter-spacing:2px}
+.pod .nm{font:700 17px var(--ff-h);text-transform:uppercase;margin:8px 0 2px;color:#fff}
+.pod .vl{font:700 28px var(--ff-h);font-variant-numeric:tabular-nums}
 .pod .vl small{font-size:12px;font-weight:700;opacity:.75;margin-left:3px}
 .pod .un{font-size:12px;color:var(--txt-3);font-weight:700}
 .pod.p1{border-color:var(--ouro)} .pod.p1 .pos,.pod.p1 .vl{color:var(--ouro)}
@@ -166,7 +183,7 @@ h2{font-size:19px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
 
 table{width:100%;border-collapse:collapse}
 th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:14.5px}
-th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-3);font-weight:800}
+th{font:700 10px var(--ff-m);letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-3)}
 td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
 tr .rk{width:44px;font-weight:900;color:var(--txt-3);font-variant-numeric:tabular-nums}
 .empty{text-align:center;padding:40px 16px;color:var(--txt-3)}
@@ -182,8 +199,8 @@ tr .rk{width:44px;font-weight:900;color:var(--txt-3);font-variant-numeric:tabula
 .rowres input{width:92px;padding:9px 10px;border-radius:9px;border:1px solid var(--line);background:var(--panel-2)}
 .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
 .stat > div{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:14px}
-.stat b{display:block;font-size:24px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1}
-.stat span{font-size:11.5px;color:var(--txt-3);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.stat b{display:block;font:700 28px/1.1 var(--ff-h);color:#fff;font-variant-numeric:tabular-nums}
+.stat span{font:700 10px var(--ff-m);color:var(--accent);text-transform:uppercase;letter-spacing:1.5px}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .toast{
   position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:99;
@@ -191,15 +208,16 @@ tr .rk{width:44px;font-weight:900;color:var(--txt-3);font-variant-numeric:tabula
   box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.25s
 }
 .toast.on{opacity:1;bottom:32px}
-footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--txt-3);font-size:12.5px}
+footer{border-top:1px solid var(--line-gold);padding:24px 0 40px;color:var(--txt-3);font:400 11px/1.8 var(--ff-m);letter-spacing:.5px}
 </style>
 </head>
 <body>
+<div class="bgph" aria-hidden="true"></div>
 
 <header class="topbar">
   <div class="topbar-in">
     <div class="brand">
-      <div class="mark">AJR</div>
+      <img src="../logo-ajr.png" alt="AJR Performance">
       <div>TENDA AJR PERFORMANCE<small id="brandSub">Desafio do Levantamento Terra Isométrico</small></div>
     </div>
     <nav class="nav">
@@ -363,7 +381,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--txt-3);f
       <form class="card" id="loginForm" style="max-width:380px">
         <div class="field">
           <label for="f_pin">Senha do painel</label>
-          <input id="f_pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••">
+          <input id="f_pin" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="••••••">
         </div>
         <div class="err" id="loginErr"></div>
         <button class="btn" type="submit">Entrar</button>
