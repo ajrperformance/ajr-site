@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Agenda da Tenda · AJR Performance</title>
+<meta name="description" content="Onde a Tenda AJR vai estar: próximas corridas em Bauru e região, com link de inscrição de cada prova.">
+<meta property="og:title" content="Agenda da Tenda AJR">
+<meta property="og:description" content="Próximas corridas onde a Tenda AJR estará presente — com link de inscrição de cada prova.">
+<meta property="og:image" content="https://ajrperformance.com.br/logo-ajr.png">
+<meta name="theme-color" content="#08090b">
+<link rel="icon" href="logo-ajr.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C; --gold-lt:#e2c878;
+  --navy:#17191d; --surface:#101114; --bg:#08090b;
+  --border:rgba(201,168,76,.22);
+  --gray:#a3a9b1; --dim:#7a8088; --off:#f0ede8;
+  --ok:#4CAF7D; --warn:#E0A84F; --bad:#E0685F;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
+  background-size:56px 56px;background-attachment:fixed;color:var(--off);min-height:100vh;-webkit-font-smoothing:antialiased}
+.wrap{max-width:560px;margin:0 auto;padding:22px 16px calc(48px + env(safe-area-inset-bottom,0px))}
+.hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.hdr img{width:44px;height:44px;object-fit:contain}
+.brand{font:700 13px 'Chakra Petch',sans-serif;letter-spacing:2px;color:var(--gold)}
+.sub{font:400 11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:4px}
+h1{font:700 30px/1.06 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff}
+h1 em{font-style:normal;color:var(--gold)}
+.lead{font-size:14.5px;line-height:1.5;color:var(--gray);margin:10px 0 22px}
+.sec{font:700 11px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin:26px 0 10px}
+
+.ev{display:flex;gap:14px;background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:16px 14px;margin-bottom:12px;box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.ev.next{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 16px 48px rgba(0,0,0,.45)}
+.ev.past{opacity:.45}
+.date{flex:0 0 58px;text-align:center;border-right:1px solid var(--border);padding-right:12px}
+.day{font:700 30px/1 'Chakra Petch',sans-serif;color:#fff}
+.mon{font:700 11px 'JetBrains Mono',monospace;letter-spacing:2px;color:var(--gold);margin-top:4px}
+.wd{font:400 10px 'JetBrains Mono',monospace;color:var(--dim);margin-top:4px;text-transform:uppercase}
+.info{flex:1;min-width:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.tag{font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase;padding:3px 7px;border-radius:3px;border:1px solid var(--border);color:var(--gray)}
+.tag.gold{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.tag.warn{color:var(--warn);border-color:rgba(224,168,79,.5)}
+.tag.bad{color:var(--bad);border-color:rgba(224,104,95,.5)}
+.tag.ok{color:var(--ok);border-color:rgba(76,175,125,.5)}
+.title{display:flex;align-items:center;gap:12px}
+.thumb{flex:0 0 64px;width:64px;height:64px;border-radius:6px;overflow:hidden;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .ph{font:700 13px/1.1 'Chakra Petch',sans-serif;color:var(--gold);text-align:center;padding:4px}
+.name{font:700 17px/1.2 'Chakra Petch',sans-serif;color:#fff;text-transform:uppercase;min-width:0}
+.meta{font-size:13px;color:var(--gray);margin-top:4px;line-height:1.45}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{display:inline-flex;align-items:center;gap:6px;font:700 12px 'Space Grotesk',sans-serif;text-decoration:none;padding:9px 12px;border-radius:5px;min-height:38px}
+.btn.pri{background:var(--gold);color:var(--bg)}
+.btn.pri:hover{background:var(--gold-lt)}
+.btn.sec2{border:1px solid var(--border);color:var(--off)}
+.btn.sec2:hover{border-color:var(--gold)}
+
+.box{background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:16px 14px;font-size:13.5px;line-height:1.5;color:var(--gray)}
+.box b{color:var(--off)}
+.foot{margin-top:28px;text-align:center;font:400 11px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:1px;line-height:1.8}
+.foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hdr">
+    <img src="logo-ajr.png" alt="AJR Performance">
+    <div>
+      <div class="brand">AJR PERFORMANCE</div>
+      <div class="sub">Tenda AJR · Eventos esportivos</div>
+    </div>
+  </header>
+
+  <h1>Agenda da <em>Tenda</em></h1>
+  <p class="lead">As próximas provas em que a Tenda AJR vai estar montada — com avaliação, ativações dos parceiros e o Desafio do Terra. Toque na prova para ir direto à inscrição.</p>
+
+  <div class="sec">Próximos eventos</div>
+  <div id="lista"></div>
+
+  <div class="sec">Fora das provas</div>
+  <div class="box">
+    <b>Domingos na Av. Getúlio Vargas</b> e presenças no <b>Linhão / Radar da UNESP</b>, conforme a estratégia do mês. Acompanhe no Instagram <a href="https://instagram.com/aldemirjrtreinador" style="color:var(--gold)">@aldemirjrtreinador</a>.
+  </div>
+
+  <div class="foot">
+    Datas e inscrições são de responsabilidade de cada organizador.<br>
+    Dúvidas: <a href="https://wa.me/5514997432182">WhatsApp (14) 99743-2182</a><br>
+    <a href="index.html">ajrperformance.com.br</a>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   AGENDA — para editar, mexa só nesta lista.
+   data: AAAA-MM-DD · status: "confirmado" ou "a confirmar"
+   inscricao: "aberta", "app" (só pelo app) ou "esgotada"
+   foto: link da imagem OU nome de um arquivo subido no site
+         (ex.: "evento-aguia.jpg"). Se falhar, aparece "sigla".
+   ========================================================= */
+var EVENTOS = [
+  {
+    data:"2026-11-01",
+    nome:"Meia Maratona Solidária de Barra Bonita",
+    local:"Orla Turística · Av. Chafic Mucare · Barra Bonita/SP",
+    distancias:"21 km · 7 km · caminhada 4,5 km · kids",
+    foto:"https://inscricoes.corridaeaventura.com.br/images/2026/1168/1168-head.jpeg", sigla:"21K",
+    status:"confirmado", inscricao:"aberta",
+    links:[{t:"Inscrição e regulamento", u:"https://inscricoes.corridaeaventura.com.br/event/corrida-pedestre/1168-meia-maratona-solidaria-barra-bonita-2026"}]
+  },
+  {
+    data:"2026-11-20",
+    nome:"Track&Field Experience — 5 e 10 km Bauru Shopping",
+    local:"Bauru Shopping · Bauru/SP",
+    distancias:"5 km · 10 km",
+    foto:"https://dmeventosesportivos.com.br/wp-content/uploads/2026/10/WhatsApp-Image-2026-10-02-at-10.34.57-600x750.jpeg", sigla:"5K<br>10K",
+    status:"confirmado", inscricao:"app",
+    links:[{t:"Inscrição 5/10 km (app TFSports)", u:"https://link-prod.tfsports.com.br/events/meia-maratonabauru-shopping-02609081640"}]
+  },
+  {
+    data:"2026-11-22",
+    nome:"Meia Maratona de Bauru — Track&Field",
+    local:"Bauru Shopping · Bauru/SP",
+    distancias:"21 km",
+    foto:"https://dmeventosesportivos.com.br/wp-content/uploads/2026/10/WhatsApp-Image-2026-10-02-at-10.34.57-600x750.jpeg", sigla:"21K",
+    status:"confirmado", inscricao:"app",
+    links:[{t:"Inscrição 21 km (app TFSports)", u:"https://link-prod.tfsports.com.br/events/desafio-tit-meia-maratona-bauru-shopping-02609141903"}]
+  },
+  {
+    data:"2026-12-06",
+    nome:"1ª Águia Run Bauru",
+    local:"Bauru/SP",
+    distancias:"Largada 7h",
+    foto:"https://dmeventosesportivos.com.br/wp-content/uploads/2026/08/Aguia_Run_995x746-600x450.png", sigla:"ÁGUIA<br>RUN",
+    status:"a confirmar", inscricao:"esgotada",
+    links:[{t:"Página da prova", u:"https://dmeventosesportivos.com.br/produto/1-aguia-run/"}]
+  }
+];
+
+var MES=["JAN","FEV","MAR","ABR","MAI","JUN","JUL","AGO","SET","OUT","NOV","DEZ"];
+var SEM=["dom","seg","ter","qua","qui","sex","sáb"];
+function fotoFalhou(img){
+  var t=img.parentNode; var s=t.getAttribute("data-sigla").replace(/&lt;br&gt;/g,"<br>");
+  t.innerHTML='<span class="ph">'+s+'</span>';
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function gcal(e){
+  var d=e.data.replace(/-/g,""), n=new Date(e.data+"T12:00:00"); n.setDate(n.getDate()+1);
+  var d2=n.toISOString().slice(0,10).replace(/-/g,"");
+  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(e.nome+" · Tenda AJR")+
+    "&dates="+d+"/"+d2+"&location="+encodeURIComponent(e.local)+"&details="+encodeURIComponent((e.links[0]||{}).u||"");
+}
+(function(){
+  var hoje=new Date(); hoje.setHours(0,0,0,0);
+  var proximoMarcado=false, html="";
+  EVENTOS.sort(function(a,b){return a.data<b.data?-1:1});
+  EVENTOS.forEach(function(e){
+    var dt=new Date(e.data+"T12:00:00"), passado=dt<hoje;
+    var cls="ev"; if(passado) cls+=" past"; else if(!proximoMarcado){cls+=" next";proximoMarcado=true}
+    var tags="";
+    if(passado) tags+='<span class="tag">Realizado</span>';
+    else if(cls.indexOf("next")>-1) tags+='<span class="tag gold">Próximo</span>';
+    tags+= e.status==="a confirmar" ? '<span class="tag warn">Tenda a confirmar</span>' : '<span class="tag ok">Tenda confirmada</span>';
+    if(e.inscricao==="esgotada") tags+='<span class="tag bad">Inscrições esgotadas</span>';
+    if(e.inscricao==="app") tags+='<span class="tag">Inscrição pelo app</span>';
+    var acts="";
+    e.links.forEach(function(l,i){
+      acts+='<a class="btn '+(i===0&&e.inscricao!=="esgotada"?"pri":"sec2")+'" href="'+esc(l.u)+'" target="_blank" rel="noopener">'+esc(l.t)+' ↗</a>';
+    });
+    if(!passado) acts+='<a class="btn sec2" href="'+esc(gcal(e))+'" target="_blank" rel="noopener">+ Agenda</a>';
+    html+='<article class="'+cls+'">'+
+      '<div class="date"><div class="day">'+dt.getDate()+'</div><div class="mon">'+MES[dt.getMonth()]+'</div><div class="wd">'+SEM[dt.getDay()]+'</div></div>'+
+      '<div class="info"><div class="tags">'+tags+'</div>'+
+      '<div class="title"><div class="thumb" data-sigla="'+esc(e.sigla||"")+'">'+
+        (e.foto?'<img src="'+esc(e.foto)+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="fotoFalhou(this)">':'<span class="ph">'+(e.sigla||"")+'</span>')+
+      '</div><div class="name">'+esc(e.nome)+'</div></div>'+
+      '<div class="meta">'+esc(e.local)+'<br>'+esc(e.distancias)+'</div><div class="acts">'+acts+'</div></div></article>';
+  });
+  document.getElementById("lista").innerHTML=html;
+})();
+</script>
+</body>
+</html>
