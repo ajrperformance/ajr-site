@@ -23,20 +23,36 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);
-  background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
-  background-size:56px 56px;background-attachment:fixed;color:var(--off);min-height:100vh;-webkit-font-smoothing:antialiased}
-.wrap{max-width:560px;margin:0 auto;padding:22px 16px calc(48px + env(safe-area-inset-bottom,0px))}
-.hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-.hdr img{width:44px;height:44px;object-fit:contain}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--off);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* Foto da tenda fixa no fundo da página inteira */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:#08090b url("foto-tenda-agenda.jpg") center 30%/cover no-repeat;transform:scale(1.04)}
+.bg::before{content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg, rgba(8,9,11,.45) 0%, rgba(8,9,11,.05) 16%, rgba(8,9,11,.08) 48%, rgba(8,9,11,.72) 72%, rgba(8,9,11,.95) 100%)}
+.bg::after{content:"";position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(201,168,76,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.05) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:linear-gradient(180deg,transparent 0%,#000 55%);-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 55%)}
+
+.wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:18px 16px calc(48px + env(safe-area-inset-bottom,0px))}
+.hero{min-height:calc(100svh - 40px);display:flex;flex-direction:column;justify-content:space-between;padding-bottom:6px}
+.hdr{display:inline-flex;align-self:flex-start;align-items:center;gap:12px;padding:8px 14px 8px 8px;border-radius:999px;
+  background:rgba(8,9,11,.55);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.hdr img{width:36px;height:36px;object-fit:contain;border-radius:50%;background:#fff}
+.down{display:inline-block;margin-top:16px;font:700 12px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);text-decoration:none}
+.kicker{display:inline-flex;align-items:center;gap:8px;font:700 10.5px 'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(201,168,76,.25);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(201,168,76,0)}}
+h1{text-shadow:0 4px 30px rgba(0,0,0,.6)}
 .brand{font:700 13px 'Chakra Petch',sans-serif;letter-spacing:2px;color:var(--gold)}
 .sub{font:400 11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:4px}
-h1{font:700 30px/1.06 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff}
+h1{font:700 40px/1 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff;letter-spacing:.5px}
 h1 em{font-style:normal;color:var(--gold)}
-.lead{font-size:14.5px;line-height:1.5;color:var(--gray);margin:10px 0 22px}
+.lead{font-size:14.5px;line-height:1.5;color:#d4d7db;margin:12px 0 0;text-shadow:0 2px 14px rgba(0,0,0,.7)}
 .sec{font:700 11px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin:26px 0 10px}
 
-.ev{display:flex;gap:14px;background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:16px 14px;margin-bottom:12px;box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.ev{display:flex;gap:14px;background:rgba(23,25,29,.62);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px 14px;margin-bottom:12px;
+  box-shadow:0 16px 48px rgba(0,0,0,.45);backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%)}
 .ev.next{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 16px 48px rgba(0,0,0,.45)}
 .ev.past{opacity:.45}
 .date{flex:0 0 58px;text-align:center;border-right:1px solid var(--border);padding-right:12px}
@@ -63,26 +79,32 @@ h1 em{font-style:normal;color:var(--gold)}
 .btn.sec2{border:1px solid var(--border);color:var(--off)}
 .btn.sec2:hover{border-color:var(--gold)}
 
-.box{background:var(--surface);border:1px dashed var(--border);border-radius:8px;padding:16px 14px;font-size:13.5px;line-height:1.5;color:var(--gray)}
+.box{background:rgba(16,17,20,.6);border:1px dashed var(--border);border-radius:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:16px 14px;font-size:13.5px;line-height:1.5;color:var(--gray)}
 .box b{color:var(--off)}
 .foot{margin-top:28px;text-align:center;font:400 11px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:1px;line-height:1.8}
 .foot a{color:var(--gold);text-decoration:none}
 </style>
 </head>
 <body>
+<div class="bg" aria-hidden="true"></div>
 <div class="wrap">
-  <header class="hdr">
-    <img src="logo-ajr.png" alt="AJR Performance">
+  <section class="hero">
+    <header class="hdr">
+      <img src="logo-ajr.png" alt="AJR Performance">
+      <div>
+        <div class="brand">AJR PERFORMANCE</div>
+        <div class="sub">Tenda AJR · Eventos esportivos</div>
+      </div>
+    </header>
     <div>
-      <div class="brand">AJR PERFORMANCE</div>
-      <div class="sub">Tenda AJR · Eventos esportivos</div>
+      <div class="kicker">Temporada 2026</div>
+      <h1>Agenda da <em>Tenda</em></h1>
+      <p class="lead">As próximas provas em que a Tenda AJR vai estar montada — com avaliação, ativações dos parceiros e o Desafio do Terra. Toque na prova para ir direto à inscrição.</p>
+      <a class="down" href="#lista">Ver eventos ↓</a>
     </div>
-  </header>
+  </section>
 
-  <h1>Agenda da <em>Tenda</em></h1>
-  <p class="lead">As próximas provas em que a Tenda AJR vai estar montada — com avaliação, ativações dos parceiros e o Desafio do Terra. Toque na prova para ir direto à inscrição.</p>
-
-  <div class="sec">Próximos eventos</div>
+  <div class="sec" style="margin-top:34px">Próximos eventos</div>
   <div id="lista"></div>
 
   <div class="sec">Fora das provas</div>
