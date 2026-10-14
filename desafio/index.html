@@ -118,6 +118,14 @@ h2{font:700 19px var(--ff-h);margin:0 0 4px;letter-spacing:.3px}
 .opt input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .opts.stack{flex-direction:column;align-items:stretch}
 .opts.stack .opt span{display:block;padding:14px 16px}
+.opts.tags .opt span{border-radius:999px;padding:11px 18px}
+.opts.tags .opt input:disabled + span{opacity:.38;cursor:not-allowed}
+#tagCount{font-weight:700;color:var(--accent)}
+.tagsum{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tagsum span{font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line-gold);background:var(--panel-2)}
+.tagsum b{color:var(--accent);margin-left:4px}
+td.perfil{font-size:13px;line-height:1.35}
+td.perfil small{display:block;color:var(--txt-3)}
 
 .field{margin-bottom:14px}
 .field label{display:block;font:700 10.5px var(--ff-m);letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-2);margin-bottom:8px}
@@ -307,41 +315,23 @@ footer{border-top:1px solid var(--line-gold);padding:24px 0 40px;color:var(--txt
         </div>
 
         <div class="q">
-          <span class="qt">2. Qual sua área de atuação profissional?</span>
-          <div class="opts" data-q="q2">
-            <label class="opt"><input type="radio" name="q2" value="medicina"><span>Medicina</span></label>
-            <label class="opt"><input type="radio" name="q2" value="psicologia"><span>Psicologia</span></label>
-            <label class="opt"><input type="radio" name="q2" value="saude"><span>Saúde (outras áreas)</span></label>
-            <label class="opt"><input type="radio" name="q2" value="comex"><span>Comércio exterior / importação</span></label>
-            <label class="opt"><input type="radio" name="q2" value="tecnologia"><span>Tecnologia / gestão</span></label>
-            <label class="opt"><input type="radio" name="q2" value="outra"><span>Outra</span></label>
-          </div>
+          <span class="qt">2. Qual sua área de atuação?</span>
+          <div class="opts" data-q="q2" id="optsQ2"></div>
         </div>
 
         <div class="q">
-          <span class="qt">3. Hoje você atua como...</span>
-          <div class="opts" data-q="q3">
-            <label class="opt"><input type="radio" name="q3" value="empresa"><span>Empresa própria / sócio(a)</span></label>
-            <label class="opt"><input type="radio" name="q3" value="autonomo"><span>Autônomo(a)</span></label>
-            <label class="opt"><input type="radio" name="q3" value="clt"><span>CLT / funcionário(a)</span></label>
-            <label class="opt"><input type="radio" name="q3" value="estudante"><span>Estudante</span></label>
-          </div>
+          <span class="qt">3. Qual sua posição hoje?</span>
+          <div class="opts" data-q="q3" id="optsQ3"></div>
         </div>
 
         <div class="q">
-          <span class="qt">4. Qual(is) frase(s) mais combina(m) com você agora?</span>
-          <p class="qh">Pode marcar mais de uma — ou nenhuma.</p>
-          <div class="opts stack" data-q="q4">
-            <label class="opt"><input type="checkbox" name="q4" value="processos"><span>Vivo buscando otimizar processos e ganhar tempo no meu negócio</span></label>
-            <label class="opt"><input type="checkbox" name="q4" value="fornecedores"><span>Já compro ou penso em comprar de fornecedores fora do Brasil</span></label>
-            <label class="opt"><input type="checkbox" name="q4" value="limite"><span>Minha rotina de trabalho tem me deixado no limite e sei que preciso cuidar mais de mim</span></label>
-            <label class="opt"><input type="checkbox" name="q4" value="saude_freq"><span>Faço acompanhamento de saúde com frequência — exames, remédios, suplementos</span></label>
-            <label class="opt"><input type="checkbox" name="q4" value="performance"><span>Treino com foco em resultado e performance</span></label>
-          </div>
+          <span class="qt">4. Quais desses assuntos te interessam hoje?</span>
+          <p class="qh">Marque até 5, é rapidinho. <span id="tagCount"></span></p>
+          <div class="opts tags" data-q="q4" id="optsQ4"></div>
         </div>
 
         <div class="q">
-          <span class="qt">5. Prefere ser contatado essa semana ou só ficar por dentro das novidades?</span>
+          <span class="qt">5. Prefere contato essa semana ou só ficar por dentro das novidades?</span>
           <div class="opts" data-q="q5">
             <label class="opt"><input type="radio" name="q5" value="semana"><span>Contato essa semana</span></label>
             <label class="opt"><input type="radio" name="q5" value="novidades"><span>Só novidades por enquanto</span></label>
@@ -426,9 +416,11 @@ footer{border-top:1px solid var(--line-gold);padding:24px 0 40px;color:var(--txt
             <button class="btn sm" id="btnCsvSp">Exportar CSV deste patrocinador</button>
             <button class="btn sm ghost" id="btnCsvAll">Exportar CSV geral do evento</button>
           </div>
+          <p class="muted" style="margin:0 0 8px">Interesses marcados neste evento</p>
+          <div class="tagsum" id="tagSum"></div>
           <div class="scroll">
             <table id="tLeads">
-              <thead><tr><th>Prioridade</th><th>Nome</th><th>WhatsApp</th><th>Cidade</th><th>Por quê</th></tr></thead>
+              <thead><tr><th>Prioridade</th><th>Nome</th><th>WhatsApp</th><th>Perfil</th><th>Interesses</th><th>Por quê</th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
@@ -471,14 +463,118 @@ const CONFIG = {
     { id:"salutem",   nome:"Salutem",         desc:"farmácia" }
   ],
 
-  UNIDADE: "kgf"
+  UNIDADE: "kgf",
+
+  // Pergunta 2 — área de atuação
+  AREAS: [
+    { id:"medicina",     txt:"Medicina" },
+    { id:"psicologia",   txt:"Psicologia" },
+    { id:"saude_outras", txt:"Outras da saúde" },
+    { id:"edfisica",     txt:"Educação física / esporte" },
+    { id:"industria",    txt:"Indústria" },
+    { id:"construcao",   txt:"Construção civil" },
+    { id:"comercio",     txt:"Comércio / varejo" },
+    { id:"servicos",     txt:"Serviços / consultoria" },
+    { id:"ti",           txt:"Tecnologia" },
+    { id:"educacao",     txt:"Educação" },
+    { id:"agro",         txt:"Agro" },
+    { id:"outra_area",   txt:"Estudante / outra" }
+  ],
+
+  // Pergunta 3 — posição. decisor:true = dono, diretor ou gerente.
+  POSICOES: [
+    { id:"dono",        txt:"Dono(a) / sócio(a)",                 decisor:true },
+    { id:"gestor",      txt:"Diretor(a) / gerente",               decisor:true },
+    { id:"coord",       txt:"Coordenador(a) / supervisor(a)" },
+    { id:"operacional", txt:"Analista / técnico(a) / vendedor(a)" },
+    { id:"liberal",     txt:"Autônomo(a) / profissional liberal" },
+    { id:"estagiario",  txt:"Estagiário(a) / estudante" }
+  ],
+
+  // Pergunta 4 — tags de interesse (aparecem embaralhadas, máx. 5).
+  // sp = patrocinador dono da tag (null = tag coringa); forca = "forte" | "media".
+  // Tag nova = uma linha aqui.
+  TAGS: [
+    { id:"performance",  txt:"Correr melhor / performance",     sp:"ajr",       forca:"forte" },
+    { id:"emagrecer",    txt:"Emagrecimento",                   sp:"ajr",       forca:"forte" },
+    { id:"massa",        txt:"Ganhar massa muscular",           sp:"ajr",       forca:"media" },
+    { id:"suplementos",  txt:"Suplementos e vitaminas",         sp:"salutem",   forca:"forte" },
+    { id:"pele",         txt:"Pele e protetor solar",           sp:"salutem",   forca:"media" },
+    { id:"estresse",     txt:"Menos estresse e ansiedade",      sp:"vitallite", forca:"forte" },
+    { id:"sono",         txt:"Dormir melhor",                   sp:"vitallite", forca:"media" },
+    { id:"ia",           txt:"Inteligência artificial",         sp:"g4",        forca:"forte" },
+    { id:"automatizar",  txt:"Automatizar tarefas do trabalho", sp:"g4",        forca:"forte" },
+    { id:"marketing",    txt:"Marketing e redes sociais",       sp:"g4",        forca:"media" },
+    { id:"importados",   txt:"Produtos importados",             sp:"mori",      forca:"forte" },
+    { id:"exterior",     txt:"Negócios com outros países",      sp:"mori",      forca:"forte" },
+    { id:"financas",     txt:"Finanças e investimentos",        sp:null,        forca:null },
+    { id:"beleza",       txt:"Beleza e autocuidado",            sp:null,        forca:null }
+  ],
+  MAX_TAGS: 5,
+
+  // Segmentos em que um DECISOR sem tag ainda vale como amarelo (parceiros B2B).
+  SEGMENTOS_B2B: {
+    g4:   ["industria","construcao","comercio","servicos","saude_outras","edfisica","educacao","agro","ti"],
+    mori: ["industria","comercio","agro"]
+  }
 };
 
 /* ===================================================================
    2) MOTOR DE QUALIFICAÇÃO (verde / amarelo / vermelho)
-   Critérios conforme o material "Captação e Qualificação de Leads".
+   v2 (out/2026): área + posição + tags de interesse.
+   v1: critérios originais, usados só nos leads captados antes da mudança.
    =================================================================== */
-function qualificar(L){
+const V2_POSICOES = CONFIG.POSICOES.map(p=>p.id);
+function ehV2(L){ return V2_POSICOES.indexOf(L.q3) > -1; }
+function lista(v){ return Array.isArray(v) ? v : String(v||"").split("|").filter(Boolean); }
+function rotulo(arr, id){ const o = arr.find(x=>x.id===id); return o ? o.txt : (id||""); }
+function ehDecisor(L){ const p = CONFIG.POSICOES.find(x=>x.id===L.q3); return !!(p && p.decisor); }
+
+function qualificar(L){ return ehV2(L) ? qualificarV2(L) : qualificarV1(L); }
+
+function qualificarV2(L){
+  const tags  = lista(L.q4);
+  const sem   = L.q5 === "semana";
+  const dec   = ehDecisor(L);
+  const pos   = rotulo(CONFIG.POSICOES, L.q3).split(" /")[0];
+  const urg   = sem ? "contato essa semana" : "só novidades";
+  const out   = {};
+
+  CONFIG.PATROCINADORES.forEach(sp=>{
+    const minhas = CONFIG.TAGS.filter(t=>t.sp===sp.id && tags.indexOf(t.id)>-1);
+    const forte  = minhas.some(t=>t.forca==="forte");
+    const media  = minhas.length>0 && !forte;
+    const nomes  = minhas.map(t=>t.txt).join(" + ");
+    const segs   = CONFIG.SEGMENTOS_B2B[sp.id];
+    let cor, motivo;
+
+    if (segs){                                   // ---- B2B: G4 e Mori ----
+      const noSeg = segs.indexOf(L.q2) > -1;
+      if (forte && dec && sem){ cor="verde";   motivo=`Marcou ${nomes} · ${pos} · ${urg}`; }
+      else if (forte){          cor="amarelo"; motivo=`Marcou ${nomes} · ${pos}${dec?"":" (não decide)"} · ${urg}`; }
+      else if (dec && media){   cor="amarelo"; motivo=`${pos} · marcou ${nomes} · ${urg}`; }
+      else if (dec && noSeg){   cor="amarelo"; motivo=`${pos} em ${rotulo(CONFIG.AREAS,L.q2)} · sem tag do parceiro`; }
+      else {                    cor="vermelho";motivo= minhas.length ? `Marcou ${nomes}, sem poder de decisão` : "Sem tag do parceiro e sem poder de decisão"; }
+    } else {                                     // ---- B2C: AJR, Salutem, Vitallite ----
+      if (forte && sem){        cor="verde";   motivo=`Marcou ${nomes} · ${urg}`; }
+      else if (minhas.length){  cor="amarelo"; motivo=`Marcou ${nomes} · ${urg}`; }
+      else if ((sp.id==="ajr" || sp.id==="salutem") && L.q1==="atleta"){
+                                cor="amarelo"; motivo= sp.id==="ajr" ? "Atleta, sem tag de performance" : "Atleta — potencial de suplementação"; }
+      else {                    cor="vermelho";motivo="Sem nenhuma tag do parceiro"; }
+
+      if (sp.id==="vitallite" && (L.q2==="medicina" || L.q2==="psicologia")){
+        const area = rotulo(CONFIG.AREAS, L.q2);
+        if (cor==="amarelo"){ cor="verde";   motivo = area + " + " + motivo.charAt(0).toLowerCase() + motivo.slice(1); }
+        else if (cor==="vermelho"){ cor="amarelo"; motivo = area + " · " + urg; }
+        else motivo = area + " · " + motivo;
+      }
+    }
+    out[sp.id] = [cor, motivo];
+  });
+  return out;
+}
+
+function qualificarV1(L){
   const q4   = Array.isArray(L.q4) ? L.q4 : String(L.q4||"").split("|").filter(Boolean);
   const tem  = s => q4.indexOf(s) > -1;
   const sem  = L.q5 === "semana";
@@ -680,6 +776,27 @@ function renderRanking(){
    7) FORMULÁRIO DE INSCRIÇÃO
    =================================================================== */
 const form = document.getElementById("form");
+
+function embaralhar(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function montarOpcoes(){
+  document.getElementById("optsQ2").innerHTML = CONFIG.AREAS.map(o=>
+    `<label class="opt"><input type="radio" name="q2" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
+  document.getElementById("optsQ3").innerHTML = CONFIG.POSICOES.map(o=>
+    `<label class="opt"><input type="radio" name="q3" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
+  // ordem nova a cada pessoa: ninguém percebe blocos por empresa e nenhuma tag leva vantagem
+  document.getElementById("optsQ4").innerHTML = embaralhar(CONFIG.TAGS).map(o=>
+    `<label class="opt"><input type="checkbox" name="q4" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
+  limitarTags();
+}
+function limitarTags(){
+  const boxes = Array.from(form.querySelectorAll('[name="q4"]'));
+  const n = boxes.filter(b=>b.checked).length;
+  boxes.forEach(b=>{ b.disabled = !b.checked && n >= CONFIG.MAX_TAGS; });
+  document.getElementById("tagCount").textContent = n ? `(${n}/${CONFIG.MAX_TAGS})` : "";
+}
+document.getElementById("optsQ4").addEventListener("change", limitarTags);
+montarOpcoes();
+
 document.getElementById("f_whats").addEventListener("input", e=>{ e.target.value = maskTel(e.target.value); });
 
 form.addEventListener("submit", async e=>{
@@ -727,6 +844,7 @@ form.addEventListener("submit", async e=>{
 
 document.getElementById("btnNovo").addEventListener("click", ()=>{
   form.reset();
+  montarOpcoes();
   document.getElementById("successBox").style.display = "none";
   document.getElementById("formBox").style.display = "block";
   document.getElementById("f_nome").focus();
@@ -833,16 +951,38 @@ function leadsOrdenados(){
   return LEADS.map(l=>{ const q = qualificar(l)[spAtivo]; return Object.assign({}, l, {cor:q[0], motivo:q[1]}); })
               .sort((a,b)=> ordem[a.cor]-ordem[b.cor] || String(a.nome).localeCompare(String(b.nome)));
 }
+/* rótulos legíveis — servem para leads novos (v2) e antigos (v1) */
+const ROT_V1 = {
+  q2:{medicina:"Medicina",psicologia:"Psicologia",saude:"Saúde (outras)",comex:"Comércio exterior",tecnologia:"Tecnologia / gestão",outra:"Outra"},
+  q3:{empresa:"Empresa própria / sócio",autonomo:"Autônomo",clt:"CLT",estudante:"Estudante"},
+  q4:{processos:"Otimizar processos",fornecedores:"Fornecedores fora do Brasil",limite:"Rotina no limite",saude_freq:"Acompanhamento de saúde",performance:"Performance"}
+};
+function areaTxt(L){ return ehV2(L) ? rotulo(CONFIG.AREAS, L.q2) : (ROT_V1.q2[L.q2]||L.q2||""); }
+function posicaoTxt(L){ return ehV2(L) ? rotulo(CONFIG.POSICOES, L.q3) : (ROT_V1.q3[L.q3]||L.q3||""); }
+function decisorTxt(L){ return ehV2(L) ? (ehDecisor(L) ? "Sim" : "Não") : (L.q3==="empresa" ? "Sim" : "—"); }
+function interessesTxt(L){
+  return lista(L.q4).map(id=> ehV2(L) ? rotulo(CONFIG.TAGS,id) : (ROT_V1.q4[id]||id)).join(", ");
+}
+function renderTagSum(){
+  const novos = LEADS.filter(ehV2);
+  if(!novos.length){ document.getElementById("tagSum").innerHTML = `<span class="muted" style="border:0;background:none;padding:0">Nenhuma inscrição no formato novo ainda.</span>`; return; }
+  const cont = CONFIG.TAGS.map(t=>({t:t, n:novos.filter(l=>lista(l.q4).indexOf(t.id)>-1).length}))
+                          .sort((a,b)=>b.n-a.n);
+  document.getElementById("tagSum").innerHTML = cont.map(c=>
+    `<span>${esc(c.t.txt)}<b>${c.n}</b> <small class="muted">${Math.round(c.n*100/novos.length)}%</small></span>`).join("");
+}
 function renderLeads(){
-  const lista = leadsOrdenados();
-  document.querySelector("#tLeads tbody").innerHTML = lista.map(x=>`
+  renderTagSum();
+  const lista2 = leadsOrdenados();
+  document.querySelector("#tLeads tbody").innerHTML = lista2.map(x=>`
     <tr>
       <td><span class="tagc ${x.cor}">${x.cor}</span></td>
-      <td>${esc(x.nome)}</td>
+      <td>${esc(x.nome)}<br><small class="muted">${esc(x.cidade)}</small></td>
       <td>${esc(x.whatsapp)}</td>
-      <td>${esc(x.cidade)}</td>
+      <td class="perfil">${esc(areaTxt(x))}<small>${esc(posicaoTxt(x))}</small></td>
+      <td class="perfil">${esc(interessesTxt(x))}</td>
       <td class="muted">${esc(x.motivo)}</td>
-    </tr>`).join("") || `<tr><td colspan="5" class="empty">Nenhum lead ainda.</td></tr>`;
+    </tr>`).join("") || `<tr><td colspan="6" class="empty">Nenhum lead ainda.</td></tr>`;
 }
 
 /* ---------- exportação CSV ---------- */
@@ -856,21 +996,22 @@ function baixarCSV(nome, linhas){
 document.getElementById("btnCsvSp").addEventListener("click", ()=>{
   const sp = CONFIG.PATROCINADORES.find(s=>s.id===spAtivo);
   const ev = document.getElementById("admEvento").value;
-  const linhas = [["Prioridade","Nome","WhatsApp","Cidade","Motivo","Quer contato","Perfil","Vínculo"]];
+  const linhas = [["Prioridade","Nome","WhatsApp","Cidade","Motivo","Quer contato","Área","Posição","Decisor","Interesses"]];
   leadsOrdenados().forEach(x=>linhas.push([x.cor.toUpperCase(), x.nome, x.whatsapp, x.cidade, x.motivo,
-    x.q5==="semana"?"Sim, essa semana":"Só novidades", x.q2, x.q3]));
+    x.q5==="semana"?"Sim, essa semana":"Só novidades", areaTxt(x), posicaoTxt(x), decisorTxt(x), interessesTxt(x)]));
   baixarCSV(`leads_${ev}_${sp.id}.csv`, linhas);
 });
 document.getElementById("btnCsvAll").addEventListener("click", ()=>{
   const ev = document.getElementById("admEvento").value;
-  const cab = ["Código","Nome","WhatsApp","Cidade","Categoria","Resultado (kgf)","Peso (kg)","Atleta/Acomp.","Área","Vínculo","Sinais","Contato"];
-  CONFIG.PATROCINADORES.forEach(s=>cab.push(s.nome));
+  const cab = ["Código","Nome","WhatsApp","Cidade","Categoria","Resultado (kgf)","Peso (kg)","Atleta/Acomp.","Área","Posição","Decisor","Interesses","Contato"];
+  CONFIG.PATROCINADORES.forEach(s=>{ cab.push(s.nome); cab.push(s.nome+" — motivo"); });
   const linhas = [cab];
   LEADS.forEach(x=>{
     const q = qualificar(x);
     const l = [x.codigo,x.nome,x.whatsapp,x.cidade,x.sexo==="F"?"Feminino":"Masculino",x.kgf||"",x.peso||"",
-               x.q1,x.q2,x.q3,(x.q4||[]).join(", "),x.q5==="semana"?"Essa semana":"Só novidades"];
-    CONFIG.PATROCINADORES.forEach(s=>l.push(q[s.id][0].toUpperCase()));
+               x.q1==="atleta"?"Atleta":"Acompanhante",areaTxt(x),posicaoTxt(x),decisorTxt(x),interessesTxt(x),
+               x.q5==="semana"?"Essa semana":"Só novidades"];
+    CONFIG.PATROCINADORES.forEach(s=>{ l.push(q[s.id][0].toUpperCase()); l.push(q[s.id][1]); });
     linhas.push(l);
   });
   baixarCSV(`leads_${ev}_geral.csv`, linhas);
