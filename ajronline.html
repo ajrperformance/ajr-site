@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AJR Online — Formulário de Adesão</title>
+<title>AJR Online — 3 meses de acompanhamento</title>
+<meta name="description" content="Consultoria online AJR: 3 meses de acompanhamento com ajustes e correções sempre que precisar. Pague pelo InfinitePay, preencha sua avaliação e receba o treino em até 24 horas.">
+<meta name="theme-color" content="#08090b">
+<meta property="og:title" content="AJR Online — 3 meses de acompanhamento, não 3 treinos">
+<meta property="og:description" content="Treino ajustado e corrigido sempre que precisar.">
+<meta property="og:image" content="https://ajrperformance.com.br/ajronline-hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -258,6 +263,218 @@ h1,h2,h3,h4,.hero-logo,.section-title,.pricing-hero .logo{font-family:'Chakra Pe
 }
 .wa-float:hover{transform:scale(1.1);}
 </style>
+<style>
+/* ═══ LANDING AJR ONLINE (2026-10) — escopo #secPricing ═══ */
+#secPricing{
+  --gold:#C9A84C; --gold-lt:#e2c878; --gold-dk:#9f8038;
+  --rust:#AB4726; --rust-lt:#d0714c; --iron:#1b1a19; --cement:#2a2826;
+  --navy:#17191d; --surface:#101114; --bg:#08090b; --input:#0e0f12;
+  --border:rgba(201,168,76,.22); --line:#26292f;
+  --gray:#a3a9b1; --dim:#7a8088; --off:#f0ede8;
+  --ok:#4CAF7D;
+  color-scheme:dark;
+}
+#secPricing img{max-width:100%;display:block}
+#secPricing a{color:inherit}
+#secPricing .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+#secPricing .mono{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:2px}
+#secPricing .kicker{font:700 11px 'JetBrains Mono',monospace;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+#secPricing .kicker::before{content:"";width:22px;height:1px;background:var(--gold)}
+#secPricing .kicker.rust{color:var(--rust-lt)}
+#secPricing .kicker.rust::before{background:var(--rust-lt)}
+#secPricing h1,#secPricing h2,#secPricing h3{font-family:'Chakra Petch',sans-serif;text-transform:uppercase;line-height:1.05;letter-spacing:-.3px;text-wrap:balance}
+#secPricing h2{font-size:clamp(26px,4.4vw,40px);color:#fff}
+#secPricing h2 em,#secPricing h1 em{font-style:normal;color:var(--gold)}
+#secPricing .lead{font-size:16px;line-height:1.6;color:var(--gray);max-width:560px}
+#secPricing section{padding:72px 0}
+#secPricing .lp-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;border:0;background:var(--gold);color:#101114;
+  font:700 14px 'Chakra Petch',sans-serif;letter-spacing:1.6px;text-transform:uppercase;text-decoration:none;cursor:pointer;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));transition:background .15s,transform .15s}
+#secPricing .lp-btn:hover{background:var(--gold-lt)}
+#secPricing .lp-btn:active{transform:translateY(1px)}
+#secPricing .lp-btn.ghost{background:transparent;color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+#secPricing .lp-btn.ghost:hover{background:rgba(201,168,76,.1)}
+#secPricing .lp-btn.rust{background:var(--rust);color:#fff}
+#secPricing .lp-btn.rust:hover{background:var(--rust-lt)}
+#secPricing .lp-btn.block{width:100%}
+#secPricing .lp-btn[aria-disabled=true]{opacity:.35;pointer-events:none}
+#secPricing .lp-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#secPricing .top{position:sticky;top:0;z-index:40;background:rgba(8,9,11,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+#secPricing .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+#secPricing .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 13px 'Chakra Petch',sans-serif;letter-spacing:2px;color:var(--gold)}
+#secPricing .brand img{width:34px;height:34px;object-fit:contain}
+#secPricing .brand span{color:var(--off)}
+#secPricing .brand b{color:var(--rust-lt);font-weight:700}
+#secPricing .top .lp-btn{padding:10px 16px;font-size:12px}
+#secPricing .lp-hero{padding:40px 0 64px;position:relative}
+#secPricing .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+#secPricing .lp-hero h1{font-size:clamp(36px,6.4vw,66px);color:#fff;margin-bottom:18px}
+#secPricing .lp-hero h1 .strike{position:relative;color:var(--dim);white-space:nowrap}
+#secPricing .lp-hero h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:52%;height:4px;background:var(--rust);transform:rotate(-3deg)}
+#secPricing .lp-hero .lead{font-size:17px;margin-bottom:28px}
+#secPricing .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+#secPricing .hero-facts{display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
+#secPricing .hero-facts div{font:700 22px 'Chakra Petch',sans-serif;color:#fff}
+#secPricing .hero-facts small{display:block;font:400 10px 'JetBrains Mono',monospace;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);margin-top:4px}
+#secPricing .hero-photo{position:relative}
+#secPricing .hero-photo .frame{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--border);clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,28px 100%,0 calc(100% - 28px))}
+#secPricing .hero-photo .frame img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:saturate(.85) contrast(1.05)}
+#secPricing .hero-photo .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,9,11,.85))}
+#secPricing .hero-photo .tag{position:absolute;left:18px;bottom:18px;z-index:2;font:700 10px 'JetBrains Mono',monospace;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+#secPricing .hero-photo .tag b{display:block;font:700 15px 'Chakra Petch',sans-serif;letter-spacing:1px;color:#fff;margin-top:4px}
+#secPricing .corner{position:absolute;width:44px;height:44px;border-color:var(--gold);border-style:solid;border-width:0}
+#secPricing .corner.tl{top:-10px;left:-10px;border-top-width:2px;border-left-width:2px}
+#secPricing .corner.br{bottom:-10px;right:-10px;border-bottom-width:2px;border-right-width:2px}
+#secPricing .versus{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px}
+#secPricing .vs-card{padding:26px 24px;border:1px solid var(--line);background:var(--surface)}
+#secPricing .vs-card h3{font-size:16px;letter-spacing:1px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+#secPricing .vs-card.no h3{color:var(--dim)}
+#secPricing .vs-card.yes{border-color:var(--gold);background:linear-gradient(160deg,rgba(201,168,76,.08),var(--navy) 60%)}
+#secPricing .vs-card.yes h3{color:var(--gold)}
+#secPricing .vs-card ul{list-style:none;display:grid;gap:12px}
+#secPricing .vs-card li{display:grid;grid-template-columns:20px 1fr;gap:10px;font-size:14.5px;line-height:1.5;color:var(--gray)}
+#secPricing .vs-card.yes li{color:var(--off)}
+#secPricing .vs-card li i{font-style:normal;font:700 13px 'JetBrains Mono',monospace}
+#secPricing .vs-card.no li i{color:var(--dim)}
+#secPricing .vs-card.yes li i{color:var(--gold)}
+#secPricing .pill{font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;padding:4px 8px;border:1px solid currentColor}
+#secPricing .timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px;border:1px solid var(--border)}
+#secPricing .tl-step{padding:24px 22px;position:relative;border-right:1px solid var(--border)}
+#secPricing .tl-step:last-child{border-right:0}
+#secPricing .tl-step .n{font:700 44px/1 'Chakra Petch',sans-serif;color:var(--gold);opacity:.9}
+#secPricing .tl-step .n small{font-size:13px;letter-spacing:2px;margin-left:6px;color:var(--gray)}
+#secPricing .tl-step h3{font-size:15px;color:#fff;letter-spacing:1px;margin:12px 0 8px}
+#secPricing .tl-step p{font-size:14px;line-height:1.55;color:var(--gray)}
+#secPricing .tl-bar{grid-column:1/-1;height:4px;background:linear-gradient(90deg,var(--gold-dk),var(--gold),var(--gold-lt));position:relative}
+#secPricing .tl-bar span{position:absolute;right:16px;top:12px}
+#secPricing .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+#secPricing .split-photo{position:relative;aspect-ratio:3/2;overflow:hidden;border:1px solid var(--border)}
+#secPricing .split-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:saturate(.85)}
+#secPricing .adj-list{display:grid;gap:10px;margin-top:24px}
+#secPricing .adj{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:14px 16px;background:var(--navy);border:1px solid var(--line)}
+#secPricing .adj .k{font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;color:var(--gold);padding-top:3px;width:78px}
+#secPricing .adj p{font-size:14.5px;line-height:1.5;color:var(--off)}
+#secPricing .adj p span{color:var(--gray)}
+#secPricing .how{background:linear-gradient(180deg,transparent,rgba(201,168,76,.04) 40%,transparent)}
+#secPricing .how-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;margin-top:36px}
+#secPricing .steps{list-style:none;display:grid;gap:0;counter-reset:s}
+#secPricing .steps li{display:grid;grid-template-columns:56px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);counter-increment:s}
+#secPricing .steps li:first-child{border-top:1px solid var(--line)}
+#secPricing .steps li::before{content:"0" counter(s);font:700 26px/1 'Chakra Petch',sans-serif;color:var(--gold)}
+#secPricing .steps li.app::before{color:var(--rust-lt)}
+#secPricing .steps h3{font-size:16px;color:#fff;letter-spacing:1px;margin-bottom:6px}
+#secPricing .steps p{font-size:14.5px;line-height:1.55;color:var(--gray)}
+#secPricing .steps .where{display:inline-block;margin-top:8px;font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;padding:3px 8px;border:1px solid var(--border);color:var(--gold)}
+#secPricing .steps li.app .where{border-color:rgba(171,71,38,.6);color:var(--rust-lt)}
+#secPricing .phone-wrap{display:flex;justify-content:center;position:relative}
+#secPricing .phone-wrap::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.22),transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(10px)}
+#secPricing .phone{position:relative;width:270px;aspect-ratio:9/18.5;background:#0b0a0a;border:2px solid #3a3633;border-radius:38px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+#secPricing .phone::before{content:"";position:absolute;top:16px;left:50%;transform:translateX(-50%);width:80px;height:20px;background:#000;border-radius:12px;z-index:2}
+#secPricing .screen{height:100%;border-radius:29px;overflow:hidden;background:var(--iron);background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:22px 22px;padding:48px 16px 18px;display:flex;flex-direction:column;font-family:'Space Grotesk',sans-serif}
+#secPricing .app-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+#secPricing .app-logo{font:700 15px 'Chakra Petch',sans-serif;letter-spacing:2.5px;color:#fff}
+#secPricing .app-logo b{color:var(--gold)}
+#secPricing .app-chip{font:700 8px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:var(--gold);border:1px solid rgba(201,168,76,.5);padding:3px 6px}
+#secPricing .app-step{font:700 9px 'JetBrains Mono',monospace;letter-spacing:1.5px;color:#9b948d;text-transform:uppercase}
+#secPricing .app-prog{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:8px 0 18px}
+#secPricing .app-prog i{height:3px;background:var(--cement)}
+#secPricing .app-prog i.on{background:var(--gold)}
+#secPricing .app-q{font:700 17px/1.2 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff;margin-bottom:14px}
+#secPricing .app-opts{display:grid;gap:7px}
+#secPricing .app-opts span{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--cement);border:1px solid #3a3633;font-size:12px;color:#d8d2cb}
+#secPricing .app-opts span.sel{border-color:var(--gold);background:rgba(201,168,76,.14);color:#fff}
+#secPricing .app-opts span.sel::after{content:"✓";color:var(--gold);font-weight:700}
+#secPricing .app-note{margin-top:auto;font:400 9px 'JetBrains Mono',monospace;letter-spacing:1px;color:#8a837c;text-transform:uppercase;margin-bottom:10px;text-align:center}
+#secPricing .app-btn{background:var(--gold);color:#101114;text-align:center;font:700 11px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:12px}
+#secPricing .phone-cap{position:absolute;bottom:-52px;right:-10px;background:var(--surface);border:1px solid var(--border);padding:10px 12px;font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;max-width:170px;line-height:1.5}
+#secPricing .phone-cap b{display:block;color:#fff;font-family:'Chakra Petch',sans-serif;font-size:12px;letter-spacing:1px}
+#secPricing .coach{display:grid;grid-template-columns:320px 1fr;gap:48px;align-items:center}
+#secPricing .coach-photo{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--border)}
+#secPricing .coach-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+#secPricing .creds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}
+#secPricing .cred{padding:16px;background:var(--navy);border:1px solid var(--line)}
+#secPricing .cred b{display:block;font:700 22px 'Chakra Petch',sans-serif;color:var(--gold)}
+#secPricing .cred span{font-size:12.5px;line-height:1.45;color:var(--gray)}
+#secPricing .plans{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:36px;align-items:stretch}
+#secPricing .plan{padding:30px 26px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column}
+#secPricing .plan.main{border-color:var(--gold);background:linear-gradient(160deg,rgba(201,168,76,.1),var(--navy) 55%);position:relative}
+#secPricing .plan .lp-badge{align-self:flex-start;font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.8px;text-transform:uppercase;padding:5px 10px;margin-bottom:18px;border:1px solid var(--border);color:var(--gray)}
+#secPricing .plan.main .lp-badge{background:var(--gold);border-color:var(--gold);color:#101114}
+#secPricing .plan h3{font-size:20px;color:#fff;letter-spacing:1px}
+#secPricing .price{display:flex;align-items:baseline;gap:6px;margin:14px 0 4px}
+#secPricing .price small{font:600 18px 'Space Grotesk',sans-serif;color:var(--gray)}
+#secPricing .price strong{font:700 56px/1 'Chakra Petch',sans-serif;color:#fff}
+#secPricing .plan.main .price strong{color:var(--gold)}
+#secPricing .price-sub{font-size:13px;color:var(--gray);margin-bottom:20px}
+#secPricing .plan ul{list-style:none;display:grid;gap:9px;margin-bottom:24px}
+#secPricing .plan li{display:grid;grid-template-columns:18px 1fr;gap:8px;font-size:14px;line-height:1.45;color:var(--off)}
+#secPricing .plan li::before{content:"→";color:var(--gold);font-family:'JetBrains Mono'}
+#secPricing .plan .lp-btn{margin-top:auto}
+#secPricing .discount{font:700 10px 'JetBrains Mono',monospace;letter-spacing:1px;color:#101114;background:var(--ok);padding:2px 6px;margin-left:6px}
+#secPricing .checkout{max-width:760px;margin:20px auto 0;display:grid;gap:12px}
+#secPricing .terms{border:1px solid var(--line);background:var(--surface)}
+#secPricing .terms summary{cursor:pointer;list-style:none;padding:14px 16px;display:flex;justify-content:space-between;font:700 11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)}
+#secPricing .terms summary::-webkit-details-marker{display:none}
+#secPricing .terms summary::after{content:"+";color:var(--gold);font-size:14px}
+#secPricing .terms[open] summary::after{content:"−"}
+#secPricing .terms ol{padding:0 18px 16px 34px;display:grid;gap:8px}
+#secPricing .terms li{font-size:13px;line-height:1.55;color:var(--gray)}
+#secPricing .terms li b{color:var(--off)}
+#secPricing .aceite{display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:start;padding:14px 16px;border:1px solid var(--border);background:var(--navy);cursor:pointer;font-size:13.5px;line-height:1.5;color:var(--gray)}
+#secPricing .aceite input{width:18px;height:18px;margin-top:1px;accent-color:var(--gold)}
+#secPricing .aceite-hint{font:400 11px 'JetBrains Mono',monospace;letter-spacing:1px;color:var(--dim);text-align:center}
+#secPricing .coupon{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#secPricing .coupon label{font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)}
+#secPricing .coupon input{flex:1;min-width:140px;padding:11px 12px;background:var(--input);border:1px solid rgba(255,255,255,.12);color:var(--off);font:500 15px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px;outline:none}
+#secPricing .coupon input:focus{border-color:var(--gold)}
+#secPricing .coupon button{padding:11px 16px;background:transparent;border:1px solid var(--gold);color:var(--gold);font:700 12px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+#secPricing .coupon-fb{width:100%;font-size:12.5px}
+#secPricing .coupon-fb.ok{color:var(--ok)}
+#secPricing .coupon-fb.err{color:#E0685F}
+#secPricing .next{display:none;max-width:760px;margin:24px auto 0;padding:26px 24px;border:1px solid var(--gold);background:linear-gradient(160deg,rgba(201,168,76,.12),var(--surface) 60%)}
+#secPricing .next.show{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#secPricing .next h3{font-size:22px;color:#fff;margin-bottom:8px}
+#secPricing .next p{font-size:14.5px;line-height:1.55;color:var(--gray);margin-bottom:18px}
+#secPricing .next-actions{display:grid;grid-template-columns:1.3fr 1fr;gap:10px}
+#secPricing .faq{max-width:760px;margin:30px auto 0;display:grid;gap:8px}
+#secPricing .faq details{border:1px solid var(--line);background:var(--surface)}
+#secPricing .faq summary{cursor:pointer;list-style:none;padding:16px 18px;font:700 14px 'Chakra Petch',sans-serif;letter-spacing:.8px;text-transform:uppercase;color:#fff;display:flex;justify-content:space-between;gap:16px}
+#secPricing .faq summary::-webkit-details-marker{display:none}
+#secPricing .faq summary::after{content:"+";color:var(--gold)}
+#secPricing .faq details[open] summary::after{content:"−"}
+#secPricing .faq p{padding:0 18px 16px;font-size:14.5px;line-height:1.6;color:var(--gray)}
+#secPricing .final{text-align:center;padding:72px 0 88px;border-top:1px solid var(--border)}
+#secPricing .final h2{margin-bottom:14px}
+#secPricing .final .lead{margin:0 auto 26px}
+#secPricing footer{border-top:1px solid var(--line);padding:26px 0 40px;text-align:center;font:400 11px 'JetBrains Mono',monospace;letter-spacing:1px;color:var(--dim);line-height:1.9}
+#secPricing footer a{color:var(--gray);text-decoration:none}
+#secPricing .center{text-align:center}
+#secPricing .center .lead{margin:0 auto}
+#secPricing .center .kicker{justify-content:center}
+@media (max-width:860px){#secPricing section{padding:56px 0}
+#secPricing .lp-hero{padding:20px 0 48px}
+#secPricing .hero-grid,#secPricing .split,#secPricing .how-grid,#secPricing .coach,#secPricing .plans{grid-template-columns:1fr;gap:32px}
+#secPricing .hero-photo{order:-1}
+#secPricing .hero-photo .frame{aspect-ratio:16/11}
+#secPricing .corner{display:none}
+#secPricing .versus{grid-template-columns:1fr}
+#secPricing .timeline{grid-template-columns:1fr}
+#secPricing .tl-step{border-right:0;border-bottom:1px solid var(--border)}
+#secPricing .tl-step:last-child{border-bottom:0}
+#secPricing .coach-photo{max-width:320px;aspect-ratio:1/1}
+#secPricing .creds{grid-template-columns:1fr 1fr 1fr}
+#secPricing .phone-wrap{flex-direction:column;align-items:center;padding-bottom:0}
+#secPricing .phone-cap{position:static;margin-top:16px;max-width:none;text-align:center}}
+@media (max-width:520px){#secPricing .wrap{padding:0 16px}
+#secPricing .top .lp-btn{display:none}
+#secPricing .hero-facts{gap:18px}
+#secPricing .creds{grid-template-columns:1fr}
+#secPricing .next-actions{grid-template-columns:1fr}
+#secPricing .lp-btn{padding:15px 20px}
+#secPricing .hero-ctas .lp-btn{flex:1}}
+@media (prefers-reduced-motion:reduce){}
+</style>
 </head>
 <body>
 
@@ -287,131 +504,287 @@ h1,h2,h3,h4,.hero-logo,.section-title,.pricing-hero .logo{font-family:'Chakra Pe
 
 <!-- ══════════════ PRICING PAGE ══════════════ -->
 <div id="secPricing">
-  <div class="pricing-wrap">
 
-    <div class="pricing-hero">
-      <div class="logo">AJR</div>
-      <div class="tagline">Online</div>
-      <h1>Treino personalizado.<br>Do seu jeito, onde você estiver.</h1>
-      <p>Consultoria esportiva 100% online com programa montado para o seu corpo, seus objetivos e sua rotina.</p>
-    </div>
-
-    <div class="benefits">
-      <div class="benefit-item">
-        <div class="benefit-icon">📋</div>
-        <div class="benefit-text">
-          <strong>Programa 100% personalizado</strong>
-          <span>Montado individualmente após análise detalhada do seu perfil, objetivos e histórico.</span>
-        </div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon">🔄</div>
-        <div class="benefit-text">
-          <strong>Atualização mensal</strong>
-          <span>Seu treino evolui junto com você — revisado todo mês com base na sua progressão.</span>
-        </div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon">💬</div>
-        <div class="benefit-text">
-          <strong>Suporte via WhatsApp</strong>
-          <span>Dúvidas, ajustes e acompanhamento direto com o profissional em horário comercial.</span>
-        </div>
-      </div>
-      <div class="benefit-item">
-        <div class="benefit-icon">🎯</div>
-        <div class="benefit-text">
-          <strong>Entrega em até 24 horas</strong>
-          <span>Após o preenchimento do formulário, seu programa já estará pronto. De segunda a sexta.</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="price-card">
-      <div class="badge">Plano AJR Online</div>
-      <div class="amount"><span>R$</span><span id="pricingAmount">79,90</span></div>
-      <div class="amount-sub" id="pricingAmountSub">por mês · renovação automática</div>
-      <hr class="price-divider">
-
-      <!-- CUPOM -->
-      <div class="coupon-wrap" style="margin-bottom:20px;">
-        <div class="coupon-label">🎟️ Cupom de desconto?</div>
-        <div class="coupon-row">
-          <input class="coupon-input" id="couponInput" type="text" placeholder="Digite seu cupom" maxlength="20" autocomplete="off">
-          <button class="coupon-btn" onclick="applyCoupon()">Aplicar</button>
-        </div>
-        <div class="coupon-feedback" id="couponFeedback"></div>
-      </div>
-
-      <!-- CONTRATO (colapsável) -->
-      <div class="pre-contract">
-        <div class="pre-contract-header" onclick="toggleContract(this)">
-          <span>📄 Leia o contrato antes de pagar</span>
-          <span class="toggle-icon">▼</span>
-        </div>
-        <div class="pre-contract-body">
-          <h3>1. Objeto do contrato</h3>
-          <p>Prestação de serviços de consultoria esportiva online pelo profissional Aldemir Junior (AJR Online), ao aluno identificado no formulário de adesão, incluindo elaboração de programas de treinamento personalizados entregues digitalmente.</p>
-          <h3>2. Plano e pagamento</h3>
-          <p>Serviço oferecido em assinatura recorrente mensal (R$ 79,90) ou pagamento único trimestral (R$ 189,90). O não pagamento na data acordada implica suspensão automática do acesso ao programa.</p>
-          <h3>3. Obrigações do profissional</h3>
-          <p>Entrega do programa em até 24 horas (segunda a sexta) após o preenchimento completo do formulário. Atualizações mensais e suporte via WhatsApp em horário comercial.</p>
-          <h3>4. Obrigações do aluno</h3>
-          <p>Fornecer informações verdadeiras sobre saúde, seguir o programa conforme orientado, comunicar qualquer intercorrência de saúde e realizar os pagamentos nas datas acordadas.</p>
-          <h3>5. Saúde e responsabilidade</h3>
-          <p>O aluno declara estar apto para a prática de atividades físicas. Em caso de condições pré-existentes, recomenda-se avaliação médica prévia. O profissional não se responsabiliza por lesões decorrentes de execução incorreta ou omissão de informações de saúde.</p>
-          <h3>6. Direitos de imagem</h3>
-          <p>O aluno autoriza o uso de suas fotos de evolução para fins de divulgação pela AJR Online, podendo solicitar anonimato ou revogar a autorização a qualquer momento por escrito.</p>
-          <h3>7. LGPD</h3>
-          <p>Dados coletados tratados em conformidade com a Lei nº 13.709/2018, utilizados exclusivamente para prestação do serviço e não compartilhados com terceiros sem consentimento.</p>
-          <h3>8. Cancelamento</h3>
-          <p>Cancelamento a qualquer momento sem multa, com aviso prévio de 7 dias. Não há reembolso proporcional para o mês em curso após o início dos serviços.</p>
-          <h3>9. Foro</h3>
-          <p>Foro da comarca de residência do profissional para dirimir controvérsias.</p>
-        </div>
-      </div>
-
-      <!-- ACEITE -->
-      <label class="aceite-wrap">
-        <input type="checkbox" id="aceitePrePagamento" onchange="togglePayButtons()">
-        <span>Li e concordo com os termos do contrato acima. Estou ciente de que a assinatura digital será coletada no formulário de adesão após o pagamento. <strong style="color:var(--text);">*</strong></span>
-      </label>
-
-      <!-- BOTÕES DE PAGAMENTO -->
-      <div class="pay-options" style="margin:0;">
-        <div>
-          <a id="linkRecorrente" href="https://invoice.infinitepay.io/plans/aldemir-de-r05/oUka4QT5io" class="btn-pay" target="_blank" onclick="showJaPaguei()" disabled>💳 Assinar — <span id="labelRecorrente">Recorrente Mensal</span></a>
-          <span class="pay-badge" id="badgeRecorrente">Renovação automática todo mês</span>
-        </div>
-        <div>
-          <a id="linkAvista" href="https://link.infinitepay.io/aldemir-de-r05/VC1DLTMtSQ-9nt9Cin2xt-189,90" class="btn-pay-outline" target="_blank" onclick="showJaPaguei()" disabled>💰 <span id="labelAvista">R$ 189,90 — 3 meses à vista</span></a>
-          <span class="pay-badge" id="badgeAvista">Acompanhamento trimestral · parcela em até 3x</span>
-        </div>
-      </div>
-
-      <!-- BOTÃO "JÁ PAGUEI" — aparece após clicar em pagar -->
-      <div id="jaPagueiWrap" style="display:none;margin-top:20px;padding-top:18px;border-top:1px solid var(--border);">
-        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">✅ Pagamento concluído? Clique abaixo para preencher o formulário de adesão.</p>
-        <button onclick="showStep(1)" style="width:100%;background:var(--success);color:#fff;border:none;border-radius:12px;padding:14px;font-weight:800;font-size:15px;cursor:pointer;letter-spacing:.3px;">
-          📋 Preencher Formulário de Adesão →
-        </button>
-      </div>
-    </div>
-
-    <p class="price-note">Após o pagamento, clique em <strong style="color:var(--text);">Preencher Formulário</strong> para enviar seus dados.<br>Seu programa será entregue em até 24 horas (seg–sex).</p>
-
-    <!-- DÚVIDAS + WHATSAPP -->
-    <div style="background:var(--card);border:1px solid var(--border-gold);border-radius:16px;padding:24px;margin-top:8px;">
-      <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px;">💬 Ficou com alguma dúvida?</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5;">Me conta o que você quer saber antes de assinar. Respondo rápido.</div>
-      <textarea id="duvidas" placeholder="Ex: como funciona a entrega do treino? posso treinar em casa? tem suporte pelo WhatsApp?..." style="width:100%;background:#0e0f12;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;padding:10px 12px;outline:none;min-height:90px;resize:vertical;font-family:inherit;transition:border-color .2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-      <a id="btnWaDuvida" href="https://wa.me/5514997432182?text=Olá%2C%20tenho%20uma%20dúvida%20sobre%20o%20AJR%20Online" target="_blank" onclick="buildWaLink(event)" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#25d366;color:#fff;padding:12px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .2s;" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Enviar dúvida pelo WhatsApp
-      </a>
-    </div>
-
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">AJR <span>ONLINE</span></a>
+    <a class="lp-btn" href="#planos">Quero começar</a>
   </div>
+</header>
+
+<!-- HERO -->
+<section class="lp-hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">Consultoria online · AJR Performance</div>
+      <h1>3 meses de <em>acompanhamento.</em><br><span class="strike">Não 3 treinos.</span></h1>
+      <p class="lead">Seu treino é montado a partir da sua avaliação e ajustado sempre que precisar: mudou a rotina, apareceu uma dor, a execução não está boa, o progresso travou. Eu ajusto e corrijo junto com você, do primeiro ao último dia.</p>
+      <div class="hero-ctas">
+        <a class="lp-btn" href="#planos">Ver planos</a>
+        <a class="lp-btn ghost" href="#como-funciona">Como funciona</a>
+      </div>
+      <div class="hero-facts">
+        <div>90 dias<small>de acompanhamento</small></div>
+        <div>Sempre<small>que precisar de ajuste</small></div>
+        <div>24h<small>treino pronto após a avaliação</small></div>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <span class="corner tl"></span><span class="corner br"></span>
+      <div class="frame">
+        <img src="ajronline-hero.jpg" alt="Análise de execução de agachamento em vídeo no notebook" fetchpriority="high">
+      </div>
+      <div class="tag">Análise de execução por vídeo<b>Correção técnica a distância</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 MESES x 3 TREINOS -->
+<section id="diferenca">
+  <div class="wrap">
+    <div class="kicker">A diferença</div>
+    <h2>Treino pronto não acompanha você. <em>Eu acompanho.</em></h2>
+    <div class="versus">
+      <div class="vs-card no">
+        <h3>Planilha mensal <span class="pill">3 treinos</span></h3>
+        <ul>
+          <li><i>×</i>Um treino por mês e você se vira até o próximo</li>
+          <li><i>×</i>Ninguém confere se a execução está certa</li>
+          <li><i>×</i>Viagem, dor ou academia nova e o plano para de servir</li>
+          <li><i>×</i>Progresso travou? Espera o mês virar</li>
+        </ul>
+      </div>
+      <div class="vs-card yes">
+        <h3>AJR Online <span class="pill">3 meses</span></h3>
+        <ul>
+          <li><i>✓</i>Treino ajustado sempre que for necessário, sem esperar o mês virar</li>
+          <li><i>✓</i>Correção de execução pelos seus vídeos</li>
+          <li><i>✓</i>Plano adaptado à sua rotina real, semana a semana</li>
+          <li><i>✓</i>Progressão planejada para os 3 meses inteiros</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="n">01<small>MÊS</small></div>
+        <h3>Base e técnica</h3>
+        <p>Avaliação de entrada, treino montado e os primeiros ajustes de carga, volume e execução.</p>
+      </div>
+      <div class="tl-step">
+        <div class="n">02<small>MÊS</small></div>
+        <h3>Progressão</h3>
+        <p>Com o retorno dos treinos, o plano evolui no seu ritmo. O que não encaixou, a gente corrige.</p>
+      </div>
+      <div class="tl-step">
+        <div class="n">03<small>MÊS</small></div>
+        <h3>Consolidação</h3>
+        <p>Hora de colher resultado, comparar com o começo e definir o próximo ciclo.</p>
+      </div>
+      <div class="tl-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AJUSTES -->
+<section id="ajustes">
+  <div class="wrap split">
+    <div class="split-photo"><img src="ajronline-ajustes.jpg" alt="Aldemir corrigindo a postura de um atleta" loading="lazy"></div>
+    <div>
+      <div class="kicker">Ajustes e correções</div>
+      <h2>Mudou alguma coisa? <em>O treino muda junto.</em></h2>
+      <div class="adj-list">
+        <div class="adj"><div class="k">Rotina</div><p>Semana corrida ou viagem. <span>Reorganizo os dias e encurto as sessões.</span></p></div>
+        <div class="adj"><div class="k">Dor</div><p>Algo incomodou. <span>Troco o exercício e ajusto a carga.</span></p></div>
+        <div class="adj"><div class="k">Execução</div><p>Você grava o exercício. <span>Eu devolvo a correção do movimento.</span></p></div>
+        <div class="adj"><div class="k">Estrutura</div><p>Academia nova ou treino em casa. <span>Adapto ao equipamento que você tem.</span></p></div>
+        <div class="adj"><div class="k">Platô</div><p>O progresso parou. <span>Mudo o estímulo antes de você desanimar.</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="how">
+  <div class="wrap">
+    <div class="kicker">Como funciona</div>
+    <h2>Do pagamento ao treino <em>em 4 passos.</em></h2>
+    <div class="how-grid">
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>Escolha o plano e pague</h3>
+            <p>Pagamento seguro pelo InfinitePay, no Pix ou no cartão.</p>
+            <span class="where">Nesta página</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Preencha sua avaliação</h3>
+            <p>Logo depois do pagamento: dados, saúde, objetivos, rotina, medidas e fotos. É a base de tudo.</p>
+            <span class="where">Formulário de adesão</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Receba seu treino</h3>
+            <p>Programa montado para você em até 24 horas, de segunda a sexta.</p>
+            <span class="where">Em até 24h</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Treine e ajuste comigo por 3 meses</h3>
+            <p>Eu acompanho, ajusto e corrijo sempre que precisar, pelo WhatsApp.</p>
+            <span class="where">90 dias de acompanhamento</span>
+          </div>
+        </li>
+      </ol>
+
+      <div class="phone-wrap" aria-hidden="true">
+        <div class="phone">
+          <div class="screen">
+            <div class="app-top"><div class="app-logo">AJR<b> ONLINE</b></div><div class="app-chip">AVALIAÇÃO</div></div>
+            <div class="app-step">Objetivos · passo 3 de 6</div>
+            <div class="app-prog"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+            <div class="app-q">Quantos dias por semana você consegue treinar?</div>
+            <div class="app-opts">
+              <span>2 dias</span>
+              <span class="sel">3 dias</span>
+              <span>4 dias</span>
+              <span>5 ou mais</span>
+            </div>
+            <div class="app-note">Quanto mais detalhes, melhor o treino</div>
+            <div class="app-btn">Continuar</div>
+          </div>
+        </div>
+        <div class="phone-cap">Passo 02<b>Sua avaliação de entrada</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEM ACOMPANHA -->
+<section id="quem">
+  <div class="wrap coach">
+    <div class="coach-photo"><img src="ajronline-aldemir.jpg" alt="Aldemir Junior, treinador" loading="lazy"></div>
+    <div>
+      <div class="kicker">Quem acompanha você</div>
+      <h2>Aldemir <em>Junior</em></h2>
+      <p class="lead" style="margin-top:14px">Avaliador físico e especialista em performance, ex-atleta de judô. O mesmo critério das avaliações presenciais da AJR em Bauru vai para o seu treino online.</p>
+      <div class="creds">
+        <div class="cred"><b>120+</b><span>atletas avaliados na AJR Performance</span></div>
+        <div class="cred"><b>VO₂</b><span>teste ergoespirométrico e avaliação completa em Bauru</span></div>
+        <div class="cred"><b>CREF</b><span>182634-G/SP</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos">
+  <div class="wrap">
+    <div class="center">
+      <div class="kicker">Planos</div>
+      <h2>Comece hoje. <em>Ajuste por 3 meses.</em></h2>
+    </div>
+
+    <div class="plans">
+      <div class="plan main">
+        <div class="lp-badge">Recomendado · 3 meses</div>
+        <h3>Trimestral</h3>
+        <div class="price"><small>R$</small><strong>189,90</strong></div>
+        <div class="price-sub">pagamento único · parcele em até 3x no cartão</div>
+        <ul>
+          <li>90 dias de acompanhamento completo</li>
+          <li>Ajustes e correções sempre que necessário</li>
+          <li>Correção de execução por vídeo</li>
+          <li>Suporte pelo WhatsApp em horário comercial</li>
+        </ul>
+        <a id="linkAvista" class="lp-btn block pay" href="https://link.infinitepay.io/aldemir-de-r05/VC1DLTMtSQ-9nt9Cin2xt-189,90" target="_blank" rel="noopener" aria-disabled="true">Pagar trimestral</a>
+      </div>
+      <div class="plan">
+        <div class="lp-badge">Mês a mês</div>
+        <h3>Mensal</h3>
+        <div class="price"><small>R$</small><strong id="precoMensal">79,90</strong></div>
+        <div class="price-sub" id="subMensal">por mês · renovação automática</div>
+        <ul>
+          <li>O mesmo acompanhamento, cobrado por mês</li>
+          <li>Ajustes e correções sempre que necessário</li>
+          <li>Suporte pelo WhatsApp em horário comercial</li>
+          <li>Cancele com 7 dias de aviso</li>
+        </ul>
+        <a id="linkRecorrente" class="lp-btn ghost block pay" href="https://invoice.infinitepay.io/plans/aldemir-de-r05/oUka4QT5io" target="_blank" rel="noopener" aria-disabled="true">Assinar mensal</a>
+      </div>
+    </div>
+
+    <div class="checkout">
+      <div class="coupon">
+        <label for="couponInput">Cupom</label>
+        <input id="couponInput" type="text" maxlength="20" autocomplete="off" placeholder="Seu cupom">
+        <button type="button" onclick="applyCoupon()">Aplicar</button>
+        <div class="coupon-fb" id="couponFeedback"></div>
+      </div>
+
+      <details class="terms">
+        <summary>Termos do serviço</summary>
+        <ol>
+          <li><b>Serviço:</b> consultoria de treinamento online por Aldemir Junior (AJR Online), com treino personalizado entregue digitalmente.</li>
+          <li><b>Pagamento:</b> R$ 79,90 por mês em assinatura recorrente ou R$ 189,90 à vista por 3 meses. Sem pagamento, o acompanhamento é suspenso.</li>
+          <li><b>Início:</b> o treino é entregue em até 24 horas úteis depois do envio do formulário de adesão.</li>
+          <li><b>Acompanhamento:</b> ajustes e correções sempre que necessário durante o período contratado, com suporte pelo WhatsApp em horário comercial.</li>
+          <li><b>Saúde:</b> o aluno declara estar apto à atividade física e informa com verdade os dados da avaliação. Com condição pré-existente, recomenda-se liberação médica.</li>
+          <li><b>Dados e imagem:</b> dados tratados conforme a LGPD (Lei 13.709/2018), só para o serviço. Fotos de evolução só são divulgadas com autorização do aluno.</li>
+          <li><b>Cancelamento:</b> plano mensal cancela a qualquer momento com 7 dias de aviso, sem reembolso do mês em curso. O trimestral não tem reembolso após o início do acompanhamento.</li>
+        </ol>
+      </details>
+
+      <label class="aceite">
+        <input type="checkbox" id="aceite" onchange="togglePay()">
+        <span>Li e concordo com os termos do serviço.</span>
+      </label>
+      <div class="aceite-hint" id="aceiteHint">Marque para liberar o pagamento</div>
+    </div>
+
+    <!-- Aparece depois do clique em pagar -->
+    <div class="next" id="next">
+      <div class="kicker">Próximo passo</div>
+      <h3>Pagou? Preencha sua avaliação.</h3>
+      <p>São alguns minutos: dados, saúde, objetivos, medidas, fotos e a assinatura do contrato. Em até 24 horas (segunda a sexta) depois do envio, seu treino está pronto.</p>
+      <div class="next-actions">
+        <button type="button" class="lp-btn" onclick="showStep(1)">Preencher avaliação</button>
+        <a class="lp-btn ghost" id="linkZap" href="#" target="_blank" rel="noopener">Enviar comprovante</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="duvidas" style="padding-top:0">
+  <div class="wrap">
+    <div class="center"><div class="kicker">Dúvidas</div><h2>Perguntas <em>frequentes</em></h2></div>
+    <div class="faq">
+      <details><summary>O que conta como "ajuste"?</summary><p>Qualquer mudança que deixe o treino servindo para você de novo: troca de exercício, carga, volume, dias da semana, adaptação para casa ou viagem, correção de execução. Não tem cota mensal. Precisou, a gente ajusta.</p></details>
+      <details><summary>Preciso ir até Bauru?</summary><p>Não. Tudo é online. A avaliação é feita pelo formulário de adesão e o acompanhamento acontece pelo WhatsApp. Se quiser, também dá para fazer a avaliação presencial na AJR, em Bauru.</p></details>
+            <details><summary>Treino em casa ou só na academia?</summary><p>Os dois. O treino é montado com o equipamento que você tem, e muda se a sua estrutura mudar.</p></details>
+      <details><summary>Como corrijo a execução a distância?</summary><p>Você grava o exercício com o celular e me envia. Eu devolvo a correção com o que ajustar no movimento.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>3 meses. <em>Ajustado a cada passo.</em></h2>
+    <p class="lead">Escolha o plano, preencha sua avaliação e receba o treino em até 24 horas.</p>
+    <a class="lp-btn" href="#planos">Escolher meu plano</a>
+  </div>
+</section>
+
+<footer>
+  <a href="index.html">ajrperformance.com.br</a> · <a href="https://instagram.com/aldemirjrtreinador" target="_blank" rel="noopener">@aldemirjrtreinador</a><br>
+  AJR Avaliação Física e Performance · Bauru/SP · CREF 182634-G/SP
+</footer>
+
 </div>
 
 <!-- ══════════════ SEÇÃO 1 — DADOS PESSOAIS ══════════════ -->
@@ -1223,50 +1596,6 @@ function buildWaLink(e){
 
 // ── CUPONS DE EMBAIXADOR ───────────────────────────────────
 // 🔧 Todos os cupons de embaixador têm 10% off e apontam para o mesmo link.
-// Para adicionar um novo embaixador, basta duplicar uma linha abaixo.
-const LINK_EMBAIXADOR_RECORRENTE = 'https://invoice.infinitepay.io/plans/aldemir-de-r05/z9BbrvL2eP';
-const LINK_EMBAIXADOR_AVISTA     = '#PENDENTE'; // ← adicionar link à vista com desconto se houver
-
-const CUPONS = {
-  'ANA10': { desconto: 0.10, nome: 'Ana' },
-};
-
-// Preços originais (atualizar se mudar no InfinitePay)
-const PRECO_AVISTA = 79.90; // mensal recorrente (base para cálculo do desconto)
-// O recorrente mensal não tem valor fixo exibido, mas pode ser ajustado abaixo
-const PRECO_MENSAL_LABEL = 'Recorrente Mensal';
-
-function applyCoupon(){
-  const code = document.getElementById('couponInput').value.trim().toUpperCase();
-  const feedback = document.getElementById('couponFeedback');
-
-  if(!code){ feedback.className='coupon-feedback err'; feedback.textContent='Digite um cupom.'; return; }
-
-  const cupom = CUPONS[code];
-  if(!cupom){ feedback.className='coupon-feedback err'; feedback.textContent='Cupom inválido ou expirado.'; return; }
-
-  const pct = Math.round(cupom.desconto * 100);
-  const novoAvista = (PRECO_AVISTA * (1 - cupom.desconto)).toFixed(2).replace('.',',');
-
-  // Feedback
-  feedback.className='coupon-feedback ok';
-  feedback.textContent=`✅ Cupom aplicado — ${pct}% de desconto!`;
-
-  // Atualiza link e label — Recorrente (único afetado pelo cupom)
-  document.getElementById('linkRecorrente').href = LINK_EMBAIXADOR_RECORRENTE;
-  document.getElementById('labelRecorrente').innerHTML =
-    `${PRECO_MENSAL_LABEL} <span class="discount-badge">-${pct}%</span>`;
-  document.getElementById('badgeRecorrente').textContent = `Renovação automática · ${pct}% off aplicado`;
-
-  // Botão à vista — não alterado pelo cupom (produto diferente)
-}
-
-// Aplicar cupom ao pressionar Enter no campo
-document.addEventListener('DOMContentLoaded', ()=>{
-  const inp = document.getElementById('couponInput');
-  if(inp) inp.addEventListener('keydown', e=>{ if(e.key==='Enter') applyCoupon(); });
-});
-
 // ── IMC + RCQ ─────────────────────────────────────────────
 function calcMetrics(){
   const peso    = parseFloat(document.getElementById('peso')?.value);
@@ -1326,6 +1655,54 @@ function resetBtn(){
   document.getElementById('spinner').style.display='none';
   document.getElementById('btnEnviar').disabled=false;
 }
+</script>
+<script>
+// ═══ LANDING AJR ONLINE ═══
+// ── LINKS (trocar aqui) ───────────────────────────────────
+const WHATSAPP_LP = '5514997432182';
+
+// Cupons de embaixador: 10% off no mensal, mesmo link com desconto
+const LINK_EMB_LP = 'https://invoice.infinitepay.io/plans/aldemir-de-r05/z9BbrvL2eP';
+const CUPONS_LP = {
+  'ANA10': { desconto: 0.10, nome: 'Ana' },
+};
+const PRECO_MENSAL_LP = 79.90;
+
+document.getElementById('linkZap').href = 'https://wa.me/' + WHATSAPP_LP + '?text=' +
+  encodeURIComponent('Oi, Aldemir! Acabei de assinar o AJR Online. Segue o comprovante:');
+
+function togglePay(){
+  const ok = document.getElementById('aceite').checked;
+  document.querySelectorAll('.pay').forEach(a => a.setAttribute('aria-disabled', ok ? 'false' : 'true'));
+  document.getElementById('aceiteHint').style.visibility = ok ? 'hidden' : 'visible';
+}
+document.querySelectorAll('.pay').forEach(a => a.addEventListener('click', e => {
+  if (a.getAttribute('aria-disabled') === 'true') { e.preventDefault(); return; }
+  const n = document.getElementById('next');
+  n.classList.add('show');
+  setTimeout(() => n.scrollIntoView({behavior:'smooth', block:'center'}), 300);
+}));
+// Botões de pagamento desabilitados: levar até o aceite
+document.querySelectorAll('.plan').forEach(p => p.addEventListener('click', e => {
+  const a = e.target.closest('.pay');
+  if (!document.getElementById('aceite').checked && (a || e.target === p)) {
+    document.querySelector('.aceite').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}));
+
+window.applyCoupon = function(){
+  const code = document.getElementById('couponInput').value.trim().toUpperCase();
+  const fb = document.getElementById('couponFeedback');
+  if (!code) { fb.className = 'coupon-fb err'; fb.textContent = 'Digite um cupom.'; return; }
+  const c = CUPONS_LP[code];
+  if (!c) { fb.className = 'coupon-fb err'; fb.textContent = 'Cupom inválido ou expirado.'; return; }
+  const pct = Math.round(c.desconto * 100);
+  document.getElementById('linkRecorrente').href = LINK_EMB_LP;
+  document.getElementById('precoMensal').innerHTML = (PRECO_MENSAL_LP * (1 - c.desconto)).toFixed(2).replace('.', ',') + '<span class="discount">-' + pct + '%</span>';
+  document.getElementById('subMensal').textContent = 'por mês · cupom ' + code + ' aplicado';
+  fb.className = 'coupon-fb ok';
+  fb.textContent = 'Cupom aplicado: ' + pct + '% de desconto no plano mensal.';
+};
 </script>
 </body>
 </html>
