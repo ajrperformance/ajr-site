@@ -972,6 +972,73 @@
   @media (max-width: 768px) {
     #giro-noticias { padding: 50px 5% 80px; }
   }
+
+  /* ══════════════════════════════════
+     PLANOS EM ABAS (2026-10)
+  ══════════════════════════════════ */
+  .nav-links .nav-tab { color:#c4c8ce; font-weight:600; padding:0.4rem 0; border-bottom:2px solid transparent; }
+  .nav-links .nav-tab.on { color:var(--gold); border-bottom-color:var(--gold); }
+  .nav-links .nav-tab-quiz { color:var(--gold); font-weight:700; }
+
+  #planos { scroll-margin-top:70px; }
+  .pt-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem; margin-top:3rem; }
+  .pt-tab { text-align:left; cursor:pointer; padding:1rem 1.15rem; border-radius:var(--radius);
+    background:var(--navy-mid); border:1px solid rgba(255,255,255,0.08); color:var(--white);
+    font-family:'Space Grotesk',sans-serif; transition:border-color .2s, background .2s; }
+  .pt-tab b { display:block; font-family:'Chakra Petch',sans-serif; font-weight:700; font-size:1rem; letter-spacing:.3px; }
+  .pt-tab small { display:block; margin-top:.3rem; font-family:'JetBrains Mono',monospace; font-size:.66rem; letter-spacing:1.2px; text-transform:uppercase; color:rgba(196,200,206,0.6); }
+  .pt-tab:hover { border-color:rgba(201,168,76,0.5); }
+  .pt-tab[aria-selected="true"] { border-color:var(--gold); background:linear-gradient(160deg,rgba(201,168,76,0.14),var(--navy-mid) 70%); }
+  .pt-tab[aria-selected="true"] b { color:var(--gold); }
+  .pt-tab-quiz { border-style:dashed; }
+  .pt-tab:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+
+  .pt-panel { display:none; margin-top:1.5rem; scroll-margin-top:90px; }
+  .pt-panel.on { display:block; animation:ptIn .3s ease; }
+  @keyframes ptIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  .pt-panel .plano { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:auto auto auto 1fr auto; position:relative; }
+  .pt-panel .plano:hover { transform:none; }
+  .pt-panel .plano-img { grid-column:1; grid-row:1 / span 5; height:100%; min-height:420px; aspect-ratio:auto; }
+  .pt-panel .plano > :not(.plano-img):not(.plano-badge):not(.plano-badge-green) { grid-column:2; }
+  .pt-panel .plano-badge, .pt-panel .plano-badge-green { left:1rem; transform:none; top:1rem; }
+  .pt-panel .plano-head { padding-top:2.5rem; }
+  .pt-panel .plano-name { font-size:1.8rem; }
+  .pt-panel .plano-foot a { display:block; }
+
+  .pt-panel-quiz #quiz { padding:50px 5% 40px; border-radius:var(--radius); border:1px dashed rgba(201,168,76,0.35); background:var(--navy-mid); }
+
+  .pd-strip { margin-top:1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1.25rem; flex-wrap:wrap;
+    padding:1.1rem 1.4rem; border-radius:var(--radius); border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.02); }
+  .pd-strip b { font-family:'Chakra Petch',sans-serif; color:var(--white); font-size:1rem; margin-right:.4rem; }
+  .pd-strip-tag { display:inline-block; margin-right:.6rem; font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); }
+  .pd-strip-txt { color:rgba(196,200,206,0.7); font-size:.85rem; }
+  .pd-strip .btn-plano-outline { width:auto; flex-shrink:0; }
+
+  @media (max-width: 960px) {
+    .pt-tabs { grid-template-columns:1fr 1fr; }
+    .pt-panel .plano { grid-template-columns:1fr; grid-template-rows:none; }
+    .pt-panel .plano-img { grid-row:auto; min-height:0; height:auto; aspect-ratio:16/10; }
+    .pt-panel .plano > :not(.plano-img):not(.plano-badge):not(.plano-badge-green) { grid-column:1; }
+  }
+  @media (max-width: 768px) {
+    nav { flex-wrap:wrap; height:auto; padding:12px 4% 0; }
+    .nav-links { display:flex; order:3; width:100%; gap:.4rem; overflow-x:auto; padding:10px 0 10px; scrollbar-width:none; }
+    .nav-links::-webkit-scrollbar { display:none; }
+    .nav-links li { flex:0 0 auto; }
+    .nav-links .nav-tab { display:block; padding:.45rem .8rem; border:1px solid rgba(201,168,76,0.25); border-radius:4px; font-size:.78rem; white-space:nowrap; }
+    .nav-links .nav-tab.on { background:var(--gold); color:var(--navy); border-color:var(--gold); }
+    .nav-links .nav-wa { display:none; }
+    .pt-panel { scroll-margin-top:120px; }
+    #planos { scroll-margin-top:100px; }
+    .footer-links { flex-wrap:wrap; justify-content:center; }
+  }
+  body { overflow-x:clip; }
+  @media (max-width: 480px) {
+    .pt-tab { padding:.8rem .85rem; }
+    .pt-tab b { font-size:.9rem; }
+    .pt-tab small { font-size:.58rem; letter-spacing:.8px; }
+    .pt-panel .plano-name { font-size:1.45rem; }
+  }
   </style>
 </head>
 <body>
@@ -982,13 +1049,11 @@
 <nav>
   <a href="#hero" class="nav-logo-txt">AJR<span>.</span><small>Avaliação · Performance</small></a>
   <ul class="nav-links">
-    <li><a href="#quiz" style="color:var(--gold);font-weight:700">Descobrir meu plano</a></li>
-    <li><a href="#vo2">VO₂ Máx</a></li>
-    <li><a href="#planos">Planos</a></li>
-    <li><a href="#depoimentos">Depoimentos</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="https://wa.me/5514997432182?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais!" class="nav-cta">Falar no WhatsApp</a></li>
+    <li><a href="#plano-vo2" class="nav-tab" data-plano="vo2">Teste de VO₂ Máx</a></li>
+    <li><a href="#plano-performance" class="nav-tab" data-plano="performance">AJR Performance</a></li>
+    <li><a href="#plano-online" class="nav-tab" data-plano="online">AJR Online</a></li>
+    <li><a href="#quiz" class="nav-tab nav-tab-quiz" data-plano="quiz">Descobrir meu plano</a></li>
+    <li class="nav-wa"><a href="https://wa.me/5514997432182?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais!" class="nav-cta">Falar no WhatsApp</a></li>
   </ul>
 </nav>
 
@@ -1468,204 +1533,7 @@ window.addEventListener('load', function () {
 }
 </style>
 
-<section id="quiz">
-<div class="quiz-wrap">
 
-  <!-- INTRO -->
-  <div id="qIntro">
-    <div class="quiz-intro-wrap">
-      <div class="quiz-intro-icon">🎯</div>
-      <h2 class="quiz-intro-title">Qual plano é <em>certo para você?</em></h2>
-      <p class="quiz-intro-sub">Responda 4 perguntas rápidas e receba uma recomendação personalizada baseada no seu objetivo, nível e preferência de atendimento.</p>
-      <div class="quiz-tags">
-        <span class="quiz-tag">4 perguntas</span>
-        <span class="quiz-tag">2 minutos</span>
-        <span class="quiz-tag">Resultado personalizado</span>
-      </div>
-      <button class="quiz-start" onclick="qStart()">Descobrir meu plano →</button>
-    </div>
-  </div>
-
-  <!-- STEPS INDICATOR -->
-  <div id="qStepsBar" class="quiz-steps-bar" style="display:none">
-    <div class="quiz-step-node active" id="qNode1">
-      <div class="quiz-step-circle" id="qCircle1">1</div>
-      <div class="quiz-step-label">Objetivo</div>
-    </div>
-    <div class="quiz-step-node" id="qNode2">
-      <div class="quiz-step-circle" id="qCircle2">2</div>
-      <div class="quiz-step-label">Atendimento</div>
-    </div>
-    <div class="quiz-step-node" id="qNode3">
-      <div class="quiz-step-circle" id="qCircle3">3</div>
-      <div class="quiz-step-label">Experiência</div>
-    </div>
-    <div class="quiz-step-node" id="qNode4">
-      <div class="quiz-step-circle" id="qCircle4">4</div>
-      <div class="quiz-step-label">Foco</div>
-    </div>
-  </div>
-
-  <!-- QUESTIONS -->
-  <div id="qBody" style="display:none">
-
-    <!-- Q1: Objetivo -->
-    <div id="qStep1" class="quiz-question-wrap">
-      <div class="quiz-q-label">Pergunta 1 de 4</div>
-      <h3 class="quiz-question">Qual é o seu objetivo principal?</h3>
-      <p class="quiz-subtitle">Escolha o que melhor descreve o que você busca agora.</p>
-      <div class="quiz-opts">
-        <button class="quiz-opt-btn" onclick="qAnswer(1,'emagrecimento')">
-          <span class="qob-icon">⚖️</span>
-          <span class="qob-body">
-            <span class="qob-label">Emagrecer e redefinir o corpo</span>
-            <span class="qob-desc">Composição corporal, reduzir gordura, entender o que está travando</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-        <button class="quiz-opt-btn" onclick="qAnswer(1,'performance')">
-          <span class="qob-icon">🏆</span>
-          <span class="qob-body">
-            <span class="qob-label">Melhorar desempenho esportivo</span>
-            <span class="qob-desc">CrossFit, corrida, musculação — evoluir além do platô</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-        <button class="quiz-opt-btn" onclick="qAnswer(1,'saude')">
-          <span class="qob-icon">❤️</span>
-          <span class="qob-body">
-            <span class="qob-label">Cuidar da saúde com método</span>
-            <span class="qob-desc">Iniciar, voltar a treinar ou manter qualidade de vida com segurança</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-        <button class="quiz-opt-btn" onclick="qAnswer(1,'grupo')">
-          <span class="qob-icon">👥</span>
-          <span class="qob-body">
-            <span class="qob-label">Avaliar meu grupo ou equipe</span>
-            <span class="qob-desc">Box, academia, time esportivo ou empresa</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Q2: Atendimento -->
-    <div id="qStep2" class="quiz-question-wrap" style="display:none">
-      <div class="quiz-q-label">Pergunta 2 de 4</div>
-      <h3 class="quiz-question">Como prefere ser atendido?</h3>
-      <p class="quiz-subtitle">Isso define o formato do seu plano e as possibilidades de avaliação.</p>
-      <div class="quiz-opts two-col">
-        <button class="quiz-opt-btn" onclick="qAnswer(2,'presencial')">
-          <span class="qob-icon">📍</span>
-          <span class="qob-body">
-            <span class="qob-label">Presencial em Bauru</span>
-            <span class="qob-desc">Clínica Vitallite — avaliação completa com equipamentos profissionais</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-        <button class="quiz-opt-btn" onclick="qAnswer(2,'online')">
-          <span class="qob-icon">📱</span>
-          <span class="qob-body">
-            <span class="qob-label">Online, de onde estiver</span>
-            <span class="qob-desc">Formulário + prescrição de treino sem sair de casa</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Q3: Experiência -->
-    <div id="qStep3" class="quiz-question-wrap" style="display:none">
-      <div class="quiz-q-label">Pergunta 3 de 4</div>
-      <h3 class="quiz-question">Qual é o seu nível de experiência com exercícios?</h3>
-      <p class="quiz-subtitle">Ajuda a calibrar o diagnóstico e a prescrição do plano.</p>
-      <div class="quiz-opts">
-        <button class="quiz-opt-btn" onclick="qAnswer(3,'iniciante')">
-          <span class="qob-icon">🌱</span>
-          <span class="qob-body">
-            <span class="qob-label">Nunca treinei ou estou voltando</span>
-            <span class="qob-desc">Quero começar com segurança e entender meu ponto de partida</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-        <button class="quiz-opt-btn" onclick="qAnswer(3,'basico')">
-          <span class="qob-icon">💪</span>
-          <span class="qob-body">
-            <span class="qob-label">Treino há menos de 1 ano</span>
-            <span class="qob-desc">Já tenho uma base, quero entender como evoluir melhor</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-        <button class="quiz-opt-btn" onclick="qAnswer(3,'intermediario')">
-          <span class="qob-icon">🔥</span>
-          <span class="qob-body">
-            <span class="qob-label">Treino regularmente há mais de 1 ano</span>
-            <span class="qob-desc">Busco dados precisos para quebrar o platô e evoluir de verdade</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-        <button class="quiz-opt-btn" onclick="qAnswer(3,'avancado')">
-          <span class="qob-icon">🏅</span>
-          <span class="qob-body">
-            <span class="qob-label">Atleta ou competidor</span>
-            <span class="qob-desc">Preciso de avaliação de alto nível para otimizar meu esporte</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Q4: Foco -->
-    <div id="qStep4" class="quiz-question-wrap" style="display:none">
-      <div class="quiz-q-label">Pergunta 4 de 4</div>
-      <h3 class="quiz-question">O que você busca nessa avaliação?</h3>
-      <p class="quiz-subtitle">Última pergunta — promessa! Sua recomendação já está quase pronta.</p>
-      <div class="quiz-opts two-col">
-        <button class="quiz-opt-btn" onclick="qAnswer(4,'vo2')">
-          <span class="qob-icon">🫀</span>
-          <span class="qob-body">
-            <span class="qob-label">Medir minha capacidade cardiorrespiratória</span>
-            <span class="qob-desc">Teste de VO2 Máximo — o indicador mais preciso de saúde aeróbica</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-        <button class="quiz-opt-btn" onclick="qAnswer(4,'completo')">
-          <span class="qob-icon">🎯</span>
-          <span class="qob-body">
-            <span class="qob-label">Diagnóstico completo + acompanhamento</span>
-            <span class="qob-desc">BIA, VO2, força, mobilidade, relatório + 90 dias de suporte</span>
-          </span>
-          <span class="qob-check">✓</span>
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- RESULT -->
-  <div id="qResult" style="display:none" class="quiz-result-wrap">
-    <div class="result-match-ring">
-      <div class="result-match-inner" id="rMatch">✓</div>
-    </div>
-    <div class="result-plan-tag">Recomendação personalizada</div>
-    <h3 class="result-title" id="rTitle"></h3>
-    <p class="result-why" id="rWhy"></p>
-    <ul class="result-perks" id="rPerks"></ul>
-    <div class="result-price-box">
-      <div class="result-price-val" id="rPrice"></div>
-      <div class="result-price-note" id="rNote"></div>
-    </div>
-    <br>
-    <a class="result-cta-btn" id="rCta" href="#" target="_blank">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Falar com Aldemir agora
-    </a>
-    <button class="result-restart" onclick="qRestart()">← Refazer o quiz</button>
-  </div>
-
-</div>
-</section>
 
 <script>
 (function(){
@@ -1863,37 +1731,14 @@ window.addEventListener('load', function () {
   <h2 class="section-title" style="color:var(--white)">Escolha como quer começar</h2>
   <p class="section-sub">Do plano online acessível ao acompanhamento completo presencial.</p>
 
-  <div class="planos-grid">
+  <div class="pt-tabs" role="tablist" aria-label="Planos">
+    <button type="button" class="pt-tab" role="tab" id="tab-vo2" aria-controls="plano-vo2" data-plano="vo2"><b>Teste de VO₂ Máx</b><small>R$349,90 · sessão única</small></button>
+    <button type="button" class="pt-tab" role="tab" id="tab-performance" aria-controls="plano-performance" data-plano="performance"><b>AJR Performance</b><small>a partir de R$450</small></button>
+    <button type="button" class="pt-tab" role="tab" id="tab-online" aria-controls="plano-online" data-plano="online"><b>AJR Online</b><small>R$79,90/mês</small></button>
+    <button type="button" class="pt-tab pt-tab-quiz" role="tab" id="tab-quiz" aria-controls="painel-quiz" data-plano="quiz"><b>Descobrir meu plano</b><small>4 perguntas · 2 min</small></button>
+  </div>
 
-    <!-- AJR Online — LANÇAMENTO -->
-    <div class="plano launch">
-      <span class="plano-badge-green">● Lançamento</span>
-      <!-- Salve sua foto como "foto-ajr-online.jpg" nesta pasta -->
-      <img src="foto-ajr-online.jpg" alt="AJR Online — Treino Online" class="plano-img" style="object-position: center 72%;" />
-      <div class="plano-head">
-        <div class="plano-tag">Treino Online</div>
-        <div class="plano-name">AJR Online</div>
-        <div class="plano-desc">Estrutura e orientação profissional com praticidade. 100% remoto, de onde você estiver.</div>
-      </div>
-      <div class="plano-preco">
-        <div class="preco-val">R$79<span style="font-size:1.1rem">,90</span><span class="preco-per">/mês</span></div>
-        <div class="preco-note">Cancele quando quiser · sem fidelidade</div>
-      </div>
-      <div class="plano-divider" style="margin-top:1.25rem"></div>
-      <ul class="plano-lista">
-        <li>Formulário de anamnese completo</li>
-        <li>Prescrição de treino individualizada</li>
-        <li>Ajuste mensal do programa</li>
-        <li>Suporte via WhatsApp</li>
-        <li>Progressão de carga orientada</li>
-        <li>Emagrecimento, hipertrofia ou condicionamento</li>
-      </ul>
-      <div class="plano-foot">
-        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Online%20(R%2479%2C90%2Fm%C3%AAs).%20Quero%20saber%20mais%21" onclick="gtag('event','whatsapp_click',{plan:'ajr_online',source:'card'})" class="btn-plano-gold">Começar agora</a>
-      </div>
-    </div>
-
-    <!-- Teste de VO2 Máximo -->
+  <div class="pt-panel" role="tabpanel" id="plano-vo2" aria-labelledby="tab-vo2">
     <div class="plano">
       <img src="foto-vo2-teste.jpg" alt="Teste de VO2 Máximo real na AJR Performance" class="plano-img" style="object-position:center 30%" />
       <div class="plano-head">
@@ -1917,8 +1762,8 @@ window.addEventListener('load', function () {
         <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Teste%20de%20VO2%20M%C3%A1ximo%20(R%24349%2C90).%20Pode%20me%20ajudar%3F" onclick="gtag('event','whatsapp_click',{plan:'vo2',source:'card'})" class="btn-plano-outline">Agendar teste de VO2</a>
       </div>
     </div>
-
-    <!-- AJR Performance — DESTAQUE -->
+  </div>
+  <div class="pt-panel" role="tabpanel" id="plano-performance" aria-labelledby="tab-performance">
     <div class="plano featured">
       <span class="plano-badge">Mais completo</span>
       <img src="foto-ajr-performance.jpg" alt="AJR Performance — Avaliação Completa" class="plano-img" style="position:relative;z-index:1" />
@@ -1933,7 +1778,7 @@ window.addEventListener('load', function () {
       </div>
       <div class="plano-divider" style="margin-top:1.25rem"></div>
       <ul class="plano-lista">
-        <li>Bioimpedância (BIA) + dobras cutâneas</li>
+        <li>Composição corporal por dobras cutâneas</li>
         <li>Mobilidade e padrão de movimento</li>
         <li>Força muscular e funcional</li>
         <li>Assimetrias musculares bilateral</li>
@@ -1946,33 +1791,238 @@ window.addEventListener('load', function () {
         <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" onclick="gtag('event','whatsapp_click',{plan:'ajr_performance',source:'card'})" class="btn-plano-gold">Agendar avaliação</a>
       </div>
     </div>
-
-    <!-- Performance Day -->
-    <div class="plano">
-      <img src="foto-pd-grupo.jpg" alt="Performance Day — Avaliação em Grupo" class="plano-img" />
+  </div>
+  <div class="pt-panel" role="tabpanel" id="plano-online" aria-labelledby="tab-online">
+    <div class="plano launch">
+      <span class="plano-badge-green">● 3 meses de acompanhamento</span>
+      <img src="foto-ajr-online.jpg" alt="AJR Online — Treino Online" class="plano-img" style="object-position: center 72%;" />
       <div class="plano-head">
-        <div class="plano-tag">Para Grupos</div>
-        <div class="plano-name">Performance Day</div>
-        <div class="plano-desc">Avaliação coletiva para boxes, academias e equipes.</div>
+        <div class="plano-tag">Treino Online</div>
+        <div class="plano-name">AJR Online</div>
+        <div class="plano-desc">3 meses de acompanhamento, não 3 treinos. Seu treino é ajustado e corrigido sempre que precisar, de onde você estiver.</div>
       </div>
       <div class="plano-preco">
-        <div class="preco-val" style="font-size:1.8rem">R$179<span style="font-size:1rem">,90</span></div>
-        <div class="preco-note">A partir de · até 3x sem juros</div>
+        <div class="preco-val">R$79<span style="font-size:1.1rem">,90</span><span class="preco-per">/mês</span></div>
+        <div class="preco-note">ou R$189,90 à vista pelos 3 meses · até 3x no cartão</div>
       </div>
       <div class="plano-divider" style="margin-top:1.25rem"></div>
       <ul class="plano-lista">
-        <li>Avaliação completa por atleta</li>
-        <li>Apresentação coletiva dos resultados</li>
-        <li>Kit personalizado por participante</li>
-        <li>Relatório digital individual</li>
-        <li>Registro fotográfico do evento</li>
-        <li>Conteúdo para redes sociais</li>
+        <li>Avaliação de entrada completa</li>
+        <li>Prescrição de treino individualizada</li>
+        <li>Ajustes e correções sempre que necessário</li>
+        <li>Correção de execução por vídeo</li>
+        <li>Progressão planejada para os 3 meses</li>
+        <li>Suporte via WhatsApp</li>
       </ul>
       <div class="plano-foot">
-        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Performance%20Day%20para%20o%20meu%20grupo.%20Pode%20enviar%20uma%20proposta%3F" onclick="gtag('event','whatsapp_click',{plan:'performance_day',source:'card'})" class="btn-plano-outline">Pedir proposta</a>
+        <a href="ajronline.html" onclick="gtag('event','plan_click',{plan:'ajr_online',source:'tab'})" class="btn-plano-gold">Conhecer o AJR Online</a>
+      </div>
+    </div>
+  </div>
+  <div class="pt-panel pt-panel-quiz" role="tabpanel" id="painel-quiz" aria-labelledby="tab-quiz">
+<div id="quiz">
+<div class="quiz-wrap">
+
+  <!-- INTRO -->
+  <div id="qIntro">
+    <div class="quiz-intro-wrap">
+      <div class="quiz-intro-icon">🎯</div>
+      <h2 class="quiz-intro-title">Qual plano é <em>certo para você?</em></h2>
+      <p class="quiz-intro-sub">Responda 4 perguntas rápidas e receba uma recomendação personalizada baseada no seu objetivo, nível e preferência de atendimento.</p>
+      <div class="quiz-tags">
+        <span class="quiz-tag">4 perguntas</span>
+        <span class="quiz-tag">2 minutos</span>
+        <span class="quiz-tag">Resultado personalizado</span>
+      </div>
+      <button class="quiz-start" onclick="qStart()">Descobrir meu plano →</button>
+    </div>
+  </div>
+
+  <!-- STEPS INDICATOR -->
+  <div id="qStepsBar" class="quiz-steps-bar" style="display:none">
+    <div class="quiz-step-node active" id="qNode1">
+      <div class="quiz-step-circle" id="qCircle1">1</div>
+      <div class="quiz-step-label">Objetivo</div>
+    </div>
+    <div class="quiz-step-node" id="qNode2">
+      <div class="quiz-step-circle" id="qCircle2">2</div>
+      <div class="quiz-step-label">Atendimento</div>
+    </div>
+    <div class="quiz-step-node" id="qNode3">
+      <div class="quiz-step-circle" id="qCircle3">3</div>
+      <div class="quiz-step-label">Experiência</div>
+    </div>
+    <div class="quiz-step-node" id="qNode4">
+      <div class="quiz-step-circle" id="qCircle4">4</div>
+      <div class="quiz-step-label">Foco</div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="qBody" style="display:none">
+
+    <!-- Q1: Objetivo -->
+    <div id="qStep1" class="quiz-question-wrap">
+      <div class="quiz-q-label">Pergunta 1 de 4</div>
+      <h3 class="quiz-question">Qual é o seu objetivo principal?</h3>
+      <p class="quiz-subtitle">Escolha o que melhor descreve o que você busca agora.</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt-btn" onclick="qAnswer(1,'emagrecimento')">
+          <span class="qob-icon">⚖️</span>
+          <span class="qob-body">
+            <span class="qob-label">Emagrecer e redefinir o corpo</span>
+            <span class="qob-desc">Composição corporal, reduzir gordura, entender o que está travando</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(1,'performance')">
+          <span class="qob-icon">🏆</span>
+          <span class="qob-body">
+            <span class="qob-label">Melhorar desempenho esportivo</span>
+            <span class="qob-desc">CrossFit, corrida, musculação — evoluir além do platô</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(1,'saude')">
+          <span class="qob-icon">❤️</span>
+          <span class="qob-body">
+            <span class="qob-label">Cuidar da saúde com método</span>
+            <span class="qob-desc">Iniciar, voltar a treinar ou manter qualidade de vida com segurança</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(1,'grupo')">
+          <span class="qob-icon">👥</span>
+          <span class="qob-body">
+            <span class="qob-label">Avaliar meu grupo ou equipe</span>
+            <span class="qob-desc">Box, academia, time esportivo ou empresa</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
       </div>
     </div>
 
+    <!-- Q2: Atendimento -->
+    <div id="qStep2" class="quiz-question-wrap" style="display:none">
+      <div class="quiz-q-label">Pergunta 2 de 4</div>
+      <h3 class="quiz-question">Como prefere ser atendido?</h3>
+      <p class="quiz-subtitle">Isso define o formato do seu plano e as possibilidades de avaliação.</p>
+      <div class="quiz-opts two-col">
+        <button class="quiz-opt-btn" onclick="qAnswer(2,'presencial')">
+          <span class="qob-icon">📍</span>
+          <span class="qob-body">
+            <span class="qob-label">Presencial em Bauru</span>
+            <span class="qob-desc">Clínica Vitallite — avaliação completa com equipamentos profissionais</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(2,'online')">
+          <span class="qob-icon">📱</span>
+          <span class="qob-body">
+            <span class="qob-label">Online, de onde estiver</span>
+            <span class="qob-desc">Formulário + prescrição de treino sem sair de casa</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q3: Experiência -->
+    <div id="qStep3" class="quiz-question-wrap" style="display:none">
+      <div class="quiz-q-label">Pergunta 3 de 4</div>
+      <h3 class="quiz-question">Qual é o seu nível de experiência com exercícios?</h3>
+      <p class="quiz-subtitle">Ajuda a calibrar o diagnóstico e a prescrição do plano.</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt-btn" onclick="qAnswer(3,'iniciante')">
+          <span class="qob-icon">🌱</span>
+          <span class="qob-body">
+            <span class="qob-label">Nunca treinei ou estou voltando</span>
+            <span class="qob-desc">Quero começar com segurança e entender meu ponto de partida</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(3,'basico')">
+          <span class="qob-icon">💪</span>
+          <span class="qob-body">
+            <span class="qob-label">Treino há menos de 1 ano</span>
+            <span class="qob-desc">Já tenho uma base, quero entender como evoluir melhor</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(3,'intermediario')">
+          <span class="qob-icon">🔥</span>
+          <span class="qob-body">
+            <span class="qob-label">Treino regularmente há mais de 1 ano</span>
+            <span class="qob-desc">Busco dados precisos para quebrar o platô e evoluir de verdade</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(3,'avancado')">
+          <span class="qob-icon">🏅</span>
+          <span class="qob-body">
+            <span class="qob-label">Atleta ou competidor</span>
+            <span class="qob-desc">Preciso de avaliação de alto nível para otimizar meu esporte</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q4: Foco -->
+    <div id="qStep4" class="quiz-question-wrap" style="display:none">
+      <div class="quiz-q-label">Pergunta 4 de 4</div>
+      <h3 class="quiz-question">O que você busca nessa avaliação?</h3>
+      <p class="quiz-subtitle">Última pergunta — promessa! Sua recomendação já está quase pronta.</p>
+      <div class="quiz-opts two-col">
+        <button class="quiz-opt-btn" onclick="qAnswer(4,'vo2')">
+          <span class="qob-icon">🫀</span>
+          <span class="qob-body">
+            <span class="qob-label">Medir minha capacidade cardiorrespiratória</span>
+            <span class="qob-desc">Teste de VO2 Máximo — o indicador mais preciso de saúde aeróbica</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+        <button class="quiz-opt-btn" onclick="qAnswer(4,'completo')">
+          <span class="qob-icon">🎯</span>
+          <span class="qob-body">
+            <span class="qob-label">Diagnóstico completo + acompanhamento</span>
+            <span class="qob-desc">BIA, VO2, força, mobilidade, relatório + 90 dias de suporte</span>
+          </span>
+          <span class="qob-check">✓</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESULT -->
+  <div id="qResult" style="display:none" class="quiz-result-wrap">
+    <div class="result-match-ring">
+      <div class="result-match-inner" id="rMatch">✓</div>
+    </div>
+    <div class="result-plan-tag">Recomendação personalizada</div>
+    <h3 class="result-title" id="rTitle"></h3>
+    <p class="result-why" id="rWhy"></p>
+    <ul class="result-perks" id="rPerks"></ul>
+    <div class="result-price-box">
+      <div class="result-price-val" id="rPrice"></div>
+      <div class="result-price-note" id="rNote"></div>
+    </div>
+    <br>
+    <a class="result-cta-btn" id="rCta" href="#" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar com Aldemir agora
+    </a>
+    <button class="result-restart" onclick="qRestart()">← Refazer o quiz</button>
+  </div>
+
+</div>
+</div>
+  </div>
+
+  <div class="pd-strip">
+    <div><span class="pd-strip-tag">Para grupos</span><b>Performance Day</b> <span class="pd-strip-txt">Avaliação coletiva para boxes, academias e equipes · a partir de R$179,90</span></div>
+    <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Performance%20Day%20para%20o%20meu%20grupo.%20Pode%20enviar%20uma%20proposta%3F" onclick="gtag('event','whatsapp_click',{plan:'performance_day',source:'strip'})" class="btn-plano-outline">Pedir proposta</a>
   </div>
 </section>
 
@@ -2260,5 +2310,37 @@ document.getElementById('loginOverlay').addEventListener('click', function(e){ i
   </svg>
 </a>
 
+
+<script>
+/* ── Planos em abas (menu do topo + seção Planos) ── */
+(function(){
+  var MAP = {vo2:'plano-vo2', performance:'plano-performance', online:'plano-online', quiz:'painel-quiz'};
+  var HASH = {'#plano-vo2':'vo2','#vo2-plano':'vo2','#plano-performance':'performance','#plano-online':'online','#quiz':'quiz','#painel-quiz':'quiz'};
+  function abrir(id, rolar, semMenu){
+    if(!MAP[id]) return;
+    document.querySelectorAll('.pt-tab').forEach(function(b){ b.setAttribute('aria-selected', b.dataset.plano===id ? 'true':'false'); b.tabIndex = b.dataset.plano===id ? 0 : -1; });
+    document.querySelectorAll('.pt-panel').forEach(function(p){ p.classList.toggle('on', p.id===MAP[id]); });
+    document.querySelectorAll('.nav-tab').forEach(function(a){ a.classList.toggle('on', !semMenu && a.dataset.plano===id); });
+    if(rolar){ var alvo = document.getElementById('planos'); if(alvo) alvo.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }
+  window.abrirPlano = abrir;
+  document.querySelectorAll('.pt-tab').forEach(function(b){
+    b.addEventListener('click', function(){ abrir(b.dataset.plano, false); history.replaceState(null,'', '#'+MAP[b.dataset.plano]); });
+    b.addEventListener('keydown', function(e){
+      var tabs=[].slice.call(document.querySelectorAll('.pt-tab')), i=tabs.indexOf(b);
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ e.preventDefault(); var n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length]; n.focus(); n.click(); }
+    });
+  });
+  // qualquer link para #quiz / #plano-* abre a aba certa
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#"]'); if(!a) return;
+    var id = HASH[a.getAttribute('href')]; if(!id) return;
+    e.preventDefault(); abrir(id, true); history.replaceState(null,'', a.getAttribute('href'));
+  });
+  window.addEventListener('hashchange', function(){ var id=HASH[location.hash]; if(id) abrir(id, true); });
+  var inicial = HASH[location.hash];
+  abrir(inicial || 'vo2', !!inicial, !inicial);
+})();
+</script>
 </body>
 </html>
