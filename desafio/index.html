@@ -326,7 +326,7 @@ footer{border-top:1px solid var(--line-gold);padding:24px 0 40px;color:var(--txt
 
         <div class="q">
           <span class="qt">4. Quais desses assuntos te interessam hoje?</span>
-          <p class="qh">Marque até 5, é rapidinho. <span id="tagCount"></span></p>
+          <p class="qh">Marque quantos quiser. <span id="tagCount"></span></p>
           <div class="opts tags" data-q="q4" id="optsQ4"></div>
         </div>
 
@@ -448,9 +448,10 @@ const CONFIG = {
   // Deixando em branco, a página roda em MODO DEMONSTRAÇÃO (dados só neste aparelho).
   API_URL: "https://script.google.com/macros/s/AKfycbw9OiAQEVrDEV6pGR087kBVKOTUC7BuUS95H2gK4I2EDcyH3zA08B_u28SzJRmO8fS7Kg/exec",
 
-  // Eventos. Para um evento novo, basta acrescentar uma linha aqui.
-  // "prefixo" é o começo do código de inscrição (ex.: 96FM-001).
+  // Eventos. O PRIMEIRO da lista é o evento ativo.
+  // "prefixo" é o começo do código de inscrição (ex.: BB-001).
   EVENTOS: [
+    { id: "barrabonita-2026", nome: "Meia Maratona de Barra Bonita", prefixo: "BB", data: "01/11/2026", local: "Barra Bonita/SP" },
     { id: "96fm-2026", nome: "Corrida 96 FM", prefixo: "96FM", data: "2026", local: "Bauru/SP" }
   ],
 
@@ -459,63 +460,44 @@ const CONFIG = {
     { id:"ajr",       nome:"AJR Performance", desc:"avaliação física" },
     { id:"g4",        nome:"G4",              desc:"automação" },
     { id:"mori",      nome:"Mori Consulting", desc:"comércio exterior" },
-    { id:"vitallite", nome:"Vitallite",       desc:"médicos e psicólogos" },
-    { id:"salutem",   nome:"Salutem",         desc:"farmácia" }
+    { id:"vitallite", nome:"Vitallitè",       desc:"médicos e psicólogos" }
   ],
 
   UNIDADE: "kgf",
 
   // Pergunta 2 — área de atuação
   AREAS: [
-    { id:"medicina",     txt:"Medicina" },
-    { id:"psicologia",   txt:"Psicologia" },
-    { id:"saude_outras", txt:"Outras da saúde" },
-    { id:"edfisica",     txt:"Educação física / esporte" },
-    { id:"industria",    txt:"Indústria" },
-    { id:"construcao",   txt:"Construção civil" },
-    { id:"comercio",     txt:"Comércio / varejo" },
-    { id:"servicos",     txt:"Serviços / consultoria" },
-    { id:"ti",           txt:"Tecnologia" },
-    { id:"educacao",     txt:"Educação" },
-    { id:"agro",         txt:"Agro" },
-    { id:"outra_area",   txt:"Estudante / outra" }
+    { id:"construcao", txt:"Construção" },
+    { id:"saude",      txt:"Saúde" },
+    { id:"comercio",   txt:"Comércio e varejo" },
+    { id:"educacao",   txt:"Educação" },
+    { id:"estudante",  txt:"Estudante" },
+    { id:"agro",       txt:"Agro" },
+    { id:"ti",         txt:"Tecnologia" }
   ],
 
   // Pergunta 3 — posição. decisor:true = dono, diretor ou gerente.
   POSICOES: [
-    { id:"dono",        txt:"Dono(a) / sócio(a)",                 decisor:true },
-    { id:"gestor",      txt:"Diretor(a) / gerente",               decisor:true },
-    { id:"coord",       txt:"Coordenador(a) / supervisor(a)" },
-    { id:"operacional", txt:"Analista / técnico(a) / vendedor(a)" },
-    { id:"liberal",     txt:"Autônomo(a) / profissional liberal" },
-    { id:"estagiario",  txt:"Estagiário(a) / estudante" }
+    { id:"dono",        txt:"Dono(a) / sócio(a)",   decisor:true },
+    { id:"liberal",     txt:"Autônomo(a)" },
+    { id:"gestor",      txt:"Diretor(a) / gerente", decisor:true },
+    { id:"operacional", txt:"Vendedor(a) / analista" },
+    { id:"outro",       txt:"Outro" }
   ],
 
-  // Pergunta 4 — tags de interesse (aparecem embaralhadas, máx. 5).
-  // sp = patrocinador dono da tag (null = tag coringa); forca = "forte" | "media".
-  // Tag nova = uma linha aqui.
+  // Pergunta 4 — um assunto por parceiro.
   TAGS: [
-    { id:"performance",  txt:"Correr melhor / performance",     sp:"ajr",       forca:"forte" },
-    { id:"emagrecer",    txt:"Emagrecimento",                   sp:"ajr",       forca:"forte" },
-    { id:"massa",        txt:"Ganhar massa muscular",           sp:"ajr",       forca:"media" },
-    { id:"suplementos",  txt:"Suplementos e vitaminas",         sp:"salutem",   forca:"forte" },
-    { id:"pele",         txt:"Pele e protetor solar",           sp:"salutem",   forca:"media" },
-    { id:"estresse",     txt:"Menos estresse e ansiedade",      sp:"vitallite", forca:"forte" },
-    { id:"sono",         txt:"Dormir melhor",                   sp:"vitallite", forca:"media" },
-    { id:"ia",           txt:"Inteligência artificial",         sp:"g4",        forca:"forte" },
-    { id:"automatizar",  txt:"Automatizar tarefas do trabalho", sp:"g4",        forca:"forte" },
-    { id:"marketing",    txt:"Marketing e redes sociais",       sp:"g4",        forca:"media" },
-    { id:"importados",   txt:"Produtos importados",             sp:"mori",      forca:"forte" },
-    { id:"exterior",     txt:"Negócios com outros países",      sp:"mori",      forca:"forte" },
-    { id:"financas",     txt:"Finanças e investimentos",        sp:null,        forca:null },
-    { id:"beleza",       txt:"Beleza e autocuidado",            sp:null,        forca:null }
+    { id:"performance", txt:"Treinar melhor: performance ou emagrecimento", sp:"ajr",       forca:"forte" },
+    { id:"automatizar", txt:"Automatizar o trabalho com IA",                sp:"g4",        forca:"forte" },
+    { id:"importados",  txt:"Importação e negócios com outros países",      sp:"mori",      forca:"forte" },
+    { id:"estresse",    txt:"Menos estresse e ansiedade, dormir melhor",    sp:"vitallite", forca:"forte" }
   ],
-  MAX_TAGS: 5,
+  MAX_TAGS: 4,
 
   // Segmentos em que um DECISOR sem tag ainda vale como amarelo (parceiros B2B).
   SEGMENTOS_B2B: {
-    g4:   ["industria","construcao","comercio","servicos","saude_outras","edfisica","educacao","agro","ti"],
-    mori: ["industria","comercio","agro"]
+    g4:   ["construcao","comercio","saude","educacao","agro","ti"],
+    mori: ["comercio","agro"]
   }
 };
 
@@ -555,14 +537,14 @@ function qualificarV2(L){
       else if (dec && media){   cor="amarelo"; motivo=`${pos} · marcou ${nomes} · ${urg}`; }
       else if (dec && noSeg){   cor="amarelo"; motivo=`${pos} em ${rotulo(CONFIG.AREAS,L.q2)} · sem tag do parceiro`; }
       else {                    cor="vermelho";motivo= minhas.length ? `Marcou ${nomes}, sem poder de decisão` : "Sem tag do parceiro e sem poder de decisão"; }
-    } else {                                     // ---- B2C: AJR, Salutem, Vitallite ----
+    } else {                                     // ---- B2C: AJR e Vitallitè ----
       if (forte && sem){        cor="verde";   motivo=`Marcou ${nomes} · ${urg}`; }
       else if (minhas.length){  cor="amarelo"; motivo=`Marcou ${nomes} · ${urg}`; }
-      else if ((sp.id==="ajr" || sp.id==="salutem") && L.q1==="atleta"){
-                                cor="amarelo"; motivo= sp.id==="ajr" ? "Atleta, sem tag de performance" : "Atleta — potencial de suplementação"; }
+      else if (sp.id==="ajr" && L.q1==="atleta"){
+                                cor="amarelo"; motivo="Atleta, sem tag de performance"; }
       else {                    cor="vermelho";motivo="Sem nenhuma tag do parceiro"; }
 
-      if (sp.id==="vitallite" && (L.q2==="medicina" || L.q2==="psicologia")){
+      if (sp.id==="vitallite" && (L.q2==="saude" || L.q2==="medicina" || L.q2==="psicologia")){
         const area = rotulo(CONFIG.AREAS, L.q2);
         if (cor==="amarelo"){ cor="verde";   motivo = area + " + " + motivo.charAt(0).toLowerCase() + motivo.slice(1); }
         else if (cor==="vermelho"){ cor="amarelo"; motivo = area + " · " + urg; }
@@ -602,7 +584,7 @@ function qualificarV1(L){
     out.mori = ["amarelo", sem ? "Sinal de comércio exterior, mas não é empresa própria" : "Sinal de comércio exterior, prefere só novidades"];
   else out.mori = ["vermelho","Sem sinal relacionado a comércio exterior"];
 
-  // --- Vitallite (médicos e psicólogos) ---
+  // --- Vitallitè (médicos e psicólogos) ---
   const medpsi = (L.q2==="medicina" || L.q2==="psicologia");
   if (medpsi && (tem("limite") || sem))
     out.vitallite = ["verde", (L.q2==="medicina"?"Medicina":"Psicologia") + (tem("limite") ? " + rotina no limite" : " + contato essa semana")];
@@ -611,15 +593,6 @@ function qualificarV1(L){
   else if (L.q2==="saude" && tem("limite"))
     out.vitallite = ["amarelo","Outra área da saúde com a frase de rotina no limite"];
   else out.vitallite = ["vermelho","Fora da área médica/psicológica e sem a frase marcada"];
-
-  // --- Salutem (farmácia) ---
-  if (tem("saude_freq") && sem)
-    out.salutem = ["verde","Acompanhamento de saúde frequente + contato essa semana"];
-  else if (tem("saude_freq"))
-    out.salutem = ["amarelo","Acompanhamento de saúde frequente, prefere só novidades"];
-  else if (L.q1==="atleta")
-    out.salutem = ["amarelo","Atleta — potencial de suplementação"];
-  else out.salutem = ["vermelho","Sem sinal relacionado a saúde/medicação"];
 
   return out;
 }
@@ -988,7 +961,7 @@ function renderLeads(){
 /* ---------- exportação CSV ---------- */
 function baixarCSV(nome, linhas){
   const csv = linhas.map(l=>l.map(c=>`"${String(c==null?"":c).replace(/"/g,'""')}"`).join(";")).join("\r\n");
-  const blob = new Blob(["﻿"+csv], {type:"text/csv;charset=utf-8"});
+  const blob = new Blob(["\uFEFF"+csv], {type:"text/csv;charset=utf-8"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob); a.download = nome; a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
