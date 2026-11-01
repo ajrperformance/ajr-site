@@ -216,6 +216,19 @@ tr .rk{width:44px;font-weight:900;color:var(--txt-3);font-variant-numeric:tabula
   box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.25s
 }
 .toast.on{opacity:1;bottom:32px}
+/* ---------- passo a passo ---------- */
+.step{display:none}
+.step.on{display:block;animation:entra .25s ease}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.prog{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.prog-bar{flex:1;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.prog span{font:700 10.5px var(--ff-m);letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-2);white-space:nowrap}
+.stepnav{display:flex;gap:10px;margin-top:16px}
+.stepnav .btn{flex:1}
+.stepnav .btn.ghost{flex:0 0 auto;width:auto;padding:15px 18px}
+.step .q{border-top:0;padding-top:4px}
+.step .opts.stack .opt span{display:block;padding:15px 16px}
 footer{border-top:1px solid var(--line-gold);padding:24px 0 40px;color:var(--txt-3);font:400 11px/1.8 var(--ff-m);letter-spacing:.5px}
 </style>
 </head>
@@ -283,68 +296,86 @@ footer{border-top:1px solid var(--line-gold);padding:24px 0 40px;color:var(--txt
       </div>
 
       <form id="form" class="card" novalidate>
-        <div class="grid2">
-          <div class="field">
-            <label for="f_nome">Nome completo *</label>
-            <input id="f_nome" name="nome" autocomplete="name" placeholder="Ex.: Aldemir Rios Junior">
-          </div>
-          <div class="field">
-            <label for="f_whats">WhatsApp *</label>
-            <input id="f_whats" name="whatsapp" inputmode="numeric" placeholder="(14) 99999-9999">
-          </div>
-          <div class="field">
-            <label for="f_cidade">Cidade *</label>
-            <input id="f_cidade" name="cidade" autocomplete="address-level2" placeholder="Bauru">
-          </div>
-          <div class="field">
-            <label for="f_sexo">Categoria do ranking *</label>
-            <select id="f_sexo" name="sexo">
-              <option value="">Selecione</option>
-              <option value="M">Masculino</option>
-              <option value="F">Feminino</option>
-            </select>
-          </div>
-        </div>
+        <div class="prog"><div class="prog-bar"><i id="progFill"></i></div><span id="progTxt">Etapa 1 de 6</span></div>
 
-        <div class="q">
-          <span class="qt">1. Você está competindo hoje ou veio apoiar/acompanhar alguém?</span>
-          <div class="opts" data-q="q1">
-            <label class="opt"><input type="radio" name="q1" value="atleta"><span>Atleta / corredor(a)</span></label>
-            <label class="opt"><input type="radio" name="q1" value="acompanhante"><span>Acompanhante / apoio</span></label>
+        <div class="step on" data-step="0">
+          <div class="grid2">
+            <div class="field">
+              <label for="f_nome">Nome completo *</label>
+              <input id="f_nome" name="nome" autocomplete="name" placeholder="Ex.: Aldemir Rios Junior">
+            </div>
+            <div class="field">
+              <label for="f_whats">WhatsApp *</label>
+              <input id="f_whats" name="whatsapp" inputmode="numeric" placeholder="(14) 99999-9999">
+            </div>
+            <div class="field">
+              <label for="f_cidade">Cidade *</label>
+              <input id="f_cidade" name="cidade" autocomplete="address-level2" placeholder="Barra Bonita">
+            </div>
+            <div class="field">
+              <label for="f_sexo">Categoria do ranking *</label>
+              <select id="f_sexo" name="sexo">
+                <option value="">Selecione</option>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <div class="q">
-          <span class="qt">2. Qual sua área de atuação?</span>
-          <div class="opts" data-q="q2" id="optsQ2"></div>
-        </div>
-
-        <div class="q">
-          <span class="qt">3. Qual sua posição hoje?</span>
-          <div class="opts" data-q="q3" id="optsQ3"></div>
-        </div>
-
-        <div class="q">
-          <span class="qt">4. Quais desses assuntos te interessam hoje?</span>
-          <p class="qh">Marque quantos quiser. <span id="tagCount"></span></p>
-          <div class="opts tags" data-q="q4" id="optsQ4"></div>
-        </div>
-
-        <div class="q">
-          <span class="qt">5. Prefere contato essa semana ou só ficar por dentro das novidades?</span>
-          <div class="opts" data-q="q5">
-            <label class="opt"><input type="radio" name="q5" value="semana"><span>Contato essa semana</span></label>
-            <label class="opt"><input type="radio" name="q5" value="novidades"><span>Só novidades por enquanto</span></label>
+        <div class="step" data-step="1" data-auto="q1">
+          <div class="q">
+            <span class="qt">Você está correndo hoje ou veio apoiar alguém?</span>
+            <div class="opts stack" data-q="q1">
+              <label class="opt"><input type="radio" name="q1" value="atleta"><span>Estou correndo</span></label>
+              <label class="opt"><input type="radio" name="q1" value="acompanhante"><span>Vim apoiar / acompanhar</span></label>
+            </div>
           </div>
         </div>
 
-        <label class="consent">
-          <input type="checkbox" id="f_consent">
-          <p>Autorizo a AJR Performance a tratar os dados informados e a compartilhá-los com as empresas parceiras da Tenda AJR, para contato sobre produtos e serviços. Posso pedir a exclusão dos meus dados a qualquer momento pelo WhatsApp <b>(14) 99743-2182</b>. (LGPD — Lei 13.709/2018)</p>
-        </label>
+        <div class="step" data-step="2" data-auto="q2">
+          <div class="q">
+            <span class="qt">Qual sua área de atuação?</span>
+            <div class="opts stack" data-q="q2" id="optsQ2"></div>
+          </div>
+        </div>
+
+        <div class="step" data-step="3" data-auto="q3">
+          <div class="q">
+            <span class="qt">E a sua posição hoje?</span>
+            <div class="opts stack" data-q="q3" id="optsQ3"></div>
+          </div>
+        </div>
+
+        <div class="step" data-step="4">
+          <div class="q">
+            <span class="qt">O que você quer resolver nos próximos meses?</span>
+            <p class="qh">Marque quantos quiser. <span id="tagCount"></span></p>
+            <div class="opts stack" data-q="q4" id="optsQ4"></div>
+          </div>
+        </div>
+
+        <div class="step" data-step="5">
+          <div class="q">
+            <span class="qt">Podemos te mandar uma mensagem esta semana?</span>
+            <p class="qh">Com uma condição especial para o que você marcou.</p>
+            <div class="opts stack" data-q="q5">
+              <label class="opt"><input type="radio" name="q5" value="semana"><span>Sim, pode me chamar</span></label>
+              <label class="opt"><input type="radio" name="q5" value="novidades"><span>Agora não, só novidades</span></label>
+            </div>
+          </div>
+          <label class="consent">
+            <input type="checkbox" id="f_consent">
+            <p>Autorizo a AJR Performance a tratar os dados informados e a compartilhá-los com as empresas parceiras da Tenda AJR, para contato sobre produtos e serviços. Posso pedir a exclusão dos meus dados a qualquer momento pelo WhatsApp <b>(14) 99743-2182</b>. (LGPD — Lei 13.709/2018)</p>
+          </label>
+        </div>
 
         <div class="err" id="formErr"></div>
-        <button class="btn" type="submit" id="submitBtn" style="margin-top:6px">Confirmar inscrição</button>
+        <div class="stepnav">
+          <button class="btn ghost" type="button" id="btnVoltar" style="display:none">Voltar</button>
+          <button class="btn" type="button" id="btnAvancar">Continuar</button>
+          <button class="btn" type="submit" id="submitBtn" style="display:none">Confirmar inscrição</button>
+        </div>
       </form>
     </div>
 
@@ -478,21 +509,23 @@ const CONFIG = {
 
   // Pergunta 3 — posição. decisor:true = dono, diretor ou gerente.
   POSICOES: [
-    { id:"dono",        txt:"Dono(a) / sócio(a)",   decisor:true },
-    { id:"liberal",     txt:"Autônomo(a)" },
-    { id:"gestor",      txt:"Diretor(a) / gerente", decisor:true },
-    { id:"operacional", txt:"Vendedor(a) / analista" },
+    { id:"dono",        txt:"Dono(a) / sócio(a)",                 decisor:true },
+    { id:"gestor",      txt:"Diretor(a) / gerente",               decisor:true },
+    { id:"liberal",     txt:"Autônomo(a) / profissional liberal" },
+    { id:"operacional", txt:"Funcionário(a) / CLT" },
+    { id:"servidor",    txt:"Servidor(a) público(a)" },
     { id:"outro",       txt:"Outro" }
   ],
 
-  // Pergunta 4 — um assunto por parceiro.
+  // Pergunta 4 — assuntos por parceiro.
   TAGS: [
-    { id:"performance", txt:"Treinar melhor: performance ou emagrecimento", sp:"ajr",       forca:"forte" },
-    { id:"automatizar", txt:"Automatizar o trabalho com IA",                sp:"g4",        forca:"forte" },
-    { id:"importados",  txt:"Importação e negócios com outros países",      sp:"mori",      forca:"forte" },
-    { id:"estresse",    txt:"Menos estresse e ansiedade, dormir melhor",    sp:"vitallite", forca:"forte" }
+    { id:"performance", txt:"Correr melhor e descobrir meu VO₂",            sp:"ajr",       forca:"forte" },
+    { id:"emagrecer",   txt:"Emagrecer ou ganhar massa com acompanhamento", sp:"ajr",       forca:"forte" },
+    { id:"automatizar", txt:"Usar IA e automação no meu trabalho",          sp:"g4",        forca:"forte" },
+    { id:"importados",  txt:"Importar ou vender para fora do Brasil",       sp:"mori",      forca:"forte" },
+    { id:"estresse",    txt:"Cuidar do estresse, ansiedade ou sono",        sp:"vitallite", forca:"forte" }
   ],
-  MAX_TAGS: 4,
+  MAX_TAGS: 5,
 
   // Segmentos em que um DECISOR sem tag ainda vale como amarelo (parceiros B2B).
   SEGMENTOS_B2B: {
@@ -765,15 +798,53 @@ function limitarTags(){
   const boxes = Array.from(form.querySelectorAll('[name="q4"]'));
   const n = boxes.filter(b=>b.checked).length;
   boxes.forEach(b=>{ b.disabled = !b.checked && n >= CONFIG.MAX_TAGS; });
-  document.getElementById("tagCount").textContent = n ? `(${n}/${CONFIG.MAX_TAGS})` : "";
+  document.getElementById("tagCount").textContent = n ? `(${n} marcado${n>1?"s":""})` : "";
 }
 document.getElementById("optsQ4").addEventListener("change", limitarTags);
 montarOpcoes();
 
 document.getElementById("f_whats").addEventListener("input", e=>{ e.target.value = maskTel(e.target.value); });
 
+/* ---------- passo a passo ---------- */
+const STEPS = Array.from(form.querySelectorAll(".step"));
+let passo = 0;
+function mostrarPasso(n){
+  passo = Math.max(0, Math.min(n, STEPS.length-1));
+  STEPS.forEach((s,i)=>s.classList.toggle("on", i===passo));
+  const ultimo = passo===STEPS.length-1;
+  document.getElementById("btnVoltar").style.display  = passo>0 ? "" : "none";
+  document.getElementById("btnAvancar").style.display = (ultimo || STEPS[passo].dataset.auto) ? "none" : "";
+  document.getElementById("submitBtn").style.display  = ultimo ? "" : "none";
+  document.getElementById("progFill").style.width = Math.round((passo+1)*100/STEPS.length) + "%";
+  document.getElementById("progTxt").textContent = "Etapa " + (passo+1) + " de " + STEPS.length;
+  document.getElementById("formErr").textContent = "";
+  document.getElementById("formBox").scrollIntoView({behavior:"smooth", block:"start"});
+}
+function validarPasso(n){
+  if(n===0){
+    const f = [];
+    if(document.getElementById("f_nome").value.trim().split(/\s+/).length < 2) f.push("nome completo");
+    if(document.getElementById("f_whats").value.replace(/\D/g,"").length < 10) f.push("WhatsApp");
+    if(!document.getElementById("f_cidade").value.trim()) f.push("cidade");
+    if(!document.getElementById("f_sexo").value) f.push("categoria");
+    return f.length ? "Falta preencher: " + f.join(", ") + "." : "";
+  }
+  return "";
+}
+document.getElementById("btnAvancar").addEventListener("click", ()=>{
+  const erro = validarPasso(passo);
+  if(erro){ document.getElementById("formErr").textContent = erro; return; }
+  mostrarPasso(passo+1);
+});
+document.getElementById("btnVoltar").addEventListener("click", ()=>mostrarPasso(passo-1));
+form.addEventListener("change", e=>{
+  const st = STEPS[passo];
+  if(st.dataset.auto && e.target.name===st.dataset.auto){ setTimeout(()=>mostrarPasso(passo+1), 260); }
+});
+
 form.addEventListener("submit", async e=>{
   e.preventDefault();
+  if(passo < STEPS.length-1){ document.getElementById("btnAvancar").click(); return; }
   const errEl = document.getElementById("formErr");
   const get = n => (form.querySelector(`[name="${n}"]:checked`)||{}).value || "";
   const evSel = document.getElementById("insEvento").value;
@@ -818,6 +889,7 @@ form.addEventListener("submit", async e=>{
 document.getElementById("btnNovo").addEventListener("click", ()=>{
   form.reset();
   montarOpcoes();
+  mostrarPasso(0);
   document.getElementById("successBox").style.display = "none";
   document.getElementById("formBox").style.display = "block";
   document.getElementById("f_nome").focus();
