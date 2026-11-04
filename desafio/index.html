@@ -166,6 +166,7 @@ td.perfil small{display:block;color:var(--txt-3)}
 }
 
 /* ---------- ranking ---------- */
+.ev{opacity:.7;font-size:.85em}
 .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .tabs button{
   background:var(--panel);border:1px solid var(--line);color:var(--txt-2);padding:10px 18px;
@@ -738,11 +739,20 @@ document.querySelectorAll('[data-modo]').forEach(b=>b.addEventListener("click",(
   renderRanking();
 }));
 
+const TODOS = "todos";
+function nomeEvento(id){ const e = CONFIG.EVENTOS.find(x=>x.id===id); return e ? e.nome : ""; }
 async function carregarRanking(){
   const ev = document.getElementById("rkEvento").value || CONFIG.EVENTOS[0].id;
   try{
-    const r = await api("ranking", {evento:ev});
-    RK = r.itens || [];
+    if(ev===TODOS){
+      // junta o ranking de todos os eventos; cada marca guarda de qual evento veio
+      const partes = await Promise.all(CONFIG.EVENTOS.map(e=>
+        api("ranking", {evento:e.id}).then(r=>(r.itens||[]).map(x=>Object.assign({}, x, {evento:e.id}))).catch(()=>[])));
+      RK = [].concat.apply([], partes);
+    } else {
+      const r = await api("ranking", {evento:ev});
+      RK = r.itens || [];
+    }
   }catch(e){ RK = []; }
   renderRanking();
 }
@@ -752,6 +762,8 @@ function renderRanking(){
   lista = lista.map(x=>Object.assign({}, x, {valor: rkModo==="rel" ? Number(x.kgf)/Number(x.peso) : Number(x.kgf)}))
                .sort((a,b)=>b.valor-a.valor);
 
+  const todos = document.getElementById("rkEvento").value===TODOS;
+  const onde = x => esc(x.cidade||"") + (todos && x.evento ? `<small class="ev"> · ${esc(nomeEvento(x.evento))}</small>` : "");
   const un  = rkModo==="rel" ? "× peso" : CONFIG.UNIDADE;
   const fmt = v => rkModo==="rel" ? v.toFixed(2)+"×" : (Math.round(v*10)/10).toLocaleString("pt-BR");
   document.getElementById("thVal").textContent = un;
@@ -762,12 +774,12 @@ function renderRanking(){
       <div class="pos">${i+1}º LUGAR</div>
       <div class="nm">${esc(x.nome)}</div>
       <div class="vl">${fmt(x.valor)}${rkModo==="rel"?"":`<small>${esc(CONFIG.UNIDADE)}</small>`}</div>
-      <div class="un">${esc(x.cidade||"")}</div>
+      <div class="un">${onde(x)}</div>
     </div>`).join("");
 
   const tb = document.querySelector("#rkTable tbody");
   tb.innerHTML = lista.slice(3).map((x,i)=>`
-    <tr><td class="rk">${i+4}</td><td>${esc(x.nome)}</td><td>${esc(x.cidade||"")}</td><td class="n">${fmt(x.valor)}</td></tr>`).join("");
+    <tr><td class="rk">${i+4}</td><td>${esc(x.nome)}</td><td>${onde(x)}</td><td class="n">${fmt(x.valor)}</td></tr>`).join("");
 
   const vazio = lista.length===0;
   document.getElementById("rkEmpty").style.display = vazio ? "block":"none";
@@ -1068,7 +1080,13 @@ document.getElementById("btnCsvAll").addEventListener("click", ()=>{
 ["rkEvento","insEvento","admEvento"].forEach(id=>{
   const el = document.getElementById(id);
   fillEventos(el);
+  if(id==="rkEvento"){
+    // só o ranking tem "Todos os eventos"; o evento ativo continua sendo o padrão
+    el.insertAdjacentHTML("beforeend", `<option value="${TODOS}">Todos os eventos</option>`);
+    el.value = CONFIG.EVENTOS[0].id;
+  }
   el.addEventListener("change", ()=>{
+    if(el.value===TODOS){ carregarRanking(); return; }
     ["rkEvento","insEvento","admEvento"].forEach(o=>{ document.getElementById(o).value = el.value; });
     if(id==="admEvento" && PIN) carregarLeads().catch(()=>{});
     carregarRanking();
