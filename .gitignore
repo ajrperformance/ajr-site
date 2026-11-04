@@ -1,0 +1,8 @@
+# Token pessoal do GitHub usado por scripts/publicar.sh — nunca versionar
+.github-token
+
+# Arquivos do macOS
+.DS_Store
+
+# Backups de páginas
+*-backup*.html
