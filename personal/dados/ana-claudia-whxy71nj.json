@@ -1,0 +1,104 @@
+{
+  "nome": "Ana Claudia",
+  "local": "Clínica Vitallitè",
+  "horarios": "Segundas 9h15 e quartas 7h15",
+  "pacote_inicio": "2026-09-24",
+  "total": 12,
+  "feitas": 10,
+  "faltam": 2,
+  "vence": "2026-11-11",
+  "concluido": false,
+  "aulas": [
+    {
+      "data": "2026-09-28",
+      "status": "feita",
+      "hora": "09:15",
+      "n": 1
+    },
+    {
+      "data": "2026-09-30",
+      "status": "feita",
+      "hora": "07:15",
+      "n": 2
+    },
+    {
+      "data": "2026-10-07",
+      "status": "feita",
+      "hora": "07:15",
+      "n": 3
+    },
+    {
+      "data": "2026-10-10",
+      "status": "feita",
+      "obs": "reposição",
+      "n": 4
+    },
+    {
+      "data": "2026-10-14",
+      "status": "feita",
+      "hora": "07:15",
+      "n": 5
+    },
+    {
+      "data": "2026-10-19",
+      "status": "feita",
+      "hora": "09:15",
+      "n": 6
+    },
+    {
+      "data": "2026-10-21",
+      "status": "feita",
+      "hora": "07:15",
+      "n": 7
+    },
+    {
+      "data": "2026-10-28",
+      "status": "feita",
+      "hora": "07:15",
+      "n": 8
+    },
+    {
+      "data": "2026-10-31",
+      "status": "feita",
+      "obs": "reposição",
+      "n": 9
+    },
+    {
+      "data": "2026-11-04",
+      "status": "feita",
+      "hora": "07:15",
+      "n": 10
+    },
+    {
+      "data": "2026-11-09",
+      "status": "agendada",
+      "hora": "09:15",
+      "n": 11
+    },
+    {
+      "data": "2026-11-11",
+      "status": "agendada",
+      "hora": "07:15",
+      "n": 12
+    }
+  ],
+  "remarcadas": [
+    {
+      "data": "2026-10-05",
+      "motivo": "imprevisto do professor"
+    },
+    {
+      "data": "2026-10-12",
+      "motivo": "feriado"
+    },
+    {
+      "data": "2026-10-26",
+      "motivo": "desmarcada pela aluna"
+    },
+    {
+      "data": "2026-11-02",
+      "motivo": "feriado"
+    }
+  ],
+  "atualizado": "2026-11-04T11:55:19-03:00"
+}

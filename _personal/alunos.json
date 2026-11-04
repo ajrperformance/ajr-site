@@ -1,0 +1,39 @@
+{
+  "_leia_me": "Configuração da área /personal. Esta pasta começa com _ e por isso NÃO é publicada no site. Veja _personal/COMO-USAR.md.",
+  "agenda": "aldemirjrpersonal@gmail.com",
+  "fuso": "America/Sao_Paulo",
+  "dias_a_frente": 21,
+  "alunos": [
+    {
+      "nome": "Ana Claudia",
+      "slug": "ana-claudia-whxy71nj",
+      "filtro": "Ana Claudia",
+      "local": "Clínica Vitallitè",
+      "horarios": "Segundas 9h15 e quartas 7h15",
+      "dias_fixos": ["seg", "qua"],
+      "pacote_inicio": "2026-09-24",
+      "total": 12,
+      "historico": {
+        "conferido_ate": "2026-11-04",
+        "aulas": [
+          { "data": "2026-09-28", "hora": "09:15" },
+          { "data": "2026-09-30", "hora": "07:15" },
+          { "data": "2026-10-07", "hora": "07:15" },
+          { "data": "2026-10-10", "obs": "reposição" },
+          { "data": "2026-10-14", "hora": "07:15" },
+          { "data": "2026-10-19", "hora": "09:15" },
+          { "data": "2026-10-21", "hora": "07:15" },
+          { "data": "2026-10-28", "hora": "07:15" },
+          { "data": "2026-10-31", "obs": "reposição" },
+          { "data": "2026-11-04", "hora": "07:15" }
+        ],
+        "remarcadas": [
+          { "data": "2026-10-05", "motivo": "imprevisto do professor" },
+          { "data": "2026-10-12", "motivo": "feriado" },
+          { "data": "2026-10-26", "motivo": "desmarcada pela aluna" },
+          { "data": "2026-11-02", "motivo": "feriado" }
+        ]
+      }
+    }
+  ]
+}

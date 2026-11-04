@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Meu pacote — AJR Performance</title>
+<meta name="theme-color" content="#08090b">
+<link rel="icon" href="/logo-ajr.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Modelo único das páginas /personal/<slug>/. Os dados vêm de /personal/dados/<slug>.json
+     (gerado por scripts/agenda_personal.py). Não editar as cópias em personal/<slug>/. -->
+<style>
+:root{
+  --bg:#08090b; --panel:rgba(23,25,29,.72); --line:rgba(255,255,255,.09); --line-gold:rgba(201,168,76,.25);
+  --txt:#f0ede8; --txt-2:#a3a9b1; --txt-3:#7a8088;
+  --accent:#C9A84C; --accent-lt:#e2c878; --verde:#4CAF7D; --laranja:#E0A84F;
+  --ff:'Space Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --ff-h:'Chakra Petch',sans-serif; --ff-m:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--ff);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+.bg{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(201,168,76,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.045) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:radial-gradient(ellipse 100% 70% at 50% 0%,#000 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 100% 70% at 50% 0%,#000 30%,transparent 80%)}
+.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 40% at 80% 0%,rgba(201,168,76,.10),transparent 60%)}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+.topbar{border-bottom:1px solid var(--line);background:rgba(8,9,11,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.topbar .wrap{display:flex;align-items:center;gap:10px;padding-top:12px;padding-bottom:12px}
+.brand{display:flex;align-items:center;gap:10px;font:700 13px var(--ff-h);letter-spacing:2px;color:var(--accent);text-decoration:none}
+.brand img{width:32px;height:32px;object-fit:contain;border-radius:50%;background:#fff}
+.brand small{display:block;font:400 10px var(--ff-m);letter-spacing:1.2px;text-transform:uppercase;color:var(--txt-2);margin-top:1px}
+main.wrap{padding-top:24px;padding-bottom:40px}
+.kicker{font:700 11px var(--ff-m);letter-spacing:1.6px;text-transform:uppercase;color:var(--accent)}
+h1{font:700 26px/1.15 var(--ff-h);margin:6px 0 10px;letter-spacing:.2px}
+h1 span{color:var(--accent-lt)}
+.meta{display:flex;flex-direction:column;gap:4px;color:var(--txt-2);font-size:14px}
+.meta b{color:var(--txt);font-weight:500}
+.meta .lb{display:inline-block;min-width:68px;font:700 10px var(--ff-m);letter-spacing:1.2px;text-transform:uppercase;color:var(--txt-3)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:16px}
+.card.gold{border-color:var(--line-gold)}
+.count{display:flex;align-items:baseline;gap:8px}
+.count .n{font:700 44px/1 var(--ff-h);color:var(--accent-lt)}
+.count .de{font:500 15px var(--ff);color:var(--txt-2)}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin:14px 0 12px}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent-dk,#9f8038),var(--accent-lt));transition:width .6s ease}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:rgba(8,9,11,.5);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stat small{display:block;font:700 10px var(--ff-m);letter-spacing:1.2px;text-transform:uppercase;color:var(--txt-3)}
+.stat strong{display:block;font:700 17px var(--ff-h);margin-top:2px}
+.done{display:none;margin-top:16px;padding:14px 16px;border-radius:14px;background:rgba(76,175,125,.12);border:1px solid rgba(76,175,125,.45);font-weight:500}
+.done a{color:var(--verde);font-weight:700}
+h2{font:700 13px var(--ff-m);letter-spacing:1.6px;text-transform:uppercase;color:var(--txt-2);margin:26px 0 10px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--txt-2);margin:-2px 0 10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.aula{position:relative;min-height:86px;border-radius:12px;padding:9px 10px;border:1px solid var(--line);background:rgba(23,25,29,.55);display:flex;flex-direction:column;gap:1px}
+.aula .num{font:700 11px var(--ff-m);color:var(--txt-3)}
+.aula .dt{font:700 17px var(--ff-h);margin-top:4px}
+.aula .dw{font-size:12px;color:var(--txt-2)}
+.aula .tag{font:700 9.5px var(--ff-m);letter-spacing:.6px;text-transform:uppercase;margin-top:auto;padding-top:4px}
+.aula.feita{background:rgba(76,175,125,.14);border-color:rgba(76,175,125,.55)}
+.aula.feita .num,.aula.feita .tag{color:var(--verde)}
+.aula.feita::after{content:"✓";position:absolute;top:7px;right:10px;color:var(--verde);font-weight:700}
+.aula.agendada{background:rgba(224,168,79,.13);border-color:rgba(224,168,79,.6)}
+.aula.agendada .num,.aula.agendada .tag{color:var(--laranja)}
+.aula.livre{border:1.5px dashed rgba(255,255,255,.2);background:transparent;align-items:center;justify-content:center;text-align:center}
+.aula.livre .num{position:absolute;top:9px;left:10px}
+.aula.livre .dw{color:var(--txt-3);margin-top:10px}
+.rem{list-style:none;margin:0;padding:0}
+.rem li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.rem li:last-child{border-bottom:0}
+.rem b{font-weight:500}
+.rem span{color:var(--txt-2);text-align:right}
+.vazio{color:var(--txt-3);font-size:14px}
+footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--txt-3)}
+footer p{margin:0 0 4px}
+.erro{padding:30px 0;color:var(--txt-2)}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="/"><img src="/logo-ajr.png" alt=""><div>AJR PERFORMANCE<small>Personal · Agenda do pacote</small></div></a>
+</div></header>
+
+<main class="wrap" id="app" aria-live="polite"><p class="erro">Carregando sua agenda…</p></main>
+
+<script>
+(function(){
+  var DIAS=['dom','seg','ter','qua','qui','sex','sáb'];
+  var WA='https://wa.me/5514997432182?text='+encodeURIComponent('Oi Aldemir! Concluí meu pacote de aulas e quero renovar.');
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function d(iso){var p=iso.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+  function ddmm(iso){var p=iso.split('-');return p[2]+'/'+p[1]}
+  function dia(iso){return DIAS[d(iso).getDay()]}
+  function hora(h){if(!h)return'';var p=h.split(':');return (+p[0])+'h'+(p[1]==='00'?'':p[1])}
+  function atualizado(iso){var m=/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)/.exec(iso||'');return m?m[3]+'/'+m[2]+'/'+m[1]+' '+m[4]+':'+m[5]:'—'}
+
+  var slug=(location.pathname.match(/\/personal\/([a-z0-9-]+)\/?/)||[])[1];
+  var app=document.getElementById('app');
+  if(!slug){app.innerHTML='<p class="erro">Use o link que o Aldemir te enviou.</p>';return}
+
+  fetch('/personal/dados/'+slug+'.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(render)
+    .catch(function(){app.innerHTML='<p class="erro">Não encontramos esta agenda. Confira o link que o Aldemir te enviou.</p>'});
+
+  function render(x){
+    document.title='Pacote de '+x.total+' aulas — '+x.nome+' · AJR Performance';
+    var pct=Math.round(100*x.feitas/x.total);
+    var vence=x.vence?(dia(x.vence)+', '+ddmm(x.vence)):'a definir';
+    var cells='';
+    for(var i=0;i<x.total;i++){
+      var a=x.aulas[i];
+      if(!a){cells+='<div class="aula livre"><span class="num">'+String(i+1).padStart(2,'0')+'</span><span class="dw">a agendar</span></div>';continue}
+      var tag=a.status==='feita'?'feita':('agendada'+(a.hora?' · '+hora(a.hora):''));
+      if(a.obs)tag+=' · '+esc(a.obs);
+      cells+='<div class="aula '+a.status+'"><span class="num">'+String(i+1).padStart(2,'0')+'</span>'+
+        '<span class="dt">'+ddmm(a.data)+'</span><span class="dw">'+dia(a.data)+(a.status==='feita'&&a.hora?' · '+hora(a.hora):'')+'</span>'+
+        '<span class="tag">'+tag+'</span></div>';
+    }
+    var rem=x.remarcadas.length?'<ul class="rem">'+x.remarcadas.map(function(r){
+      return '<li><b>'+dia(r.data)+', '+ddmm(r.data)+'</b><span>'+esc(r.motivo)+'</span></li>'}).join('')+'</ul>'
+      :'<p class="vazio">Nenhuma aula remarcada.</p>';
+
+    app.innerHTML=
+      '<div class="kicker">Seu pacote</div>'+
+      '<h1>Pacote de '+x.total+' aulas — <span>'+esc(x.nome)+'</span></h1>'+
+      '<div class="meta"><div><span class="lb">Horários</span> <b>'+esc(x.horarios)+'</b></div><div><span class="lb">Local</span> <b>'+esc(x.local)+'</b></div></div>'+
+      '<div class="done" id="done">Pacote concluído — <a href="'+WA+'" target="_blank" rel="noopener">fale com o Aldemir para renovar</a>.</div>'+
+      '<section class="card gold">'+
+        '<div class="count"><span class="n">'+x.feitas+'</span><span class="de">de '+x.total+' aulas feitas</span></div>'+
+        '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+x.total+'" aria-valuenow="'+x.feitas+'"><i style="width:'+pct+'%"></i></div>'+
+        '<div class="stats"><div class="stat"><small>Faltam</small><strong>'+(x.faltam===1?'1 aula':x.faltam+' aulas')+'</strong></div>'+
+        '<div class="stat"><small>Vence em</small><strong>'+vence+'</strong></div></div>'+
+      '</section>'+
+      '<h2>As '+x.total+' aulas</h2>'+
+      '<div class="legend"><span><i style="background:var(--verde)"></i>feita</span><span><i style="background:var(--laranja)"></i>agendada</span><span><i style="border:1.5px dashed rgba(255,255,255,.35)"></i>a agendar</span></div>'+
+      '<div class="grid">'+cells+'</div>'+
+      '<h2>Aulas remarcadas</h2><div class="card" style="margin-top:0;padding:4px 16px">'+rem+'</div>'+
+      '<footer><p>Atualizado em '+atualizado(x.atualizado)+'.</p><p>Aulas remarcadas não descontam do pacote.</p></footer>';
+    if(x.concluido)document.getElementById('done').style.display='block';
+  }
+})();
+</script>
+</body>
+</html>
