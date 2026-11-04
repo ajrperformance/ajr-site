@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Desafio — lançar resultados · AJR Performance</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#08090b">
+<link rel="icon" href="logo-ajr.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --gold:#C9A84C; --gold-lt:#e2c878;
+  --navy:#17191d; --surface:#101114; --bg:#08090b; --input:#0e0f12;
+  --border:rgba(201,168,76,.22);
+  --gray:#a3a9b1; --dim:#7a8088; --off:#f0ede8;
+  --ok:#4CAF7D; --bad:#E0685F;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
+  background-size:56px 56px;background-attachment:fixed;color:var(--off);min-height:100vh;-webkit-font-smoothing:antialiased}
+.wrap{max-width:560px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom,0px))}
+.hdr{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.hdr img{width:44px;height:44px;object-fit:contain}
+.brand{font:700 13px 'Chakra Petch',sans-serif;letter-spacing:2px;color:var(--gold)}
+.event{font:400 11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-top:4px}
+h1{font:700 28px/1.08 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff}
+h1 em{font-style:normal;color:var(--gold)}
+.lead{font-size:14.5px;line-height:1.5;color:var(--gray);margin:8px 0 18px}
+.card{background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:20px 16px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.sec{font:700 11px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin:4px 0 12px;display:flex;align-items:center;gap:10px}
+.sec::after{content:"";flex:1;height:1px;background:var(--border)}
+.field{margin-bottom:16px}
+label,.lbl{font:700 11px 'JetBrains Mono',monospace;color:var(--gold);text-transform:uppercase;letter-spacing:2px;display:block;margin-bottom:8px}
+.row{display:grid;grid-template-columns:1.3fr 1fr;gap:12px}
+.row .field{min-width:0}
+input[type=text],input[type=search]{width:100%;padding:13px 14px;background:var(--input);border:1px solid rgba(255,255,255,.12);border-radius:4px;
+  font-size:16px;color:var(--off);font-family:'Space Grotesk',sans-serif;outline:none;-webkit-appearance:none;appearance:none}
+::placeholder{color:#5d636b}
+input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.15)}
+input[readonly]{color:#fff;font-weight:700;border-color:transparent;background:var(--surface)}
+.invalid{border-color:var(--bad)!important}
+.err{font-size:12px;color:var(--bad);margin-top:6px;display:none}
+.field.has-err .err{display:block}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{padding:13px 6px;border-radius:4px;border:1px solid rgba(255,255,255,.12);background:var(--input);color:var(--gray);
+  font:700 14px 'Chakra Petch',sans-serif;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.seg button[aria-pressed=true]{border-color:var(--gold);color:#101114;background:var(--gold)}
+.test{display:grid;grid-template-columns:1fr 130px;gap:12px;align-items:center;padding:13px;border-radius:6px;background:var(--surface);border:1px solid rgba(255,255,255,.06);margin-bottom:10px}
+.test b{display:block;font:700 15px 'Chakra Petch',sans-serif;color:#fff}
+.test small{display:block;font-size:12.5px;color:var(--dim);margin-top:3px;line-height:1.4}
+.test small.atual{color:var(--ok)}
+.test .inp{position:relative}
+.test .inp input{text-align:right;padding-right:46px;font:700 20px 'JetBrains Mono',monospace}
+.test .inp span{position:absolute;right:12px;top:50%;transform:translateY(-50%);font:700 11px 'JetBrains Mono',monospace;color:var(--dim)}
+.calc{grid-column:1/-1;font:400 13px 'JetBrains Mono',monospace;color:var(--gold);display:none}
+.consent{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font:400 13px/1.5 'Space Grotesk',sans-serif;letter-spacing:0;text-transform:none;color:var(--gray);cursor:pointer;margin:6px 0 0}
+.consent input{width:20px;height:20px;margin-top:1px;accent-color:var(--gold)}
+.btn{width:100%;margin-top:18px;padding:15px;border:0;border-radius:4px;background:var(--gold);color:#101114;
+  font:700 15px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.btn.small{margin-top:10px;padding:11px;font-size:13px}
+.msg{margin-top:12px;font-size:13px;line-height:1.5;color:var(--bad);display:none}
+/* lista */
+.busca{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0 10px}
+.info{display:flex;justify-content:space-between;font:400 11px 'JetBrains Mono',monospace;color:var(--dim);letter-spacing:1px;margin:2px 0 10px}
+.pessoas{display:grid;gap:8px}
+.p{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:13px 14px;border-radius:6px;background:var(--navy);border:1px solid rgba(255,255,255,.06);cursor:pointer;text-align:left;width:100%;color:inherit;font:inherit}
+.p:hover,.p:focus-visible{border-color:var(--gold);outline:none}
+.p b{display:block;font-size:16px;color:#fff}
+.p small{font:400 12px 'JetBrains Mono',monospace;color:var(--dim)}
+.chips{display:flex;gap:4px}
+.chips i{font:700 10px 'JetBrains Mono',monospace;font-style:normal;padding:4px 5px;border-radius:3px;background:var(--surface);color:#4a4f56;border:1px solid rgba(255,255,255,.06)}
+.chips i.on{color:#101114;background:var(--ok);border-color:var(--ok)}
+.vazio{color:var(--dim);font-size:14px;padding:14px 4px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--ok);color:#08090b;font:700 14px 'Chakra Petch',sans-serif;letter-spacing:1px;text-transform:uppercase;padding:12px 18px;border-radius:4px;transition:transform .25s;z-index:20}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.hide{display:none!important}
+.voltar{background:none;border:0;color:var(--gold);font:700 12px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;margin-bottom:12px;padding:4px 0}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hdr">
+    <img src="logo-ajr.png" alt="AJR Performance">
+    <div>
+      <div class="brand">AJR PERFORMANCE</div>
+      <div class="event">Desafio das turmas · lançar resultados</div>
+    </div>
+  </header>
+
+  <!-- CHAVE -->
+  <section class="card" id="login">
+    <h1>Lançar <em>resultados</em></h1>
+    <p class="lead">Os nomes vêm do cadastro do marca-página. Digite a chave para abrir a lista.</p>
+    <label for="chave">Chave</label>
+    <input type="text" id="chave" autocomplete="off" autocapitalize="characters" placeholder="••••••">
+    <button class="btn" id="btnEntrar">Abrir lista</button>
+    <p class="msg" id="msgLogin" role="alert"></p>
+  </section>
+
+  <!-- LISTA -->
+  <section id="lista" class="hide">
+    <div class="busca">
+      <input type="search" id="busca" placeholder="Buscar nome…" autocomplete="off">
+    </div>
+    <div class="info"><span id="contagem"></span><span id="atual"></span></div>
+    <div class="pessoas" id="pessoas"></div>
+    <button class="btn ghost small" id="btnNovo">+ Pessoa que não se cadastrou</button>
+  </section>
+
+  <!-- FORMULÁRIO -->
+  <form class="card hide" id="form" novalidate>
+    <button type="button" class="voltar" id="btnVoltar">← Voltar para a lista</button>
+    <div class="field" id="f-nome">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" autocomplete="off" placeholder="Nome e sobrenome">
+      <div class="err">Escreva o nome.</div>
+    </div>
+    <div class="row">
+      <div class="field" id="f-turma">
+        <label for="turma">Turma</label>
+        <input type="text" id="turma" autocomplete="off" placeholder="Ex.: Ed. Física 5º">
+        <div class="err">Qual turma?</div>
+      </div>
+      <div class="field" id="f-sexo">
+        <span class="lbl">Sexo</span>
+        <div class="seg" role="group" aria-label="Sexo">
+          <button type="button" data-v="M" aria-pressed="false">Masc.</button>
+          <button type="button" data-v="F" aria-pressed="false">Fem.</button>
+        </div>
+        <div class="err">Escolha — muda a fórmula do VO₂.</div>
+      </div>
+    </div>
+
+    <div class="sec">Resultados · preencha o que já tem</div>
+    <div id="f-testes" class="field">
+      <div class="test">
+        <div><b>Sentar e alcançar</b><small data-atual="sentar">Banco de Wells · melhor de 3</small></div>
+        <div class="inp"><input type="text" id="sentar" inputmode="decimal" placeholder="—"><span>cm</span></div>
+      </div>
+      <div class="test">
+        <div><b>Preensão manual</b><small data-atual="preensao">Melhor de 3</small></div>
+        <div class="inp"><input type="text" id="preensao" inputmode="decimal" placeholder="—"><span>kgf</span></div>
+      </div>
+      <div class="test">
+        <div><b>Terra isométrico</b><small data-atual="terra">Pico de força · melhor de 2</small></div>
+        <div class="inp"><input type="text" id="terra" inputmode="decimal" placeholder="—"><span>kgf</span></div>
+      </div>
+      <div class="test">
+        <div><b>VO₂ no step</b><small data-atual="vo2">Batimentos em 15 s, de 5 a 20 s após parar</small></div>
+        <div class="inp"><input type="text" id="bat15" inputmode="numeric" placeholder="—"><span>bat</span></div>
+        <div class="calc" id="calc"></div>
+      </div>
+      <div class="err">Preencha pelo menos um teste (confira se o número faz sentido).</div>
+    </div>
+
+    <label class="consent" for="telao">
+      <input type="checkbox" id="telao" checked>
+      <span>Pode mostrar o nome no telão.</span>
+    </label>
+
+    <button class="btn" type="submit" id="btnSend">Salvar</button>
+    <p class="msg" id="msg" role="alert"></p>
+  </form>
+</main>
+<div class="toast" id="toast">Salvo ✓</div>
+
+<script>
+/* Mesma URL do fib.html e do sorteio.html (Apps Script da palestra) */
+var CONFIG = {
+  endpoint: 'https://script.google.com/macros/s/AKfycbzx2_XQTLBH0lKlj5EgALoR6fJBFq3ZtbrCeaxzpsksZRkB8jIPgZL5EJ6A80I6aSwJMw/exec',
+  soPalestra: 'Aldemir Junior',   // mostra só quem marcou esta palestra no cadastro ('' = todos)
+  abrevCurso: { 'Educação Física': 'Ed. Física' }
+};
+var FAIXAS = { sentar:[-40,70], preensao:[3,100], terra:[10,400], bat15:[12,55] };
+var $ = function(id){ return document.getElementById(id); };
+var chave = '', cadastros = [], lancados = [], sexo = '', timer = null;
+
+function norm(s){ return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function fmt(n, c){ return Number(n).toFixed(c).replace('.', ','); }
+function tem(v){ return v !== '' && v !== null && v !== undefined && isFinite(Number(v)); }
+function post(body){
+  return fetch(CONFIG.endpoint, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(body) })
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+}
+function toast(t){ var e = $('toast'); e.textContent = t; e.classList.add('on'); setTimeout(function(){ e.classList.remove('on'); }, 1800); }
+function turmaDe(c){
+  var curso = CONFIG.abrevCurso[c.curso] || c.curso || '';
+  var per = /^\d/.test(c.periodo || '') ? c.periodo : '';
+  return (curso + (per ? ' ' + per : '')).trim();
+}
+function lancadoDe(nome){ var k = norm(nome); return lancados.filter(function(l){ return l.idNome === k; })[0]; }
+
+/* ---------- carregar ---------- */
+function carregar(){
+  return post({ acao:'desafioBase', chave: chave }).then(function(res){
+    if (!res.ok) throw new Error(res.erro === 'chave incorreta' ? 'Chave incorreta.' :
+      res.erro === 'acao desconhecida' ? 'Falta atualizar o Apps Script (Nova versão).' : 'Erro: ' + res.erro);
+    cadastros = (res.cadastros || []).filter(function(c){ return !CONFIG.soPalestra || c.palestra === CONFIG.soPalestra; });
+    // tira nomes repetidos
+    var vistos = {};
+    cadastros = cadastros.filter(function(c){ var k = norm(c.nome); if (vistos[k]) return false; vistos[k] = 1; return true; })
+      .sort(function(a, b){ return a.nome.localeCompare(b.nome, 'pt-BR'); });
+    lancados = res.lancados || [];
+    // quem foi lançado sem cadastro também aparece na lista
+    lancados.forEach(function(l){
+      if (!cadastros.some(function(c){ return norm(c.nome) === l.idNome; }))
+        cadastros.push({ nome: l.nome === 'Representante' ? l.idNome : l.nome, turma: l.turma, extra: true });
+    });
+    $('atual').textContent = 'atualizado ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+    renderLista();
+  });
+}
+
+function renderLista(){
+  var q = norm($('busca').value);
+  var itens = cadastros.filter(function(c){ return !q || norm(c.nome).indexOf(q) !== -1; });
+  $('contagem').textContent = cadastros.length + ' nomes · ' + lancados.length + ' com resultado';
+  $('pessoas').innerHTML = itens.map(function(c, i){
+    var l = lancadoDe(c.nome) || {};
+    var chips = [['sentar','S'],['preensao','P'],['terra','T'],['vo2','V']].map(function(t){
+      return '<i class="' + (tem(l[t[0]]) ? 'on' : '') + '" title="' + t[0] + '">' + t[1] + '</i>'; }).join('');
+    return '<button type="button" class="p" data-n="' + esc(c.nome) + '"><span><b>' + esc(c.nome) + '</b><small>' +
+      esc(l.turma || c.turma || turmaDe(c) || 'sem turma') + '</small></span><span class="chips">' + chips + '</span></button>';
+  }).join('') || '<div class="vazio">Ninguém com esse nome. Use “+ Pessoa que não se cadastrou”.</div>';
+}
+
+/* ---------- formulário ---------- */
+function abrir(nome){
+  var c = cadastros.filter(function(x){ return x.nome === nome; })[0] || {};
+  var l = nome ? lancadoDe(nome) : null;
+  $('nome').value = nome || ''; $('nome').readOnly = !!nome;
+  $('turma').value = (l && l.turma) || c.turma || turmaDe(c) || '';
+  setSexo(l ? l.sexo : '');
+  ['sentar','preensao','terra','bat15'].forEach(function(k){ $(k).value = ''; $(k).classList.remove('invalid'); });
+  var dicas = { sentar:'Banco de Wells · melhor de 3', preensao:'Melhor de 3', terra:'Pico de força · melhor de 2', vo2:'Batimentos em 15 s, de 5 a 20 s após parar' };
+  var un = { sentar:' cm', preensao:' kgf', terra:' kgf', vo2:' ml/kg/min' };
+  document.querySelectorAll('[data-atual]').forEach(function(el){
+    var k = el.dataset.atual;
+    if (l && tem(l[k])) { el.textContent = 'Já lançado: ' + fmt(l[k], k === 'terra' ? 0 : 1) + un[k] + ' · digite para trocar'; el.classList.add('atual'); }
+    else { el.textContent = dicas[k]; el.classList.remove('atual'); }
+  });
+  document.querySelectorAll('.field').forEach(function(f){ f.classList.remove('has-err'); });
+  $('calc').style.display = 'none'; $('msg').style.display = 'none';
+  var b = $('btnSend'); b.disabled = false; b.textContent = 'Salvar';
+  $('lista').classList.add('hide'); $('form').classList.remove('hide'); window.scrollTo(0, 0);
+  if (!nome) $('nome').focus();
+}
+function fechar(){ $('form').classList.add('hide'); $('lista').classList.remove('hide'); }
+
+function setSexo(v){
+  sexo = v || '';
+  document.querySelectorAll('.seg button').forEach(function(x){ x.setAttribute('aria-pressed', String(x.dataset.v === sexo)); });
+  calc();
+}
+document.querySelectorAll('.seg button').forEach(function(b){
+  b.addEventListener('click', function(){ setSexo(b.dataset.v); $('f-sexo').classList.remove('has-err'); });
+});
+
+function num(id){
+  var v = $(id).value.trim().replace(',', '.');
+  if (v === '') return '';
+  var n = Number(v); return isFinite(n) ? n : NaN;
+}
+function vo2(sx, bpm){ return sx === 'F' ? 65.81 - 0.1847 * bpm : 111.33 - 0.42 * bpm; }
+function calc(){
+  var b = num('bat15'), el = $('calc');
+  if (b === '' || isNaN(b) || b < FAIXAS.bat15[0] || b > FAIXAS.bat15[1]) { el.style.display = 'none'; return; }
+  var bpm = b * 4;
+  el.textContent = 'FC ' + bpm + ' bpm' + (sexo ? '  ·  VO₂ ≈ ' + fmt(vo2(sexo, bpm), 1) + ' ml/kg/min' : '  ·  escolha o sexo');
+  el.style.display = 'block';
+}
+$('bat15').addEventListener('input', calc);
+
+function marca(id, ok){
+  var f = $('f-' + id); f.classList.toggle('has-err', !ok);
+  var inp = f.querySelector('input'); if (inp && id !== 'testes') inp.classList.toggle('invalid', !ok);
+  return ok;
+}
+function valida(){
+  var ok = true, algum = false, testesOk = true;
+  ok = marca('nome', $('nome').value.trim().length >= 2) && ok;
+  ok = marca('turma', $('turma').value.trim().length >= 1) && ok;
+  ok = marca('sexo', !!sexo) && ok;
+  ['sentar','preensao','terra','bat15'].forEach(function(k){
+    var v = num(k), bad = v !== '' && (isNaN(v) || v < FAIXAS[k][0] || v > FAIXAS[k][1]);
+    $(k).classList.toggle('invalid', bad);
+    if (bad) testesOk = false;
+    if (v !== '' && !bad) algum = true;
+  });
+  ok = marca('testes', algum && testesOk) && ok;
+  return ok;
+}
+
+$('form').addEventListener('submit', function(ev){
+  ev.preventDefault();
+  $('msg').style.display = 'none';
+  if (!valida()) return;
+  var btn = $('btnSend'); btn.disabled = true; btn.textContent = 'Salvando...';
+  var body = { acao:'desafio', chave: chave, nome: $('nome').value.trim(), turma: $('turma').value.trim(), sexo: sexo,
+               sentar: num('sentar'), preensao: num('preensao'), terra: num('terra'), bat15: num('bat15'),
+               telao: $('telao').checked ? 'Sim' : 'Não' };
+  post(body).then(function(res){
+    if (!res.ok) throw new Error('Não foi possível salvar (' + res.erro + ').');
+    toast(body.bat15 !== '' ? 'Salvo ✓ VO₂ ' + fmt(res.vo2, 1) : 'Salvo ✓');
+    $('busca').value = '';
+    fechar();
+    return carregar();
+  }).catch(function(e){
+    var m = $('msg');
+    m.textContent = e.message === 'Failed to fetch' || e.message.indexOf('HTTP') === 0 ? 'Sem conexão com a planilha. Tente de novo.' : e.message;
+    m.style.display = 'block'; btn.disabled = false; btn.textContent = 'Tentar de novo';
+  });
+});
+
+/* ---------- eventos ---------- */
+$('pessoas').addEventListener('click', function(ev){ var b = ev.target.closest('.p'); if (b) abrir(b.dataset.n); });
+$('busca').addEventListener('input', renderLista);
+$('btnNovo').addEventListener('click', function(){ abrir(''); });
+$('btnVoltar').addEventListener('click', fechar);
+
+function entrar(){
+  chave = $('chave').value.trim().toUpperCase();
+  var m = $('msgLogin'); m.style.display = 'none';
+  if (!chave) { $('chave').focus(); return; }
+  var b = $('btnEntrar'); b.disabled = true; b.textContent = 'Abrindo...';
+  carregar().then(function(){
+    try { localStorage.setItem('ajr-fib-chave', chave); } catch(e){}
+    $('login').classList.add('hide'); $('lista').classList.remove('hide');
+    clearInterval(timer);
+    // atualiza a lista (novos cadastros) enquanto ela estiver aberta
+    timer = setInterval(function(){ if (!$('lista').classList.contains('hide')) carregar().catch(function(){}); }, 20000);
+  }).catch(function(e){
+    m.textContent = e.message === 'Failed to fetch' ? 'Sem conexão com a planilha.' : e.message; m.style.display = 'block';
+  }).then(function(){ b.disabled = false; b.textContent = 'Abrir lista'; });
+}
+$('btnEntrar').addEventListener('click', entrar);
+$('chave').addEventListener('keydown', function(e){ if (e.key === 'Enter') entrar(); });
+try { var k = new URLSearchParams(location.search).get('k') || localStorage.getItem('ajr-fib-chave'); if (k) $('chave').value = k; } catch(e){}
+</script>
+</body>
+</html>
