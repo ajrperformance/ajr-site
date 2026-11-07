@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Caixa da Tenda AJR</title>
+<meta name="description" content="Prestação de contas aberta da Tenda AJR: cotas dos parceiros, gastos e saldo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Prestação de contas: cabeçalho, 4 números, parceiros, orçamento x gasto, extrato. Paleta do site AJR. */
+:root {
+  --bg: #17191d; --panel: #1f2227; --panel-2: #262a30; --line: #33373e;
+  --fg: #f0ede8; --muted: #9aa0a8; --gold: #C9A84C; --gold-lt: #e2c878;
+  --ok: #6fcf97; --warn: #e2c878; --bad: #ef7d6d;
+  --f-display: "Chakra Petch", "Space Grotesk", system-ui, sans-serif;
+  --f-body: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
+  padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+.wrap { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+header { display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(28px, 5vw, 44px); line-height: 1.05; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+.lede { margin: 0; color: var(--muted); max-width: 64ch; }
+.lede b { color: var(--fg); font-weight: 700; font-variant-numeric: tabular-nums; }
+.upd { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.tile.main { border-color: var(--gold); }
+.tile .k { font-size: 13px; color: var(--muted); }
+.tile .v { font-family: var(--f-display); font-weight: 600; font-size: 30px; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.tile .n { font-size: 12.5px; color: var(--muted); }
+.neg { color: var(--bad); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card h2 { margin: 0; font-family: var(--f-display); font-weight: 600; font-size: 20px; }
+.note { margin: 0; font-size: 13px; color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 12px; }
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-family: var(--f-mono); font-weight: 400; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: 0; }
+.r { text-align: right; white-space: nowrap; }
+.m { color: var(--muted); }
+.sub { font-size: 12.5px; color: var(--muted); }
+.bar { height: 6px; border-radius: 3px; background: var(--panel-2); min-width: 80px; position: relative; overflow: hidden; }
+.bar i { position: absolute; inset: 0 auto 0 0; background: var(--gold); border-radius: 3px; }
+.chip { display: inline-block; font-family: var(--f-mono); font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.chip.ok { color: var(--ok); } .chip.warn { color: var(--warn); }
+.in { color: var(--ok); } .out { color: var(--bad); }
+details { color: var(--muted); }
+summary { cursor: pointer; color: var(--fg); font-weight: 500; }
+summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+dl { display: grid; grid-template-columns: minmax(8rem, max-content) 1fr; gap: 6px 16px; margin: 12px 0 0; }
+dt { color: var(--fg); } dd { margin: 0; }
+footer { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+@media (max-width: 560px) { .hide-sm { display: none; } .tile .v { font-size: 26px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">AJR Performance · Prestação de contas</span>
+    <h1>Caixa da Tenda AJR</h1>
+    <p class="lede">Recebemos <b id="l-rec">—</b> dos <b id="l-con">—</b> contratados pelos parceiros e já gastamos <b id="l-gas">—</b>. Todo o valor vai para a estrutura e os eventos da tenda, sem margem de lucro.</p>
+    <span class="upd">Atualizado em <span id="upd">—</span></span>
+  </header>
+
+  <section class="tiles" aria-label="Resumo">
+    <div class="tile main"><span class="k">Saldo em caixa</span><span class="v" id="t-saldo">—</span><span class="n">Recebido menos gasto</span></div>
+    <div class="tile"><span class="k">Recebido dos parceiros</span><span class="v" id="t-rec">—</span><span class="n">Cotas já pagas</span></div>
+    <div class="tile"><span class="k">Gasto com a tenda</span><span class="v" id="t-gas">—</span><span class="n"><span id="t-pagar">—</span> já comprometidos a pagar</span></div>
+    <div class="tile"><span class="k">A receber nos contratos</span><span class="v" id="t-areceber">—</span><span class="n"><span id="t-prev">—</span> com data marcada</span></div>
+  </section>
+
+  <section class="card">
+    <h2>Parceiros e cotas</h2>
+    <p class="note">Quanto cada parceiro já pagou do contrato de 12 meses.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Parceiro</th><th class="hide-sm">Plano</th><th class="r">Pago</th><th class="r hide-sm">Contrato</th><th class="r">Falta</th><th>Andamento</th></tr></thead>
+      <tbody id="tb-parc"></tbody>
+    </table></div>
+  </section>
+
+  <div class="grid2">
+    <section class="card">
+      <h2>Gastos por item do orçamento</h2>
+      <p class="note">Orçamento do 1º ano ao lado do que já foi pago em cada item.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>Item</th><th class="r">Previsto</th><th class="r">Gasto</th></tr></thead>
+        <tbody id="tb-orc"></tbody>
+      </table></div>
+    </section>
+    <section class="card">
+      <h2>Extrato de lançamentos</h2>
+      <p class="note">Cada entrada e saída, da mais recente para a mais antiga. Comprovantes à disposição dos parceiros.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>Data</th><th>Lançamento</th><th class="r">Valor</th><th>Situação</th></tr></thead>
+        <tbody id="tb-ext"></tbody>
+      </table></div>
+    </section>
+  </div>
+
+  <details>
+    <summary>Como funciona este relatório</summary>
+    <dl>
+      <dt>Modelo</dt><dd>Custo compartilhado: a soma das cotas paga a estrutura e os eventos do 1º ano. O que sobrar fica como fundo de reserva do projeto.</dd>
+      <dt>Saldo em caixa</dt><dd>Tudo o que os parceiros já pagaram, menos tudo o que já foi gasto. Quando fica negativo, a AJR está adiantando a diferença.</dd>
+      <dt>A pagar</dt><dd>Compras e compromissos já decididos, como o saldo de cotas de eventos e equipamentos a comprar. Entram no gasto quando são pagos, com o valor real.</dd>
+      <dt>A receber</dt><dd>O que ainda falta entrar dos contratos assinados, incluindo pagamentos com data marcada.</dd>
+      <dt>Orçamento</dt><dd>Valores de referência da proposta de parceria (jul/2026), mais itens incluídos depois, como o gerador.</dd>
+      <dt>Estimados</dt><dd>Combustível é calculado pela distância, a 10 km por litro de etanol e pelo preço médio da ANP em Bauru, até haver o cupom do posto.</dd>
+    </dl>
+  </details>
+
+  <footer>Aldemir Junior · AJR Performance. Notas fiscais e comprovantes podem ser pedidos a qualquer momento.</footer>
+</div>
+
+<script id="dados" type="application/json">{"lancamentos": [{"id": "L001", "data": null, "tipo": "entrada", "categoria": "Cota", "descricao": "Cota mensal — parcela 1/12", "parceiro": "g4 Time de Vendas", "item_orcamento": null, "valor": 230, "status": "pago"}, {"id": "L002", "data": null, "tipo": "entrada", "categoria": "Cota", "descricao": "Cota mensal — parcela 2/12", "parceiro": "g4 Time de Vendas", "item_orcamento": null, "valor": 230, "status": "pago"}, {"id": "L003", "data": null, "tipo": "entrada", "categoria": "Cota", "descricao": "Cota mensal — parcela 1/12", "parceiro": "Mori", "item_orcamento": null, "valor": 230, "status": "pago"}, {"id": "L004", "data": null, "tipo": "entrada", "categoria": "Cota", "descricao": "Cota mensal — parcela 2/12", "parceiro": "Mori", "item_orcamento": null, "valor": 230, "status": "pago"}, {"id": "L005", "data": null, "tipo": "entrada", "categoria": "Cota", "descricao": "Cota mensal — parcela 1/12", "parceiro": "Vitallité", "item_orcamento": null, "valor": 270, "status": "pago"}, {"id": "L006", "data": null, "tipo": "entrada", "categoria": "Cota", "descricao": "Cota mensal — parcela 2/12", "parceiro": "Vitallité", "item_orcamento": null, "valor": 270, "status": "pago"}, {"id": "L007", "data": "2026-11-10", "tipo": "entrada", "categoria": "Cota", "descricao": "Cota anual à vista", "parceiro": "Salutem", "item_orcamento": null, "valor": 2700, "status": "previsto"}, {"id": "L008", "data": "2026-09-03", "tipo": "saida", "categoria": "Estrutura", "descricao": "Tenda inflável 3x3 personalizada (Visu Mídias, Shopee, pedido 2609044HQNSGVC)", "parceiro": null, "item_orcamento": "Tenda inflável 3x3 personalizada", "valor": 1660.0, "status": "pago"}, {"id": "L009", "data": "2026-10-21", "tipo": "saida", "categoria": "Estrutura", "descricao": "Tecido Tactel 1,50 x 2,20 m das colunas (danfert, Shopee, pedido 2610216GSTQTGX)", "parceiro": null, "item_orcamento": "Manutenção e reimpressão de artes", "valor": 41.38, "status": "pago"}, {"id": "L010", "data": "2026-10-31", "tipo": "saida", "categoria": "Estrutura", "descricao": "Mesa dobrável 6 lugares (Leroy Merlin, pedido 0038046860)", "parceiro": null, "item_orcamento": "Mesa bistrô alta + 2 banquetas", "valor": 299.9, "status": "pago"}, {"id": "L011", "data": "2026-10-31", "tipo": "saida", "categoria": "Estrutura", "descricao": "2 banquetas a R$ 23,00 (Leroy Merlin)", "parceiro": null, "item_orcamento": "Mesa bistrô alta + 2 banquetas", "valor": 46.0, "status": "pago"}, {"id": "L012", "data": null, "tipo": "saida", "categoria": "Estrutura", "descricao": "Manequim", "parceiro": null, "item_orcamento": "Outros (fora do orçamento)", "valor": 150.0, "status": "pago"}, {"id": "L013", "data": "2026-10-28", "tipo": "saida", "categoria": "Evento", "descricao": "Cota bronze Meia Maratona de Bauru (Bauru Shopping) — 1º aporte, Pix para Diego Morelli", "parceiro": null, "item_orcamento": "Taxas de inscrição dos eventos", "valor": 450.0, "status": "pago"}, {"id": "L014", "data": "2026-11-20", "tipo": "saida", "categoria": "Evento", "descricao": "Cota bronze Meia Maratona de Bauru (Bauru Shopping) — saldo, vence até 20/11", "parceiro": null, "item_orcamento": "Taxas de inscrição dos eventos", "valor": 1050.0, "status": "previsto"}, {"id": "L015", "data": null, "tipo": "saida", "categoria": "Estrutura", "descricao": "Gerador a gasolina (valor estimado)", "parceiro": null, "item_orcamento": "Gerador a gasolina", "valor": 600.0, "status": "previsto"}, {"id": "L016", "data": null, "tipo": "saida", "categoria": "Transporte", "descricao": "Combustível ida e volta Bauru–Barra Bonita (152 km ÷ 10 km/l = 15,2 l de etanol a R$ 3,51, estimado)", "parceiro": null, "item_orcamento": "Reserva para eventos na região", "valor": 53.35, "status": "pago"}], "parceiros": [{"parceiro": "g4 Time de Vendas", "plano": "Mensal 12x", "valor_parcela": 230, "parcelas": 12, "total_contrato": 2760}, {"parceiro": "Mori", "plano": "Mensal 12x", "valor_parcela": 230, "parcelas": 12, "total_contrato": 2760}, {"parceiro": "Vitallité", "plano": "Mensal 12x", "valor_parcela": 270, "parcelas": 12, "total_contrato": 3240}, {"parceiro": "Salutem", "plano": "Anual à vista", "valor_parcela": 2700, "parcelas": 1, "total_contrato": 2700}], "orcamento": [{"item": "Tenda inflável 3x3 personalizada", "grupo": "Estrutura", "valor_previsto": 1990}, {"item": "Balcão promocional dobrável", "grupo": "Estrutura", "valor_previsto": 450}, {"item": "Wind banner personalizado", "grupo": "Estrutura", "valor_previsto": 190}, {"item": "Mesa bistrô alta + 2 banquetas", "grupo": "Estrutura", "valor_previsto": 480}, {"item": "Cadeiras dobráveis (4 un)", "grupo": "Estrutura", "valor_previsto": 320}, {"item": "Grama sintética", "grupo": "Estrutura", "valor_previsto": 150}, {"item": "Caixa térmica", "grupo": "Estrutura", "valor_previsto": 150}, {"item": "Caixa de som portátil", "grupo": "Estrutura", "valor_previsto": 300}, {"item": "Gerador a gasolina", "grupo": "Estrutura", "valor_previsto": 600}, {"item": "Taxas de inscrição dos eventos", "grupo": "Operação", "valor_previsto": 6000}, {"item": "Insumos (água, frutas, copos)", "grupo": "Operação", "valor_previsto": 2760}, {"item": "Reserva para eventos na região", "grupo": "Operação", "valor_previsto": 1200}, {"item": "Manutenção e reimpressão de artes", "grupo": "Operação", "valor_previsto": 1000}, {"item": "Outros (fora do orçamento)", "grupo": "Outros", "valor_previsto": 0}], "atualizado": "07/11/2026 às 11:24"}</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('dados').textContent);
+  var brl = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2});
+  var dt = function (s) { return s ? s.slice(8, 10) + '/' + s.slice(5, 7) + '/' + s.slice(0, 4) : 'a confirmar'; };
+  var sum = function (a) { return a.reduce(function (t, r) { return t + Number(r.valor || 0); }, 0); };
+  var L = D.lancamentos, P = D.parceiros, O = D.orcamento;
+  var ent = L.filter(function (r) { return r.tipo === 'entrada'; }), sai = L.filter(function (r) { return r.tipo === 'saida'; });
+  var pago = function (r) { return r.status === 'pago'; }, prev = function (r) { return r.status === 'previsto'; };
+  var rec = sum(ent.filter(pago)), gas = sum(sai.filter(pago));
+  var con = P.reduce(function (t, p) { return t + p.total_contrato; }, 0);
+  var set = function (id, v, signed) { var e = document.getElementById(id); e.textContent = brl.format(v); if (signed && v < 0) e.classList.add('neg'); };
+  set('l-rec', rec); set('l-con', con); set('l-gas', gas);
+  set('t-saldo', rec - gas, true); set('t-rec', rec); set('t-gas', gas);
+  set('t-pagar', sum(sai.filter(prev))); set('t-areceber', con - rec); set('t-prev', sum(ent.filter(prev)));
+  document.getElementById('upd').textContent = D.atualizado;
+  var td = function (tr, text, cls) { var c = document.createElement('td'); if (cls) c.className = cls; c.textContent = text; tr.appendChild(c); return c; };
+
+  var tp = document.getElementById('tb-parc');
+  P.forEach(function (p) {
+    var pg = sum(ent.filter(function (r) { return pago(r) && r.parceiro === p.parceiro; }));
+    var tr = document.createElement('tr');
+    td(tr, p.parceiro); td(tr, p.plano, 'm hide-sm'); td(tr, brl.format(pg), 'r');
+    td(tr, brl.format(p.total_contrato), 'r m hide-sm'); td(tr, brl.format(p.total_contrato - pg), 'r');
+    var c = td(tr, ''); var b = document.createElement('div'); b.className = 'bar';
+    var i = document.createElement('i'); i.style.width = Math.min(100, pg / p.total_contrato * 100) + '%';
+    b.appendChild(i); c.appendChild(b); c.setAttribute('aria-label', Math.round(pg / p.total_contrato * 100) + '%');
+    tp.appendChild(tr);
+  });
+
+  var to = document.getElementById('tb-orc');
+  O.forEach(function (o) {
+    var g = sum(sai.filter(function (r) { return pago(r) && r.item_orcamento === o.item; }));
+    var tr = document.createElement('tr');
+    td(tr, o.item); td(tr, brl.format(o.valor_previsto), 'r m'); td(tr, brl.format(g), 'r' + (g > o.valor_previsto ? ' out' : ''));
+    to.appendChild(tr);
+  });
+
+  var te = document.getElementById('tb-ext');
+  L.slice().reverse().forEach(function (r) {
+    var tr = document.createElement('tr');
+    td(tr, dt(r.data), 'm');
+    var c = td(tr, ''); var a = document.createElement('div'); a.textContent = r.parceiro || r.descricao;
+    var s = document.createElement('div'); s.className = 'sub'; s.textContent = r.parceiro ? r.descricao : (r.item_orcamento || r.categoria || '');
+    c.appendChild(a); c.appendChild(s);
+    td(tr, (r.tipo === 'saida' ? '− ' : '+ ') + brl.format(r.valor), 'r ' + (r.tipo === 'saida' ? 'out' : 'in'));
+    var st = td(tr, ''); var ch = document.createElement('span'); ch.className = 'chip ' + (pago(r) ? 'ok' : 'warn'); ch.textContent = pago(r) ? 'pago' : 'previsto';
+    st.appendChild(ch); te.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>
