@@ -4,10 +4,10 @@
   "horarios": "Segundas 9h15 e quartas 7h15",
   "pacote_inicio": "2026-09-24",
   "total": 12,
-  "feitas": 10,
-  "faltam": 2,
-  "vence": "2026-11-11",
-  "concluido": false,
+  "feitas": 12,
+  "faltam": 0,
+  "vence": "2026-11-13",
+  "concluido": true,
   "aulas": [
     {
       "data": "2026-09-28",
@@ -71,14 +71,15 @@
     },
     {
       "data": "2026-11-09",
-      "status": "agendada",
+      "status": "feita",
       "hora": "09:15",
       "n": 11
     },
     {
-      "data": "2026-11-11",
-      "status": "agendada",
+      "data": "2026-11-13",
+      "status": "feita",
       "hora": "07:15",
+      "obs": "reposição",
       "n": 12
     }
   ],
@@ -100,5 +101,5 @@
       "motivo": "feriado"
     }
   ],
-  "atualizado": "2026-11-04T11:55:19-03:00"
+  "atualizado": "2026-11-15T08:14:03-03:00"
 }
