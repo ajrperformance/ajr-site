@@ -1562,8 +1562,8 @@ window.addEventListener('load', function () {
     },
     'ajr-performance': {
       title: 'AJR Performance é o caminho certo para você',
-      why: 'Você está pronto para um diagnóstico completo e acompanhamento real. Avaliação física profunda — BIA, dobras, VO2, força, mobilidade, assimetrias — com plano individualizado e 90 dias de suporte.',
-      perks: ['BIA + dobras + composição corporal','VO2, FC, pressão arterial e saturação','Força muscular e assimetrias bilaterais','Mobilidade e padrão de movimento','Relatório completo + orientação via app','90 dias de acompanhamento contínuo'],
+      why: 'Você está pronto para um diagnóstico completo e acompanhamento real. Avaliação física profunda — dobras cutâneas, VO2, força, mobilidade, assimetrias — com plano individualizado e 90 dias de suporte.',
+      perks: ['Composição corporal por dobras cutâneas','VO2, FC, pressão arterial e saturação','Força muscular e assimetrias bilaterais','Mobilidade e padrão de movimento','Relatório completo + orientação via app','90 dias de acompanhamento contínuo'],
       price: 'A partir de R$450', note: 'até 3x sem juros · conforme plano',
       wpp: 'Fiz+o+quiz+e+o+resultado+foi+AJR+Performance.+Quero+agendar+minha+avalia%C3%A7%C3%A3o!'
     }
@@ -1701,7 +1701,7 @@ window.addEventListener('load', function () {
         <div class="recebe-num">03</div>
         <div class="recebe-body">
           <div class="recebe-title">Definição das suas zonas de treino</div>
-          <div class="recebe-text">FC e intensidades ideais baseadas no seu VO2 e cardiorrespiratório — treino na zona certa, resultado garantido.</div>
+          <div class="recebe-text">FC e intensidades ideais baseadas no seu VO2 e cardiorrespiratório — treino na intensidade certa, medida no seu próprio teste.</div>
         </div>
       </div>
       <div class="recebe-item">
@@ -1759,7 +1759,7 @@ window.addEventListener('load', function () {
         <li>Relatório digital completo</li>
       </ul>
       <div class="plano-foot">
-        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Teste%20de%20VO2%20M%C3%A1ximo%20(R%24349%2C90).%20Pode%20me%20ajudar%3F" onclick="gtag('event','whatsapp_click',{plan:'vo2',source:'card'})" class="btn-plano-outline">Agendar teste de VO2</a>
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20o%20Teste%20de%20VO2%20M%C3%A1ximo%20(R%24349%2C90).%20Pode%20me%20ajudar%3F" data-plan="vo2" data-source="card" class="btn-plano-outline">Agendar teste de VO2</a>
       </div>
     </div>
   </div>
@@ -1788,7 +1788,7 @@ window.addEventListener('load', function () {
         <li>Acompanhamento por 90 dias</li>
       </ul>
       <div class="plano-foot">
-        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" onclick="gtag('event','whatsapp_click',{plan:'ajr_performance',source:'card'})" class="btn-plano-gold">Agendar avaliação</a>
+        <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" data-plan="ajr_performance" data-source="card" class="btn-plano-gold">Agendar avaliação</a>
       </div>
     </div>
   </div>
@@ -1986,7 +1986,7 @@ window.addEventListener('load', function () {
           <span class="qob-icon">🎯</span>
           <span class="qob-body">
             <span class="qob-label">Diagnóstico completo + acompanhamento</span>
-            <span class="qob-desc">BIA, VO2, força, mobilidade, relatório + 90 dias de suporte</span>
+            <span class="qob-desc">Dobras, VO2, força, mobilidade, relatório + 90 dias de suporte</span>
           </span>
           <span class="qob-check">✓</span>
         </button>
@@ -2022,7 +2022,7 @@ window.addEventListener('load', function () {
 
   <div class="pd-strip">
     <div><span class="pd-strip-tag">Para grupos</span><b>Performance Day</b> <span class="pd-strip-txt">Avaliação coletiva para boxes, academias e equipes · a partir de R$179,90</span></div>
-    <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Performance%20Day%20para%20o%20meu%20grupo.%20Pode%20enviar%20uma%20proposta%3F" onclick="gtag('event','whatsapp_click',{plan:'performance_day',source:'strip'})" class="btn-plano-outline">Pedir proposta</a>
+    <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20interesse%20no%20Performance%20Day%20para%20o%20meu%20grupo.%20Pode%20enviar%20uma%20proposta%3F" data-plan="performance_day" data-source="strip" class="btn-plano-outline">Pedir proposta</a>
   </div>
 </section>
 
@@ -2119,7 +2119,7 @@ window.addEventListener('load', function () {
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        O AJR Online é 100% remoto: você preenche o formulário de anamnese e recebe um programa de treino personalizado pelo app. O AJR Performance é presencial em Bauru, com avaliação física completa — BIA, dobras, VO2, força, mobilidade — e acompanhamento de 90 dias.
+        O AJR Online é 100% remoto: você preenche o formulário de anamnese e recebe um programa de treino personalizado pelo app. O AJR Performance é presencial em Bauru, com avaliação física completa — dobras cutâneas, VO2, força, mobilidade — e acompanhamento de 90 dias.
       </div>
     </div>
 
@@ -2177,7 +2177,7 @@ function toggleFaq(btn) {
     <div class="sobre-itens">
       <div class="sobre-item"><div class="sobre-dot"></div>📍 Clínica Vitallite · Rua Gérson França, 18-28, Jd. Estoril · Bauru, SP</div>
       <div class="sobre-item"><div class="sobre-dot"></div>CREF 182634-G/SP</div>
-      <div class="sobre-item"><div class="sobre-dot"></div>Instagram: @aldemirjrtreinador</div>
+      <div class="sobre-item"><div class="sobre-dot"></div>Instagram: @aldemirjr.treinador</div>
       <div class="sobre-item"><div class="sobre-dot"></div>WhatsApp: (14) 99743-2182</div>
       <div class="sobre-item"><div class="sobre-dot"></div>Avaliação individual e em grupo (Performance Day)</div>
     </div>
@@ -2201,14 +2201,14 @@ function toggleFaq(btn) {
   <div class="cta-tag">Pronto para evoluir?</div>
   <h2 class="cta-title">Conhecer o corpo é o<br>primeiro passo para evoluir<br>com <em>segurança.</em></h2>
   <p class="cta-sub">Manda mensagem agora. A gente entende o seu momento e indica o melhor plano — online ou presencial.</p>
-  <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" onclick="gtag('event','whatsapp_click',{plan:'geral',source:'cta'})" class="btn-wpp">
+  <a href="https://wa.me/5514997432182?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20escolhi%20o%20plano%20AJR%20Performance.%20Quero%20saber%20mais%21" data-plan="geral" data-source="cta" class="btn-wpp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
     Falar com o Aldemir agora
   </a>
-  <a href="https://instagram.com/aldemirjrtreinador" class="cta-insta" target="_blank">
-    ou me siga no Instagram <span>@aldemirjrtreinador</span>
+  <a href="https://instagram.com/aldemirjr.treinador" class="cta-insta" target="_blank">
+    ou me siga no Instagram <span>@aldemirjr.treinador</span>
   </a>
 </section>
 
@@ -2216,7 +2216,7 @@ function toggleFaq(btn) {
 <footer>
   <span class="nav-logo-txt" style="opacity:0.6">AJR<span>.</span><small>Avaliação · Performance</small></span>
   <div class="footer-links">
-    <a href="https://instagram.com/aldemirjrtreinador" target="_blank">@aldemirjrtreinador</a>
+    <a href="https://instagram.com/aldemirjr.treinador" target="_blank">@aldemirjr.treinador</a>
     <a href="https://wa.me/5514997432182">WhatsApp</a>
     <a href="#planos">Planos</a>
     <a href="#planos">Performance Day</a>
@@ -2342,5 +2342,6 @@ document.getElementById('loginOverlay').addEventListener('click', function(e){ i
   abrir(inicial || 'vo2', !!inicial, !inicial);
 })();
 </script>
+<script src="ajr-track.js"></script>
 </body>
 </html>
