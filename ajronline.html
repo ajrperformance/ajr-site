@@ -1,682 +1,191 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AJR Online — 3 meses de acompanhamento</title>
-<meta name="description" content="Consultoria online AJR: 3 meses de acompanhamento com ajustes e correções sempre que precisar. Pague pelo InfinitePay, crie sua conta no Clutch, faça a avaliação no app e receba o treino em até 24 horas.">
-<meta name="theme-color" content="#08090b">
-<meta property="og:title" content="AJR Online — 3 meses de acompanhamento, não 3 treinos">
-<meta property="og:description" content="Treino ajustado e corrigido sempre que precisar, com acompanhamento pelo app Clutch.">
-<meta property="og:image" content="https://ajrperformance.com.br/ajronline-hero.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR Online · 3 meses de acompanhamento · Treino no app Clutch</title>
+<meta name="description" content="Treino online individual com o Aldemir Junior: avaliação no app Clutch, treino em até 24 h e ajustes sempre que precisar por 3 meses. R$ 189,90 o trimestre ou R$ 79,90/mês.">
+<link rel="canonical" href="https://ajrperformance.com.br/ajronline">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AJR Online · 3 meses de acompanhamento. Não 3 treinos.">
+<meta property="og:description" content="Treino individual no app Clutch, ajustado sempre que precisar.">
+<meta property="og:image" content="https://ajrperformance.com.br/img/online-video.jpg">
+<meta name="theme-color" content="#0a1424">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<link rel="preload" as="image" href="img/online-video.jpg">
 <style>
-:root {
-  --black: #08090b;
-  --dark: #101114;
-  --card: #17191d;
-  --card2: #1d2025;
-  --border: #26292f;
-  --border-gold: rgba(201,168,76,.25);
-  --accent: #C9A84C;
-  --accent-light: #e2c878;
-  --accent2: #e2c878;
-  --accent-glow: rgba(201,168,76,.18);
-  --text: #f0ede8;
-  --text-soft: #c2c6cb;
-  --muted: #8b929c;
-  --danger: #ff4444;
-  --success: #22c55e;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;min-height:100vh;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:56px 56px;}
-h1,h2,h3,h4,.hero-logo,.section-title,.pricing-hero .logo{font-family:'Chakra Petch',sans-serif;}
-
-/* PRICING PAGE */
-.pricing-wrap{max-width:520px;margin:0 auto;padding:32px 16px 60px;}
-.pricing-hero{text-align:center;margin-bottom:36px;}
-.pricing-hero .logo{font-size:56px;font-weight:900;letter-spacing:6px;color:var(--accent);}
-.pricing-hero .tagline{font-size:20px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-bottom:18px;}
-.pricing-hero h1{font-size:clamp(24px,5vw,34px);font-weight:800;color:var(--text);line-height:1.2;margin-bottom:10px;}
-.pricing-hero p{font-size:14px;color:var(--text-soft);line-height:1.6;max-width:400px;margin:0 auto;}
-.benefits{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
-.benefit-item{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
-.benefit-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
-.benefit-text strong{display:block;font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
-.benefit-text span{font-size:12px;color:var(--muted);line-height:1.4;}
-.price-card{background:linear-gradient(135deg,var(--card) 0%,#101114 100%);border:1.5px solid var(--border-gold);border-radius:16px;padding:28px 24px;margin-bottom:24px;text-align:center;}
-.price-card .badge{display:inline-block;background:rgba(201,162,39,.15);color:var(--accent);border:1px solid var(--border-gold);border-radius:20px;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 14px;margin-bottom:14px;}
-.price-card .amount{font-size:100px;font-weight:900;color:var(--text);line-height:1;}
-.price-card .amount span:first-child{font-size:22px;font-weight:600;color:var(--text-soft);vertical-align:super;margin-right:2px;}
-.price-card .amount-sub{font-size:13px;color:var(--muted);margin-top:4px;margin-bottom:20px;}
-.price-divider{border:none;border-top:1px solid var(--border);margin:16px 0;}
-.price-note{font-size:11px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.5;}
-.pre-contract{background:var(--card2);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;overflow:hidden;}
-.pre-contract-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;user-select:none;}
-.pre-contract-header span{font-size:13px;font-weight:700;color:var(--text-soft);}
-.pre-contract-header .toggle-icon{font-size:12px;color:var(--muted);transition:transform .2s;}
-.pre-contract-header.open .toggle-icon{transform:rotate(180deg);}
-.pre-contract-body{display:none;padding:0 16px 16px;max-height:260px;overflow-y:auto;border-top:1px solid var(--border);}
-.pre-contract-body.open{display:block;}
-.pre-contract-body h3{font-size:11px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin:14px 0 4px;}
-.pre-contract-body p{font-size:12px;color:var(--text-soft);line-height:1.6;}
-.aceite-wrap{display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;padding:12px 14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;cursor:pointer;}
-.aceite-wrap input{margin-top:2px;accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;cursor:pointer;}
-.aceite-wrap span{font-size:12px;color:var(--text-soft);line-height:1.5;}
-.btn-pay[disabled],.btn-pay-outline[disabled]{opacity:.35;pointer-events:none;cursor:not-allowed;}
-
-/* PROGRESS BAR */
-.progress-wrap{position:sticky;top:0;z-index:100;background:var(--dark);border-bottom:1px solid var(--border);padding:12px 16px;}
-.progress-steps{display:flex;gap:4px;max-width:640px;margin:0 auto;}
-.step-dot{flex:1;height:4px;border-radius:2px;background:var(--border);transition:background .3s;}
-.step-dot.active{background:var(--accent);}
-.step-label{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;letter-spacing:.5px;text-transform:uppercase;}
-
-/* HERO */
-.hero{background:linear-gradient(160deg,#101114 0%,#08090b 100%);border-bottom:1px solid var(--border-gold);padding:36px 20px 28px;text-align:center;}
-.hero-logo{font-size:22px;font-weight:900;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:4px;}
-.hero-sub{font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
-.hero h1{font-size:clamp(22px,5vw,32px);font-weight:800;color:var(--text);margin:18px 0 8px;line-height:1.2;}
-.hero p{font-size:14px;color:var(--text-soft);max-width:480px;margin:0 auto;line-height:1.6;}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,162,39,.1);border:1px solid var(--border-gold);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--accent);margin-top:14px;letter-spacing:.5px;}
-
-/* SECTIONS */
-.section{display:none;max-width:640px;margin:0 auto;padding:24px 16px 40px;}
-.section.active{display:block;}
-.section-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
-.section-desc{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
-
-/* CARD */
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
-.card-title{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;}
-
-/* FIELDS */
-.field{display:flex;flex-direction:column;gap:6px;}
-.field label{font-size:12px;font-weight:600;color:var(--text-soft);}
-.field input,.field select,.field textarea{
-  background:#0e0f12;border:1px solid var(--border);border-radius:8px;
-  color:var(--text);font-size:14px;padding:10px 12px;outline:none;
-  transition:border-color .2s;width:100%;
-}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);}
-.field textarea{resize:vertical;min-height:80px;}
-.field select option{background:#101114;}
-
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-
-/* RADIO GROUP */
-.radio-group{display:flex;gap:8px;flex-wrap:wrap;}
-.radio-btn{flex:1;min-width:80px;}
-.radio-btn input{display:none;}
-.radio-btn label{
-  display:flex;align-items:center;justify-content:center;
-  padding:9px 12px;border-radius:8px;border:1px solid var(--border);
-  cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);
-  transition:all .2s;text-align:center;
-}
-.radio-btn input:checked+label{border-color:var(--accent);color:var(--accent);background:rgba(201,162,39,.08);}
-
-/* CHECKBOX GROUP */
-.check-group{display:flex;flex-direction:column;gap:8px;}
-.check-item{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--text-soft);}
-.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;}
-
-/* PHOTO UPLOAD */
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.photo-box{position:relative;}
-.photo-box input[type=file]{display:none;}
-.photo-label{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;border:1.5px dashed var(--border);border-radius:12px;
-  padding:20px 10px;cursor:pointer;transition:border-color .2s;min-height:110px;
-  font-size:11px;color:var(--muted);text-align:center;
-}
-.photo-label:hover{border-color:var(--accent);}
-.photo-label .icon{font-size:24px;}
-.photo-preview{width:100%;height:110px;object-fit:cover;border-radius:10px;display:none;}
-
-/* MEASUREMENT */
-.meas-group-hdr{font-size:12px;font-weight:700;color:var(--text-soft);margin:18px 0 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:8px;}
-.meas-group-hdr:first-child{margin-top:0;}
-.meas-subhint{font-size:11px;color:var(--muted);font-weight:400;}
-.opt-badge{font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:4px;}
-.meas-intro{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
-.mnum{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:20px;height:20px;border-radius:50%;
-  background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.35);
-  color:var(--accent);font-size:10px;font-weight:800;
-  margin-right:5px;flex-shrink:0;vertical-align:middle;
-}
-.meas-tip{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4;}
-
-/* CONTRACT */
-.contract-box{
-  background:#070e1a;border:1px solid var(--border);border-radius:10px;
-  padding:18px;font-size:12px;color:var(--text-soft);line-height:1.8;
-  max-height:320px;overflow-y:auto;margin-bottom:16px;
-}
-.contract-box h3{color:var(--accent);font-size:13px;margin:14px 0 6px;letter-spacing:.5px;}
-.contract-box h3:first-child{margin-top:0;}
-.contract-box p{margin-bottom:8px;}
-
-/* SIGNATURE */
-#sigCanvas{
-  width:100%;height:160px;background:#060d1a;border:1px solid var(--border);
-  border-radius:10px;cursor:crosshair;display:block;touch-action:none;
-}
-.sig-actions{display:flex;gap:8px;margin-top:8px;}
-
-/* BUTTONS */
-.btn{
-  padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;
-  cursor:pointer;border:none;transition:all .2s;letter-spacing:.3px;
-}
-.btn-primary{background:var(--accent);color:#000;}
-.btn-primary:hover{background:var(--accent-light);}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted);}
-.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
-.btn-sm{padding:7px 14px;font-size:12px;}
-
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;}
-.nav-bar .btn{flex:1;}
-
-/* GOLD DIVIDER */
-.gold-line{height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:16px 0;opacity:.35;}
-
-/* SUCCESS */
-.success-wrap{text-align:center;padding:48px 20px;}
-.success-icon{font-size:56px;margin-bottom:16px;}
-.success-title{font-size:26px;font-weight:800;color:var(--text);margin-bottom:8px;}
-.success-sub{font-size:14px;color:var(--muted);line-height:1.6;max-width:400px;margin:0 auto 28px;}
-.pay-options{display:flex;flex-direction:column;gap:12px;max-width:360px;margin:0 auto;}
-.btn-pay{
-  display:block;text-align:center;background:var(--accent);color:#000;
-  padding:14px 24px;border-radius:12px;font-weight:800;font-size:15px;
-  text-decoration:none;letter-spacing:.3px;transition:background .2s;
-}
-.btn-pay:hover{background:var(--accent-light);}
-.btn-pay-outline{
-  display:block;text-align:center;background:transparent;color:var(--accent);
-  border:2px solid var(--accent);padding:13px 24px;border-radius:12px;
-  font-weight:800;font-size:15px;text-decoration:none;letter-spacing:.3px;
-  transition:all .2s;
-}
-.btn-pay-outline:hover{background:rgba(201,162,39,.1);}
-.pay-badge{font-size:11px;font-weight:600;color:var(--muted);margin-top:4px;display:block;}
-
-/* COUPON */
-.coupon-wrap{max-width:360px;margin:0 auto 24px;text-align:left;}
-.coupon-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
-.coupon-row{display:flex;gap:8px;}
-.coupon-input{
-  flex:1;background:var(--card);border:1.5px solid rgba(255,255,255,.12);
-  border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;
-  font-weight:600;text-transform:uppercase;letter-spacing:1px;outline:none;
-  transition:border-color .2s;
-}
-.coupon-input:focus{border-color:var(--accent);}
-.coupon-input::placeholder{text-transform:none;letter-spacing:0;font-weight:400;}
-.coupon-btn{
-  background:var(--accent);color:#000;border:none;border-radius:10px;
-  padding:11px 18px;font-weight:800;font-size:13px;cursor:pointer;
-  transition:background .2s;white-space:nowrap;
-}
-.coupon-btn:hover{background:var(--accent-light);}
-.coupon-feedback{font-size:12px;font-weight:600;margin-top:8px;min-height:18px;}
-.coupon-feedback.ok{color:#4caf50;}
-.coupon-feedback.err{color:#f44336;}
-.discount-badge{
-  display:inline-block;background:rgba(76,175,80,.15);color:#4caf50;
-  border:1px solid rgba(76,175,80,.3);border-radius:6px;
-  font-size:11px;font-weight:800;padding:2px 8px;margin-left:8px;vertical-align:middle;
-}
-.price-original{text-decoration:line-through;color:var(--muted);font-size:13px;margin-right:4px;}
-.price-new{color:var(--accent);font-weight:800;}
-
-/* SPINNER */
-.spinner{display:none;width:20px;height:20px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-/* REQUIRED */
-.req{color:var(--danger);margin-left:2px;}
-
-@media (max-width:500px){
-  .row,.row3{grid-template-columns:1fr;}
-  .photo-grid{grid-template-columns:1fr 1fr;}
-}
-@media print{.progress-wrap,.nav-bar{display:none;}}
-
-/* WHATSAPP FLOAT */
-.wa-float{
-  position:fixed;bottom:20px;right:20px;z-index:999;
-  background:#25d366;color:#fff;
-  width:52px;height:52px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:26px;text-decoration:none;
-  box-shadow:0 4px 16px rgba(37,211,102,.45);
-  transition:transform .2s;
-}
-.wa-float:hover{transform:scale(1.1);}
-</style>
-<style>
-/* ═══ LANDING AJR ONLINE (2026-10) — escopo #secPricing ═══ */
-#secPricing{
-  --gold:#C9A84C; --gold-lt:#e2c878; --gold-dk:#9f8038;
-  --rust:#AB4726; --rust-lt:#d0714c; --iron:#1b1a19; --cement:#2a2826;
-  --navy:#17191d; --surface:#101114; --bg:#08090b; --input:#0e0f12;
-  --border:rgba(201,168,76,.22); --line:#26292f;
-  --gray:#a3a9b1; --dim:#7a8088; --off:#f0ede8;
-  --ok:#4CAF7D;
-  color-scheme:dark;
-}
-#secPricing img{max-width:100%;display:block}
-#secPricing a{color:inherit}
-#secPricing .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-#secPricing .mono{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:2px}
-#secPricing .kicker{font:700 11px 'JetBrains Mono',monospace;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px}
-#secPricing .kicker::before{content:"";width:22px;height:1px;background:var(--gold)}
-#secPricing .kicker.rust{color:var(--rust-lt)}
-#secPricing .kicker.rust::before{background:var(--rust-lt)}
-#secPricing h1,#secPricing h2,#secPricing h3{font-family:'Chakra Petch',sans-serif;text-transform:uppercase;line-height:1.05;letter-spacing:-.3px;text-wrap:balance}
-#secPricing h2{font-size:clamp(26px,4.4vw,40px);color:#fff}
-#secPricing h2 em,#secPricing h1 em{font-style:normal;color:var(--gold)}
-#secPricing .lead{font-size:16px;line-height:1.6;color:var(--gray);max-width:560px}
-#secPricing section{padding:72px 0}
-#secPricing .lp-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;border:0;background:var(--gold);color:#101114;
-  font:700 14px 'Chakra Petch',sans-serif;letter-spacing:1.6px;text-transform:uppercase;text-decoration:none;cursor:pointer;
-  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));transition:background .15s,transform .15s}
-#secPricing .lp-btn:hover{background:var(--gold-lt)}
-#secPricing .lp-btn:active{transform:translateY(1px)}
-#secPricing .lp-btn.ghost{background:transparent;color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
-#secPricing .lp-btn.ghost:hover{background:rgba(201,168,76,.1)}
-#secPricing .lp-btn.rust{background:var(--rust);color:#fff}
-#secPricing .lp-btn.rust:hover{background:var(--rust-lt)}
-#secPricing .lp-btn.block{width:100%}
-#secPricing .lp-btn[aria-disabled=true]{opacity:.35;pointer-events:none}
-#secPricing .lp-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
-#secPricing .top{position:sticky;top:0;z-index:40;background:rgba(8,9,11,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
-#secPricing .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-#secPricing .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 13px 'Chakra Petch',sans-serif;letter-spacing:2px;color:var(--gold)}
-#secPricing .brand img{width:34px;height:34px;object-fit:contain}
-#secPricing .brand span{color:var(--off)}
-#secPricing .brand b{color:var(--rust-lt);font-weight:700}
-#secPricing .top .lp-btn{padding:10px 16px;font-size:12px}
-#secPricing .lp-hero{padding:40px 0 64px;position:relative}
-#secPricing .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
-#secPricing .lp-hero h1{font-size:clamp(36px,6.4vw,66px);color:#fff;margin-bottom:18px}
-#secPricing .lp-hero h1 .strike{position:relative;color:var(--dim);white-space:nowrap}
-#secPricing .lp-hero h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:52%;height:4px;background:var(--rust);transform:rotate(-3deg)}
-#secPricing .lp-hero .lead{font-size:17px;margin-bottom:28px}
-#secPricing .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
-#secPricing .hero-facts{display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
-#secPricing .hero-facts div{font:700 22px 'Chakra Petch',sans-serif;color:#fff}
-#secPricing .hero-facts small{display:block;font:400 10px 'JetBrains Mono',monospace;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);margin-top:4px}
-#secPricing .hero-photo{position:relative}
-#secPricing .hero-photo .frame{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--border);clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,28px 100%,0 calc(100% - 28px))}
-#secPricing .hero-photo .frame img{width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:saturate(.85) contrast(1.05)}
-#secPricing .hero-photo .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,9,11,.85))}
-#secPricing .hero-photo .tag{position:absolute;left:18px;bottom:18px;z-index:2;font:700 10px 'JetBrains Mono',monospace;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
-#secPricing .hero-photo .tag b{display:block;font:700 15px 'Chakra Petch',sans-serif;letter-spacing:1px;color:#fff;margin-top:4px}
-#secPricing .corner{position:absolute;width:44px;height:44px;border-color:var(--gold);border-style:solid;border-width:0}
-#secPricing .corner.tl{top:-10px;left:-10px;border-top-width:2px;border-left-width:2px}
-#secPricing .corner.br{bottom:-10px;right:-10px;border-bottom-width:2px;border-right-width:2px}
-#secPricing .versus{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px}
-#secPricing .vs-card{padding:26px 24px;border:1px solid var(--line);background:var(--surface)}
-#secPricing .vs-card h3{font-size:16px;letter-spacing:1px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
-#secPricing .vs-card.no h3{color:var(--dim)}
-#secPricing .vs-card.yes{border-color:var(--gold);background:linear-gradient(160deg,rgba(201,168,76,.08),var(--navy) 60%)}
-#secPricing .vs-card.yes h3{color:var(--gold)}
-#secPricing .vs-card ul{list-style:none;display:grid;gap:12px}
-#secPricing .vs-card li{display:grid;grid-template-columns:20px 1fr;gap:10px;font-size:14.5px;line-height:1.5;color:var(--gray)}
-#secPricing .vs-card.yes li{color:var(--off)}
-#secPricing .vs-card li i{font-style:normal;font:700 13px 'JetBrains Mono',monospace}
-#secPricing .vs-card.no li i{color:var(--dim)}
-#secPricing .vs-card.yes li i{color:var(--gold)}
-#secPricing .pill{font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;padding:4px 8px;border:1px solid currentColor}
-#secPricing .timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px;border:1px solid var(--border)}
-#secPricing .tl-step{padding:24px 22px;position:relative;border-right:1px solid var(--border)}
-#secPricing .tl-step:last-child{border-right:0}
-#secPricing .tl-step .n{font:700 44px/1 'Chakra Petch',sans-serif;color:var(--gold);opacity:.9}
-#secPricing .tl-step .n small{font-size:13px;letter-spacing:2px;margin-left:6px;color:var(--gray)}
-#secPricing .tl-step h3{font-size:15px;color:#fff;letter-spacing:1px;margin:12px 0 8px}
-#secPricing .tl-step p{font-size:14px;line-height:1.55;color:var(--gray)}
-#secPricing .tl-bar{grid-column:1/-1;height:4px;background:linear-gradient(90deg,var(--gold-dk),var(--gold),var(--gold-lt));position:relative}
-#secPricing .tl-bar span{position:absolute;right:16px;top:12px}
-#secPricing .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-#secPricing .split-photo{position:relative;aspect-ratio:3/2;overflow:hidden;border:1px solid var(--border)}
-#secPricing .split-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:saturate(.85)}
-#secPricing .adj-list{display:grid;gap:10px;margin-top:24px}
-#secPricing .adj{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:14px 16px;background:var(--navy);border:1px solid var(--line)}
-#secPricing .adj .k{font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;color:var(--gold);padding-top:3px;width:78px}
-#secPricing .adj p{font-size:14.5px;line-height:1.5;color:var(--off)}
-#secPricing .adj p span{color:var(--gray)}
-#secPricing .how{background:linear-gradient(180deg,transparent,rgba(201,168,76,.04) 40%,transparent)}
-#secPricing .how-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;margin-top:36px}
-#secPricing .steps{list-style:none;display:grid;gap:0;counter-reset:s}
-#secPricing .steps li{display:grid;grid-template-columns:56px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);counter-increment:s}
-#secPricing .steps li:first-child{border-top:1px solid var(--line)}
-#secPricing .steps li::before{content:"0" counter(s);font:700 26px/1 'Chakra Petch',sans-serif;color:var(--gold)}
-#secPricing .steps li.app::before{color:var(--rust-lt)}
-#secPricing .steps h3{font-size:16px;color:#fff;letter-spacing:1px;margin-bottom:6px}
-#secPricing .steps p{font-size:14.5px;line-height:1.55;color:var(--gray)}
-#secPricing .steps .where{display:inline-block;margin-top:8px;font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;padding:3px 8px;border:1px solid var(--border);color:var(--gold)}
-#secPricing .steps li.app .where{border-color:rgba(171,71,38,.6);color:var(--rust-lt)}
-#secPricing .phone-wrap{display:flex;justify-content:center;position:relative}
-#secPricing .phone-wrap::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.22),transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(10px)}
-#secPricing .phone{position:relative;width:270px;aspect-ratio:9/18.5;background:#0b0a0a;border:2px solid #3a3633;border-radius:38px;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-#secPricing .phone::before{content:"";position:absolute;top:16px;left:50%;transform:translateX(-50%);width:80px;height:20px;background:#000;border-radius:12px;z-index:2}
-#secPricing .screen{height:100%;border-radius:29px;overflow:hidden;background:var(--iron);background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:22px 22px;padding:48px 16px 18px;display:flex;flex-direction:column;font-family:'Space Grotesk',sans-serif}
-#secPricing .app-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-#secPricing .app-logo{font:700 15px 'Chakra Petch',sans-serif;letter-spacing:2.5px;color:#fff}
-#secPricing .app-logo b{color:var(--gold)}
-#secPricing .app-chip{font:700 8px 'JetBrains Mono',monospace;letter-spacing:1.2px;color:var(--gold);border:1px solid rgba(201,168,76,.5);padding:3px 6px}
-#secPricing .app-step{font:700 9px 'JetBrains Mono',monospace;letter-spacing:1.5px;color:#9b948d;text-transform:uppercase}
-#secPricing .app-prog{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:8px 0 18px}
-#secPricing .app-prog i{height:3px;background:var(--cement)}
-#secPricing .app-prog i.on{background:var(--gold)}
-#secPricing .app-q{font:700 17px/1.2 'Chakra Petch',sans-serif;text-transform:uppercase;color:#fff;margin-bottom:14px}
-#secPricing .app-opts{display:grid;gap:7px}
-#secPricing .app-opts span{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--cement);border:1px solid #3a3633;font-size:12px;color:#d8d2cb}
-#secPricing .app-opts span.sel{border-color:var(--gold);background:rgba(201,168,76,.14);color:#fff}
-#secPricing .app-opts span.sel::after{content:"✓";color:var(--gold);font-weight:700}
-#secPricing .app-note{margin-top:auto;font:400 9px 'JetBrains Mono',monospace;letter-spacing:1px;color:#8a837c;text-transform:uppercase;margin-bottom:10px;text-align:center}
-#secPricing .app-btn{background:var(--gold);color:#101114;text-align:center;font:700 11px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:12px}
-#secPricing .phone-cap{position:absolute;bottom:-52px;right:-10px;background:var(--surface);border:1px solid var(--border);padding:10px 12px;font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;max-width:170px;line-height:1.5}
-#secPricing .phone-cap b{display:block;color:#fff;font-family:'Chakra Petch',sans-serif;font-size:12px;letter-spacing:1px}
-#secPricing .coach{display:grid;grid-template-columns:320px 1fr;gap:48px;align-items:center}
-#secPricing .coach-photo{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--border)}
-#secPricing .coach-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
-#secPricing .creds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}
-#secPricing .cred{padding:16px;background:var(--navy);border:1px solid var(--line)}
-#secPricing .cred b{display:block;font:700 22px 'Chakra Petch',sans-serif;color:var(--gold)}
-#secPricing .cred span{font-size:12.5px;line-height:1.45;color:var(--gray)}
-#secPricing .plans{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:36px;align-items:stretch}
-#secPricing .plan{padding:30px 26px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column}
-#secPricing .plan.main{border-color:var(--gold);background:linear-gradient(160deg,rgba(201,168,76,.1),var(--navy) 55%);position:relative}
-#secPricing .plan .lp-badge{align-self:flex-start;font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.8px;text-transform:uppercase;padding:5px 10px;margin-bottom:18px;border:1px solid var(--border);color:var(--gray)}
-#secPricing .plan.main .lp-badge{background:var(--gold);border-color:var(--gold);color:#101114}
-#secPricing .plan h3{font-size:20px;color:#fff;letter-spacing:1px}
-#secPricing .price{display:flex;align-items:baseline;gap:6px;margin:14px 0 4px}
-#secPricing .price small{font:600 18px 'Space Grotesk',sans-serif;color:var(--gray)}
-#secPricing .price strong{font:700 56px/1 'Chakra Petch',sans-serif;color:#fff}
-#secPricing .plan.main .price strong{color:var(--gold)}
-#secPricing .price-sub{font-size:13px;color:var(--gray);margin-bottom:20px}
-#secPricing .plan ul{list-style:none;display:grid;gap:9px;margin-bottom:24px}
-#secPricing .plan li{display:grid;grid-template-columns:18px 1fr;gap:8px;font-size:14px;line-height:1.45;color:var(--off)}
-#secPricing .plan li::before{content:"→";color:var(--gold);font-family:'JetBrains Mono'}
-#secPricing .plan .lp-btn{margin-top:auto}
-#secPricing .discount{font:700 10px 'JetBrains Mono',monospace;letter-spacing:1px;color:#101114;background:var(--ok);padding:2px 6px;margin-left:6px}
-#secPricing .checkout{max-width:760px;margin:20px auto 0;display:grid;gap:12px}
-#secPricing .terms{border:1px solid var(--line);background:var(--surface)}
-#secPricing .terms summary{cursor:pointer;list-style:none;padding:14px 16px;display:flex;justify-content:space-between;font:700 11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)}
-#secPricing .terms summary::-webkit-details-marker{display:none}
-#secPricing .terms summary::after{content:"+";color:var(--gold);font-size:14px}
-#secPricing .terms[open] summary::after{content:"−"}
-#secPricing .terms ol{padding:0 18px 16px 34px;display:grid;gap:8px}
-#secPricing .terms li{font-size:13px;line-height:1.55;color:var(--gray)}
-#secPricing .terms li b{color:var(--off)}
-#secPricing .aceite{display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:start;padding:14px 16px;border:1px solid var(--border);background:var(--navy);cursor:pointer;font-size:13.5px;line-height:1.5;color:var(--gray)}
-#secPricing .aceite input{width:18px;height:18px;margin-top:1px;accent-color:var(--gold)}
-#secPricing .aceite-hint{font:400 11px 'JetBrains Mono',monospace;letter-spacing:1px;color:var(--dim);text-align:center}
-#secPricing .coupon{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-#secPricing .coupon label{font:700 10px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray)}
-#secPricing .coupon input{flex:1;min-width:140px;padding:11px 12px;background:var(--input);border:1px solid rgba(255,255,255,.12);color:var(--off);font:500 15px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px;outline:none}
-#secPricing .coupon input:focus{border-color:var(--gold)}
-#secPricing .coupon button{padding:11px 16px;background:transparent;border:1px solid var(--gold);color:var(--gold);font:700 12px 'Chakra Petch',sans-serif;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
-#secPricing .coupon-fb{width:100%;font-size:12.5px}
-#secPricing .coupon-fb.ok{color:var(--ok)}
-#secPricing .coupon-fb.err{color:#E0685F}
-#secPricing .next{display:none;max-width:760px;margin:24px auto 0;padding:26px 24px;border:1px solid var(--gold);background:linear-gradient(160deg,rgba(201,168,76,.12),var(--surface) 60%)}
-#secPricing .next.show{display:block;animation:in .35s ease}
-@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#secPricing .next h3{font-size:22px;color:#fff;margin-bottom:8px}
-#secPricing .next p{font-size:14.5px;line-height:1.55;color:var(--gray);margin-bottom:18px}
-#secPricing .next-actions{display:grid;grid-template-columns:1.3fr 1fr;gap:10px}
-#secPricing .faq{max-width:760px;margin:30px auto 0;display:grid;gap:8px}
-#secPricing .faq details{border:1px solid var(--line);background:var(--surface)}
-#secPricing .faq summary{cursor:pointer;list-style:none;padding:16px 18px;font:700 14px 'Chakra Petch',sans-serif;letter-spacing:.8px;text-transform:uppercase;color:#fff;display:flex;justify-content:space-between;gap:16px}
-#secPricing .faq summary::-webkit-details-marker{display:none}
-#secPricing .faq summary::after{content:"+";color:var(--gold)}
-#secPricing .faq details[open] summary::after{content:"−"}
-#secPricing .faq p{padding:0 18px 16px;font-size:14.5px;line-height:1.6;color:var(--gray)}
-#secPricing .final{text-align:center;padding:72px 0 88px;border-top:1px solid var(--border)}
-#secPricing .final h2{margin-bottom:14px}
-#secPricing .final .lead{margin:0 auto 26px}
-#secPricing footer{border-top:1px solid var(--line);padding:26px 0 40px;text-align:center;font:400 11px 'JetBrains Mono',monospace;letter-spacing:1px;color:var(--dim);line-height:1.9}
-#secPricing footer a{color:var(--gray);text-decoration:none}
-#secPricing .center{text-align:center}
-#secPricing .center .lead{margin:0 auto}
-#secPricing .center .kicker{justify-content:center}
-@media (max-width:860px){#secPricing section{padding:56px 0}
-#secPricing .lp-hero{padding:20px 0 48px}
-#secPricing .hero-grid,#secPricing .split,#secPricing .how-grid,#secPricing .coach,#secPricing .plans{grid-template-columns:1fr;gap:32px}
-#secPricing .hero-photo{order:-1}
-#secPricing .hero-photo .frame{aspect-ratio:16/11}
-#secPricing .corner{display:none}
-#secPricing .versus{grid-template-columns:1fr}
-#secPricing .timeline{grid-template-columns:1fr}
-#secPricing .tl-step{border-right:0;border-bottom:1px solid var(--border)}
-#secPricing .tl-step:last-child{border-bottom:0}
-#secPricing .coach-photo{max-width:320px;aspect-ratio:1/1}
-#secPricing .creds{grid-template-columns:1fr 1fr 1fr}
-#secPricing .phone-wrap{flex-direction:column;align-items:center;padding-bottom:0}
-#secPricing .phone-cap{position:static;margin-top:16px;max-width:none;text-align:center}}
-@media (max-width:520px){#secPricing .wrap{padding:0 16px}
-#secPricing .top .lp-btn{display:none}
-#secPricing .hero-facts{gap:18px}
-#secPricing .creds{grid-template-columns:1fr}
-#secPricing .next-actions{grid-template-columns:1fr}
-#secPricing .lp-btn{padding:15px 20px}
-#secPricing .hero-ctas .lp-btn{flex:1}}
-@media (prefers-reduced-motion:reduce){}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.vs{grid-template-columns:1fr}}
+  .vs .card.off{opacity:.85}
+  .vs ul{list-style:none;margin-top:14px}
+  .vs li{padding-left:26px;position:relative;margin-bottom:10px;color:var(--tx2);font-size:15px}
+  .vs .off li:before{content:"×";position:absolute;left:2px;top:-1px;color:#e2725b;font-family:var(--m);font-weight:700}
+  .vs .hl li:before{content:"✓";position:absolute;left:2px;top:-1px;color:var(--gold);font-family:var(--m);font-weight:700}
+  .tl{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .tl>div{background:var(--card);padding:24px}
+  @media(max-width:760px){.tl{grid-template-columns:1fr}}
+  .adj{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  @media(max-width:960px){.adj{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.adj{grid-template-columns:1fr}}
+  .adj .card{padding:20px}
+  .adj b{display:block;font-family:var(--m);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media(max-width:960px){.steps4{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.steps4{grid-template-columns:1fr}}
+  .steps4 .tag{margin:14px 0 0}
+  /* planos e pagamento */
+  .plans2{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px}
+  @media(max-width:760px){.plans2{grid-template-columns:1fr}}
+  .plan .price .discount{font-family:var(--m);font-size:13px;color:#7dd3a0;margin-left:8px}
+  .pay[aria-disabled="true"]{opacity:.45;cursor:not-allowed;transform:none}
+  .aceite{display:flex;gap:12px;align-items:flex-start;margin-top:22px;max-width:900px;padding:16px 18px;border:1px solid var(--line2);border-radius:var(--r);background:var(--card)}
+  .aceite input{width:20px;height:20px;accent-color:#f5c21b;margin-top:2px;flex:none}
+  .aceite label{font-size:15px;color:var(--tx2)}
+  #aceiteHint{display:block;font-family:var(--m);font-size:12px;color:var(--gold);margin-top:4px}
+  .coupon{display:flex;gap:10px;margin-top:18px;max-width:900px;flex-wrap:wrap;align-items:center}
+  .coupon input{background:var(--card);border:1px solid var(--line2);border-radius:8px;color:var(--tx);padding:11px 14px;font-family:var(--m);font-size:14px;text-transform:uppercase;width:180px}
+  .coupon-fb{font-family:var(--m);font-size:12.5px}
+  .coupon-fb.ok{color:#7dd3a0}.coupon-fb.err{color:#e2725b}
+  .terms{max-width:900px;margin-top:18px}
+  .terms p{font-size:14px;margin-top:8px}
+  .terms b{color:var(--tx)}
+  #next{display:none;max-width:900px;margin-top:22px}
+  #next.show{display:block}
 </style>
 </head>
 <body>
 
-<a href="https://wa.me/5514997432182?text=Olá%2C%20tenho%20dúvidas%20sobre%20o%20AJR%20Online" target="_blank" class="wa-float" title="Fale no WhatsApp">💬</a>
-
-<!-- PROGRESS (oculto até o formulário abrir) -->
-<div class="progress-wrap" id="progressWrap" style="display:none;">
-  <div class="progress-steps" id="progressBar">
-    <div class="step-dot active"></div>
-    <div class="step-dot"></div>
-    <div class="step-dot"></div>
-    <div class="step-dot"></div>
-    <div class="step-dot"></div>
-    <div class="step-dot"></div>
-  </div>
-  <div class="step-label" id="stepLabel">Passo 1 de 6 — Dados Pessoais</div>
-</div>
-
-<!-- HERO (oculto até o formulário abrir) -->
-<div class="hero" id="formHero" style="display:none;">
-  <div class="hero-logo">AJR</div>
-  <div class="hero-sub">Online</div>
-  <h1>Seu treino ideal começa aqui.</h1>
-  <p>Preencha com atenção. Quanto mais detalhes, melhor o programa montado para você.</p>
-  <div class="hero-badge">🔒 Formulário seguro · LGPD</div>
-</div>
-
-<!-- ══════════════ PRICING PAGE ══════════════ -->
-<div id="secPricing">
-
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="index.html">AJR <span>ONLINE</span></a>
-    <a class="lp-btn" href="#planos">Quero começar</a>
+    <a href="./" class="logo" aria-label="AJR Performance"><img src="img/logo-full-gold.png" alt="AJR Performance" width="180" height="56"></a>
+    <nav class="nav">
+      <a href="#diferenca" class="hide-m">A diferença</a>
+      <a href="#como-funciona" class="hide-m">Como funciona</a>
+      <a href="#duvidas" class="hide-m">Dúvidas</a>
+      <a class="btn btn-gold btn-sm" href="#planos">Quero começar</a>
+    </nav>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="lp-hero">
-  <div class="wrap hero-grid">
+<section class="hero">
+  <div class="wrap grid">
     <div>
-      <div class="kicker">Consultoria online · AJR Performance</div>
-      <h1>3 meses de <em>acompanhamento.</em><br><span class="strike">Não 3 treinos.</span></h1>
-      <p class="lead">Seu treino é montado a partir da sua avaliação e ajustado sempre que precisar: mudou a rotina, apareceu uma dor, a execução não está boa, o progresso travou. Eu ajusto e corrijo junto com você, do primeiro ao último dia.</p>
-      <div class="hero-ctas">
-        <a class="lp-btn" href="#planos">Ver planos</a>
-        <a class="lp-btn ghost" href="#como-funciona">Como funciona</a>
+      <span class="eyebrow">AJR Online · treino remoto</span>
+      <h1>3 meses de acompanhamento. <span class="gold">Não 3 treinos.</span></h1>
+      <p class="lead" style="margin-top:20px">Seu treino é montado a partir da sua avaliação no app Clutch e ajustado sempre que precisar: mudou a rotina, apareceu uma dor, a execução não está boa ou o progresso travou. Eu corrijo junto com você, do primeiro ao último dia.</p>
+      <div class="ctas">
+        <a class="btn btn-gold" href="#planos">Ver planos <span class="arr">→</span></a>
+        <a class="btn btn-line" href="#como-funciona">Como funciona</a>
       </div>
-      <div class="hero-facts">
-        <div>90 dias<small>de acompanhamento</small></div>
-        <div>Sempre<small>que precisar de ajuste</small></div>
-        <div>24h<small>treino pronto após a avaliação</small></div>
+      <div class="proof">
+        <span><b>90 dias</b>&nbsp;de acompanhamento</span>
+        <span><b>24 h</b>&nbsp;para o treino ficar pronto</span>
+        <span>Correção por vídeo</span>
       </div>
     </div>
-    <div class="hero-photo">
-      <span class="corner tl"></span><span class="corner br"></span>
-      <div class="frame">
-        <img src="ajronline-hero.jpg" alt="Análise de execução de agachamento em vídeo no notebook" fetchpriority="high">
-      </div>
-      <div class="tag">Análise de execução por vídeo<b>Correção técnica a distância</b></div>
+    <div class="pic">
+      <img src="img/online-video.jpg" alt="Notebook mostrando o vídeo de um aluno agachando para correção de execução" width="1000" height="1500">
+      <div class="hud h1"><small>Treino pronto</small><b>em até 24 h</b></div>
+      <div class="hud h2"><small>Ajustes</small><b>sem esperar o mês virar</b></div>
+      <div class="hud h3"><span><small>Execução · </small><b>vídeo enviado → correção</b></span><small>app Clutch</small></div>
+      <svg class="ecg" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50 H260 L280 50 L292 20 L304 70 L318 8 L332 62 L344 50 H620 L640 50 L652 20 L664 70 L678 8 L692 62 L704 50 H980 L1000 50 L1012 20 L1024 70 L1038 8 L1052 62 L1064 50 H1200"/></svg>
     </div>
   </div>
 </section>
 
-<!-- 3 MESES x 3 TREINOS -->
-<section id="diferenca">
+<!-- DIFERENÇA -->
+<section id="diferenca" class="alt">
   <div class="wrap">
-    <div class="kicker">A diferença</div>
-    <h2>Treino pronto não acompanha você. <em>Eu acompanho.</em></h2>
-    <div class="versus">
-      <div class="vs-card no">
-        <h3>Planilha mensal <span class="pill">3 treinos</span></h3>
+    <div class="head">
+      <span class="eyebrow">A diferença</span>
+      <h2>Treino pronto não acompanha você. <span class="gold">Eu acompanho.</span></h2>
+    </div>
+    <div class="vs">
+      <div class="card off">
+        <span class="idx">PLANILHA MENSAL · 3 TREINOS</span>
         <ul>
-          <li><i>×</i>Um treino por mês e você se vira até o próximo</li>
-          <li><i>×</i>Ninguém confere se a execução está certa</li>
-          <li><i>×</i>Viagem, dor ou academia nova e o plano para de servir</li>
-          <li><i>×</i>Progresso travou? Espera o mês virar</li>
+          <li>Um treino por mês e você se vira até o próximo</li>
+          <li>Ninguém confere se a execução está certa</li>
+          <li>Viagem, dor ou academia nova e o plano para de servir</li>
+          <li>Progresso travou? Espera o mês virar</li>
         </ul>
       </div>
-      <div class="vs-card yes">
-        <h3>AJR Online <span class="pill">3 meses</span></h3>
+      <div class="card hl">
+        <span class="idx">AJR ONLINE · 3 MESES</span>
         <ul>
-          <li><i>✓</i>Treino ajustado sempre que for necessário, sem esperar o mês virar</li>
-          <li><i>✓</i>Correção de execução pelos seus vídeos</li>
-          <li><i>✓</i>Plano adaptado à sua rotina real, semana a semana</li>
-          <li><i>✓</i>Progressão planejada para os 3 meses inteiros</li>
+          <li>Treino ajustado sempre que for necessário, sem esperar o mês virar</li>
+          <li>Correção de execução pelos seus vídeos</li>
+          <li>Plano adaptado à sua rotina real, semana a semana</li>
+          <li>Progressão planejada para os 3 meses inteiros</li>
         </ul>
       </div>
     </div>
 
-    <div class="timeline">
-      <div class="tl-step">
-        <div class="n">01<small>MÊS</small></div>
-        <h3>Base e técnica</h3>
-        <p>Avaliação de entrada, treino montado e os primeiros ajustes de carga, volume e execução.</p>
+    <div style="margin-top:40px">
+      <span class="eyebrow">Os 3 meses</span>
+      <div class="tl">
+        <div><span class="idx">MÊS 01</span><h3>Base e técnica</h3><p class="mut">Avaliação de entrada, treino montado e os primeiros ajustes de carga, volume e execução.</p></div>
+        <div><span class="idx">MÊS 02</span><h3>Progressão</h3><p class="mut">Com o retorno dos treinos, o plano evolui no seu ritmo. O que não encaixou, a gente corrige.</p></div>
+        <div><span class="idx">MÊS 03</span><h3>Consolidação</h3><p class="mut">Hora de colher resultado, comparar com o começo e definir o próximo ciclo.</p></div>
       </div>
-      <div class="tl-step">
-        <div class="n">02<small>MÊS</small></div>
-        <h3>Progressão</h3>
-        <p>Com o retorno dos treinos, o plano evolui no seu ritmo. O que não encaixou, a gente corrige.</p>
-      </div>
-      <div class="tl-step">
-        <div class="n">03<small>MÊS</small></div>
-        <h3>Consolidação</h3>
-        <p>Hora de colher resultado, comparar com o começo e definir o próximo ciclo.</p>
-      </div>
-      <div class="tl-bar"></div>
     </div>
   </div>
 </section>
 
 <!-- AJUSTES -->
-<section id="ajustes">
-  <div class="wrap split">
-    <div class="split-photo"><img src="ajronline-ajustes.jpg" alt="Aldemir corrigindo a postura de um atleta" loading="lazy"></div>
-    <div>
-      <div class="kicker">Ajustes e correções</div>
-      <h2>Mudou alguma coisa? <em>O treino muda junto.</em></h2>
-      <div class="adj-list">
-        <div class="adj"><div class="k">Rotina</div><p>Semana corrida ou viagem. <span>Reorganizo os dias e encurto as sessões.</span></p></div>
-        <div class="adj"><div class="k">Dor</div><p>Algo incomodou. <span>Troco o exercício e ajusto a carga.</span></p></div>
-        <div class="adj"><div class="k">Execução</div><p>Você grava o exercício. <span>Eu devolvo a correção do movimento.</span></p></div>
-        <div class="adj"><div class="k">Estrutura</div><p>Academia nova ou treino em casa. <span>Adapto ao equipamento que você tem.</span></p></div>
-        <div class="adj"><div class="k">Platô</div><p>O progresso parou. <span>Mudo o estímulo antes de você desanimar.</span></p></div>
-      </div>
+<section class="grey">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Ajustes e correções</span>
+      <h2>Mudou alguma coisa? <span class="gold">O treino muda junto.</span></h2>
+    </div>
+    <div class="adj">
+      <div class="card"><b>Rotina</b><p class="mut small">Semana corrida ou viagem. Reorganizo os dias e encurto as sessões.</p></div>
+      <div class="card"><b>Dor</b><p class="mut small">Algo incomodou. Troco o exercício e ajusto a carga.</p></div>
+      <div class="card"><b>Execução</b><p class="mut small">Você grava o exercício. Eu devolvo a correção do movimento.</p></div>
+      <div class="card"><b>Estrutura</b><p class="mut small">Academia nova ou treino em casa. Adapto ao equipamento que você tem.</p></div>
+      <div class="card"><b>Platô</b><p class="mut small">O progresso parou. Mudo o estímulo antes de você desanimar.</p></div>
     </div>
   </div>
 </section>
 
 <!-- COMO FUNCIONA -->
-<section id="como-funciona" class="how">
+<section id="como-funciona">
   <div class="wrap">
-    <div class="kicker">Como funciona</div>
-    <h2>Do pagamento ao treino <em>em 4 passos.</em></h2>
-    <div class="how-grid">
-      <ol class="steps">
-        <li>
-          <div>
-            <h3>Escolha o plano e pague</h3>
-            <p>Pagamento seguro pelo InfinitePay, no Pix ou no cartão.</p>
-            <span class="where">Nesta página</span>
-          </div>
-        </li>
-        <li class="app">
-          <div>
-            <h3>Crie sua conta no Clutch e faça a avaliação</h3>
-            <p>Logo depois do pagamento, pelo meu link: cadastro em menos de 1 minuto e avaliação dentro do app (dados, saúde, objetivos, rotina, medidas e fotos). É a base de tudo.</p>
-            <span class="where">App Clutch</span>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3>Receba seu treino</h3>
-            <p>Programa montado para você em até 24 horas, de segunda a sexta, direto no Clutch.</p>
-            <span class="where">Em até 24h</span>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3>Treine e ajuste comigo por 3 meses</h3>
-            <p>Eu acompanho, ajusto e corrijo sempre que precisar, pelo Clutch e pelo WhatsApp.</p>
-            <span class="where">90 dias de acompanhamento</span>
-          </div>
-        </li>
-      </ol>
-
-      <div class="phone-wrap" aria-hidden="true">
-        <div class="phone">
-          <div class="screen">
-            <div class="app-top"><div class="app-logo">CLUTCH<b>.</b></div><div class="app-chip">AJR ONLINE</div></div>
-            <div class="app-step">Objetivos · passo 3 de 6</div>
-            <div class="app-prog"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
-            <div class="app-q">Quantos dias por semana você consegue treinar?</div>
-            <div class="app-opts">
-              <span>2 dias</span>
-              <span class="sel">3 dias</span>
-              <span>4 dias</span>
-              <span>5 ou mais</span>
-            </div>
-            <div class="app-note">Quanto mais detalhes, melhor o treino</div>
-            <div class="app-btn">Continuar</div>
-          </div>
-        </div>
-        <div class="phone-cap">Passo 02<b>Sua avaliação no Clutch</b></div>
-      </div>
+    <div class="head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Do pagamento ao treino <span class="gold">em 4 passos.</span></h2>
+    </div>
+    <div class="steps4">
+      <div class="card"><span class="idx">01</span><h3>Escolha o plano</h3><p class="mut">Pagamento seguro pelo InfinitePay, no Pix ou no cartão.</p><span class="tag">nesta página</span></div>
+      <div class="card"><span class="idx">02</span><h3>Avaliação no Clutch</h3><p class="mut">Cadastro em menos de 1 minuto e avaliação no app: saúde, objetivos, rotina, medidas e fotos.</p><span class="tag">app Clutch</span></div>
+      <div class="card"><span class="idx">03</span><h3>Receba o treino</h3><p class="mut">Programa montado para você em até 24 horas, de segunda a sexta, direto no Clutch.</p><span class="tag">em até 24 h</span></div>
+      <div class="card"><span class="idx">04</span><h3>Treine e ajuste</h3><p class="mut">Eu acompanho, ajusto e corrijo sempre que precisar, pelo Clutch e pelo WhatsApp.</p><span class="tag">90 dias</span></div>
     </div>
   </div>
 </section>
 
-<!-- QUEM ACOMPANHA -->
-<section id="quem">
-  <div class="wrap coach">
-    <div class="coach-photo"><img src="ajronline-aldemir.jpg" alt="Aldemir Junior, treinador" loading="lazy"></div>
+<!-- CLUTCH + QUEM -->
+<section class="alt">
+  <div class="wrap about">
+    <div class="pic"><img src="img/aldemir.jpg" alt="Aldemir Junior" loading="lazy" width="800" height="1001"></div>
     <div>
-      <div class="kicker">Quem acompanha você</div>
-      <h2>Aldemir <em>Junior</em></h2>
-      <p class="lead" style="margin-top:14px">Avaliador físico e especialista em performance, ex-atleta de judô. O mesmo critério das avaliações presenciais da AJR em Bauru vai para o seu treino online.</p>
-      <div class="creds">
-        <div class="cred"><b>120+</b><span>atletas avaliados na AJR Performance</span></div>
-        <div class="cred"><b>VO₂</b><span>teste ergoespirométrico e avaliação completa em Bauru</span></div>
-        <div class="cred"><b>CREF</b><span>182634-G/SP</span></div>
+      <span class="eyebrow">Quem acompanha você</span>
+      <h2>Aldemir Junior</h2>
+      <p class="lead">Treinador e avaliador físico, ex-atleta de judô. O mesmo critério das avaliações presenciais da AJR em Bauru vai para o seu treino online, tudo no app Clutch.</p>
+      <div class="metrics">
+        <div><b>120+</b><small>avaliados</small></div>
+        <div><b>5,0</b><small>no Google</small></div>
+        <div><b>24 h</b><small>treino pronto</small></div>
+        <div><b>CREF</b><small>182634-G/SP</small></div>
       </div>
+      <p class="note">Mora em Bauru? Dá para fazer a <a class="gold" href="./#testes">avaliação presencial completa</a> antes de começar.</p>
     </div>
   </div>
 </section>
@@ -684,989 +193,118 @@ h1,h2,h3,h4,.hero-logo,.section-title,.pricing-hero .logo{font-family:'Chakra Pe
 <!-- PLANOS -->
 <section id="planos">
   <div class="wrap">
-    <div class="center">
-      <div class="kicker">Planos</div>
-      <h2>Comece hoje. <em>Ajuste por 3 meses.</em></h2>
+    <div class="head">
+      <span class="eyebrow">Planos</span>
+      <h2>Comece hoje. <span class="gold">Ajuste por 3 meses.</span></h2>
     </div>
-
-    <div class="plans">
-      <div class="plan main">
-        <div class="lp-badge">Recomendado · 3 meses</div>
+    <div class="plans2">
+      <div class="card plan hl">
+        <span class="tag">Recomendado · 3 meses</span>
         <h3>Trimestral</h3>
-        <div class="price"><small>R$</small><strong>189,90</strong></div>
-        <div class="price-sub">pagamento único · parcele em até 3x no cartão</div>
-        <ul>
+        <div class="price">R$ 189,90 <small>pagamento único · até 3x no cartão</small></div>
+        <ul class="list">
           <li>90 dias de acompanhamento completo</li>
           <li>Ajustes e correções sempre que necessário</li>
           <li>Correção de execução por vídeo</li>
           <li>Suporte pelo WhatsApp em horário comercial</li>
         </ul>
-        <a id="linkAvista" class="lp-btn block pay" href="https://link.infinitepay.io/aldemir-de-r05/VC1DLTMtSQ-9nt9Cin2xt-189,90" target="_blank" rel="noopener" aria-disabled="true">Pagar trimestral</a>
+        <a id="linkAvista" class="btn btn-gold pay" aria-disabled="true" data-plan="ajr_online_trimestral" data-source="pagamento" href="https://link.infinitepay.io/aldemir-de-r05/VC1DLTMtSQ-9nt9Cin2xt-189,90" target="_blank" rel="noopener">Pagar trimestral</a>
       </div>
-      <div class="plan">
-        <div class="lp-badge">Mês a mês</div>
+      <div class="card plan">
+        <span class="tag">Mês a mês</span>
         <h3>Mensal</h3>
-        <div class="price"><small>R$</small><strong id="precoMensal">79,90</strong></div>
-        <div class="price-sub" id="subMensal">por mês · renovação automática</div>
-        <ul>
+        <div class="price"><span id="precoMensal">R$ 79,90</span> <small id="subMensal">por mês · renovação automática</small></div>
+        <ul class="list">
           <li>O mesmo acompanhamento, cobrado por mês</li>
           <li>Ajustes e correções sempre que necessário</li>
           <li>Suporte pelo WhatsApp em horário comercial</li>
           <li>Cancele com 7 dias de aviso</li>
         </ul>
-        <a id="linkRecorrente" class="lp-btn ghost block pay" href="https://invoice.infinitepay.io/plans/aldemir-de-r05/oUka4QT5io" target="_blank" rel="noopener" aria-disabled="true">Assinar mensal</a>
+        <a id="linkRecorrente" class="btn btn-line pay" aria-disabled="true" data-plan="ajr_online_mensal" data-source="pagamento" href="https://invoice.infinitepay.io/plans/aldemir-de-r05/oUka4QT5io" target="_blank" rel="noopener">Assinar mensal</a>
       </div>
     </div>
 
-    <div class="checkout">
-      <div class="coupon">
-        <label for="couponInput">Cupom</label>
-        <input id="couponInput" type="text" maxlength="20" autocomplete="off" placeholder="Seu cupom">
-        <button type="button" onclick="applyCoupon()">Aplicar</button>
-        <div class="coupon-fb" id="couponFeedback"></div>
-      </div>
-
-      <details class="terms">
-        <summary>Termos do serviço</summary>
-        <ol>
-          <li><b>Serviço:</b> consultoria de treinamento online por Aldemir Junior (AJR Online), com treino personalizado entregue e acompanhado pelo app Clutch.</li>
-          <li><b>Pagamento:</b> R$ 79,90 por mês em assinatura recorrente ou R$ 189,90 à vista por 3 meses. Sem pagamento, o acompanhamento é suspenso.</li>
-          <li><b>Início:</b> o treino é entregue em até 24 horas úteis depois que a avaliação for respondida no Clutch.</li>
-          <li><b>Acompanhamento:</b> ajustes e correções sempre que necessário durante o período contratado, com suporte pelo WhatsApp em horário comercial.</li>
-          <li><b>Saúde:</b> o aluno declara estar apto à atividade física e informa com verdade os dados da avaliação. Com condição pré-existente, recomenda-se liberação médica.</li>
-          <li><b>Dados e imagem:</b> dados tratados conforme a LGPD (Lei 13.709/2018), só para o serviço. Fotos de evolução só são divulgadas com autorização do aluno.</li>
-          <li><b>Cancelamento:</b> plano mensal cancela a qualquer momento com 7 dias de aviso, sem reembolso do mês em curso. O trimestral não tem reembolso após o início do acompanhamento.</li>
-        </ol>
-      </details>
-
-      <label class="aceite">
-        <input type="checkbox" id="aceite" onchange="togglePay()">
-        <span>Li e concordo com os termos do serviço.</span>
-      </label>
-      <div class="aceite-hint" id="aceiteHint">Marque para liberar o pagamento</div>
+    <div class="coupon">
+      <input id="couponInput" type="text" placeholder="Cupom" aria-label="Cupom de desconto">
+      <button class="btn btn-line btn-sm" type="button" onclick="applyCoupon()">Aplicar</button>
+      <span id="couponFeedback" class="coupon-fb"></span>
     </div>
 
-    <!-- Aparece depois do clique em pagar -->
-    <div class="next" id="next">
-      <div class="kicker">Próximo passo</div>
+    <details class="terms">
+      <summary>Termos do serviço</summary>
+      <p class="mut"><b>Serviço:</b> consultoria de treinamento online por Aldemir Junior (AJR Online), com treino personalizado entregue e acompanhado pelo app Clutch.</p>
+      <p class="mut"><b>Pagamento:</b> R$ 79,90 por mês em assinatura recorrente ou R$ 189,90 à vista por 3 meses. Sem pagamento, o acompanhamento é suspenso.</p>
+      <p class="mut"><b>Início:</b> o treino é entregue em até 24 horas úteis depois que a avaliação for respondida no Clutch.</p>
+      <p class="mut"><b>Acompanhamento:</b> ajustes e correções sempre que necessário durante o período contratado, com suporte pelo WhatsApp em horário comercial.</p>
+      <p class="mut"><b>Saúde:</b> o aluno declara estar apto à atividade física e informa com verdade os dados da avaliação. Com condição pré-existente, recomenda-se liberação médica.</p>
+      <p class="mut"><b>Dados e imagem:</b> dados tratados conforme a LGPD (Lei 13.709/2018), só para o serviço. Fotos de evolução só são divulgadas com autorização do aluno.</p>
+      <p class="mut"><b>Cancelamento:</b> plano mensal cancela a qualquer momento com 7 dias de aviso, sem reembolso do mês em curso. O trimestral não tem reembolso após o início do acompanhamento.</p>
+    </details>
+
+    <div class="aceite">
+      <input type="checkbox" id="aceite" onchange="togglePay()">
+      <label for="aceite">Li e concordo com os termos do serviço.<span id="aceiteHint">Marque para liberar o pagamento</span></label>
+    </div>
+
+    <div id="next" class="card hl">
+      <span class="idx">PRÓXIMO PASSO</span>
       <h3>Pagou? Crie sua conta no Clutch.</h3>
-      <p>Pelo botão abaixo você entra direto no meu link: cadastro em menos de 1 minuto e avaliação dentro do app. Em até 24 horas (segunda a sexta) depois da avaliação, seu treino está no Clutch. Se puder, me mande o comprovante no WhatsApp para eu já liberar seu acompanhamento.</p>
-      <div class="next-actions">
-        <a class="lp-btn" id="linkClutch" href="https://clutch.app.br/register?invite=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMTc3N2RkNC1iOGI5LTQyY2QtOWIxMi1lODc3Yzk5NGNjODYiLCJwdXJwb3NlIjoicHJvZmVzc2lvbmFsLWludml0YXRpb24iLCJpbnZpdGF0aW9uX3R5cGUiOiJUcmFpbmVyU3R1ZGVudCIsImV4cCI6MjEwNzg2NzI1NSwiaXNzIjoiUGVyc29uYWxTYWFzQXBpIiwiYXVkIjoiUGVyc29uYWxTYWFzQXBpIn0.xXzOdW9FHCUAbNfguNWp-zZYWME9yifwDPRkX8d3WeI" target="_blank" rel="noopener">Criar conta no Clutch</a>
-        <a class="lp-btn ghost" id="linkZap" href="#" target="_blank" rel="noopener">Enviar comprovante</a>
+      <p class="mut">Pelo botão abaixo você entra direto no meu link: cadastro em menos de 1 minuto e avaliação dentro do app. Em até 24 horas (segunda a sexta) depois da avaliação, seu treino está no Clutch. Se puder, me mande o comprovante no WhatsApp para eu já liberar seu acompanhamento.</p>
+      <div class="ctas">
+        <a class="btn btn-gold" href="https://clutch.app.br/register?invite=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMTc3N2RkNC1iOGI5LTQyY2QtOWIxMi1lODc3Yzk5NGNjODYiLCJwdXJwb3NlIjoicHJvZmVzc2lvbmFsLWludml0YXRpb24iLCJpbnZpdGF0aW9uX3R5cGUiOiJUcmFpbmVyU3R1ZGVudCIsImV4cCI6MjEwNzg2NzI1NSwiaXNzIjoiUGVyc29uYWxTYWFzQXBpIiwiYXVkIjoiUGVyc29uYWxTYWFzQXBpIn0.xXzOdW9FHCUAbNfguNWp-zZYWME9yifwDPRkX8d3WeI" target="_blank" rel="noopener">Criar conta no Clutch <span class="arr">→</span></a>
+        <a id="linkZap" class="btn btn-line" data-plan="ajr_online" data-source="comprovante" href="https://wa.me/5514997432182" target="_blank" rel="noopener">Enviar comprovante</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section id="duvidas" style="padding-top:0">
-  <div class="wrap">
-    <div class="center"><div class="kicker">Dúvidas</div><h2>Perguntas <em>frequentes</em></h2></div>
-    <div class="faq">
-      <details><summary>O que conta como "ajuste"?</summary><p>Qualquer mudança que deixe o treino servindo para você de novo: troca de exercício, carga, volume, dias da semana, adaptação para casa ou viagem, correção de execução. Não tem cota mensal. Precisou, a gente ajusta.</p></details>
-      <details><summary>Preciso ir até Bauru?</summary><p>Não. Tudo é online. A avaliação é respondida dentro do app Clutch e o acompanhamento acontece pelo app e pelo WhatsApp. Se quiser, também dá para fazer a avaliação presencial na AJR, em Bauru.</p></details>
-      <details><summary>Já tenho conta no Clutch. E agora?</summary><p>Me chama no WhatsApp depois do pagamento que eu vinculo a sua conta ao meu acompanhamento.</p></details>
-      <details><summary>Treino em casa ou só na academia?</summary><p>Os dois. O treino é montado com o equipamento que você tem, e muda se a sua estrutura mudar.</p></details>
-      <details><summary>Como corrijo a execução a distância?</summary><p>Você grava o exercício com o celular e me envia. Eu devolvo a correção com o que ajustar no movimento.</p></details>
-    </div>
+<!-- DÚVIDAS -->
+<section id="duvidas" class="alt">
+  <div class="wrap" style="max-width:820px">
+    <span class="eyebrow">Dúvidas</span>
+    <h2>Perguntas frequentes</h2>
+    <details><summary>O que conta como "ajuste"?</summary><p>Qualquer mudança que deixe o treino servindo para você de novo: troca de exercício, carga, volume, dias da semana, adaptação para casa ou viagem, correção de execução. Não tem cota mensal. Precisou, a gente ajusta.</p></details>
+    <details><summary>Preciso ir até Bauru?</summary><p>Não. Tudo é online. A avaliação é respondida dentro do app Clutch e o acompanhamento acontece pelo app e pelo WhatsApp. Se quiser, também dá para fazer a avaliação presencial na AJR, em Bauru.</p></details>
+    <details><summary>Já tenho conta no Clutch. E agora?</summary><p>Me chama no WhatsApp depois do pagamento que eu vinculo a sua conta ao meu acompanhamento.</p></details>
+    <details><summary>Treino em casa ou só na academia?</summary><p>Os dois. O treino é montado com o equipamento que você tem, e muda se a sua estrutura mudar.</p></details>
+    <details><summary>Como corrijo a execução a distância?</summary><p>Você grava o exercício com o celular e me envia. Eu devolvo a correção com o que ajustar no movimento.</p></details>
   </div>
 </section>
 
+<!-- CTA FINAL -->
 <section class="final">
   <div class="wrap">
-    <h2>3 meses. <em>Ajustado a cada passo.</em></h2>
+    <span class="eyebrow">Próximo passo</span>
+    <h2>3 meses. <span class="gold">Ajustado a cada passo.</span></h2>
     <p class="lead">Escolha o plano, crie sua conta no Clutch e receba o treino em até 24 horas.</p>
-    <a class="lp-btn" href="#planos">Escolher meu plano</a>
+    <div class="ctas">
+      <a class="btn btn-gold" href="#planos">Ver planos</a>
+      <a class="btn btn-line" data-plan="ajr_online" data-source="duvida" href="https://wa.me/5514997432182?text=Ol%C3%A1%2C%20tenho%20d%C3%BAvidas%20sobre%20o%20AJR%20Online"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg> Tirar dúvidas</a>
+    </div>
   </div>
 </section>
 
 <footer>
-  <a href="index.html">ajrperformance.com.br</a> · <a href="https://instagram.com/aldemirjr.treinador" target="_blank" rel="noopener">@aldemirjr.treinador</a><br>
-  AJR Avaliação Física e Performance · Bauru/SP · CREF 182634-G/SP
+  <div class="wrap">
+    <img src="img/logo-full-white.png" alt="AJR Performance" width="90" height="28">
+    <div>
+      <a href="./">Início</a>
+      <a href="vo2.html">Teste de VO₂</a>
+      <a href="https://instagram.com/aldemirjr.treinador" target="_blank" rel="noopener">@aldemirjr.treinador</a>
+      <a href="https://wa.me/5514997432182">WhatsApp</a>
+    </div>
+    <div class="mono">AJR Performance · Bauru-SP · CREF 182634-G/SP</div>
+  </div>
 </footer>
 
-</div>
-
-<!-- ══════════════ SEÇÃO 1 — DADOS PESSOAIS ══════════════ -->
-<div class="section" id="sec1">
-  <p class="section-title">Dados Pessoais</p>
-  <p class="section-desc">Informações básicas para identificação e contato.</p>
-
-  <div class="card">
-    <div class="card-title">Identificação</div>
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div class="field">
-        <label>Nome completo <span class="req">*</span></label>
-        <input type="text" id="nome" placeholder="Seu nome completo" required>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label>E-mail <span class="req">*</span></label>
-          <input type="email" id="email" placeholder="seu@email.com" required>
-        </div>
-        <div class="field">
-          <label>WhatsApp <span class="req">*</span></label>
-          <input type="tel" id="whatsapp" placeholder="(11) 99999-9999" required>
-        </div>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label>Data de nascimento <span class="req">*</span></label>
-          <input type="date" id="nascimento" required>
-        </div>
-        <div class="field">
-          <label>Sexo biológico <span class="req">*</span></label>
-          <div class="radio-group">
-            <div class="radio-btn"><input type="radio" name="sexo" id="sexoM" value="Masculino"><label for="sexoM">Masculino</label></div>
-            <div class="radio-btn"><input type="radio" name="sexo" id="sexoF" value="Feminino"><label for="sexoF">Feminino</label></div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label>Peso (kg) <span class="req">*</span></label>
-          <input type="number" id="peso" placeholder="70" min="30" max="300" required oninput="calcMetrics()">
-        </div>
-        <div class="field">
-          <label>Altura (cm) <span class="req">*</span></label>
-          <input type="number" id="altura" placeholder="170" min="100" max="250" required oninput="calcMetrics()">
-        </div>
-      </div>
-      <div class="field">
-        <label>Cidade / Estado</label>
-        <input type="text" id="cidade" placeholder="São Paulo / SP">
-      </div>
-      <div class="field">
-        <label>Profissão</label>
-        <input type="text" id="profissao" placeholder="Sua profissão">
-      </div>
-    </div>
-  </div>
-
-  <!-- MEDIDAS CORPORAIS -->
-  <div class="card">
-    <div class="card-title">Medidas Corporais <span style="font-size:11px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:6px;">— opcional, mas recomendado</span></div>
-    <p class="meas-intro">📏 Meça sempre em jejum ou com estômago vazio. Use fita métrica inelástica, posicionada na horizontal, paralela ao chão.</p>
-
-    <!-- TRONCO -->
-    <div class="meas-group-hdr">
-      Tronco
-      <span class="meas-subhint">fita horizontal, respiração normal</span>
-    </div>
-    <div class="row" style="gap:12px;">
-      <div class="field">
-        <label><span class="mnum">1</span>Pescoço (cm)</label>
-        <input type="number" id="m_pescoco" placeholder="38" min="20" max="80">
-        <div class="meas-tip">Abaixo do pomo-de-adão, parte mais estreita.</div>
-      </div>
-      <div class="field">
-        <label><span class="mnum">2</span>Peitoral (cm)</label>
-        <input type="number" id="m_peitoral" placeholder="95" min="40" max="200">
-        <div class="meas-tip">Na linha dos mamilos, inspire e meça.</div>
-      </div>
-    </div>
-    <div class="row" style="gap:12px;margin-top:10px;">
-      <div class="field">
-        <label><span class="mnum">3</span>Abdominal (cm)</label>
-        <input type="number" id="m_abdominal" placeholder="85" min="40" max="200">
-        <div class="meas-tip">Na altura do umbigo, ao expirar normalmente.</div>
-      </div>
-      <div class="field">
-        <label><span class="mnum">4</span>Cintura (cm)</label>
-        <input type="number" id="m_cintura" placeholder="80" min="40" max="200" oninput="calcMetrics()">
-        <div class="meas-tip">Parte mais estreita, entre costelas e quadril.</div>
-      </div>
-    </div>
-    <div style="margin-top:10px;">
-      <div class="field">
-        <label><span class="mnum">5</span>Quadril (cm)</label>
-        <input type="number" id="m_quadril" placeholder="95" min="40" max="200" style="max-width:240px;" oninput="calcMetrics()">
-        <div class="meas-tip">Parte mais larga dos glúteos, pés juntos.</div>
-      </div>
-    </div>
-
-    <!-- BRAÇOS -->
-    <div class="meas-group-hdr" style="margin-top:18px;">
-      <span class="mnum">6</span>Braços
-      <span class="opt-badge">(cm · ponto médio do bíceps, braço relaxado)</span>
-    </div>
-    <div class="row" style="gap:12px;">
-      <div class="field">
-        <label>Braço Direito</label>
-        <input type="number" id="m_braco_d" placeholder="34" min="10" max="80">
-      </div>
-      <div class="field">
-        <label>Braço Esquerdo</label>
-        <input type="number" id="m_braco_e" placeholder="34" min="10" max="80">
-      </div>
-    </div>
-
-    <!-- COXAS -->
-    <div class="meas-group-hdr" style="margin-top:18px;">
-      <span class="mnum">7</span>Coxas
-      <span class="opt-badge">(cm · ponto médio entre virilha e joelho)</span>
-    </div>
-    <div class="row" style="gap:12px;">
-      <div class="field">
-        <label>Coxa Direita</label>
-        <input type="number" id="m_coxa_d" placeholder="55" min="20" max="100">
-      </div>
-      <div class="field">
-        <label>Coxa Esquerda</label>
-        <input type="number" id="m_coxa_e" placeholder="55" min="20" max="100">
-      </div>
-    </div>
-
-    <!-- PANTURRILHAS -->
-    <div class="meas-group-hdr" style="margin-top:18px;">
-      <span class="mnum">8</span>Panturrilhas
-      <span class="opt-badge">(cm · parte mais larga da batata da perna)</span>
-    </div>
-    <div class="row" style="gap:12px;">
-      <div class="field">
-        <label>Panturrilha Direita</label>
-        <input type="number" id="m_pant_d" placeholder="37" min="15" max="80">
-      </div>
-      <div class="field">
-        <label>Panturrilha Esquerda</label>
-        <input type="number" id="m_pant_e" placeholder="37" min="15" max="80">
-      </div>
-    </div>
-
-    <!-- PAINEL IMC + RCQ -->
-    <div id="metricsPanel" style="display:none;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-      <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">📊 Calculado automaticamente</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div id="cardIMC" style="display:none;background:#0e0f12;border:1px solid var(--border-gold);border-radius:10px;padding:14px;text-align:center;">
-          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">IMC</div>
-          <div id="valIMC" style="font-size:26px;font-weight:800;color:var(--accent);">—</div>
-          <div id="classIMC" style="font-size:11px;color:var(--text-soft);margin-top:4px;"></div>
-          <div style="font-size:10px;color:var(--muted);margin-top:6px;">kg/m² · Quetelet</div>
-        </div>
-        <div id="cardRCQ" style="display:none;background:#0e0f12;border:1px solid var(--border-gold);border-radius:10px;padding:14px;text-align:center;">
-          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">RCQ</div>
-          <div id="valRCQ" style="font-size:26px;font-weight:800;color:var(--accent);">—</div>
-          <div id="classRCQ" style="font-size:11px;color:var(--text-soft);margin-top:4px;"></div>
-          <div style="font-size:10px;color:var(--muted);margin-top:6px;">Razão Cintura-Quadril</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="nav-bar">
-    <button class="btn btn-primary" onclick="next(1)">Próximo →</button>
-  </div>
-</div>
-
-<!-- ══════════════ SEÇÃO 2 — HISTÓRICO DE SAÚDE ══════════════ -->
-<div class="section" id="sec2">
-  <p class="section-title">Histórico de Saúde</p>
-  <p class="section-desc">Essencial para um treino seguro e eficiente.</p>
-
-  <div class="card">
-    <div class="card-title">Condições de Saúde</div>
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div class="field">
-        <label>Possui alguma condição médica diagnosticada? <span class="req">*</span></label>
-        <div class="radio-group">
-          <div class="radio-btn"><input type="radio" name="condicao" id="condN" value="Não"><label for="condN">Não</label></div>
-          <div class="radio-btn"><input type="radio" name="condicao" id="condS" value="Sim"><label for="condS">Sim</label></div>
-        </div>
-      </div>
-      <div class="field">
-        <label>Se sim, qual(is)?</label>
-        <textarea id="condicao_desc" placeholder="Descreva suas condições de saúde..."></textarea>
-      </div>
-      <div class="field">
-        <label>Faz uso de algum medicamento contínuo?</label>
-        <input type="text" id="medicamentos" placeholder="Ex: Losartana, Metformina... ou Não">
-      </div>
-      <div class="field">
-        <label>Possui lesão ou limitação física atual?</label>
-        <textarea id="lesoes" placeholder="Ex: dor no joelho direito, hérnia de disco L4-L5..."></textarea>
-      </div>
-      <div class="field">
-        <label>Já realizou cirurgia? Qual?</label>
-        <input type="text" id="cirurgia" placeholder="Ex: joelho em 2019... ou Não">
-      </div>
-      <div class="field">
-        <label>Tem alguma restrição alimentar ou alergia?</label>
-        <input type="text" id="alergia" placeholder="Ex: intolerância à lactose... ou Não">
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Histórico de Treino</div>
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div class="field">
-        <label>Nível de experiência com treino <span class="req">*</span></label>
-        <select id="nivel">
-          <option value="">Selecione...</option>
-          <option>Iniciante (menos de 6 meses)</option>
-          <option>Intermediário (6 meses a 2 anos)</option>
-          <option>Avançado (mais de 2 anos)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Treina atualmente? Com qual frequência?</label>
-        <input type="text" id="frequencia_atual" placeholder="Ex: 3x por semana, musculação">
-      </div>
-      <div class="field">
-        <label>Quais atividades físicas já praticou?</label>
-        <textarea id="atividades" placeholder="Ex: musculação, corrida, futebol..."></textarea>
-      </div>
-      <div class="field">
-        <label>Já teve acompanhamento profissional antes?</label>
-        <div class="radio-group">
-          <div class="radio-btn"><input type="radio" name="acomp" id="acN" value="Não"><label for="acN">Não</label></div>
-          <div class="radio-btn"><input type="radio" name="acomp" id="acS" value="Sim"><label for="acS">Sim</label></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="nav-bar">
-    <button class="btn btn-outline" onclick="prev(1)">← Voltar</button>
-    <button class="btn btn-primary" onclick="next(2)">Próximo →</button>
-  </div>
-</div>
-
-<!-- ══════════════ SEÇÃO 3 — OBJETIVOS & ESTILO DE VIDA ══════════════ -->
-<div class="section" id="sec3">
-  <p class="section-title">Objetivos &amp; Estilo de Vida</p>
-  <p class="section-desc">Quanto mais você contar, mais personalizado será seu programa.</p>
-
-  <div class="card">
-    <div class="card-title">Seus Objetivos</div>
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div class="field">
-        <label>Objetivo principal <span class="req">*</span></label>
-        <select id="objetivo">
-          <option value="">Selecione...</option>
-          <option>Emagrecimento / Perda de gordura</option>
-          <option>Ganho de massa muscular</option>
-          <option>Condicionamento físico geral</option>
-          <option>Definição muscular</option>
-          <option>Reabilitação / Saúde</option>
-          <option>Performance esportiva</option>
-          <option>Qualidade de vida</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Objetivo secundário</label>
-        <input type="text" id="obj_sec" placeholder="Ex: melhorar postura, aumentar disposição...">
-      </div>
-      <div class="field">
-        <label>Qual resultado você quer em 3 meses?</label>
-        <textarea id="resultado_3m" placeholder="Descreva com detalhes o que espera alcançar..."></textarea>
-      </div>
-      <div class="field">
-        <label>Quantos dias por semana pode treinar? <span class="req">*</span></label>
-        <select id="dias_semana">
-          <option value="">Selecione...</option>
-          <option>2 dias</option>
-          <option>3 dias</option>
-          <option>4 dias</option>
-          <option>5 dias</option>
-          <option>6 dias</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Tempo disponível por sessão</label>
-        <select id="tempo_sessao">
-          <option value="">Selecione...</option>
-          <option>30 a 45 minutos</option>
-          <option>45 a 60 minutos</option>
-          <option>60 a 90 minutos</option>
-          <option>Mais de 90 minutos</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Estilo de Vida</div>
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div class="field">
-        <label>Onde vai treinar? <span class="req">*</span></label>
-        <div class="radio-group">
-          <div class="radio-btn"><input type="radio" name="local" id="locA" value="Academia"><label for="locA">Academia</label></div>
-          <div class="radio-btn"><input type="radio" name="local" id="locC" value="Casa"><label for="locC">Casa</label></div>
-          <div class="radio-btn"><input type="radio" name="local" id="locAC" value="Academia e Casa"><label for="locAC">Ambos</label></div>
-        </div>
-      </div>
-      <div class="field">
-        <label>Equipamentos disponíveis em casa</label>
-        <textarea id="equipamentos" placeholder="Ex: halteres, elásticos, barra... ou Nenhum"></textarea>
-      </div>
-      <div class="field">
-        <label>Como é sua alimentação atual?</label>
-        <select id="alimentacao">
-          <option value="">Selecione...</option>
-          <option>Muito ruim (muita junk food, sem controle)</option>
-          <option>Regular (pode melhorar bastante)</option>
-          <option>Boa (tem noção mas peca às vezes)</option>
-          <option>Ótima (alimentação controlada)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Quantas horas de sono por noite, em média?</label>
-        <select id="sono">
-          <option value="">Selecione...</option>
-          <option>Menos de 5h</option>
-          <option>5 a 6h</option>
-          <option>6 a 7h</option>
-          <option>7 a 8h</option>
-          <option>Mais de 8h</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Nível de estresse no dia a dia</label>
-        <select id="estresse">
-          <option value="">Selecione...</option>
-          <option>Baixo</option>
-          <option>Moderado</option>
-          <option>Alto</option>
-          <option>Muito alto</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Algo mais que devo saber para montar o melhor programa para você?</label>
-        <textarea id="obs_gerais" placeholder="Conte o que quiser. Qualquer detalhe ajuda!"></textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="nav-bar">
-    <button class="btn btn-outline" onclick="prev(2)">← Voltar</button>
-    <button class="btn btn-primary" onclick="next(3)">Próximo →</button>
-  </div>
-</div>
-
-<!-- ══════════════ SEÇÃO 4 — FOTOS ══════════════ -->
-<div class="section" id="sec4">
-  <p class="section-title">Fotos de Avaliação</p>
-  <p class="section-desc">As fotos são usadas exclusivamente para montagem do seu programa. Roupas de treino (shorts/top).</p>
-
-  <div class="card">
-    <div class="card-title">📸 Fotos Corporais — opcional</div>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5;">Envie fotos em boa iluminação, de corpo inteiro, fundo neutro. Frente, costas e lateral.</p>
-    <div class="photo-grid">
-      <div class="photo-box">
-        <input type="file" id="foto_frente" accept="image/*" onchange="previewPhoto(this,'prev_frente')">
-        <label class="photo-label" for="foto_frente">
-          <img id="prev_frente" class="photo-preview">
-          <span class="icon">🧍</span>
-          <span>Frente</span>
-        </label>
-      </div>
-      <div class="photo-box">
-        <input type="file" id="foto_costas" accept="image/*" onchange="previewPhoto(this,'prev_costas')">
-        <label class="photo-label" for="foto_costas">
-          <img id="prev_costas" class="photo-preview">
-          <span class="icon">🚶</span>
-          <span>Costas</span>
-        </label>
-      </div>
-      <div class="photo-box">
-        <input type="file" id="foto_lateral" accept="image/*" onchange="previewPhoto(this,'prev_lateral')">
-        <label class="photo-label" for="foto_lateral">
-          <img id="prev_lateral" class="photo-preview">
-          <span class="icon">🧍</span>
-          <span>Lateral</span>
-        </label>
-      </div>
-    </div>
-    <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5;">🔒 Imagens tratadas com sigilo absoluto. Uso exclusivo para avaliação e acompanhamento do seu progresso.</p>
-  </div>
-
-  <div class="nav-bar">
-    <button class="btn btn-outline" onclick="prev(3)">← Voltar</button>
-    <button class="btn btn-primary" onclick="next(4)">Próximo →</button>
-  </div>
-</div>
-
-<!-- ══════════════ SEÇÃO 5 — CONTRATO ══════════════ -->
-<div class="section" id="sec5">
-  <p class="section-title">Contrato &amp; Termos</p>
-  <p class="section-desc">Leia com atenção antes de assinar.</p>
-
-  <div class="card">
-    <div class="contract-box">
-      <h3>1. OBJETO DO CONTRATO</h3>
-      <p>O presente contrato tem por objeto a prestação de serviços de consultoria esportiva online pelo profissional <strong>Aldemir Junior (AJR Performance)</strong>, CREf [número], ao aluno identificado neste formulário, incluindo a elaboração de programas de treinamento personalizados entregues digitalmente.</p>
-
-      <h3>2. PLANO E PAGAMENTO</h3>
-      <p>O serviço é oferecido em modalidade de assinatura recorrente mensal. O valor e a data de cobrança são definidos no plano selecionado pelo aluno. O não pagamento na data acordada implica suspensão automática do acesso ao programa.</p>
-
-      <h3>3. OBRIGAÇÕES DO PROFISSIONAL</h3>
-      <p>O profissional se compromete a entregar o programa de treino personalizado em até 24 horas (segunda a sexta) após o preenchimento completo deste formulário, realizar atualizações mensais conforme a evolução do aluno e estar disponível para suporte via WhatsApp em horário comercial.</p>
-
-      <h3>4. OBRIGAÇÕES DO ALUNO</h3>
-      <p>O aluno se compromete a fornecer informações verdadeiras sobre seu estado de saúde, seguir o programa conforme orientado, comunicar ao profissional qualquer intercorrência de saúde e realizar os pagamentos nas datas acordadas.</p>
-
-      <h3>5. SAÚDE E RESPONSABILIDADE</h3>
-      <p>O aluno declara estar apto para a prática de atividades físicas. Em caso de condições de saúde pré-existentes, recomenda-se avaliação médica prévia. O profissional não se responsabiliza por lesões decorrentes de execução incorreta dos exercícios ou omissão de informações de saúde.</p>
-
-      <h3>6. DIREITOS DE IMAGEM</h3>
-      <p>O aluno autoriza expressamente o uso de suas fotos de avaliação e evolução (antes e depois) pelo profissional Aldemir Junior para fins de divulgação e marketing nas redes sociais, site e materiais promocionais da AJR Performance, preservando, se solicitado, o anonimato do aluno. Esta autorização pode ser revogada a qualquer momento por escrito.</p>
-
-      <h3>7. CONFIDENCIALIDADE E LGPD</h3>
-      <p>Todos os dados coletados neste formulário são tratados em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018). As informações são utilizadas exclusivamente para a prestação do serviço contratado e não serão compartilhadas com terceiros sem consentimento do titular.</p>
-
-      <h3>8. CANCELAMENTO</h3>
-      <p>O aluno pode cancelar a assinatura a qualquer momento, sem multa, com aviso prévio de 7 dias. Não há reembolso proporcional para o mês em curso após o início da prestação dos serviços.</p>
-
-      <h3>9. FORO</h3>
-      <p>As partes elegem o foro da comarca de residência do profissional para dirimir quaisquer controvérsias oriundas deste contrato.</p>
-    </div>
-
-    <div class="check-group">
-      <label class="check-item">
-        <input type="checkbox" id="aceite_termos" required>
-        <span>Li e concordo com todos os termos e condições acima. <span class="req">*</span></span>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" id="aceite_imagem">
-        <span>Autorizo o uso das minhas fotos para fins de divulgação pela AJR Performance.</span>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" id="aceite_lgpd" required>
-        <span>Consinto com o tratamento dos meus dados pessoais conforme a LGPD. <span class="req">*</span></span>
-      </label>
-      <label class="check-item">
-        <input type="checkbox" id="aceite_saude" required>
-        <span>Declaro que estou apto(a) para prática de atividades físicas. <span class="req">*</span></span>
-      </label>
-    </div>
-  </div>
-
-  <div class="nav-bar">
-    <button class="btn btn-outline" onclick="prev(4)">← Voltar</button>
-    <button class="btn btn-primary" onclick="next(5)">Próximo →</button>
-  </div>
-</div>
-
-<!-- ══════════════ SEÇÃO 6 — ASSINATURA ══════════════ -->
-<div class="section" id="sec6">
-  <p class="section-title">Assinatura Digital</p>
-  <p class="section-desc">Assine abaixo para confirmar o contrato.</p>
-
-  <div class="card">
-    <div class="card-title">✍️ Sua assinatura</div>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Use o mouse ou o dedo (touch). Assine dentro da área abaixo.</p>
-    <canvas id="sigCanvas"></canvas>
-    <div class="sig-actions">
-      <button class="btn btn-outline btn-sm" onclick="clearSig()">🗑 Limpar</button>
-    </div>
-  </div>
-
-  <div class="card" style="background:rgba(201,162,39,.06);border-color:var(--border-gold);">
-    <div style="font-size:12px;color:var(--text-soft);line-height:1.7;">
-      Ao enviar este formulário, declaro que todas as informações são verdadeiras e que li e concordei com os termos do contrato acima.
-    </div>
-  </div>
-
-  <div id="errMsg" style="display:none;background:rgba(255,68,68,.1);border:1px solid var(--danger);border-radius:8px;padding:12px;font-size:13px;color:var(--danger);margin-bottom:12px;"></div>
-
-  <div class="nav-bar">
-    <button class="btn btn-outline" onclick="prev(5)">← Voltar</button>
-    <button class="btn btn-primary" id="btnEnviar" onclick="submitForm()">
-      <span id="btnTxt">Enviar e Assinar ✓</span>
-      <div class="spinner" id="spinner"></div>
-    </button>
-  </div>
-</div>
-
-<!-- ══════════════ SUCESSO ══════════════ -->
-<div class="section" id="secSuccess">
-  <div class="success-wrap">
-    <div class="success-icon">🏆</div>
-    <div class="success-title">Tudo certo!</div>
-    <p class="success-sub">Formulário recebido com sucesso. Em até 24 horas (segunda a sexta) seu programa de treino personalizado estará pronto. Bem-vindo(a) ao AJR Online!</p>
-    <p style="font-size:12px;color:var(--muted);">Qualquer dúvida, fale pelo WhatsApp com o Aldemir.</p>
-  </div>
-</div>
+<a class="wa-float" data-plan="ajr_online" data-source="float" href="https://wa.me/5514997432182?text=Ol%C3%A1%2C%20tenho%20d%C3%BAvidas%20sobre%20o%20AJR%20Online" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg></a>
 
 <script>
-// ── STEP NAVIGATION ──────────────────────────────────────
-const labels = ['Dados Pessoais','Histórico de Saúde','Objetivos & Estilo de Vida','Fotos','Contrato','Assinatura'];
-let currentStep = 1;
-
-function showFormUI(){
-  document.getElementById('secPricing').style.display = 'none';
-  document.getElementById('progressWrap').style.display = 'block';
-  document.getElementById('formHero').style.display = 'block';
-}
-
-function showStep(n){
-  showFormUI();
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById('sec'+n).classList.add('active');
-  const dots = document.querySelectorAll('.step-dot');
-  dots.forEach((d,i)=>d.classList.toggle('active', i<n));
-  document.getElementById('stepLabel').textContent = `Passo ${n} de 6 — ${labels[n-1]}`;
-  window.scrollTo({top:0,behavior:'smooth'});
-  currentStep = n;
-}
-
-function toggleContract(header){
-  header.classList.toggle('open');
-  header.nextElementSibling.classList.toggle('open');
-}
-
-function togglePayButtons(){
-  const ok = document.getElementById('aceitePrePagamento').checked;
-  document.getElementById('linkRecorrente').toggleAttribute('disabled', !ok);
-  document.getElementById('linkAvista').toggleAttribute('disabled', !ok);
-}
-
-function showJaPaguei(){
-  // Pequeno delay para não bloquear a abertura da nova aba
-  setTimeout(()=>{
-    const el = document.getElementById('jaPagueiWrap');
-    if(el) el.style.display = 'block';
-    el.scrollIntoView({behavior:'smooth', block:'center'});
-  }, 800);
-}
-
-window.addEventListener('DOMContentLoaded', ()=>{
-  const inp = document.getElementById('couponInput');
-  if(inp) inp.addEventListener('keydown', e=>{ if(e.key==='Enter') applyCoupon(); });
-});
-
-function next(from){
-  if(from===1 && !validateStep1()) return;
-  if(from===2 && !validateStep2()) return;
-  if(from===5 && !validateStep5()) return; // step 5 = contract
-  showStep(from+1);
-}
-function prev(from){ showStep(from); }
-
-// ── VALIDATION ────────────────────────────────────────────
-function req(id){ return document.getElementById(id)?.value?.trim(); }
-function alert2(msg){ alert(msg); }
-
-function validateStep1(){
-  if(!req('nome'))        { alert2('Informe seu nome completo.'); return false; }
-  if(!req('email'))       { alert2('Informe seu e-mail.'); return false; }
-  if(!req('whatsapp'))    { alert2('Informe seu WhatsApp.'); return false; }
-  if(!req('nascimento'))  { alert2('Informe sua data de nascimento.'); return false; }
-  if(!document.querySelector('input[name=sexo]:checked')) { alert2('Selecione o sexo biológico.'); return false; }
-  if(!req('peso'))        { alert2('Informe seu peso.'); return false; }
-  if(!req('altura'))      { alert2('Informe sua altura.'); return false; }
-  return true;
-}
-function validateStep2(){
-  if(!document.querySelector('input[name=condicao]:checked')) { alert2('Responda se possui condição médica.'); return false; }
-  if(!req('nivel')) { alert2('Selecione seu nível de experiência.'); return false; }
-  return true;
-}
-function validateStep5(){
-  if(!document.getElementById('aceite_termos').checked) { alert2('Você precisa aceitar os termos do contrato.'); return false; }
-  if(!document.getElementById('aceite_lgpd').checked)   { alert2('Você precisa aceitar o tratamento de dados (LGPD).'); return false; }
-  if(!document.getElementById('aceite_saude').checked)  { alert2('Você precisa declarar aptidão para atividades físicas.'); return false; }
-  return true;
-}
-
-// ── PHOTO PREVIEW ─────────────────────────────────────────
-function previewPhoto(input, prevId){
-  const file = input.files[0];
-  const prev = document.getElementById(prevId);
-  if(file){
-    const reader = new FileReader();
-    reader.onload = e => {
-      prev.src = e.target.result;
-      prev.style.display = 'block';
-      prev.nextElementSibling && (prev.nextElementSibling.style.display='none');
-      prev.parentElement.querySelector('span:not(.icon)') && (prev.parentElement.querySelector('span:not(.icon)').style.display='none');
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-// ── SIGNATURE CANVAS ─────────────────────────────────────
-const canvas = document.getElementById('sigCanvas');
-const ctx = canvas.getContext('2d');
-let drawing = false;
-
-function resizeCanvas(){
-  const dpr = window.devicePixelRatio||1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr,dpr);
-  ctx.strokeStyle = '#C9A84C';
-  ctx.lineWidth = 2;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-function getPos(e){
-  const r = canvas.getBoundingClientRect();
-  if(e.touches) return {x:e.touches[0].clientX-r.left, y:e.touches[0].clientY-r.top};
-  return {x:e.clientX-r.left, y:e.clientY-r.top};
-}
-canvas.addEventListener('mousedown', e=>{ drawing=true; ctx.beginPath(); const p=getPos(e); ctx.moveTo(p.x,p.y); });
-canvas.addEventListener('mousemove', e=>{ if(!drawing) return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); });
-canvas.addEventListener('mouseup',   ()=>{ drawing=false; });
-canvas.addEventListener('mouseleave',()=>{ drawing=false; });
-canvas.addEventListener('touchstart',e=>{ e.preventDefault(); drawing=true; ctx.beginPath(); const p=getPos(e); ctx.moveTo(p.x,p.y); },{passive:false});
-canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(!drawing) return; const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); },{passive:false});
-canvas.addEventListener('touchend',  ()=>{ drawing=false; });
-
-function clearSig(){ resizeCanvas(); }
-function isSigEmpty(){
-  const d = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-  return !d.some(v=>v!==0);
-}
-
-// ── FORMSUBMIT — endpoint ─────────────────────────────────
-// String aleatória do FormSubmit (esconde o e-mail real de bots de spam)
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/f7c25ce0b444de853c39d10db243e922';
-
-// ── IMGBB — upload de imagens em alta resolução ───────────
-// 🔑 Crie sua chave grátis em: https://api.imgbb.com
-const IMGBB_KEY = '844d77075aab73eefbc0518e9f0eae39';
-
-// Núcleo do upload: recebe base64 puro e devolve o link
-async function uploadBase64(base64, name){
-  const fd = new FormData();
-  fd.append('key', IMGBB_KEY);
-  fd.append('image', base64);
-  fd.append('name', name);
-  try{
-    const r = await fetch('https://api.imgbb.com/1/upload', {method:'POST', body:fd});
-    const d = await r.json();
-    // d.data.url = original em alta resolução · d.data.display_url = thumb
-    if(d.success) return { ok:true, url: d.data.url, view: d.data.display_url };
-  } catch(_){}
-  return { ok:false };
-}
-
-function nomeArquivo(){ return (val('nome').replace(/\s+/g,'_') || 'aluno'); }
-
-async function uploadFoto(file, label){
-  return new Promise((resolve)=>{
-    const reader = new FileReader();
-    reader.onload  = async (e)=> resolve(await uploadBase64(e.target.result.split(',')[1], label+'_'+nomeArquivo()));
-    reader.onerror = ()=> resolve({ ok:false });
-    reader.readAsDataURL(file);
-  });
-}
-
-// Assinatura: canvas → base64 → ImgBB (o endpoint AJAX do FormSubmit não aceita anexos)
-async function uploadAssinatura(){
-  return uploadBase64(canvas.toDataURL('image/png').split(',')[1], 'assinatura_'+nomeArquivo());
-}
-
-// ── SUBMIT ────────────────────────────────────────────────
-async function submitForm(){
-  if(isSigEmpty()){ showErr('Por favor, assine no campo acima antes de enviar.'); return; }
-
-  const btn    = document.getElementById('btnEnviar');
-  const btnTxt = document.getElementById('btnTxt');
-  const spinner= document.getElementById('spinner');
-  btn.disabled = true;
-  spinner.style.display = 'block';
-
-  // 1. Upload das fotos para ImgBB
-  const fotoMap = [
-    { id:'foto_frente',  label:'Frente'  },
-    { id:'foto_costas',  label:'Costas'  },
-    { id:'foto_lateral', label:'Lateral' },
-  ];
-  const fotoLinks = [];
-  for(let i=0; i<fotoMap.length; i++){
-    const {id, label} = fotoMap[i];
-    const file = document.getElementById(id).files[0];
-    if(file){
-      btnTxt.textContent = `Enviando foto ${i+1}/3…`;
-      const result = await uploadFoto(file, label);
-      if(result.ok){
-        fotoLinks.push(`${label}: ${result.url}`);
-      } else {
-        fotoLinks.push(`${label}: falha no upload`);
-      }
-    }
-  }
-
-  btnTxt.textContent = 'Enviando formulário…';
-
-  // 2. Monta FormData para envio por e-mail
-  const fd = new FormData();
-  fd.append('_subject','📋 Novo aluno AJR Online — '+val('nome'));
-  fd.append('_captcha','false');
-  fd.append('_template','table');
-
-  fd.append('Nome', val('nome'));
-  fd.append('Email', val('email'));
-  fd.append('WhatsApp', val('whatsapp'));
-  fd.append('Nascimento', val('nascimento'));
-  fd.append('Sexo', document.querySelector('input[name=sexo]:checked')?.value||'');
-  fd.append('Peso (kg)', val('peso'));
-  fd.append('Altura (cm)', val('altura'));
-  fd.append('Cidade', val('cidade'));
-  fd.append('Profissão', val('profissao'));
-
-  fd.append('Medida Pescoço (cm)', val('m_pescoco'));
-  fd.append('Medida Peitoral (cm)', val('m_peitoral'));
-  fd.append('Medida Abdominal (cm)', val('m_abdominal'));
-  fd.append('Medida Cintura (cm)', val('m_cintura'));
-  fd.append('Medida Quadril (cm)', val('m_quadril'));
-  fd.append('Medida Braço Direito (cm)', val('m_braco_d'));
-  fd.append('Medida Braço Esquerdo (cm)', val('m_braco_e'));
-  fd.append('Medida Coxa Direita (cm)', val('m_coxa_d'));
-  fd.append('Medida Coxa Esquerda (cm)', val('m_coxa_e'));
-  fd.append('Medida Panturrilha Direita (cm)', val('m_pant_d'));
-  fd.append('Medida Panturrilha Esquerda (cm)', val('m_pant_e'));
-
-  fd.append('Condição Médica', document.querySelector('input[name=condicao]:checked')?.value||'');
-  fd.append('Condição (desc)', val('condicao_desc'));
-  fd.append('Medicamentos', val('medicamentos'));
-  fd.append('Lesões', val('lesoes'));
-  fd.append('Cirurgia', val('cirurgia'));
-  fd.append('Alergias', val('alergia'));
-  fd.append('Nível', val('nivel'));
-  fd.append('Frequência Atual', val('frequencia_atual'));
-  fd.append('Atividades', val('atividades'));
-
-  fd.append('Objetivo', val('objetivo'));
-  fd.append('Objetivo Secundário', val('obj_sec'));
-  fd.append('Resultado 3 meses', val('resultado_3m'));
-  fd.append('Dias por Semana', val('dias_semana'));
-  fd.append('Tempo por Sessão', val('tempo_sessao'));
-  fd.append('Local de Treino', document.querySelector('input[name=local]:checked')?.value||'');
-  fd.append('Equipamentos', val('equipamentos'));
-  fd.append('Alimentação', val('alimentacao'));
-  fd.append('Sono', val('sono'));
-  fd.append('Estresse', val('estresse'));
-  fd.append('Observações Gerais', val('obs_gerais'));
-
-  fd.append('Aceite Termos', document.getElementById('aceite_termos').checked?'Sim':'Não');
-  fd.append('Autorização de Imagem', document.getElementById('aceite_imagem').checked?'Sim':'Não');
-  fd.append('Aceite LGPD', document.getElementById('aceite_lgpd').checked?'Sim':'Não');
-  fd.append('Declaração Aptidão', document.getElementById('aceite_saude').checked?'Sim':'Não');
-  fd.append('Data Assinatura', new Date().toLocaleString('pt-BR'));
-
-  // Fotos como links de download (alta resolução)
-  if(fotoLinks.length > 0){
-    fd.append('📸 Fotos (alta resolução — clique para baixar)', fotoLinks.join(' | '));
-  } else {
-    fd.append('📸 Fotos', 'Nenhuma foto enviada');
-  }
-
-  // 3. Upload da assinatura (vira link, igual às fotos)
-  btnTxt.textContent = 'Enviando assinatura…';
-  const assinatura = await uploadAssinatura();
-  fd.append('✍️ Assinatura digital', assinatura.ok ? assinatura.url : 'falha no upload da assinatura');
-
-  // 4. Envia o formulário
-  btnTxt.textContent = 'Enviando formulário…';
-  try{
-    const res = await fetch(FORM_ENDPOINT,{method:'POST',body:fd});
-    const json = await res.json();
-    if(json.success==='true'||json.success===true){
-      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-      document.getElementById('secSuccess').classList.add('active');
-      document.getElementById('progressWrap').style.display='none';
-      document.getElementById('formHero').style.display='none';
-      window.scrollTo({top:0,behavior:'smooth'});
-    } else {
-      showErr('Ocorreu um erro ao enviar. Tente novamente ou entre em contato via WhatsApp.');
-      resetBtn();
-    }
-  } catch(e){
-    showErr('Erro de conexão. Verifique sua internet e tente novamente.');
-    resetBtn();
-  }
-}
-
-function val(id){ return document.getElementById(id)?.value||''; }
-
-function buildWaLink(e){
-  const texto = document.getElementById('duvidas')?.value?.trim();
-  if(texto){
-    e.currentTarget.href = 'https://wa.me/5514997432182?text=' + encodeURIComponent('Olá, tenho uma dúvida sobre o AJR Online:\n\n' + texto);
-  }
-}
-
-// ── CUPONS DE EMBAIXADOR ───────────────────────────────────
-// 🔧 Todos os cupons de embaixador têm 10% off e apontam para o mesmo link.
-// ── IMC + RCQ ─────────────────────────────────────────────
-function calcMetrics(){
-  const peso    = parseFloat(document.getElementById('peso')?.value);
-  const altura  = parseFloat(document.getElementById('altura')?.value);
-  const cintura = parseFloat(document.getElementById('m_cintura')?.value);
-  const quadril = parseFloat(document.getElementById('m_quadril')?.value);
-  const sexo    = document.querySelector('input[name=sexo]:checked')?.value||'';
-
-  let anyResult = false;
-
-  // IMC
-  if(peso>0 && altura>0){
-    const altM = altura/100;
-    const imc  = peso/(altM*altM);
-    document.getElementById('valIMC').textContent = imc.toFixed(1);
-    let cls='', color='var(--text-soft)';
-    if(imc<18.5){ cls='Abaixo do peso'; color='#60a5fa'; }
-    else if(imc<25){ cls='Peso normal ✓'; color='var(--success)'; }
-    else if(imc<30){ cls='Sobrepeso'; color='#fbbf24'; }
-    else if(imc<35){ cls='Obesidade grau I'; color='#f97316'; }
-    else if(imc<40){ cls='Obesidade grau II'; color='#ef4444'; }
-    else           { cls='Obesidade grau III'; color='#dc2626'; }
-    const cl = document.getElementById('classIMC');
-    cl.textContent = cls; cl.style.color = color;
-    document.getElementById('cardIMC').style.display='block';
-    anyResult = true;
-  } else {
-    document.getElementById('cardIMC').style.display='none';
-  }
-
-  // RCQ
-  if(cintura>0 && quadril>0){
-    const rcq = cintura/quadril;
-    document.getElementById('valRCQ').textContent = rcq.toFixed(2);
-    let cls='', color='var(--text-soft)';
-    const limH = sexo==='Feminino' ? 0.85 : 0.90;
-    if(rcq <= limH){ cls='Risco baixo ✓'; color='var(--success)'; }
-    else            { cls='Risco elevado'; color='#f97316'; }
-    const cl = document.getElementById('classRCQ');
-    cl.textContent = cls; cl.style.color = color;
-    document.getElementById('cardRCQ').style.display='block';
-    anyResult = true;
-  } else {
-    document.getElementById('cardRCQ').style.display='none';
-  }
-
-  document.getElementById('metricsPanel').style.display = anyResult ? 'block' : 'none';
-}
-function showErr(msg){
-  const el = document.getElementById('errMsg');
-  el.textContent = msg;
-  el.style.display='block';
-  el.scrollIntoView({behavior:'smooth'});
-}
-function resetBtn(){
-  document.getElementById('btnTxt').style.display='inline';
-  document.getElementById('spinner').style.display='none';
-  document.getElementById('btnEnviar').disabled=false;
-}
-</script>
-<script>
-// ═══ LANDING AJR ONLINE ═══
-// ── LINKS (trocar aqui) ───────────────────────────────────
+// ── LINKS (trocar aqui) ──
 const WHATSAPP_LP = '5514997432182';
-
-// Cupons de embaixador: 10% off no mensal, mesmo link com desconto
+// Cupons de embaixador: 10% off no mensal, link com desconto
 const LINK_EMB_LP = 'https://invoice.infinitepay.io/plans/aldemir-de-r05/z9BbrvL2eP';
-const CUPONS_LP = {
-  'ANA10': { desconto: 0.10, nome: 'Ana' },
-};
+const CUPONS_LP = { 'ANA10': { desconto: 0.10, nome: 'Ana' } };
 const PRECO_MENSAL_LP = 79.90;
 
 document.getElementById('linkZap').href = 'https://wa.me/' + WHATSAPP_LP + '?text=' +
@@ -1678,20 +316,19 @@ function togglePay(){
   document.getElementById('aceiteHint').style.visibility = ok ? 'hidden' : 'visible';
 }
 document.querySelectorAll('.pay').forEach(a => a.addEventListener('click', e => {
-  if (a.getAttribute('aria-disabled') === 'true') { e.preventDefault(); return; }
+  if (a.getAttribute('aria-disabled') === 'true') {
+    e.preventDefault();
+    document.querySelector('.aceite').scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  if (window.gtag) gtag('event', 'checkout_click', { plan: a.dataset.plan });
+  if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: a.dataset.plan });
   const n = document.getElementById('next');
   n.classList.add('show');
   setTimeout(() => n.scrollIntoView({behavior:'smooth', block:'center'}), 300);
 }));
-// Botões de pagamento desabilitados: levar até o aceite
-document.querySelectorAll('.plan').forEach(p => p.addEventListener('click', e => {
-  const a = e.target.closest('.pay');
-  if (!document.getElementById('aceite').checked && (a || e.target === p)) {
-    document.querySelector('.aceite').scrollIntoView({behavior:'smooth', block:'center'});
-  }
-}));
 
-window.applyCoupon = function(){
+function applyCoupon(){
   const code = document.getElementById('couponInput').value.trim().toUpperCase();
   const fb = document.getElementById('couponFeedback');
   if (!code) { fb.className = 'coupon-fb err'; fb.textContent = 'Digite um cupom.'; return; }
@@ -1699,11 +336,12 @@ window.applyCoupon = function(){
   if (!c) { fb.className = 'coupon-fb err'; fb.textContent = 'Cupom inválido ou expirado.'; return; }
   const pct = Math.round(c.desconto * 100);
   document.getElementById('linkRecorrente').href = LINK_EMB_LP;
-  document.getElementById('precoMensal').innerHTML = (PRECO_MENSAL_LP * (1 - c.desconto)).toFixed(2).replace('.', ',') + '<span class="discount">-' + pct + '%</span>';
+  document.getElementById('precoMensal').innerHTML = 'R$ ' + (PRECO_MENSAL_LP * (1 - c.desconto)).toFixed(2).replace('.', ',') + '<span class="discount">−' + pct + '%</span>';
   document.getElementById('subMensal').textContent = 'por mês · cupom ' + code + ' aplicado';
   fb.className = 'coupon-fb ok';
   fb.textContent = 'Cupom aplicado: ' + pct + '% de desconto no plano mensal.';
-};
+}
+document.getElementById('couponInput').addEventListener('keydown', e => { if (e.key === 'Enter') applyCoupon(); });
 </script>
 <script src="ajr-track.js"></script>
 </body>
