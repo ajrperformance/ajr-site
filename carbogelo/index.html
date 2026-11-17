@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ganhe um Carbogelo · Tenda AJR Performance</title>
+<meta name="description" content="Preencha em 1 minuto e retire sua amostra grátis de Carbogelo na Tenda AJR Performance.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0a1424">
+<meta property="og:title" content="Ganhe um Carbogelo na Tenda AJR">
+<meta property="og:description" content="Combustível gelado. Preencha em 1 minuto e retire sua amostra grátis.">
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Pacifico&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+/* AJR Performance (identidade nova do site) + toques do Carbogelo */
+:root{
+  --bg:#0a1424; --bg2:#0d1a2f; --card:#112039; --card2:#142645; --line:#1d2f4f; --line2:#2a4068;
+  --tx:#eef1f6; --tx2:#c6cfdb; --mut:#93a1b6; --dim:#62738d;
+  --gold:#f5c21b; --gold2:#ffd54a; --goldd:rgba(245,194,27,.12);
+  /* Carbogelo */
+  --ice:#EAF4FF; --ice2:#B9D6FF; --ice3:#8DB8FF; --iceline:#3B7BE0; --raio:#FFC72C; --largada:#FF5A1F;
+  --err:#ff7a6b; --ok:#25d366;
+  --r:12px;
+  --h:'Space Grotesk',system-ui,sans-serif; --b:'Inter',system-ui,sans-serif; --m:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--tx);font:16px/1.55 var(--b);-webkit-font-smoothing:antialiased;min-height:100vh;
+  background-image:
+    radial-gradient(700px 380px at 85% -60px,rgba(141,184,255,.16),transparent 70%),
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:auto,56px 56px,56px 56px}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:620px;margin:0 auto;padding:0 18px}
+
+/* topo */
+.top{position:sticky;top:0;z-index:10;background:rgba(10,20,36,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.top img{height:32px;width:auto;display:block}
+.top .ev{font-family:var(--m);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);text-align:right;line-height:1.35}
+.top .ev b{display:block;color:var(--tx2);font-weight:500}
+
+/* hero */
+.hero{padding:28px 0 8px}
+.eyebrow{font-family:var(--m);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:10px;margin-bottom:12px}
+.eyebrow:before{content:"";width:18px;height:1px;background:var(--gold)}
+h1{font-family:var(--h);font-weight:700;letter-spacing:-.02em;line-height:1.05;font-size:clamp(34px,9vw,48px)}
+h1 em{font-style:normal;color:var(--ice3)}
+.lead{color:var(--tx2);margin-top:10px;font-size:16.5px}
+
+/* cartão Carbogelo */
+.cg{margin-top:22px;border-radius:16px;padding:18px;display:flex;gap:16px;align-items:center;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(234,244,255,.10),rgba(59,123,224,.10) 55%,rgba(17,32,57,.6));
+  border:1px solid rgba(141,184,255,.35)}
+.cg:after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(255,199,44,.18),transparent 70%)}
+.cg svg.cube{width:78px;height:78px;flex:none;filter:drop-shadow(0 8px 18px rgba(59,123,224,.35))}
+.cg .wm{font-family:'Pacifico',cursive;font-size:30px;line-height:1.2}
+.cg .wm .a{color:var(--ice)} .cg .wm .b{color:var(--ice3)}
+.cg .sl{font-family:'Baloo 2',var(--h);font-weight:800;color:var(--raio);font-size:17px;line-height:1.1;margin-top:2px}
+.cg p{font-size:13.5px;color:var(--tx2);margin-top:6px;line-height:1.45}
+
+/* passos */
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:16px}
+.how div{background:var(--card);padding:12px 10px;font-size:13px;color:var(--tx2);line-height:1.3}
+.how b{display:block;font-family:var(--m);font-weight:500;color:var(--gold);font-size:12px;margin-bottom:4px}
+
+/* formulário */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+#formBox{padding:22px 0 40px}
+.prog{display:flex;align-items:center;gap:12px;margin-bottom:18px;font-family:var(--m);font-size:11.5px;color:var(--mut)}
+.prog-bar{flex:1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.prog-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ice3),var(--gold));transition:width .3s}
+.step{display:none}.step.on{display:block;animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13.5px;color:var(--tx2);margin-bottom:6px;font-weight:500}
+.field input,.field select{width:100%;padding:14px;border-radius:10px;border:1px solid var(--line2);background:var(--bg2);font-size:16px;outline:none;transition:border .15s}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.qt{display:block;font-family:var(--h);font-weight:700;font-size:21px;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px}
+.qh{font-size:13.5px;color:var(--mut);margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.opt{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line2);border-radius:10px;background:var(--bg2);cursor:pointer;transition:all .15s;font-size:15.5px}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt:before{content:"";width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line2);flex:none;transition:all .15s}
+.opt.cb:before{border-radius:5px}
+.opt:has(input:checked){border-color:var(--gold);background:var(--goldd)}
+.opt:has(input:checked):before{border-color:var(--gold);background:var(--gold);box-shadow:inset 0 0 0 3px var(--bg2)}
+.opt:has(input:disabled){opacity:.45;cursor:not-allowed}
+.consent{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:12.5px;color:var(--mut);line-height:1.45;cursor:pointer}
+.consent input{margin-top:2px;width:18px;height:18px;accent-color:var(--gold);flex:none}
+.consent b{color:var(--tx2);font-weight:500}
+.err{color:var(--err);font-size:14px;min-height:20px;margin-top:10px}
+.nav{display:flex;gap:10px;margin-top:8px}
+.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 20px;border-radius:10px;font-weight:600;font-size:16px;border:0;cursor:pointer;transition:all .15s;text-decoration:none}
+.btn-gold{background:var(--gold);color:#111;box-shadow:0 0 0 1px rgba(245,194,27,.4),0 8px 30px rgba(245,194,27,.18)}
+.btn-gold:hover{background:var(--gold2)}
+.btn-gold:disabled{opacity:.6;cursor:wait}
+.btn-line{flex:0 0 auto;border:1px solid var(--line2);background:rgba(255,255,255,.02);color:var(--tx2)}
+.note{font-size:12.5px;color:var(--dim);text-align:center;margin-top:14px}
+
+/* sucesso */
+#okBox{display:none;padding:28px 0 44px;text-align:center}
+#okBox .card{padding:28px 20px;border-color:rgba(141,184,255,.4);background:linear-gradient(180deg,rgba(141,184,255,.10),var(--card) 45%)}
+#okBox svg.cube{width:96px;height:96px;margin:0 auto 10px;display:block;animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.5) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+#okBox h2{font-family:var(--h);font-size:26px;letter-spacing:-.02em;line-height:1.15}
+#okBox .lbl{font-family:var(--m);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);margin-top:20px}
+.codigo{font-family:var(--m);font-weight:500;font-size:clamp(40px,13vw,58px);color:var(--gold);letter-spacing:2px;line-height:1.1;margin:6px 0 4px}
+#okBox p{color:var(--tx2);font-size:15px;max-width:420px;margin:10px auto 0}
+.bora{font-family:'Baloo 2',var(--h);font-weight:800;color:var(--ice3);font-size:22px;margin-top:18px}
+.again{margin-top:18px;background:none;border:0;color:var(--dim);font-size:13px;text-decoration:underline;cursor:pointer}
+
+footer{border-top:1px solid var(--line);padding:22px 0 30px;font-size:12.5px;color:var(--dim);text-align:center}
+footer a{color:var(--mut)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- Símbolo do Carbogelo (pedra de gelo + batimento que vira raio) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="cubo" viewBox="0 0 120 120">
+      <g stroke="#3B7BE0" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M60 12 L106 37 L60 62 L14 37 Z" fill="#EAF4FF"/>
+        <path d="M14 37 L60 62 L60 110 L14 85 Z" fill="#B9D6FF"/>
+        <path d="M60 62 L106 37 L106 85 L60 110 Z" fill="#8DB8FF"/>
+        <polyline fill="none" stroke-width="3.5" points="17,62 27,67.5 31,58 37,81 42,68 49,72 60,78 67,74"/>
+      </g>
+      <path d="M88 56 L74 79 L83 79 L77 96 L94 71 L85 71 L91 56 Z" fill="#FFC72C" stroke="#3B7BE0" stroke-width="2.5" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a href="https://ajrperformance.com.br" aria-label="AJR Performance"><img src="../img/logo-full-gold.png" alt="AJR Performance" width="103" height="32"></a>
+    <div class="ev">Tenda AJR<b id="evNome">—</b></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ FORMULÁRIO ============ -->
+  <div id="formBox">
+    <section class="hero" style="padding-top:6px">
+      <p class="eyebrow">Amostra grátis</p>
+      <h1>Ganhe um <em>Carbogelo</em> na tenda</h1>
+      <p class="lead">Responda 6 perguntas rápidas (1 minuto) e retire o seu gelinho de energia aqui na Tenda AJR.</p>
+
+      <div class="cg">
+        <svg class="cube" aria-hidden="true"><use href="#cubo"/></svg>
+        <div>
+          <div class="wm"><span class="a">Carbo</span><span class="b">gelo</span></div>
+          <div class="sl">Combustível gelado.</div>
+          <p>Gelinho de energia e recuperação para quem corre e treina. Fruta de verdade, feito pela AJR Performance.</p>
+        </div>
+      </div>
+
+      <div class="how">
+        <div><b>01</b>Preencha aqui</div>
+        <div><b>02</b>Receba seu código</div>
+        <div><b>03</b>Mostre na tenda e pegue seu gelo</div>
+      </div>
+    </section>
+
+    <form id="form" class="card" novalidate style="margin-top:22px">
+      <div class="prog"><div class="prog-bar"><i id="progFill"></i></div><span id="progTxt">1 de 6</span></div>
+
+      <div class="step on" data-step="0">
+        <div class="field">
+          <label for="f_nome">Nome completo</label>
+          <input id="f_nome" autocomplete="name" placeholder="Ex.: Maria Souza">
+        </div>
+        <div class="field">
+          <label for="f_whats">WhatsApp</label>
+          <input id="f_whats" inputmode="numeric" autocomplete="tel" placeholder="(14) 99999-9999">
+        </div>
+        <div class="field">
+          <label for="f_cidade">Cidade</label>
+          <input id="f_cidade" autocomplete="address-level2" placeholder="Bauru">
+        </div>
+        <div class="field">
+          <label for="f_sexo">Sexo</label>
+          <select id="f_sexo">
+            <option value="">Selecione</option>
+            <option value="F">Feminino</option>
+            <option value="M">Masculino</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="step" data-step="1" data-auto="q1">
+        <span class="qt">Você está correndo hoje ou veio apoiar alguém?</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="atleta"><span>Estou correndo</span></label>
+          <label class="opt"><input type="radio" name="q1" value="acompanhante"><span>Vim apoiar / acompanhar</span></label>
+        </div>
+      </div>
+
+      <div class="step" data-step="2" data-auto="q2">
+        <span class="qt">Qual sua área de atuação?</span>
+        <div class="opts" id="optsQ2"></div>
+      </div>
+
+      <div class="step" data-step="3" data-auto="q3">
+        <span class="qt">E a sua posição hoje?</span>
+        <div class="opts" id="optsQ3"></div>
+      </div>
+
+      <div class="step" data-step="4">
+        <span class="qt">O que você quer resolver nos próximos meses?</span>
+        <p class="qh">Marque quantos quiser. <span id="tagCount"></span></p>
+        <div class="opts" id="optsQ4"></div>
+      </div>
+
+      <div class="step" data-step="5">
+        <span class="qt">Podemos te mandar uma mensagem esta semana?</span>
+        <p class="qh">Com uma condição especial para o que você marcou.</p>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q5" value="semana"><span>Sim, pode me chamar</span></label>
+          <label class="opt"><input type="radio" name="q5" value="novidades"><span>Agora não, só novidades</span></label>
+        </div>
+        <label class="consent">
+          <input type="checkbox" id="f_consent">
+          <span>Autorizo a AJR Performance a tratar os dados informados e a compartilhá-los com as empresas parceiras da Tenda AJR, para contato sobre produtos e serviços. Posso pedir a exclusão dos meus dados a qualquer momento pelo WhatsApp <b>(14) 99743-2182</b>. (LGPD, Lei 13.709/2018)</span>
+        </label>
+      </div>
+
+      <div class="err" id="formErr"></div>
+      <div class="nav">
+        <button class="btn btn-line" type="button" id="btnVoltar" style="display:none">Voltar</button>
+        <button class="btn btn-gold" type="button" id="btnAvancar">Continuar</button>
+        <button class="btn btn-gold" type="submit" id="btnEnviar" style="display:none">Quero meu Carbogelo</button>
+      </div>
+    </form>
+    <p class="note">Uma amostra por pessoa, enquanto durar o estoque do dia.</p>
+  </div>
+
+  <!-- ============ SUCESSO ============ -->
+  <div id="okBox">
+    <div class="card">
+      <svg class="cube" aria-hidden="true"><use href="#cubo"/></svg>
+      <h2>Seu Carbogelo está garantido!</h2>
+      <div class="lbl">Seu código</div>
+      <div class="codigo" id="outCodigo">—</div>
+      <p>Mostre esta tela para a equipe da Tenda AJR e retire sua amostra.</p>
+      <div class="bora">Chegou? Gelo nele.</div>
+    </div>
+    <button class="again" id="btnOutra" type="button">Cadastrar outra pessoa neste celular</button>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">AJR Performance · Bauru/SP · <a href="https://ajrperformance.com.br">ajrperformance.com.br</a> · WhatsApp (14) 99743-2182</div>
+</footer>
+
+<script>
+/* ===================================================================
+   CONFIGURAÇÃO — é só aqui que você mexe
+   =================================================================== */
+const CONFIG = {
+  // Mesmo Apps Script do Desafio (os cadastros caem na mesma planilha e
+  // aparecem no Painel em ajrperformance.com.br/desafio/#admin).
+  API_URL: "https://script.google.com/macros/s/AKfycbw9OiAQEVrDEV6pGR087kBVKOTUC7BuUS95H2gK4I2EDcyH3zA08B_u28SzJRmO8fS7Kg/exec",
+
+  // Evento ativo. O prefixo é o começo do código da amostra (ex.: TF-001).
+  // Para o próximo evento, troque aqui (e adicione o mesmo evento no CONFIG de /desafio/).
+  EVENTO: { id:"bauru-shopping-2026", nome:"Track&Field Bauru Shopping", prefixo:"TF", data:"20 e 22/11/2026" },
+
+  AREAS: [
+    { id:"construcao", txt:"Construção" },
+    { id:"saude",      txt:"Saúde" },
+    { id:"comercio",   txt:"Comércio e varejo" },
+    { id:"educacao",   txt:"Educação" },
+    { id:"estudante",  txt:"Estudante" },
+    { id:"agro",       txt:"Agro" },
+    { id:"ti",         txt:"Tecnologia" }
+  ],
+  POSICOES: [
+    { id:"dono",        txt:"Dono(a) / sócio(a)" },
+    { id:"gestor",      txt:"Diretor(a) / gerente" },
+    { id:"liberal",     txt:"Autônomo(a) / profissional liberal" },
+    { id:"operacional", txt:"Funcionário(a) / CLT" },
+    { id:"servidor",    txt:"Servidor(a) público(a)" },
+    { id:"outro",       txt:"Outro" }
+  ],
+  // Mesmos ids do Desafio (qualificação por parceiro no Painel) + Carbogelo.
+  TAGS: [
+    { id:"performance", txt:"Correr melhor e descobrir meu VO₂" },
+    { id:"emagrecer",   txt:"Emagrecer ou ganhar massa com acompanhamento" },
+    { id:"carbogelo",   txt:"Ter Carbogelo nos meus treinos e provas" },
+    { id:"automatizar", txt:"Usar IA e automação no meu trabalho" },
+    { id:"importados",  txt:"Importar ou vender para fora do Brasil" },
+    { id:"estresse",    txt:"Cuidar do estresse, ansiedade ou sono" }
+  ]
+};
+
+/* ---------- utilitários ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const CHAVE = "ajr_carbogelo_" + CONFIG.EVENTO.id;
+const guardar = v => { try{ localStorage.setItem(CHAVE, v); }catch(e){} };
+const lido = () => { try{ return localStorage.getItem(CHAVE); }catch(e){ return null; } };
+function maskTel(v){
+  const d = String(v).replace(/\D/g,"").slice(0,11);
+  if(d.length<=2) return d.length?"("+d:"";
+  if(d.length<=6) return "("+d.slice(0,2)+") "+d.slice(2);
+  if(d.length<=10) return "("+d.slice(0,2)+") "+d.slice(2,6)+"-"+d.slice(6);
+  return "("+d.slice(0,2)+") "+d.slice(2,7)+"-"+d.slice(7);
+}
+function embaralhar(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+async function api(action, payload){
+  if(!CONFIG.API_URL){                       // modo demonstração
+    await new Promise(r=>setTimeout(r,400));
+    return {ok:true, codigo: CONFIG.EVENTO.prefixo + "-" + String(Math.floor(Math.random()*900)+100)};
+  }
+  const res = await fetch(CONFIG.API_URL, {
+    method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body: JSON.stringify(Object.assign({action:action}, payload||{}))
+  });
+  if(!res.ok) throw new Error("HTTP "+res.status);
+  const j = await res.json();
+  if(!j.ok) throw new Error(j.erro||"erro desconhecido");
+  return j;
+}
+
+/* ---------- montagem ---------- */
+$("evNome").textContent = CONFIG.EVENTO.nome;
+const form = $("form");
+function montar(){
+  $("optsQ2").innerHTML = CONFIG.AREAS.map(o=>`<label class="opt"><input type="radio" name="q2" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
+  $("optsQ3").innerHTML = CONFIG.POSICOES.map(o=>`<label class="opt"><input type="radio" name="q3" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
+  $("optsQ4").innerHTML = embaralhar(CONFIG.TAGS).map(o=>`<label class="opt cb"><input type="checkbox" name="q4" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
+  contarTags();
+}
+function contarTags(){
+  const n = form.querySelectorAll('[name="q4"]:checked').length;
+  $("tagCount").textContent = n ? `(${n} marcado${n>1?"s":""})` : "";
+}
+$("optsQ4").addEventListener("change", contarTags);
+$("f_whats").addEventListener("input", e=>{ e.target.value = maskTel(e.target.value); });
+montar();
+
+/* ---------- passo a passo ---------- */
+const STEPS = Array.from(form.querySelectorAll(".step"));
+let passo = 0;
+function mostrar(n){
+  passo = Math.max(0, Math.min(n, STEPS.length-1));
+  STEPS.forEach((s,i)=>s.classList.toggle("on", i===passo));
+  const ult = passo===STEPS.length-1;
+  $("btnVoltar").style.display  = passo>0 ? "" : "none";
+  $("btnAvancar").style.display = (ult || STEPS[passo].dataset.auto) ? "none" : "";
+  $("btnEnviar").style.display  = ult ? "" : "none";
+  $("progFill").style.width = Math.round((passo+1)*100/STEPS.length) + "%";
+  $("progTxt").textContent = (passo+1) + " de " + STEPS.length;
+  $("formErr").textContent = "";
+  if(passo>0) form.scrollIntoView({behavior:"smooth", block:"start"});
+}
+function erroDados(){
+  const f = [];
+  if($("f_nome").value.trim().split(/\s+/).length < 2) f.push("nome completo");
+  if($("f_whats").value.replace(/\D/g,"").length < 10) f.push("WhatsApp");
+  if(!$("f_cidade").value.trim()) f.push("cidade");
+  if(!$("f_sexo").value) f.push("sexo");
+  return f;
+}
+$("btnAvancar").addEventListener("click", ()=>{
+  if(passo===0){ const f = erroDados(); if(f.length){ $("formErr").textContent = "Falta preencher: " + f.join(", ") + "."; return; } }
+  mostrar(passo+1);
+});
+$("btnVoltar").addEventListener("click", ()=>mostrar(passo-1));
+form.addEventListener("change", e=>{
+  const st = STEPS[passo];
+  if(st.dataset.auto && e.target.name===st.dataset.auto) setTimeout(()=>mostrar(passo+1), 260);
+});
+
+/* ---------- envio ---------- */
+form.addEventListener("submit", async e=>{
+  e.preventDefault();
+  if(passo < STEPS.length-1){ $("btnAvancar").click(); return; }
+  const get = n => (form.querySelector(`[name="${n}"]:checked`)||{}).value || "";
+  const dados = {
+    evento: CONFIG.EVENTO.id, prefixo: CONFIG.EVENTO.prefixo,
+    nome: $("f_nome").value.trim(), whatsapp: $("f_whats").value.trim(),
+    cidade: $("f_cidade").value.trim(), sexo: $("f_sexo").value,
+    q1: get("q1"), q2: get("q2"), q3: get("q3"),
+    q4: Array.from(form.querySelectorAll('[name="q4"]:checked')).map(i=>i.value).join("|"),
+    q5: get("q5"), consent:"sim", origem:"carbogelo"
+  };
+  const falta = erroDados();
+  ["q1","q2","q3","q5"].forEach((q,i)=>{ if(!dados[q]) falta.push("pergunta " + (i<3?i+2:6)); });
+  if(!$("f_consent").checked) falta.push("autorização de contato");
+  if(falta.length){ $("formErr").textContent = "Falta preencher: " + falta.join(", ") + "."; return; }
+
+  const btn = $("btnEnviar");
+  btn.disabled = true; btn.textContent = "Enviando…";
+  try{
+    const r = await api("inscricao", dados);
+    guardar(r.codigo);
+    sucesso(r.codigo);
+  }catch(err){
+    $("formErr").textContent = "Não foi possível enviar (" + err.message + "). Confira a internet e tente de novo.";
+  }finally{
+    btn.disabled = false; btn.textContent = "Quero meu Carbogelo";
+  }
+});
+
+function sucesso(cod){
+  $("outCodigo").textContent = cod;
+  $("formBox").style.display = "none";
+  $("okBox").style.display = "block";
+  window.scrollTo(0,0);
+}
+$("btnOutra").addEventListener("click", ()=>{
+  form.reset(); montar(); mostrar(0);
+  $("okBox").style.display = "none";
+  $("formBox").style.display = "block";
+  window.scrollTo(0,0);
+});
+
+// Já se cadastrou neste celular? Mostra o código de novo.
+const salvo = lido();
+if(salvo) sucesso(salvo);
+</script>
+</body>
+</html>
