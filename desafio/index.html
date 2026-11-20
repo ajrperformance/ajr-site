@@ -499,20 +499,24 @@ const CONFIG = {
     { id:"construcao", txt:"Construção" },
     { id:"saude",      txt:"Saúde" },
     { id:"comercio",   txt:"Comércio e varejo" },
+    { id:"servicos",   txt:"Serviços" },
     { id:"educacao",   txt:"Educação" },
-    { id:"estudante",  txt:"Estudante" },
     { id:"agro",       txt:"Agro" },
-    { id:"ti",         txt:"Tecnologia" }
+    { id:"ti",         txt:"Tecnologia" },
+    { id:"outros",     txt:"Outros" },
+    { id:"estudante",  txt:"Estudante" }
   ],
 
   // Pergunta 3 — posição. decisor:true = dono, diretor ou gerente.
   POSICOES: [
-    { id:"dono",        txt:"Dono(a) / sócio(a)",                 decisor:true },
-    { id:"gestor",      txt:"Diretor(a) / gerente",               decisor:true },
-    { id:"liberal",     txt:"Autônomo(a) / profissional liberal" },
-    { id:"operacional", txt:"Funcionário(a) / CLT" },
-    { id:"servidor",    txt:"Servidor(a) público(a)" },
-    { id:"outro",       txt:"Outro" }
+    { id:"dono",        txt:"Proprietário / Sócio",               decisor:true },
+    { id:"gestor",      txt:"Direção / Gerência",                 decisor:true },
+    { id:"coordenacao", txt:"Coordenação / Supervisão" },
+    { id:"analista",    txt:"Analista / Operação" },
+    { id:"servidor",    txt:"Servidor público" },
+    { id:"liberal",     txt:"Autônomo" },
+    { id:"outro",       txt:"Outro" },
+    { id:"operacional", txt:"Funcionário(a) / CLT",               oculto:true }  // só leads antigos
   ],
 
   // Pergunta 4 — assuntos por parceiro.
@@ -522,13 +526,14 @@ const CONFIG = {
     { id:"carbogelo",   txt:"Ter Carbogelo nos meus treinos e provas",      sp:"ajr",       forca:"forte" },
     { id:"automatizar", txt:"Usar IA e automação no meu trabalho",          sp:"g4",        forca:"forte" },
     { id:"importados",  txt:"Importar ou vender para fora do Brasil",       sp:"mori",      forca:"forte" },
+    { id:"marketing",   txt:"Fortalecer o marketing e o comercial",         sp:"g4",        forca:"forte" },
     { id:"estresse",    txt:"Cuidar do estresse, ansiedade ou sono",        sp:"vitallite", forca:"forte" }
   ],
   MAX_TAGS: 5,
 
   // Segmentos em que um DECISOR sem tag ainda vale como amarelo (parceiros B2B).
   SEGMENTOS_B2B: {
-    g4:   ["construcao","comercio","saude","educacao","agro","ti"],
+    g4:   ["construcao","comercio","servicos","saude","educacao","agro","ti"],
     mori: ["comercio","agro"]
   }
 };
@@ -542,16 +547,19 @@ const V2_POSICOES = CONFIG.POSICOES.map(p=>p.id);
 function ehV2(L){ return V2_POSICOES.indexOf(L.q3) > -1; }
 function lista(v){ return Array.isArray(v) ? v : String(v||"").split("|").filter(Boolean); }
 function rotulo(arr, id){ const o = arr.find(x=>x.id===id); return o ? o.txt : (id||""); }
+const CONTATO = { semana:"Sim, essa semana", inicio:"Começo da semana", fim:"Fim da semana", novidades:"Só novidades" };
+function querContato(L){ return ["semana","inicio","fim"].indexOf(L.q5) > -1; }
+function contatoTxt(L){ return CONTATO[L.q5] || L.q5 || ""; }
 function ehDecisor(L){ const p = CONFIG.POSICOES.find(x=>x.id===L.q3); return !!(p && p.decisor); }
 
 function qualificar(L){ return ehV2(L) ? qualificarV2(L) : qualificarV1(L); }
 
 function qualificarV2(L){
   const tags  = lista(L.q4);
-  const sem   = L.q5 === "semana";
+  const sem   = querContato(L);
   const dec   = ehDecisor(L);
   const pos   = rotulo(CONFIG.POSICOES, L.q3).split(" /")[0];
-  const urg   = sem ? "contato essa semana" : "só novidades";
+  const urg   = sem ? (L.q5==="semana" ? "contato essa semana" : "contato no " + contatoTxt(L).toLowerCase()) : "só novidades";
   const out   = {};
 
   CONFIG.PATROCINADORES.forEach(sp=>{
@@ -797,7 +805,7 @@ function embaralhar(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Ma
 function montarOpcoes(){
   document.getElementById("optsQ2").innerHTML = CONFIG.AREAS.map(o=>
     `<label class="opt"><input type="radio" name="q2" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
-  document.getElementById("optsQ3").innerHTML = CONFIG.POSICOES.map(o=>
+  document.getElementById("optsQ3").innerHTML = CONFIG.POSICOES.filter(o=>!o.oculto).map(o=>
     `<label class="opt"><input type="radio" name="q3" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
   // ordem nova a cada pessoa: ninguém percebe blocos por empresa e nenhuma tag leva vantagem
   document.getElementById("optsQ4").innerHTML = embaralhar(CONFIG.TAGS).map(o=>
@@ -954,7 +962,7 @@ async function carregarLeads(){
 function renderStats(){
   const total = LEADS.length;
   const comRes = LEADS.filter(x=>Number(x.kgf)>0).length;
-  const quentes = LEADS.filter(x=>x.q5==="semana").length;
+  const quentes = LEADS.filter(querContato).length;
   document.getElementById("admStats").innerHTML = `
     <div><b>${total}</b><span>Inscritos</span></div>
     <div><b>${comRes}</b><span>Com resultado</span></div>
@@ -1053,7 +1061,7 @@ document.getElementById("btnCsvSp").addEventListener("click", ()=>{
   const ev = document.getElementById("admEvento").value;
   const linhas = [["Prioridade","Nome","WhatsApp","Cidade","Motivo","Quer contato","Área","Posição","Decisor","Interesses"]];
   leadsOrdenados().forEach(x=>linhas.push([x.cor.toUpperCase(), x.nome, x.whatsapp, x.cidade, x.motivo,
-    x.q5==="semana"?"Sim, essa semana":"Só novidades", areaTxt(x), posicaoTxt(x), decisorTxt(x), interessesTxt(x)]));
+    contatoTxt(x), areaTxt(x), posicaoTxt(x), decisorTxt(x), interessesTxt(x)]));
   baixarCSV(`leads_${ev}_${sp.id}.csv`, linhas);
 });
 document.getElementById("btnCsvAll").addEventListener("click", ()=>{
@@ -1065,7 +1073,7 @@ document.getElementById("btnCsvAll").addEventListener("click", ()=>{
     const q = qualificar(x);
     const l = [x.codigo,x.nome,x.whatsapp,x.cidade,x.sexo==="F"?"Feminino":"Masculino",x.kgf||"",x.peso||"",
                x.q1==="atleta"?"Atleta":"Acompanhante",areaTxt(x),posicaoTxt(x),decisorTxt(x),interessesTxt(x),
-               x.q5==="semana"?"Essa semana":"Só novidades"];
+               contatoTxt(x)];
     CONFIG.PATROCINADORES.forEach(s=>{ l.push(q[s.id][0].toUpperCase()); l.push(q[s.id][1]); });
     linhas.push(l);
   });
