@@ -90,13 +90,6 @@ h1 em{font-style:normal;color:var(--ice3)}
 .opt:has(input:checked){border-color:var(--gold);background:var(--goldd)}
 .opt:has(input:checked):before{border-color:var(--gold);background:var(--gold);box-shadow:inset 0 0 0 3px var(--bg2)}
 .opt:has(input:disabled){opacity:.45;cursor:not-allowed}
-/* botões de toque (cidade, sexo) */
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{position:relative;padding:11px 14px;border:1px solid var(--line2);border-radius:999px;background:var(--bg2);cursor:pointer;font-size:15px;transition:all .15s;user-select:none}
-.chip input{position:absolute;opacity:0;pointer-events:none}
-.chip:has(input:checked){border-color:var(--gold);background:var(--goldd);color:var(--gold2)}
-.chips.dois .chip{flex:1;text-align:center;border-radius:10px;padding:13px}
-#f_cidade_outra{margin-top:10px;display:none}
 .consent{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:12.5px;color:var(--mut);line-height:1.45;cursor:pointer}
 .consent input{margin-top:2px;width:18px;height:18px;accent-color:var(--gold);flex:none}
 .consent b{color:var(--tx2);font-weight:500}
@@ -157,7 +150,7 @@ footer a{color:var(--mut)}
     <section class="hero" style="padding-top:6px">
       <p class="eyebrow">Amostra grátis</p>
       <h1>Ganhe um <em>Carbogelo</em> na tenda</h1>
-      <p class="lead">Responda umas perguntas rápidas (1 minuto, quase tudo é só tocar) e retire o seu gelinho de energia aqui na Tenda AJR.</p>
+      <p class="lead">Responda 6 perguntas rápidas (1 minuto) e retire o seu gelinho de energia aqui na Tenda AJR.</p>
 
       <div class="cg">
         <svg class="cube" aria-hidden="true"><use href="#cubo"/></svg>
@@ -176,7 +169,7 @@ footer a{color:var(--mut)}
     </section>
 
     <form id="form" class="card" novalidate style="margin-top:22px">
-      <div class="prog"><div class="prog-bar"><i id="progFill"></i></div><span id="progTxt">1 de 7</span></div>
+      <div class="prog"><div class="prog-bar"><i id="progFill"></i></div><span id="progTxt">1 de 6</span></div>
 
       <div class="step on" data-step="0">
         <div class="field">
@@ -188,16 +181,16 @@ footer a{color:var(--mut)}
           <input id="f_whats" inputmode="numeric" autocomplete="tel" placeholder="(14) 99999-9999">
         </div>
         <div class="field">
-          <label>Cidade</label>
-          <div class="chips" id="optsCidade"></div>
-          <input id="f_cidade_outra" autocomplete="address-level2" placeholder="Digite sua cidade">
+          <label for="f_cidade">Cidade</label>
+          <input id="f_cidade" autocomplete="address-level2" placeholder="Bauru">
         </div>
         <div class="field">
-          <label>Sexo</label>
-          <div class="chips dois">
-            <label class="chip"><input type="radio" name="sexo" value="F"><span>Feminino</span></label>
-            <label class="chip"><input type="radio" name="sexo" value="M"><span>Masculino</span></label>
-          </div>
+          <label for="f_sexo">Sexo</label>
+          <select id="f_sexo">
+            <option value="">Selecione</option>
+            <option value="F">Feminino</option>
+            <option value="M">Masculino</option>
+          </select>
         </div>
       </div>
 
@@ -215,28 +208,22 @@ footer a{color:var(--mut)}
       </div>
 
       <div class="step" data-step="3" data-auto="q3">
-        <span class="qt">Qual sua posição na empresa hoje?</span>
+        <span class="qt">E a sua posição hoje?</span>
         <div class="opts" id="optsQ3"></div>
       </div>
 
       <div class="step" data-step="4">
-        <span class="qt">Na vida pessoal, o que você gostaria de conseguir nos próximos meses?</span>
-        <p class="qh">Marque quantos quiser. <span class="tagCount"></span></p>
-        <div class="opts" id="optsPessoal"></div>
+        <span class="qt">O que você quer resolver nos próximos meses?</span>
+        <p class="qh">Marque quantos quiser. <span id="tagCount"></span></p>
+        <div class="opts" id="optsQ4"></div>
       </div>
 
       <div class="step" data-step="5">
-        <span class="qt">E na vida profissional, na empresa em que você está hoje, em que área gostaria de avançar?</span>
-        <p class="qh">Marque quantos quiser, ou siga em frente se nenhuma fizer sentido agora. <span class="tagCount"></span></p>
-        <div class="opts" id="optsProf"></div>
-      </div>
-
-      <div class="step" data-step="6">
-        <span class="qt">Quando é melhor, eventualmente, fazer contato com você?</span>
+        <span class="qt">Podemos te mandar uma mensagem esta semana?</span>
         <p class="qh">Com uma condição especial para o que você marcou.</p>
         <div class="opts">
-          <label class="opt"><input type="radio" name="q5" value="inicio"><span>Começo da semana</span></label>
-          <label class="opt"><input type="radio" name="q5" value="fim"><span>Fim da semana</span></label>
+          <label class="opt"><input type="radio" name="q5" value="semana"><span>Sim, pode me chamar</span></label>
+          <label class="opt"><input type="radio" name="q5" value="novidades"><span>Agora não, só novidades</span></label>
         </div>
         <label class="consent">
           <input type="checkbox" id="f_consent">
@@ -286,41 +273,31 @@ const CONFIG = {
   // Para o próximo evento, troque aqui (e adicione o mesmo evento no CONFIG de /desafio/).
   EVENTO: { id:"bauru-shopping-2026", nome:"Track&Field Bauru Shopping", prefixo:"TF", data:"20 e 22/11/2026" },
 
-  // Cidades com botão de toque. "Outra" abre o campo para digitar.
-  CIDADES: ["Bauru","Agudos","Piratininga","Pederneiras","Lençóis Paulista","Jaú"],
-
   AREAS: [
     { id:"construcao", txt:"Construção" },
     { id:"saude",      txt:"Saúde" },
     { id:"comercio",   txt:"Comércio e varejo" },
-    { id:"servicos",   txt:"Serviços" },
     { id:"educacao",   txt:"Educação" },
+    { id:"estudante",  txt:"Estudante" },
     { id:"agro",       txt:"Agro" },
-    { id:"ti",         txt:"Tecnologia" },
-    { id:"outros",     txt:"Outros" },
-    { id:"estudante",  txt:"Estudante" }
+    { id:"ti",         txt:"Tecnologia" }
   ],
   POSICOES: [
-    { id:"dono",        txt:"Proprietário / Sócio" },
-    { id:"gestor",      txt:"Direção / Gerência" },
-    { id:"coordenacao", txt:"Coordenação / Supervisão" },
-    { id:"analista",    txt:"Analista / Operação" },
-    { id:"servidor",    txt:"Servidor público" },
-    { id:"liberal",     txt:"Autônomo" },
+    { id:"dono",        txt:"Dono(a) / sócio(a)" },
+    { id:"gestor",      txt:"Diretor(a) / gerente" },
+    { id:"liberal",     txt:"Autônomo(a) / profissional liberal" },
+    { id:"operacional", txt:"Funcionário(a) / CLT" },
+    { id:"servidor",    txt:"Servidor(a) público(a)" },
     { id:"outro",       txt:"Outro" }
   ],
-  // Mesmos ids do Desafio (qualificação por parceiro no Painel).
-  // As duas listas vão juntas para a coluna q4 da planilha.
-  PESSOAL: [
-    { id:"estresse",    txt:"Cuidar do estresse, ansiedade ou sono" },
+  // Mesmos ids do Desafio (qualificação por parceiro no Painel) + Carbogelo.
+  TAGS: [
     { id:"performance", txt:"Correr melhor e descobrir meu VO₂" },
     { id:"emagrecer",   txt:"Emagrecer ou ganhar massa com acompanhamento" },
-    { id:"carbogelo",   txt:"Ter Carbogelo nos meus treinos e provas" }
-  ],
-  PROFISSIONAL: [
-    { id:"marketing",   txt:"Fortalecer o marketing e o comercial" },
-    { id:"automatizar", txt:"Usar IA e automação para não ficar para trás" },
-    { id:"importados",  txt:"Exportar, importar e buscar dolarização" }
+    { id:"carbogelo",   txt:"Ter Carbogelo nos meus treinos e provas" },
+    { id:"automatizar", txt:"Usar IA e automação no meu trabalho" },
+    { id:"importados",  txt:"Importar ou vender para fora do Brasil" },
+    { id:"estresse",    txt:"Cuidar do estresse, ansiedade ou sono" }
   ]
 };
 
@@ -357,35 +334,17 @@ async function api(action, payload){
 /* ---------- montagem ---------- */
 $("evNome").textContent = CONFIG.EVENTO.nome;
 const form = $("form");
-const caixa = o => `<label class="opt cb"><input type="checkbox" name="q4" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`;
 function montar(){
-  $("optsCidade").innerHTML = CONFIG.CIDADES.concat(["Outra"]).map(c=>`<label class="chip"><input type="radio" name="cidade" value="${esc(c)}"><span>${esc(c)}</span></label>`).join("");
-  $("f_cidade_outra").style.display = "none";
   $("optsQ2").innerHTML = CONFIG.AREAS.map(o=>`<label class="opt"><input type="radio" name="q2" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
   $("optsQ3").innerHTML = CONFIG.POSICOES.map(o=>`<label class="opt"><input type="radio" name="q3" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
-  $("optsPessoal").innerHTML = embaralhar(CONFIG.PESSOAL).map(caixa).join("");
-  $("optsProf").innerHTML = embaralhar(CONFIG.PROFISSIONAL).map(caixa).join("");
+  $("optsQ4").innerHTML = embaralhar(CONFIG.TAGS).map(o=>`<label class="opt cb"><input type="checkbox" name="q4" value="${esc(o.id)}"><span>${esc(o.txt)}</span></label>`).join("");
   contarTags();
 }
 function contarTags(){
-  form.querySelectorAll(".step").forEach(st=>{
-    const out = st.querySelector(".tagCount"); if(!out) return;
-    const n = st.querySelectorAll('[name="q4"]:checked').length;
-    out.textContent = n ? `(${n} marcado${n>1?"s":""})` : "";
-  });
+  const n = form.querySelectorAll('[name="q4"]:checked').length;
+  $("tagCount").textContent = n ? `(${n} marcado${n>1?"s":""})` : "";
 }
-function cidade(){
-  const c = (form.querySelector('[name="cidade"]:checked')||{}).value || "";
-  return c==="Outra" ? $("f_cidade_outra").value.trim() : c;
-}
-form.addEventListener("change", e=>{
-  if(e.target.name==="q4") contarTags();
-  if(e.target.name==="cidade"){
-    const outra = e.target.value==="Outra";
-    $("f_cidade_outra").style.display = outra ? "block" : "none";
-    if(outra) $("f_cidade_outra").focus();
-  }
-});
+$("optsQ4").addEventListener("change", contarTags);
 $("f_whats").addEventListener("input", e=>{ e.target.value = maskTel(e.target.value); });
 montar();
 
@@ -408,8 +367,8 @@ function erroDados(){
   const f = [];
   if($("f_nome").value.trim().split(/\s+/).length < 2) f.push("nome completo");
   if($("f_whats").value.replace(/\D/g,"").length < 10) f.push("WhatsApp");
-  if(!cidade()) f.push("cidade");
-  if(!form.querySelector('[name="sexo"]:checked')) f.push("sexo");
+  if(!$("f_cidade").value.trim()) f.push("cidade");
+  if(!$("f_sexo").value) f.push("sexo");
   return f;
 }
 $("btnAvancar").addEventListener("click", ()=>{
@@ -430,13 +389,13 @@ form.addEventListener("submit", async e=>{
   const dados = {
     evento: CONFIG.EVENTO.id, prefixo: CONFIG.EVENTO.prefixo,
     nome: $("f_nome").value.trim(), whatsapp: $("f_whats").value.trim(),
-    cidade: cidade(), sexo: get("sexo"),
+    cidade: $("f_cidade").value.trim(), sexo: $("f_sexo").value,
     q1: get("q1"), q2: get("q2"), q3: get("q3"),
     q4: Array.from(form.querySelectorAll('[name="q4"]:checked')).map(i=>i.value).join("|"),
     q5: get("q5"), consent:"sim", origem:"carbogelo"
   };
   const falta = erroDados();
-  ["q1","q2","q3","q5"].forEach((q,i)=>{ if(!dados[q]) falta.push(i<3 ? "pergunta "+(i+2) : "melhor momento para contato"); });
+  ["q1","q2","q3","q5"].forEach((q,i)=>{ if(!dados[q]) falta.push("pergunta " + (i<3?i+2:6)); });
   if(!$("f_consent").checked) falta.push("autorização de contato");
   if(falta.length){ $("formErr").textContent = "Falta preencher: " + falta.join(", ") + "."; return; }
 
