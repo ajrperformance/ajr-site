@@ -489,7 +489,8 @@ const CONFIG = {
     { id:"ajr",       nome:"AJR Performance", desc:"avaliação física" },
     { id:"g4",        nome:"G4",              desc:"automação" },
     { id:"mori",      nome:"Mori Consulting", desc:"comércio exterior" },
-    { id:"vitallite", nome:"Vitallitè",       desc:"médicos e psicólogos" }
+    { id:"vitallite", nome:"Vitallitè",       desc:"médicos e psicólogos" },
+    { id:"salutem",   nome:"Salutem",         desc:"farmácia" }
   ],
 
   UNIDADE: "kgf",
@@ -527,6 +528,10 @@ const CONFIG = {
     { id:"automatizar", txt:"Usar IA e automação no meu trabalho",          sp:"g4",        forca:"forte" },
     { id:"importados",  txt:"Importar ou vender para fora do Brasil",       sp:"mori",      forca:"forte" },
     { id:"marketing",   txt:"Fortalecer o marketing e o comercial",         sp:"g4",        forca:"forte" },
+    // Carbogelo (20/11): sp pode ser uma lista quando a frase serve a mais de um parceiro
+    { id:"suplementacao", txt:"Acertar a suplementação (vitaminas, proteína, creatina)", sp:["ajr","salutem"], forca:"forte" },
+    { id:"farmacia",    txt:"Ter uma farmácia de confiança, com orientação e bom preço", sp:"salutem", forca:"forte" },
+    { id:"equipe",      txt:"Cuidar da saúde e do bem-estar da minha equipe", sp:["ajr","vitallite","salutem"], forca:"forte" },
     { id:"estresse",    txt:"Cuidar do estresse, ansiedade ou sono",        sp:"vitallite", forca:"forte" }
   ],
   MAX_TAGS: 5,
@@ -563,7 +568,7 @@ function qualificarV2(L){
   const out   = {};
 
   CONFIG.PATROCINADORES.forEach(sp=>{
-    const minhas = CONFIG.TAGS.filter(t=>t.sp===sp.id && tags.indexOf(t.id)>-1);
+    const minhas = CONFIG.TAGS.filter(t=>[].concat(t.sp).indexOf(sp.id)>-1 && tags.indexOf(t.id)>-1);
     const forte  = minhas.some(t=>t.forca==="forte");
     const media  = minhas.length>0 && !forte;
     const nomes  = minhas.map(t=>t.txt).join(" + ");
